@@ -1,0 +1,189 @@
+.hall-block {
+    border-radius: 10px;
+    background: #efefefc4;
+    height: 180px;
+    margin: 0px 15px 20px 15px;
+    text-align: center;
+    display: block;
+    position: relative;
+    line-height: 180px;
+    color:#181935;
+}
+
+.hall-block:hover {
+    cursor: pointer;
+}
+
+.hall-block.vip {
+    background: #ffcece;
+}
+
+.hall-block.coffee {
+    background: #d5bb94;
+}
+
+.hall-block.small-margin {
+    margin: 10px
+}
+
+.hall-block.small-sponsor {
+    line-height: 90px;
+    height: 90px;
+}
+
+.hall-block.micro-sponsor {
+    line-height: 50px;
+    height: 50px;
+    margin: 5px;
+}
+
+.hall-block.wide-sponsor {
+    width: 100%;
+    line-height: 50px;
+    height: 50px;
+    margin: 5px;
+}
+
+.main-logo {
+    margin: auto;
+    display: block;
+    width: 90%;
+    max-width: 350px;
+    padding-top:20px;
+}
+
+.sponsor-image {
+    width:100%
+}
+
+.sponsor-type-bg {
+    position: absolute;
+    width: 100%;
+    line-height: 201px;
+    font-size: 42px;
+    font-weight: 600;
+    text-align: center;
+    color: #b0b0b0;
+}
+
+.absolute-bg-image {
+    opacity: 0.2;
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.absolute-bg-image.vip {
+    width:auto;
+    height: 75%;
+}
+
+.absolute-bg-image.stage {
+    opacity: 0.2;
+    width:75%;
+}
+
+/*
+ changing bootstrap defaults
+*/
+body {
+    background: #181935;
+    padding: 0px 0px 50px 0px;
+}
+.container-lg {
+    max-width: 1350px;
+}
+.col-md-3, .col-md-6, .col, .col-md-4, .col-md-2 {
+    padding: 0px
+}
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.display-3 {
+    font-size: 3.5rem;
+}
+
+.nopadding {
+    padding: 0px
+}
+
+@media only screen and (max-width:768px) {
+    .absolute-bg-image {
+        opacity: 0.2;
+        width: 17%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .absolute-bg-image.vip {
+        width: auto;
+        width: 10%;
+        height: auto;
+    }
+
+    .absolute-bg-image.stage {
+        opacity: 0.2;
+        width: 17%;
+    }
+
+    .main-logo {
+        margin: auto;
+        display: block;
+        width: 90%;
+        max-width: 350px;
+        padding-top: 0px;
+        padding-bottom: 40px;
+    }
+    .hall-block {
+        border-radius: 10px;
+        background: #efefefc4;
+        height: 180px;
+        margin: 0px 0px 20px 0px;
+        text-align: center;
+        display: block;
+        position: relative;
+        line-height: 180px;
+        color: #181935;
+    }
+
+    .col-md-3, .col-md-6, .col, .col-md-4, .col-md-2 {
+        padding: 0px 10px;
+    }
+
+    .col-md-4, .col-md-6 {
+        flex-basis: 0;
+        -ms-flex-positive: 1;
+        -webkit-box-flex: 1;
+        flex-grow: 1;
+        max-width: 100%;
+    }
+}
+
+@media only screen and (max-width:500px) {
+    .col-md-3, .col-md-6, .col, .col-md-4, .col-md-2 {
+        padding: 0px 5px;
+    }
+
+    .hall-block.small-margin {
+        margin: 5px
+    }
+
+    .container-lg {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .hall-block.wide-sponsor {
+        width: 100%;
+        line-height: 50px;
+        height: 50px;
+        margin: 0px 5px;
+    }
+}

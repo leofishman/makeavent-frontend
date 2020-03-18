@@ -15,7 +15,7 @@ Vue.use(Router)
 
 let io = VueSocketIO(socket, {
     query: {
-        token: window.location.hash.split("#/")[1]
+        token: window.location.hash.split("#/")[1].split("/")[0]
     }
 })
 
@@ -61,7 +61,7 @@ io.on('logout', () => {
 })
 
 setInterval(() => {
-    io.emit('auth', { id:window.location.hash.split("#/")[1] })
+    io.emit('auth', { id:window.location.hash.split("#/")[1].split("/")[0] })
 }, 5000)
 
 

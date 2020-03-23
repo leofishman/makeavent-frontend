@@ -74,6 +74,9 @@ router.beforeEach((to, from, next) => {
             window.location = '/#/login'
         })
     }
+    else if (!window.location.hash.split("#/")[1].split("/")[1] && window.location.hash.split("#/")[1].split("/")[0]) {
+        window.location = `/#/${window.location.hash.split("#/")[1].split("/")[0]}/home`
+    }
     else 
         next()
 })

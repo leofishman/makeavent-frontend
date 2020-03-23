@@ -8,6 +8,7 @@
     position: relative;
     line-height: 180px;
     color:#181935;
+    padding: 0px 10px;
 }
 
 .hall-block:hover {
@@ -26,38 +27,110 @@
     margin: 10px
 }
 
-.hall-block.small-sponsor {
-    line-height: 90px;
-    height: 90px;
-}
-
 .hall-block.micro-sponsor {
-    line-height: 50px;
-    height: 50px;
+    line-height: 100px;
+    height: 100px;
+    max-width: 100px;
+    margin: 25px;
+    max-height: 100%;
+}
+
+.hall-block.nano-sponsor {
+    line-height: 75px;
+    height: 75px;
+    max-width: 75px;
+    max-height:75px;
+    margin: 0px 20px;
+}
+
+.hall-block.silver-sponsor {
+    width: 100%;
+    line-height: 100px;
+    height: 100px;
+    max-width: 250px;
+    margin: auto;
+}
+
+.hall-block.platinum-sponsor {
+    width: 100%;
+    line-height: 200px;
+    height: 200px;
     margin: 5px;
 }
 
-.hall-block.wide-sponsor {
+.hall-block.gold-sponsor {
     width: 100%;
-    line-height: 50px;
-    height: 50px;
+    line-height: 150px;
+    height: 150px;
     margin: 5px;
+}
+.hall-block.gold-sponsor.wide {
+    max-width: 300px;
+    max-height: 120px;
+    line-height: 120px;
+}
+
+.hall-block.main-sponsor {
+    width: 100%;
+    line-height: 300px;
+    height: 300px;
+}
+
+.percent-col {
+    -webkit-box-flex: 0;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.percent-col.c15 {
+    flex: 0 0 16%;
+    max-width: 16%;
+}
+.percent-col.c20 {
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+.percent-col.c40 {
+    flex: 0 0 28%;
+    max-width: 28%;
+    padding:0px 20px;
+}
+
+.hall-block.bronze-sponsor {
+    width: 100%;
+    max-width: 210px;
+    line-height: 110px;
+    height: 110px;
+    margin: 35px 35px 35px 0px;
+}
+
+.bronze-sponsor-row {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width:90%;
+    margin: -5% auto 0px auto;
 }
 
 .main-logo {
     margin: auto;
+    z-index: 2;
     display: block;
+    position: relative;
     width: 90%;
     max-width: 350px;
-    padding-top:20px;
+    padding-top: 20px;
 }
 
 .sponsor-image {
-    width:100%
+    max-width: 90%;
+    max-height: 90%;
 }
 
 .sponsor-type-bg {
     position: absolute;
+    z-index: 1;
     width: 100%;
     line-height: 201px;
     font-size: 42px;
@@ -82,8 +155,18 @@
 
 .absolute-bg-image.stage {
     opacity: 0.2;
-    width:75%;
+    max-width: 75%;
+    max-height: 75%;
 }
+
+.stage-title {
+    font-size: 30px;
+    color:white;
+    z-index: 2;
+    position: relative;
+    display: block;
+}
+
 
 /*
  changing bootstrap defaults
@@ -91,9 +174,10 @@
 body {
     background: #181935;
     padding: 0px 0px 50px 0px;
+    overflow-x: hidden;
 }
 .container-lg {
-    max-width: 1350px;
+    max-width: 100%;
 }
 .col-md-3, .col-md-6, .col, .col-md-4, .col-md-2 {
     padding: 0px
@@ -110,6 +194,12 @@ body {
 
 .nopadding {
     padding: 0px
+}
+
+.centrify {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @media only screen and (max-width:768px) {

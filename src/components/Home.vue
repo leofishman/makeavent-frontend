@@ -10,6 +10,12 @@
 
 export default {
   name: 'Home',
+  data() {
+
+    return {
+      
+    }
+  },
   methods: {
     isMobileWidth() {
       return window.innerWidth < 768

@@ -2,28 +2,28 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import axios from 'axios'
 import {host, socket} from '../env'
-import VueSocketIO from 'socket.io-client'
 
 /**
  * @components
  */
 import Home from '../components/Home.vue'
 import NoAccess from '../components/NoAccess.vue'
-import Wait from '../components/Wait.vue'
+import Company from '../components/Company.vue'
+import Password from '../components/Password.vue'
 
 Vue.use(Router)
-
-let io = VueSocketIO(socket, {
-    query: {
-        token: window.location.hash.split("#/")[1].split("/")[0]
-    }
-})
 
 const router = new Router({
     mode: 'hash',
     linkActiveClass: 'open active',
     scrollBehavior: () => ({ y: 0 }),
     routes: [
+        {
+            path: '/',
+            meta: {
+                requiresAuth: true
+            }
+        },
         {
             path: '/:id/home',
             name: 'Home',
@@ -37,13 +37,22 @@ const router = new Router({
             name: "Noaccess",
             component: NoAccess,
             meta: {
-                requiresAuth: false
+                requiresAuth: true
             }
         },
         {
-            path: '/:id/wait',
-            name: "Wait",
-            component: Wait,
+            path: '/:id/company',
+            name: "Company",
+            component: Company,
+            meta: {
+                requiresAuth: true
+            },
+            props: (route) => ({ name: route.query.name })
+        },
+        {
+            path: '/login',
+            name: "Password",
+            component: Password,
             meta: {
                 requiresAuth: false
             }
@@ -51,36 +60,22 @@ const router = new Router({
     ]
 })
 
-io.on('connect', () => {
-    console.log('socket connected')
-})
-
-io.on('logout', () => {
-    localStorage.auth = ""
-    window.location = '/#/noaccess'
-})
-
-setInterval(() => {
-    io.emit('auth', { id:window.location.hash.split("#/")[1].split("/")[0] })
-}, 5000)
-
-
-router.beforeEach(async (to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (localStorage.auth == "" && to.params.id != 'noaccess') {
-            const id = to.params.id
-            const response = await axios.get(`${host}/login?id=${id}`)
-            localStorage.auth = response.headers.authorization
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth && !to.fullPath.includes('auth=true')) {
+        axios.get(host + `/login/checkToken?access=${window.location.hash.split("#/")[1].split("/")[0]}`, {
+            headers: {
+                authorization: localStorage.auth
+            }
+        })
+        .then(res => {
             next()
-        }
-        else {
-            console.log(to.params.id)
-            next()
-        }
+        })
+        .catch(e => {
+            window.location = '/#/login'
+        })
     }
-    else {
+    else 
         next()
-    }
 })
 
 export default router

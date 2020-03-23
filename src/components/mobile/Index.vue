@@ -60,7 +60,7 @@
             <span class="sponsor-type-bg">SILVER Sponsors</span>
             <b-col v-on:click="navToWaitPage()" md="4" class="nopadding">
                 <div class="hall-block small-margin">
-                    <img class="sponsor-image" src="../../assets/img/sponsors/fas.png" alt="">
+                    <img class="sponsor-image" src="../../assets/img/sponsors/FAS/FAS.png" alt="">
                 </div>
             </b-col>
             <b-col v-on:click="navToWaitPage()" md="4" class="nopadding">
@@ -70,7 +70,7 @@
             </b-col>
             <b-col v-on:click="navToWaitPage()" md="4" class="nopadding">
                 <div class="hall-block small-margin">
-                    <img class="sponsor-image" src="../../assets/img/sponsors/crypttp.png" alt="">
+                    <img class="sponsor-image" src="../../assets/img/sponsors/CRYPTTP/CRYPTTP.png" alt="">
                 </div>
             </b-col>
         </b-row>
@@ -208,8 +208,8 @@
 export default {
 	name: "mobile",
 	methods: {
-		navToWaitPage () {
-			this.$router.push(`/${this.$router.currentRoute.params.id}/wait`)
+		navToWaitPage (name) {
+			this.$router.push(`/${this.$router.currentRoute.params.id}/company`)
         },
         
         narov () {

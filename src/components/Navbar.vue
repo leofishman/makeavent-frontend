@@ -8,6 +8,9 @@
             <b-navbar-nav>
                 <b-nav-item :href="`/#/${$root.$router.currentRoute.params.id}/home`">{{$root.content.home}}</b-nav-item>
             </b-navbar-nav>
+            <b-navbar-nav>
+                <b-nav-item :href="`/#/${$root.$router.currentRoute.params.id}/home`">{{$root.content.agenda}}</b-nav-item>
+            </b-navbar-nav>
 
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
@@ -15,6 +18,17 @@
                     <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
                     <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
                 </b-nav-form> -->
+
+                <b-navbar-nav v-on:click="openChat()" v-if="!chatIsOpened">
+                    <b-nav-item>
+                        {{$root.content.openChat}}
+                    </b-nav-item>
+                </b-navbar-nav>
+                <b-navbar-nav v-on:click="closeChat()" v-if="chatIsOpened">
+                    <b-nav-item>
+                        {{$root.content.closeChat}}
+                    </b-nav-item>
+                </b-navbar-nav>
 
                 <b-nav-item-dropdown text="Language" right>
                     <b-dropdown-item v-on:click="setLanguage('EN')">EN</b-dropdown-item>
@@ -41,6 +55,22 @@ export default {
         setLanguage (choice) {
             localStorage.selectedLanguage = choice
             window.location.reload()
+        },
+
+        openChat () {
+            this.chatIsOpened = true
+            window.EventBus.$emit("open_global_chat")
+        },
+
+        closeChat () {
+            this.chatIsOpened = false
+            window.EventBus.$emit("close_global_chat")
+        }
+    },
+    data() {
+        
+        return {
+            chatIsOpened: false
         }
     },
 }

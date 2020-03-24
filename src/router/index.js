@@ -10,11 +10,12 @@ import Home from '../components/Home.vue'
 import NoAccess from '../components/NoAccess.vue'
 import Company from '../components/Company.vue'
 import Password from '../components/Password.vue'
+import VipMeetingRoom from '../components/VipMeetingRoom.vue'
 
 Vue.use(Router)
 
 const router = new Router({
-    mode: 'hash',
+    mode: "history",
     linkActiveClass: 'open active',
     scrollBehavior: () => ({ y: 0 }),
     routes: [
@@ -56,26 +57,48 @@ const router = new Router({
             meta: {
                 requiresAuth: false
             }
+        },
+        {
+            path: '/:id/vip',
+            name: "Vip",
+            component: VipMeetingRoom,
+            meta: {
+                requiresAuth: true
+            }
         }
     ]
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth && !to.fullPath.includes('auth=true')) {
-        axios.get(host + `/login/checkToken?access=${window.location.hash.split("#/")[1].split("/")[0]}`, {
+    if (!localStorage.auth && window.location.pathname.split("/")[1] != "login") {
+        window.location.pathname = "/login"
+    }
+    else if (!localStorage.auth && window.location.pathname.split("/")[1] == "login") {
+        next()
+    }
+    else if (!to.fullPath.includes('auth=true') && window.location.pathname.split("/")[1] != "login") {
+        axios.get(host + `/login/checkToken?access=${window.location.pathname.split("/")[1]}`, {
             headers: {
                 authorization: localStorage.auth
             }
         })
         .then(res => {
-            next()
+            if (
+                window.location.pathname.split("/")[1] != "login" &&
+                window.location.pathname.split("/")[1] != "noaccess" &&
+                window.location.pathname.split("/")[2] != "company" && 
+                window.location.pathname.split("/")[2] != "vip" &&
+                window.location.pathname.split("/")[2] != "home"
+            ) {
+                window.location.pathname = `/${window.location.pathname.split("/")[1]}/home`
+            }
+            else 
+                next()
         })
         .catch(e => {
-            window.location = '/#/login'
+            localStorage.auth = ""
+            window.location = '/login'
         })
-    }
-    else if (!window.location.hash.split("#/")[1].split("/")[1] && window.location.hash.split("#/")[1].split("/")[0]) {
-        window.location = `/#/${window.location.hash.split("#/")[1].split("/")[0]}/home`
     }
     else 
         next()

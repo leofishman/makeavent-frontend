@@ -14,7 +14,7 @@
           </b-col>
           <b-col md="2">
             <div v-on:click="navToWaitPage()" class="hall-block" style="line-height:90px; background:#b8bfe6">
-              <img class="main-logo" src="../../assets/logo.png" alt="">
+              <img class="main-logo" src="../../assets/logo.svg" alt="">
               <strong class="stage-title">
                 STAGE
               </strong>
@@ -22,11 +22,11 @@
             </div>
           </b-col>
           <b-col md="3">
-            <img class="main-logo" src="../../assets/logo.png" alt="">
+            <img class="main-logo" src="../../assets/logo.svg" alt="">
           </b-col>
           <b-col md="2">
             <div v-on:click="navToWaitPage()" class="hall-block" style="line-height:90px; background:#b8bfe6">
-              <img class="main-logo" src="../../assets/logo.png" alt="">
+              <img class="main-logo" src="../../assets/logo.svg" alt="">
               <strong class="stage-title">
                 STAGE
               </strong>
@@ -34,10 +34,9 @@
             </div>
           </b-col>
           <b-col md="2">
-            <div v-on:click="navToWaitPage()" class="hall-block vip" style="line-height:90px">
+            <div v-on:click="navToWaitPage('viproom')" class="hall-block vip" style="line-height:40px">
               <strong>
                 VIP e-MEETING ROOM<br>
-                DIAMOND SPONSOR
               </strong>
               <img class="absolute-bg-image vip" src="../../assets/img/vip.png" alt="">
             </div>
@@ -84,12 +83,12 @@
 
           <b-row>
             <b-col>
-              <div style="margin-top:15px;" v-on:click="navToWaitPage('STO MANAGERS')" class="hall-block small-margin silver-sponsor">
-                <img class="sponsor-image" src="../../assets/img/sponsors/STO MANAGERS/STO MANAGERS.png" alt="">
+              <div v-on:click="navToWaitPage('STO MANAGERS')" class="hall-block small-margin silver-sponsor fullsize-image-block">
+                <img class="fullsize-image sponsor-image" src="../../assets/img/sponsors/STO MANAGERS/STO MANAGERS.png" alt="">
               </div>
             </b-col>
             <b-col>
-              <div style="margin-top:15px;" v-on:click="navToWaitPage('crypttp')" class="hall-block small-margin silver-sponsor">
+              <div v-on:click="navToWaitPage('crypttp')" class="hall-block small-margin silver-sponsor margin-15">
                 <img class="sponsor-image" src="../../assets/img/sponsors/CRYPTTP/CRYPTTP.png" alt="">
               </div>
             </b-col>
@@ -97,12 +96,12 @@
               e-WORKSHOP
             </b-col>
             <b-col>
-              <div style="margin-top:15px;" v-on:click="navToWaitPage('fas')" class="hall-block small-margin silver-sponsor">
+              <div v-on:click="navToWaitPage('fas')" class="hall-block small-margin silver-sponsor margin-15">
                 <img class="sponsor-image" src="../../assets/img/sponsors/FAS/FAS.png" alt="">
               </div>
             </b-col>
             <b-col>
-              <div style="margin-top:15px;" v-on:click="navToWaitPage('')" class="hall-block small-margin silver-sponsor">
+              <div v-on:click="navToWaitPage('')" class="hall-block small-margin silver-sponsor margin-15">
                 Silver sponsor
               </div>
             </b-col>
@@ -245,7 +244,7 @@
 
         </b-container>
       </b-col>
-      <b-col v-if="showChat" md="2">
+      <b-col v-if="showChat" md="2" class="sticky-chat">
         <globalchat></globalchat>
       </b-col>
     </b-row>
@@ -256,12 +255,19 @@ export default {
   name: "desktop",
   methods: {
     navToWaitPage (name) {
-      this.$router.push({
-        path: `/${this.$router.currentRoute.params.id}/company`,
-        query: {
-          name: name
-        }
-      })
+      if (name == "viproom") {
+        this.$router.push({
+          path: `/${this.$root.token}/vip`
+        })
+      }
+      else {
+        this.$router.push({
+          path: `/${this.$root.token}/company`,
+          query: {
+            name: name
+          }
+        })
+      }
     },
   },
   data() {
@@ -293,5 +299,20 @@ export default {
     margin: -28% 0% 0px -12%;
     display: block;
     pointer-events: none;
+  }
+  .fullsize-image {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+  }
+  .margin-15 {
+    margin-top:15px;
+  }
+  .sticky-chat {
+    position: fixed;
+    top: 62px;
+    width: 100%;
+    z-index: 100;
+    right: 0;
   }
 </style>

@@ -18,11 +18,11 @@ export default {
     yes: "Yes",
     no: "No",
     requestContact: (p1) => {
-        return `${p1} will receive notification that you requesting contact information. If ${p1} will confirm it you will receive ${p1}'s contact information`
+        return `${p1} will receive notification that you requesting contact information.<br>If ${p1} will confirm it you will receive ${p1}'s contact information`
     },
     newContactReq: 'New business card request',
     newContactReqNote: (name, company, role) => {
-        return `${name} ${role} at ${company} is requesting your business card. If you agree sharing your contact information click "Yes" unless click "No"`
+        return `${name} ${role} at ${company} is requesting your business card.<br>If you agree sharing your contact information click "Yes" unless click "No"`
     },
     userConfirmedSharingInfo: ({name, role, company}) => {
         return `${name} ${role} at ${company} shared business card with you`
@@ -31,7 +31,7 @@ export default {
     save: "Save",
     actionsWithBusCard: 'You can save business card, print it, or access later at any time',
     reply: "Reply",
-    loginWithTicket: "Login with your ticket",
+    loginWithTicket: "Login with your ticket and password provided in email",
     email: "Email",
     emailPlaceholder: "Please enter your email",
     passwordPlaceholder: "Please enter password from email",
@@ -41,5 +41,10 @@ export default {
     openChat: "Open Chat",
     closeChat: "Close Chat",
     vipChat: "VIP Chat",
-    coffeeChat: "Coffee-break Chat"
+    coffeeChat: "Coffee-break Chat",
+    contactSupport: "If you have issues logging in or did not receive email with password, please contact support at",
+    oops: "Oops",
+    onlyForVIP: (component) => {
+        return `We are appologizing, but ${component} is available only for VIP attenders.<br>Would you like to upgrade your ticket?`
+    },
 }

@@ -41,7 +41,7 @@ new Vue({
     let self = this
 
     if (!this.token && !this.profile && !this.usertype) {
-      Axios.get(host+`/login/checkToken?access=${window.location.hash.split('#/')[1].split("/")[0]}`, {
+      Axios.get(host+`/login/checkToken?access=${window.location.pathname.split('/')[1]}`, {
         headers: {
           authorization: localStorage.auth
         }
@@ -73,7 +73,7 @@ new Vue({
     
         window.io.on('logout', () => {
           localStorage.auth = ""
-          window.open('/#/login')
+          window.open('/login')
         })
     
         setInterval(() => {
@@ -123,9 +123,10 @@ new Vue({
     },
 
     openIncomingContactRequest (data) {
-      const note = this.content.newContactReqNote(data.name.split(" ")[0], data.company, data.role)
-      
-      this.$bvModal.msgBoxConfirm(note, {
+      let note = this.content.newContactReqNote(data.name.split(" ")[0], data.company, data.role)
+      note = this.convertContentWithLineBreaks(note)
+
+      this.$bvModal.msgBoxConfirm([note], {
         title: this.content.newContactReq,
         size: 'md',
         buttonSize: 'md',
@@ -134,6 +135,8 @@ new Vue({
         cancelTitle: this.content.no,
         footerClass: 'p-2',
         hideHeaderClose: false,
+        noCloseOnBackdrop: true,
+        noCloseOnEsc: true,
         centered: true
       })
       .then(value => {
@@ -156,6 +159,8 @@ new Vue({
         cancelTitle: this.content.save,
         footerClass: 'p-2',
         hideHeaderClose: false,
+        noCloseOnBackdrop: true,
+        noCloseOnEsc: true,
         centered: true
       })
       .then(value => {
@@ -169,6 +174,24 @@ new Vue({
     joinChats () {
       this.joinGlobalChat()
       this.joinVipChat()
+    },
+
+    convertContentWithLineBreaks (content) {
+      const h = this.$createElement
+      content = content.split('<br>')
+
+      let arr = []
+      for (var i = 0; i < content.length; i += 1) {
+        arr.push(h('p', [content[i]]))
+        content[i+1] && arr.push(h('br'))
+      }
+
+      return h(
+        'div', { class: ['foobar'] },
+        [
+          arr
+        ]
+      )
     }
   },
 }).$mount('#app')

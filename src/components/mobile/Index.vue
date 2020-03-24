@@ -2,7 +2,7 @@
     <b-container fluid="lg" style="padding-top:30px;">
         <b-row style="margin: 0px 0px;" class="justify-content-md-center">
             <b-col md="3">
-                <img class="main-logo" src="../../assets/logo.png" alt="">
+                <img class="main-logo" src="../../assets/logo.svg" alt="">
             </b-col>
             <b-col md="2">
                 <div v-on:click="navToWaitPage()" class="hall-block" style="line-height:90px; background:#b8bfe6">

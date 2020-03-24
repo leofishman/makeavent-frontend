@@ -270,7 +270,7 @@ export default {
                         meetingNumber: parseInt(document.getElementById('meeting_number').value),
                         userName: document.getElementById('display_name').value,
                         passWord: "329806",
-                        leaveUrl: "http://localhost:8081/#/1qcHN0Ql3lYamix4JK7BQZrk/company?name=Crypttp",
+                        leaveUrl: "http://localhost:8081/1qcHN0Ql3lYamix4JK7BQZrk/company?name=Crypttp",
                         role: 0
                     };
 
@@ -413,9 +413,10 @@ export default {
                     + " " + el.from.name.split(' ')[0] + '`s'
                     + " " + content.businessCard
 
-                    const note = content.requestContact(el.from.name.split(' ')[0])
-
-                    this.$bvModal.msgBoxConfirm(note, {
+                    let note = content.requestContact(el.from.name.split(' ')[0])
+                    note = this.$root.convertContentWithLineBreaks(note)
+                    
+                    this.$bvModal.msgBoxConfirm([note], {
                         title: question,
                         size: 'md',
                         buttonSize: 'md',
@@ -424,6 +425,8 @@ export default {
                         cancelTitle: content.no,
                         footerClass: 'p-2',
                         hideHeaderClose: false,
+                        noCloseOnBackdrop: true,
+                        noCloseOnEsc: true,
                         centered: true
                     })
                     .then(value => {
@@ -432,6 +435,7 @@ export default {
                                 from: this.$root.profile,
                                 to: el.from
                             })
+                        
                     })
                     .catch(e => {
                         this.$bvModal.cancel()
@@ -458,7 +462,7 @@ export default {
                 let self = this
                 notification.onclick = function(event) {
                     event.preventDefault()
-                    // window.open(`${env.self}/#/${self.$root.token}/company?name=${low_chatname}&reply=${data.id}`)
+                    // window.open(`${env.self}/${self.$root.token}/company?name=${low_chatname}&reply=${data.id}`)
                 }
             }
         },

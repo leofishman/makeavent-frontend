@@ -193,9 +193,10 @@ export default {
                     + " " + el.from.name.split(' ')[0] + '`s'
                     + " " + content.businessCard
 
-                    const note = content.requestContact(el.from.name.split(' ')[0])
+                    let note = content.requestContact(el.from.name.split(' ')[0])
+                    note = this.$root.convertContentWithLineBreaks(note)
 
-                    this.$bvModal.msgBoxConfirm(note, {
+                    this.$bvModal.msgBoxConfirm([note], {
                         title: question,
                         size: 'md',
                         buttonSize: 'md',
@@ -204,6 +205,8 @@ export default {
                         cancelTitle: content.no,
                         footerClass: 'p-2',
                         hideHeaderClose: false,
+                        noCloseOnBackdrop: true,
+                        noCloseOnEsc: true,
                         centered: true
                     })
                     .then(value => {

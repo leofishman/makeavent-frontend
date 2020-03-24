@@ -1,15 +1,17 @@
 <template>
-    <b-navbar sticky toggleable="lg" type="dark" variant="dark">
-        <b-navbar-brand :href="`/#/${$root.$router.currentRoute.params.id}/home`">Blockconf DIGITAL</b-navbar-brand>
+    <b-navbar sticky toggleable="lg" type="dark" style="background:black">
+        <b-navbar-brand :href="`/${$root.$router.currentRoute.params.id}/home`">
+            <img src="../assets/logo.svg" alt="">
+        </b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
-                <b-nav-item :href="`/#/${$root.$router.currentRoute.params.id}/home`">{{$root.content.home}}</b-nav-item>
+                <b-nav-item :href="`/${$root.$router.currentRoute.params.id}/home`">{{$root.content.home}}</b-nav-item>
             </b-navbar-nav>
             <b-navbar-nav>
-                <b-nav-item :href="`/#/${$root.$router.currentRoute.params.id}/home`">{{$root.content.agenda}}</b-nav-item>
+                <b-nav-item :href="`/${$root.$router.currentRoute.params.id}/home`">{{$root.content.agenda}}</b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
@@ -75,3 +77,8 @@ export default {
     },
 }
 </script>
+<style lang="css">
+    .navbar-dark .navbar-nav .nav-link {
+        color: rgb(217, 151, 0);
+    }
+</style>

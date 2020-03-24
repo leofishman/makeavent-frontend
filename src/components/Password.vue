@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img class="logo" src="../assets/logo.png" alt="">
+        <img class="logo" src="../assets/logo.svg" alt="">
         <div class="center">
             <div class="title">
                 {{$root.content.loginWithTicket}}
@@ -22,6 +22,10 @@
                     {{$root.content.submit}}
                 </b-button>
             </b-form-group>
+
+            <div class="bottom">
+                {{$root.content.contactSupport}} support@blockconf.digital
+            </div>
         </div>
     </div>
 </template>
@@ -93,7 +97,7 @@ export default {
         border-radius: 20px;
     }
     .title {
-        font-size:40px;
+        font-size:30px;
         width: 100%;
         text-align: center;
         margin-bottom: 20px;
@@ -104,5 +108,10 @@ export default {
         position: relative;
         margin: 50px auto 0px auto;
         display: block;
+    }
+    .bottom {
+        position: absolute;
+        bottom: 20px;
+        text-align: center;
     }
 </style>

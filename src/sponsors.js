@@ -12,21 +12,22 @@ module.exports = {
             "1": {
                 name: "Bogdan Sizov",
                 email: "bogdan@crypttp.com",
+                role: "Foudner & CEO",
                 getInTouch: {
                     Telegram: "https://t.me/b_sizov",
                     Linkedin: "https://www.linkedin.com/in/bogdan-s/",
                     Facebook: "https://www.facebook.com/bogdan.sizov.3"
                 }
             },
-            "2": {
-                name: "Elena Obukhova",
-                email: "elena@crypttp.com",
-                getInTouch: {
-                    Telegram: "https://t.me/eobukhova",
-                    Linkedin: "https://www.linkedin.com/in/elenaobukhova/",
-                    Facebook: "https://www.facebook.com/helen.obuxova"
-                }
-            }
+            // "2": {
+            //     name: "Elena Obukhova",
+            //     email: "elena@crypttp.com",
+            //     getInTouch: {
+            //         Telegram: "https://t.me/eobukhova",
+            //         Linkedin: "https://www.linkedin.com/in/elenaobukhova/",
+            //         Facebook: "https://www.facebook.com/helen.obuxova"
+            //     }
+            // }
         }
     },
     "STO MANAGERS": {
@@ -43,6 +44,7 @@ module.exports = {
             "1": {
                 name: "Juan Manuel Dominguez",
                 email: "juan@stomanagers.com",
+                role: "CEO",
                 getInTouch: {
                     Telegram: "https://t.me/JuanMDominguez",
                     Linkedin: "https://www.linkedin.com/in/juan-manuel-dominguez-51666125/",
@@ -62,6 +64,7 @@ module.exports = {
             "1": {
                 name: "Elena Obukhova",
                 email: "elena@fintech-advisory.com",
+                role: "Founder & CEO",
                 getInTouch: {
                     Telegram: "https://t.me/eobukhova",
                     Linkedin: "https://www.linkedin.com/in/elenaobukhova/",
@@ -70,6 +73,7 @@ module.exports = {
             },
             "2": {
                 name: "Sergey Ivanov",
+                role: "Founder & VP",
                 email: "sergey@fintech-advisory.com",
                 getInTouch: {
                     Telegram: "https://t.me/sergeyfas",

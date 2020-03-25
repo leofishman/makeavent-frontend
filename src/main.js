@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { BootstrapVue } from 'bootstrap-vue'
+import { BootstrapVue, BIconThreeDotsVertical } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/css/style.css'
@@ -29,6 +29,10 @@ Vue.component('vipchat', VipChat)
 const EventBus = new Vue();
 window.EventBus = EventBus
 
+import Sponsors from './sponsors'
+import Speakers from './speakers'
+import Workshop from './workshop'
+import qrcode from 'qrcode-generator-es6'
 
 new Vue({
   router,
@@ -40,7 +44,7 @@ new Vue({
 
     let self = this
 
-    if (!this.token && !this.profile && !this.usertype) {
+    if (this.checkNavShouldBeWithToken()) {
       Axios.get(host+`/login/checkToken?access=${window.location.pathname.split('/')[1]}`, {
         headers: {
           authorization: localStorage.auth
@@ -53,7 +57,7 @@ new Vue({
         this.usertype = data.type
       })
       .catch(e => {
-        this.$router.push('/login')
+        // this.$router.push('/login')
       })
     }
 
@@ -91,12 +95,16 @@ new Vue({
         window.io.on('request_contact_confirmed', (data) => {
           this.openContactConfirmedModal(data)
         })
-    
-        window.EventBus.$on('request_contact_confirmed', (data) => {
-          this.openContactConfirmedModal(data)
-        })
       }
     }, 100)
+
+    window.EventBus.$on('request_contact_confirmed', (data) => {
+      this.openContactConfirmedModal(data)
+    })
+
+    window.EventBus.$on('show_business_card', data => {
+      this.openBusinessCard(data)
+    })
 
     return {
       notificationAllowed: "",
@@ -109,11 +117,25 @@ new Vue({
     }
   },
   methods: {
+    checkNavShouldBeWithToken () {
+      if (
+        !this.token &&
+        !this.profile &&
+        !this.usertype &&
+        !this.$router.currentRoute.fullPath.includes('auth=true') &&
+        this.$router.currentRoute.path != '/login' &&
+        this.$router.currentRoute.path != '/loginWithTemporaryEmail' &&
+        this.$router.currentRoute.path != '/businesscard'
+      )
+        return true
+      else
+        return false
+    },
+
     tokenCheck () {
       let self = this
       return new Promise(async (resolve, reject) => {
         let timer = setInterval(() => {
-          console.log(this.token, self.token)
           if (this.token) {
             clearInterval(timer)
             resolve(true)
@@ -164,10 +186,178 @@ new Vue({
         centered: true
       })
       .then(value => {
-        
+        if (value) {
+          this.openBusinessCard(data)
+        }
+        else {
+          Axios.post(`${host}/data/savebusinesscard`, data, {
+            headers: {
+              authorization: localStorage.auth
+            }
+          })
+          .then(res => {
+            this.$bvModal.msgBoxOk([this.convertContentWithLineBreaks(this.$root.content.businessCardSavedToEmail)], {
+              title: 'Confirmation',
+              size: 'sm',
+              buttonSize: 'sm',
+              okVariant: 'success',
+              headerClass: 'p-2 border-bottom-0',
+              footerClass: 'p-2 border-top-0',
+              centered: true
+            })
+          })
+        }
       })
       .catch(e => {
-        
+        console.log(e)
+      })
+    },
+
+    openBusinessCard (data) {
+      const h = this.$createElement
+      const titleVNode = h('div', { domProps: { innerHTML: data.name } })
+      
+      let image;
+
+      if (Sponsors[data.company.toUpperCase()])
+        Object.values(Sponsors[data.company.toUpperCase()].contacts).map((contact, index) => {
+          if (contact.email == data.email) {
+            image = require(`./assets/img/sponsors/${data.company.toUpperCase()}/contact${index+1}.png`)
+          }
+        })
+
+      if (!image)
+        Speakers.map(speaker => {
+          if (speaker.email == data.email) {
+            image = require(`./assets/img/workshopers/${data.name}.png`)
+          }
+        })
+
+      if (!image)
+        Workshop.map(workshoper => {
+          if (workshoper.email == data.email) {
+            image = require(`./assets/img/speakers/${data.name}.png`)
+          }
+        })
+
+      let tg;
+      let fb;
+      let ln;
+      if (data.Telegram)
+        tg = true
+      if (data.Facebook)
+        fb = true
+      if (data.Linkedin)
+        ln = true
+
+      let self = this
+
+      const createSocialNode = (name) => {
+        return h('div', [
+          h('b-link', {
+            props: {
+              href: data[name],
+              target: '_blank'
+            }
+          }, [
+            h('b-img', {
+              props: {
+                src: require(`./assets/img/socials/${name.toLowerCase()}.svg`)
+              },
+              style: {
+                width:'50px'
+              }
+            })
+          ]),
+          h('b-button', {
+            style: {
+              background: "none",
+              border: "none",
+              color: "grey",
+            },
+            on: {
+              click: function () { 
+                self.openAsQr(data[name])
+              }
+            }
+          }, [
+            self.$root.content.openQrCode
+          ])
+        ])
+      }
+
+      const messageVNode = h('div', { class: ['foobar'] }, [
+        (image) ? h('b-img', {
+          props: {
+            src: image,
+            thumbnail: true,
+            center: true,
+            fluid: true,
+            rounded: 'circle'
+          }
+        }) : "",
+        h('p', {
+            class: ['text-center'],
+            style: {
+              "margin": "20px 0px",
+              "font-size": "25px",
+            }
+          },
+          [ data.role + " at " + data.company ]
+        ),
+        h('div', { class: ['row'] }, [
+          h('div', { class: ['col centercol'], style: { "margin-bottom": "20px" } }, [
+            data.email
+          ])
+        ]),
+        h('div', { class: ['row'] }, [
+          ln ? h('div', { class: ['col centercol'] }, [
+            createSocialNode("Linkedin")
+          ]) : '',
+          tg ? h('div', { class: ['col centercol'] }, [
+            createSocialNode("Telegram")
+          ]) : '',
+          fb ? h('div', { class: ['col centercol'] }, [
+            createSocialNode("Facebook")
+          ]) : ''
+        ])
+      ])
+
+      this.$bvModal.msgBoxOk([messageVNode], {
+        title: [titleVNode],
+        buttonSize: 'md',
+        centered: true,
+        size: 'md',
+        hideHeaderClose: false,
+        noCloseOnBackdrop: true,
+        noCloseOnEsc: true,
+      })
+    },
+
+    openAsQr (link) {
+      const h = this.$createElement
+      
+      const qr = new qrcode(0, 'H');
+      qr.addData(link);
+      qr.make();
+      const svg = qr.createSvgTag({})
+      
+      const messageVNode = h('div', {
+        class: ['foobar'],
+        props: {
+          thumbnail: true,
+          center: true,
+          fluid: true,
+        },
+        domProps: {
+          innerHTML: svg
+        }
+      })
+      
+      this.$bvModal.msgBoxOk([messageVNode], {
+        title: '',
+        buttonSize: 'sm',
+        centered: true, size: 'sm'
       })
     },
 

@@ -204,6 +204,26 @@ body {
     transform: translate(-50%, -50%);
 }
 
+.contact-photo {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+.hover {
+    cursor: default;
+}
+.hover:hover {
+    cursor: pointer;
+}
+
+.centercol {
+    text-align: center;
+    margin: auto;
+}
+
 @media only screen and (max-width:768px) {
     .absolute-bg-image {
         opacity: 0.2;

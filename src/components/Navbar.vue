@@ -10,9 +10,9 @@
             <b-navbar-nav>
                 <b-nav-item :href="`/${$root.$router.currentRoute.params.id}/home`">{{$root.content.home}}</b-nav-item>
             </b-navbar-nav>
-            <b-navbar-nav>
+            <!-- <b-navbar-nav>
                 <b-nav-item :href="`/${$root.$router.currentRoute.params.id}/home`">{{$root.content.agenda}}</b-nav-item>
-            </b-navbar-nav>
+            </b-navbar-nav> -->
 
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
@@ -79,6 +79,19 @@ export default {
 </script>
 <style lang="css">
     .navbar-dark .navbar-nav .nav-link {
+        font-size: 20px;
+        color: rgb(217, 151, 0);
+    }
+    .navbar-dark .navbar-nav .nav-link:hover {
+        font-size: 20px;
+        color: #ffc43d;
+    }
+    .navbar-dark .navbar-nav .nav-link:focus {
+        font-size: 20px;
+        color: rgb(217, 151, 0);
+    }
+    .navbar-dark .navbar-nav .show > .nav-link, .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .nav-link.active {
+        font-size: 20px;
         color: rgb(217, 151, 0);
     }
 </style>

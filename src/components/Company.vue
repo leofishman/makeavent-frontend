@@ -13,8 +13,10 @@
                                     </b-col>
                                     <b-col >
                                         <b-link v-on:click="track(website)" :href="website" target="_blank" class="block-display">
-                                            <img class="social-icon" :src="socialLogos['Website']" alt="">
-                                            Website
+                                            <div>
+                                                <img class="social-icon" :src="socialLogos['Website']" alt="">
+                                                Website
+                                            </div>
                                         </b-link>
                                         <b-link v-for="(el, key, index) in socials" :key="index" v-on:click="track(el)" :href="el" target="_blank" class="block-display">
                                             <div v-if="el">
@@ -33,6 +35,9 @@
                                                 {{el.name}}
                                             </div>
                                             <img class="contact-photo" :src="el.photo" alt="">
+                                            <div class="contact-name" style="font-size:18px; margin-top:20px">
+                                                {{el.role}}
+                                            </div>
                                             <div class="contact-email">
                                                 {{el.email}}
                                             </div>
@@ -490,31 +495,31 @@ export default {
     .top20 {
         margin-top: 20px
     }
-    a {
-        font-size:20px;
-    }
-    a:hover {
-        font-size:20px;
-    }
     .block-display {
         display: block;
+    }
+    .block-display:hover {
+        text-decoration: none;
+    }
+    .block-display div {
+        font-size:20px;
+        color: black;
+    }
+    .block-display div:hover {
+        font-size:20px;
+        color: #6f6f6f;
+        text-decoration: none;
     }
     .a,a.white {
         text-decoration: none !important;
         color:white !important;
     }
     .social-icon {
-        height: 40px
+        height: 40px;
+        font-size:20px;
     }
     .social-icon.getInTouch {
         vertical-align: super;
-    }
-    .contact-photo {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 3px solid white;
     }
     .contacts {
         text-align: center;
@@ -522,9 +527,6 @@ export default {
         border-radius: 20px;
         background: #343a40;
         padding: 15px 10px 0px 10px;
-    }
-    .hover:hover {
-        cursor: pointer;
     }
     .contact-email {
         font-size: 14px;

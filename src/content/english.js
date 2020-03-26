@@ -1,8 +1,12 @@
+import {startDate} from '../env'
+
 export default {
     noAccessTitle:`We are apologizing but You don't have access`,
     sorryAttender: `Sorry our dear attender.`,
     reasonWhyNoAccess: `It seems like you are trying to open conferense in many tabs.<br> We restricted opening many tabs of conference hall for security reasons.<br> Sorry for any inconvinice.`,
-    buyTicket: "Buy ticket",
+    buyTicket: (type) => {
+        return `Buy ${type} ticket`
+    },
     home: "Home",
     comebackSoon: "Page will be available when conference starts",
     pageWillBeLater: "Please come back later",
@@ -45,14 +49,14 @@ export default {
     coffeeChat: "Coffee-break Chat",
     contactSupport: "If you have issues logging in or did not receive email with password, please contact support at",
     oops: "Oops",
-    onlyForVIP: (component) => {
-        return `We are appologizing, but ${component} is available only for VIP attenders.<br>Would you like to upgrade your ticket?`
+    onlyForVIP: (component, forthem) => {
+        return `We are appologizing, but ${component} is available only for ${forthem} attenders.<br>Would you like to upgrade your ticket?`
     },
     findInEbooth: "Find me in e-BOOTH",
     findInSpeakers: "Find me in Conference Adenda",
     findInWorkshop: "Find me in Workshop Agenda",
     requestMyBusinessCard: "Request my business card",
-    sheduleAprivateCall: "Shedule a private call with me",
+    sheduleAprivateCall: "Sсhedule a private call with me",
     titleForLoginWithTempEmail: "Welcome!<br>Manager of your company or Friend purchased ticket for you.<br>Please, provide real contact information and sign in.",
     password: "Password",
     old: "Old ",
@@ -67,5 +71,11 @@ export default {
     optionalyProvide: (a) => { return `Optionaly you can provide ${a} for better business connections` },
     example: ", Example: ",
     openQrCode: "Open QR-code",
-    businessCardSavedToEmail: "Amazing.<br>Business card was sent to your email!"
+    businessCardSavedToEmail: "Amazing.<br>Business card was sent to your email!",
+    vip: "VIP",
+    business: "Buiness",
+    basic: "Basic",
+    willBeAtMay: `The conference has not started yet. Please come back after May 14th at ${new Date(startDate).toLocaleString().split(", ")[1]}`,
+    followUsOnSocial: "Follow us on social media",
+    chat: "Chat"
 }

@@ -41,7 +41,7 @@ new Vue({
     let selectedLanguage = localStorage.selectedLanguage
     if (!selectedLanguage || selectedLanguage === undefined)
       selectedLanguage = "EN"
-
+    
     let self = this
 
     if (this.checkNavShouldBeWithToken()) {
@@ -57,7 +57,7 @@ new Vue({
         this.usertype = data.type
       })
       .catch(e => {
-        // this.$router.push('/login')
+        this.$router.push('/login')
       })
     }
 
@@ -125,7 +125,8 @@ new Vue({
         !this.$router.currentRoute.fullPath.includes('auth=true') &&
         this.$router.currentRoute.path != '/login' &&
         this.$router.currentRoute.path != '/loginWithTemporaryEmail' &&
-        this.$router.currentRoute.path != '/businesscard'
+        this.$router.currentRoute.path != '/noaccess' &&
+        !this.$router.currentRoute.fullPath.includes('businesscard')
       )
         return true
       else
@@ -382,6 +383,229 @@ new Vue({
           arr
         ]
       )
+    },
+
+    showMessageToUpgrade (component, type) {
+      const self = this
+      const h = this.$createElement
+      const titleVNode = h('div', { domProps: { innerHTML: this.$root.content.oops } })
+      let message = this.$root.content.onlyForVIP(component, type)
+      message = message.split("<br>")
+      
+      const messageVNode = h('div', {  }, [
+        h('div', {}, [
+          message[0]
+        ]),
+        h('br'),
+        h('div', {}, [
+          message[1],
+        ]),
+        h('div', { class:['row'], style: {
+          'display': '-ms-flexbox',
+          'display': '-webkit-box',
+          'display': 'flex',
+          '-ms-flex-wrap': 'wrap',
+          'flex-wrap': 'wrap',
+          '-ms-flex-align': 'center',
+          '-webkit-box-align': 'center',
+          'align-items': 'center',
+          '-ms-flex-pack': 'end',
+          '-webkit-box-pack': 'end',
+          'justify-content': 'flex-end',
+          'padding': '0.75rem',
+          'border-top': '1px solid #dee2e6',
+          'border-bottom-right-radius': 'calc(0.3rem - 1px)',
+          'border-bottom-left-radius': 'calc(0.3rem - 1px)',
+        } }, [
+          h('div', { class:['col-2 leftalign nopadding'] }, [
+            h(
+              'b-button',
+              {
+                class:[
+                  'btn-warning'
+                ],
+                on: {
+                  click: function () {
+                    self.$router.push('/')
+                  }
+                }
+              },
+              [
+                this.content.no
+              ]
+            ),
+          ]),
+          h('div', { class:['col-4 rightalign nopadding'] }, [
+            h(
+              'b-button',
+              {
+                props:
+                {
+                  variant: "primary"
+                }, 
+                on: {
+                  click: function () { 
+                    self.upgradeTicket("vip")
+                  }
+                }
+              },
+              [ 
+                this.content.buyTicket(this.content.vip)
+              ]
+            )
+          ])
+        ]),
+      ])
+
+      this.$bvModal.msgBoxConfirm([messageVNode], {
+        title: [titleVNode],
+        buttonSize: 'md',
+        centered: true,
+        size: 'md',
+        noCloseOnBackdrop: true,
+        noCloseOnEsc: true,
+        footerClass: 'none'
+      })
+    },
+
+    upgradeTicket(type) {
+      if (localStorage.auth) {
+        Axios.post(`${host}/ticket/upgrade`, {
+          type: type
+        }, {
+          headers: {
+            authorization: localStorage.auth
+          }
+        })
+        .then(res => {
+          this.profile = res.data.profile
+          window.location.reload()
+        })
+        .catch(e => {})
+      }
+      else {
+        this.$router.push('/login')
+        let timerForUserLoged = setInterval(() => {
+          if (localStorage.auth) {
+            clearInterva(timerForUserLoged)
+            Axios.post(`${host}/ticket/upgrade`, {
+              type: type
+            }, {
+              headers: {
+                authorization: localStorage.auth
+              }
+            })
+            .then(res => {
+              this.profile = res.data.profile
+              window.location.reload()
+            })
+            .catch(e => {})
+          }
+        }, 100)
+      }
+    },
+
+    showMessageToUpgradeBusOrVip (component, type) {
+      const h = this.$createElement
+      const titleVNode = h('div', { domProps: { innerHTML: this.$root.content.oops } })
+      let message = this.$root.content.onlyForVIP(component, type)
+      message = message.split('<br>')
+
+      const self = this
+      
+      const messageVNode = h('div', {  }, [
+        h('div', {}, [
+          message[0]
+        ]),
+        h('br'),
+        h('div', {}, [
+          message[1],
+        ]),
+        h('div', { class:['row'], style: {
+          'display': '-ms-flexbox',
+          'display': '-webkit-box',
+          'display': 'flex',
+          '-ms-flex-wrap': 'wrap',
+          'flex-wrap': 'wrap',
+          '-ms-flex-align': 'center',
+          '-webkit-box-align': 'center',
+          'align-items': 'center',
+          '-ms-flex-pack': 'end',
+          '-webkit-box-pack': 'end',
+          'justify-content': 'flex-end',
+          'padding': '0.75rem',
+          'border-top': '1px solid #dee2e6',
+          'border-bottom-right-radius': 'calc(0.3rem - 1px)',
+          'border-bottom-left-radius': 'calc(0.3rem - 1px)',
+        } }, [
+          h('div', { class:['col-2 leftalign nopadding'] }, [
+            h(
+              'b-button',
+              {
+                class:[
+                  'btn-warning'
+                ],
+                on: {
+                  click: function () {
+                    self.$router.push('/')
+                  }
+                }
+              },
+              [
+                this.content.no
+              ]
+            ),
+          ]),
+          h('div', { class:['col-6 nopadding rightalign'] }, [
+            h(
+              'b-button',
+              {
+                props:
+                {
+                  variant: "primary"
+                }, 
+                on: {
+                  click: function () { 
+                    self.upgradeTicket("businss")
+                  }
+                }
+              },
+              [ 
+                this.content.buyTicket(this.content.business)
+              ]
+            )
+          ]),
+          h('div', { class:['col-4 rightalign nopadding'] }, [
+            h(
+              'b-button',
+              {
+                props:
+                {
+                  variant: "primary"
+                }, 
+                on: {
+                  click: function () { 
+                    self.upgradeTicket("vip")
+                  }
+                }
+              },
+              [ 
+                this.content.buyTicket(this.content.vip)
+              ]
+            )
+          ])
+        ]),
+      ])
+
+      this.$bvModal.msgBoxConfirm([messageVNode], {
+        title: [titleVNode],
+        buttonSize: 'md',
+        centered: true,
+        size: 'md',
+        noCloseOnBackdrop: true,
+        noCloseOnEsc: true,
+        footerClass: 'none'
+      })
     }
   },
 }).$mount('#app')

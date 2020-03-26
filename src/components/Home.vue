@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar></navbar>
+    <navbar :nav="true"></navbar>
     <desktop v-if="!isMobileWidth()"></desktop>
     <mobile v-if="isMobileWidth()"></mobile>
   </div>

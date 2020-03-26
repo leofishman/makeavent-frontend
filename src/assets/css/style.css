@@ -224,6 +224,18 @@ body {
     margin: auto;
 }
 
+.none {
+    display: none;
+}
+
+.rightalign {
+    text-align: right;
+}
+
+.leftalign {
+    text-align: left;
+}
+
 @media only screen and (max-width:768px) {
     .absolute-bg-image {
         opacity: 0.2;

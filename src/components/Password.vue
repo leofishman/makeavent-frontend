@@ -117,9 +117,15 @@ export default {
             .then(res => {
                 const profile = res.data[0]
                 this.$root.profile = profile
-                this.$router.push(`${this.$root.token}/home`)
+
+                if (this.$router.currentRoute.fullPath.split('/')[2] == "businesscard")
+                    this.$router.push(`/${this.$root.token}/businesscard?id=${this.$router.currentRoute.fullPath.split('/')[3]}`)
+                
+                else
+                    this.$router.push(`${this.$root.token}/home`)
             })
             .catch(e => {
+                console.log(e)
                 this.$bvModal.msgBoxOk(this.$root.content.wrongPassTitle, {
                     title: this.$root.content.error,
                     size: 'sm',

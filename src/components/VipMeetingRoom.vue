@@ -96,28 +96,7 @@ export default {
     methods: {
         verifyVip () {
             if (this.$root.usertype != "vip") {
-                const h = this.$createElement
-                
-                const titleVNode = h('div', { domProps: { innerHTML: this.$root.content.oops } })
-                
-                const messageVNode = this.$root.convertContentWithLineBreaks(this.$root.content.onlyForVIP('VIP e-MEETING ROOM'))
-                
-                this.$bvModal.msgBoxConfirm([messageVNode], {
-                    title: [titleVNode],
-                    buttonSize: 'md',
-                    centered: true,
-                    size: 'md',
-                    okTitle: this.$root.content.yes,
-                    cancelTitle: this.$root.content.no,
-                    noCloseOnBackdrop: true,
-                    noCloseOnEsc: true
-                }).then(trigger => {   
-                    if (trigger) {
-                        // were?
-                    }
-                    else
-                        this.$router.back()
-                })
+                this.$root.showMessageToUpgrade('VIP e-MEETING ROOM', 'VIP')
             }
             return true
         },

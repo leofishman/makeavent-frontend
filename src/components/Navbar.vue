@@ -6,7 +6,7 @@
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-        <b-collapse id="nav-collapse" is-nav>
+        <b-collapse v-if="nav" id="nav-collapse" is-nav>
             <b-navbar-nav>
                 <b-nav-item :href="`/${$root.$router.currentRoute.params.id}/home`">{{$root.content.home}}</b-nav-item>
             </b-navbar-nav>
@@ -53,6 +53,12 @@
 <script>
 export default {
     name: "navbar",
+    props: {
+        nav: {
+            default: true,
+            type: Boolean
+        }
+    },
     methods: {
         setLanguage (choice) {
             localStorage.selectedLanguage = choice

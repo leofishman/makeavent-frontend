@@ -81,5 +81,35 @@ module.exports = {
                 }
             }
         }
+    },
+    "CLICK.BLUE": {
+        description: ``,
+        logo: '../assets/img/sponsors/CLICK.BLUE/CLICK.BLUE.png',
+        email: "",
+        website: "https://fintech-advisory.com",
+        socials: {
+
+        },
+        contacts: {
+            "1": {
+                name: "",
+                email: "",
+                role: "",
+                getInTouch: {
+                    Telegram: "",
+                    Linkedin: "",
+                    Facebook: ""
+                }
+            },
+            "2": {
+                name: "",
+                role: "",
+                email: "",
+                getInTouch: {
+                    Telegram: "",
+                    Linkedin: "",
+                }
+            }
+        }
     }
 }

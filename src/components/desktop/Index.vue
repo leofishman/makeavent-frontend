@@ -48,7 +48,9 @@
           <b-row>
 
             <div v-on:click="navToWaitPage()" class="percent-col c15" style="padding:65px 30px 0px 30px">
-              <div class="hall-block small-margin gold-sponsor">Gold sponsor</div>
+              <div class="hall-block small-margin gold-sponsor">
+                Gold sponsor
+              </div>
             </div>
 
             <div v-on:click="navToWaitPage()" class="percent-col c20" style="padding:20px 30px 0px 30px">
@@ -74,7 +76,9 @@
 
           <b-row class="justify-content-md-center">
             <b-col>
-              <div style="margin: auto; left: -10%; top: -25%;" class="hall-block small-margin gold-sponsor wide">Gold sponsor</div>
+              <div style="margin: auto; left: -10%; top: -25%;" class="hall-block small-margin gold-sponsor wide">
+                <img class="sponsor-image" src="../../assets/img/sponsors/CLICK.BLUE/CLICK.BLUE.png" alt="">
+              </div>
             </b-col>
             <b-col>
               <div style="margin: auto; right: -10%; top: -25%;" class="hall-block small-margin gold-sponsor wide">Gold sponsor</div>

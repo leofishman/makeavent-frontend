@@ -12,7 +12,7 @@
                 >
                     <div style="display: inline-block; position: relative; width: 100%;">
                         <div v-on:click="openRequestContactModal(el, index)" class="message-title">
-                            {{el.from.name.split(" ")[0]}} {{el.from.company}}
+                            {{el.from.name.split(" ")[0]}} ({{el.from.role}} {{el.from.company}})
                         </div>
                         <div v-on:click="showReplyButton(el, index)" v-html="el.html"></div>
                     </div>

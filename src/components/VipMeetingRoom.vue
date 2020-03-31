@@ -1,66 +1,73 @@
 <template>
     <div v-if="displayContent">
         <navbar></navbar>
-        <b-container fluid="sm">
-            <b-card
-                v-for="(el, index) in vipMembers" :key="index"
-                footer-bg-variant="outline-warning"
-                style="max-width:100%; margin-top:50px;"
-            >
-                <b-card-body class="canclick">
-                    <b-row no-gutters>
-                        <b-col md="2" style="text-align:center">
-                            <img class="contact-photo" :src="el.photo" alt="">
-                        </b-col>
-                        <b-col md="10">
-                            <b-row>
-                                <b-col md="8">
-                                    <div style="font-size:32px">
-                                        {{el.name + ' ' + el.role + ' at ' + el.company}}
-                                    </div>
-                                    <b-row style="margin-top:20px;">
-                                        <b-col>
-                                            <div class="inline hover fat underline" v-on:click="openRequestContactModal(el)">
-                                                <img class="inline small-link-icon" src="../assets/img/contact.png" width="20px">
-                                                {{$root.content.requestMyBusinessCard}}
+        <b-row>
+            <b-col :md="width">
+                <b-container fluid="sm" style="width:1250px">
+                    <b-card
+                        v-for="(el, index) in vipMembers" :key="index"
+                        footer-bg-variant="outline-warning"
+                        style="max-width:100%; margin-top:50px;"
+                    >
+                        <b-card-body class="canclick">
+                            <b-row no-gutters>
+                                <b-col md="2" style="text-align:center">
+                                    <img class="contact-photo" :src="el.photo" alt="">
+                                </b-col>
+                                <b-col md="10">
+                                    <b-row>
+                                        <b-col md="8">
+                                            <div style="font-size:32px">
+                                                {{el.name + ' ' + el.role + ' at ' + el.company}}
                                             </div>
+                                            <b-row style="margin-top:20px;">
+                                                <b-col>
+                                                    <div class="inline hover fat underline" v-on:click="openRequestContactModal(el)">
+                                                        <img class="inline small-link-icon" src="../assets/img/contact.png" width="20px">
+                                                        {{$root.content.requestMyBusinessCard}}
+                                                    </div>
+                                                </b-col>
+                                                <b-col>
+                                                    <div class="underline">
+                                                        <b-link class="hover fat" target="_blank" :href="el.calendly">
+                                                            <img class="inline small-link-icon" src="../assets/img/phone.svg" width="20px">
+                                                            {{$root.content.sheduleAprivateCall}}
+                                                        </b-link>
+                                                    </div>
+                                                </b-col>
+                                            </b-row>
                                         </b-col>
-                                        <b-col>
-                                            <div class="underline">
-                                                <b-link class="hover fat" target="_blank" :href="el.calendly">
-                                                    <img class="inline small-link-icon" src="../assets/img/phone.svg" width="20px">
-                                                    {{$root.content.sheduleAprivateCall}}
-                                                </b-link>
+                                        <b-col md="4" style="margin:auto;">
+                                            <div v-if="el.booth">
+                                                <div class="inline hover fat right-links" v-on:click="openPage(el.booth)">
+                                                    <img class="inline small-link-icon" src="../assets/img/booth.png">
+                                                    {{$root.content.findInEbooth}}
+                                                </div>
+                                            </div>
+                                            <div v-if="el.speaker">
+                                                <div class="inline hover fat right-links" v-on:click="openPage(el.speaker)">
+                                                    <img class="inline small-link-icon" src="../assets/img/speaker.png">
+                                                    {{$root.content.findInSpeakers}}
+                                                </div>
+                                            </div>
+                                            <div v-if="el.workshop">
+                                                <div class="inline hover fat right-links" v-on:click="openPage(el.workshop)">
+                                                    <img class="inline small-link-icon" src="../assets/img/worksshop.png">
+                                                    {{$root.content.findInWorkshop}}
+                                                </div>
                                             </div>
                                         </b-col>
                                     </b-row>
                                 </b-col>
-                                <b-col md="4" style="margin:auto;">
-                                    <div v-if="el.booth">
-                                        <div class="inline hover fat right-links" v-on:click="openPage(el.booth)">
-                                            <img class="inline small-link-icon" src="../assets/img/booth.png">
-                                            {{$root.content.findInEbooth}}
-                                        </div>
-                                    </div>
-                                    <div v-if="el.speaker">
-                                        <div class="inline hover fat right-links" v-on:click="openPage(el.speaker)">
-                                            <img class="inline small-link-icon" src="../assets/img/speaker.png">
-                                            {{$root.content.findInSpeakers}}
-                                        </div>
-                                    </div>
-                                    <div v-if="el.workshop">
-                                        <div class="inline hover fat right-links" v-on:click="openPage(el.workshop)">
-                                            <img class="inline small-link-icon" src="../assets/img/worksshop.png">
-                                            {{$root.content.findInWorkshop}}
-                                        </div>
-                                    </div>
-                                </b-col>
                             </b-row>
-                        </b-col>
-                    </b-row>
-                </b-card-body>
-            </b-card>
-        </b-container>
+                        </b-card-body>
+                    </b-card>
+                </b-container>
+            </b-col>
+            <b-col v-if="showChat" md="2" class="sticky-chat">
+                <globalchat></globalchat>
+            </b-col>
+        </b-row>
     </div>
 </template>
 <script>
@@ -74,6 +81,16 @@ export default {
     data() {
         this.vipMembers = []
         this.activiness = []
+
+        window.EventBus.$on('open_global_chat', () => {
+            this.width = "10"
+            this.showChat = true
+        })
+
+        window.EventBus.$on('close_global_chat', () => {
+            this.width = 12
+            this.showChat = false
+        })
 
         let timer = setInterval(async () => {
             if (this.$root.usertype && this.$root.token) {
@@ -90,7 +107,9 @@ export default {
 
         return {
             displayContent: false,
-            vipMembers: this.vipMembers
+            vipMembers: this.vipMembers,
+            width: "12",
+            showChat: false
         }
     },
     methods: {

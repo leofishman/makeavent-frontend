@@ -38,6 +38,9 @@ new Vue({
   router,
   render: h => h(App),
   data() {
+    this.upgradeCost_business = 0
+    this.upgradeCost_vip = 0
+
     let selectedLanguage = localStorage.selectedLanguage
     if (!selectedLanguage || selectedLanguage === undefined)
       selectedLanguage = "EN"
@@ -55,15 +58,6 @@ new Vue({
         this.profile = data.profile
         this.token = data.accessLink
         this.usertype = data.type
-      })
-      .catch(e => {
-        this.$router.push('/login')
-      })
-    }
-
-    let waitLogin = setInterval(() => {
-      if (this.token && this.profile && this.usertype) {
-        clearInterval(waitLogin)
 
         window.io = VueSocketIO(socket, {
           query: {
@@ -95,8 +89,19 @@ new Vue({
         window.io.on('request_contact_confirmed', (data) => {
           this.openContactConfirmedModal(data)
         })
-      }
-    }, 100)
+      })
+      .catch(e => {
+        this.$router.push('/login')
+      })
+    }
+
+    // let waitLogin = setInterval(() => {
+    //   if (this.token && this.profile && this.usertype) {
+    //     clearInterval(waitLogin)
+
+        
+    //   }
+    // }, 100)
 
     window.EventBus.$on('request_contact_confirmed', (data) => {
       this.openContactConfirmedModal(data)
@@ -108,15 +113,40 @@ new Vue({
 
     return {
       notificationAllowed: "",
-      profile: "",
-      usertype: "",
-      token: "",
+      profile: this.profile,
+      usertype: this.usertype,
+      token: this.token,
       content: Content[selectedLanguage],
       globalchat: "",
-      vipchat: ""
+      vipchat: "",
+      rowStyle: {
+        'display': '-ms-flexbox',
+        'display': '-webkit-box',
+        'display': 'flex',
+        '-ms-flex-wrap': 'wrap',
+        'flex-wrap': 'wrap',
+        '-ms-flex-align': 'center',
+        '-webkit-box-align': 'center',
+        'align-items': 'center',
+        '-ms-flex-pack': 'end',
+        '-webkit-box-pack': 'end',
+        'justify-content': 'flex-end',
+        'padding': '0.75rem',
+        'border-top': '1px solid #dee2e6',
+        'border-bottom-right-radius': 'calc(0.3rem - 1px)',
+        'border-bottom-left-radius': 'calc(0.3rem - 1px)',
+      },
+
+      business_paypalButtonRendered: false,
+      vip_paypalButtonRendered: false,
+      modals: []
     }
   },
   methods: {
+    capitalizeFirstLetter (text) {
+      return text.charAt(0).toUpperCase() + text.substring(1);
+    },
+
     checkNavShouldBeWithToken () {
       if (
         !this.token &&
@@ -505,107 +535,278 @@ new Vue({
       }
     },
 
-    showMessageToUpgradeBusOrVip (component, type) {
-      const h = this.$createElement
-      const titleVNode = h('div', { domProps: { innerHTML: this.$root.content.oops } })
-      let message = this.$root.content.onlyForVIP(component, type)
-      message = message.split('<br>')
+    showMessageToUpgradeBusOrVip (component) {
+      this[`business_paypalButtonRendered`] = false
+      this[`vip_paypalButtonRendered`] = false
 
+      const h    = this.$createElement
       const self = this
-      
-      const messageVNode = h('div', {  }, [
-        h('div', {}, [
-          message[0]
-        ]),
-        h('br'),
-        h('div', {}, [
-          message[1],
-        ]),
-        h('div', { class:['row'], style: {
-          'display': '-ms-flexbox',
-          'display': '-webkit-box',
-          'display': 'flex',
-          '-ms-flex-wrap': 'wrap',
-          'flex-wrap': 'wrap',
-          '-ms-flex-align': 'center',
-          '-webkit-box-align': 'center',
-          'align-items': 'center',
-          '-ms-flex-pack': 'end',
-          '-webkit-box-pack': 'end',
-          'justify-content': 'flex-end',
-          'padding': '0.75rem',
-          'border-top': '1px solid #dee2e6',
-          'border-bottom-right-radius': 'calc(0.3rem - 1px)',
-          'border-bottom-left-radius': 'calc(0.3rem - 1px)',
-        } }, [
-          h('div', { class:['col-2 leftalign nopadding'] }, [
-            h(
-              'b-button',
-              {
-                class:[
-                  'btn-warning'
-                ],
+
+      let message = this.$root.content.onlyForVIP(component, this.$root.content.business + this.$root.content.or + this.$root.content.vip)
+          message = message.split('<br>')
+
+      Axios.get(`${host}/ticket/upgrade?type=business`, {
+        headers: {
+          authorization: localStorage.auth
+        }
+      }).then(res => {
+        this.upgradeCost_business = res.data.amount
+        return Axios.get(`${host}/ticket/upgrade?type=vip`, {
+          headers: {
+            authorization: localStorage.auth
+          }
+        })
+      }).then(res => {
+        this.upgradeCost_vip = res.data.amount
+
+        const messageVNode = h('div', {  }, [
+          h(
+            'div', {
+              class: ["modal-header"],
+            },
+            [
+              h('h5', {
+                class:['modal-title'],
+                domProps: {
+                  innerHTML: this.$root.content.oops
+                }
+              }),
+              h('button', {
+                class:['close'],
+                attrs: {
+                  type: "button",
+                  ariaLabel: "Close"
+                },
                 on: {
                   click: function () {
-                    self.$router.push('/')
+                    self.$root.$emit('bv::hide::modal', 'dual-pay-modal')
+                    self[`business_paypalButtonRendered`] = false
+                    self[`vip_paypalButtonRendered`] = false
+                  }
+                }
+              }, 
+              [
+                '×'
+              ])
+            ]
+          ),
+          h('div', { style: { padding:'16px' } }, [
+            h('div', {
+              domProps: {
+                innerHTML: message[0]
+              }
+            }),
+            h('br'),
+            h('div', {
+              domProps: {
+                innerHTML: message[1]
+              }
+            })
+          ]),
+          h('div', { class:['row nopadding'], style: this.rowStyle }, [
+            h('b-col', [
+              h('b-dropdown', {attrs:{ variant:"outline-primary", text:this.content.chooseTicketType }}, [
+                h('b-dropdown-item', {
+                  on: {
+                    click: function () {
+                      self.business_paypalButtonRendered = false
+                      if (document.querySelector('div[id^="zoid-paypal-buttons"]'))
+                        document.querySelector('div[id^="zoid-paypal-buttons"]').remove()
+                      
+                      self.renderPaypalButton("vip", 'dual-paypal-button-container')
+                    }
+                  },
+                }, [
+                  this.content.vip + '  $' + this.upgradeCost_vip + '.00'
+                ]),
+                h('b-dropdown-item', {
+                  on: {
+                    click: function () {
+                      self.vip_paypalButtonRendered = false
+                      if (document.querySelector('div[id^="zoid-paypal-buttons"]'))
+                        document.querySelector('div[id^="zoid-paypal-buttons"]').remove()
+                      
+                      self.renderPaypalButton("business", 'dual-paypal-button-container')
+                    }
+                  }
+                }, [
+                  this.content.business + '  $' + this.upgradeCost_business + '.00'
+                ])
+              ])
+            ]),
+            h('b-col', [
+              h('div', { attrs: {id: 'dual-paypal-button-container'} })
+            ])
+          ]),
+        ])
+  
+        this.$bvModal.msgBoxConfirm([messageVNode], {
+          buttonSize: 'md',
+          centered: true,
+          size: 'md',
+          footerClass: 'none',
+          hideHeaderClose: true,
+          noCloseOnBackdrop: true,
+          noCloseOnEsc: true,
+          id: 'dual-pay-modal'
+        })
+      })
+    },
+
+    async showMessageToUpgradeStrict (component, type) {
+      const h = this.$createElement
+      const self = this
+
+      Axios.get(`${host}/ticket/upgrade?type=${type}`, {
+        headers: {
+          authorization: localStorage.auth
+        }
+      }).then(res => {
+        this[`upgradeCost_${type}`] = res.data.amount
+        let message = this.$root.content.upgradeFor(component, this.$root.content.vip, this[`upgradeCost_${type}`])
+      
+        message = message.split('<br>')
+  
+        const messageVNode = h('div', {  }, [
+          h(
+            'div', {
+              class: ["modal-header"],
+            },
+            [
+              h('h5', {
+                class:['modal-title'],
+                domProps: {
+                  innerHTML: this.$root.content.oops
+                }
+              }),
+              h('button', {
+                class:['close'],
+                attrs: {
+                  type: "button",
+                  ariaLabel: "Close"
+                },
+                on: {
+                  click: function (event) {
+                    self.$root.$emit('bv::hide::modal', 'strict-pay-modal')
+                    self[`${type}_paypalButtonRendered`] = false
                   }
                 }
               },
               [
-                this.content.no
-              ]
-            ),
+                '×'
+              ])
+            ]
+          ),
+          h('div', { style: { padding:'16px' } }, [
+            h('div', {
+              domProps: {
+                innerHTML: message[0]
+              }
+            }),
+            h('br'),
+            h('div', {
+              domProps: {
+                innerHTML: message[1]
+              }
+            })
           ]),
-          h('div', { class:['col-6 nopadding rightalign'] }, [
-            h(
-              'b-button',
-              {
-                props:
-                {
-                  variant: "primary"
-                }, 
-                on: {
-                  click: function () { 
-                    self.upgradeTicket("businss")
-                  }
-                }
-              },
-              [ 
-                this.content.buyTicket(this.content.business)
-              ]
-            )
+          h('div', { class:['row'], style: this.rowStyle }, [
+            h('div', {
+              class:['col centercol nopadding'],
+              attrs: {
+                id: `paypal-button-container-${type}`
+              }
+            },),
           ]),
-          h('div', { class:['col-4 rightalign nopadding'] }, [
-            h(
-              'b-button',
-              {
-                props:
-                {
-                  variant: "primary"
-                }, 
-                on: {
-                  click: function () { 
-                    self.upgradeTicket("vip")
-                  }
-                }
-              },
-              [ 
-                this.content.buyTicket(this.content.vip)
-              ]
-            )
-          ])
-        ]),
-      ])
-
-      this.$bvModal.msgBoxConfirm([messageVNode], {
-        title: [titleVNode],
-        buttonSize: 'md',
-        centered: true,
-        size: 'md',
-        noCloseOnBackdrop: true,
-        noCloseOnEsc: true,
-        footerClass: 'none'
+        ])
+  
+        this.$bvModal.msgBoxConfirm([messageVNode], {
+          buttonSize: 'md',
+          centered: true,
+          size: 'md',
+          footerClass: 'none',
+          hideHeaderClose: true,
+          noCloseOnBackdrop: true,
+          noCloseOnEsc: true,
+          id: 'strict-pay-modal'
+        })
+        
+        setTimeout(() => {
+          this.renderPaypalButton(type, `paypal-button-container-${type}`)
+        }, 500)
       })
-    }
+    },
+
+    renderPaypalButton (type, to) {
+      let self = this
+      if (!this[`${type}_paypalButtonRendered`]) {
+        this[`${type}_paypalButtonRendered`] = true
+        paypal.Buttons({
+          env: 'production',
+          locale: 'en_US',
+          createOrder: function(data, actions) {
+            return actions.order.create({
+              purchase_units: [{
+                amount: {
+                  value: self[`upgradeCost_${type}`]
+                }
+              }]
+            });   
+          },
+      
+          // Finalize the transaction
+          onApprove: function(data, actions) {
+            self.$root.$emit('bv::hide::modal', 'strict-pay-modal')
+            self.$root.$emit('bv::hide::modal', 'dual-pay-modal')
+            self[`${type}_paypalButtonRendered`] = false
+
+            return actions.order.capture().then(function(details) {
+              Axios.post(`${host}/ticket/upgrade`, {
+                type: type
+              }, {
+                headers: {
+                  authorization: localStorage.auth
+                }
+              }).then(res => {
+                window.location.reload()
+              })
+            })
+          }
+        }).render(`#${to}`);
+      }
+    },
+
+    isChatAvailable (type) {
+      return new Promise ((resolve, reject) => {
+        let self = this
+        let timer = setInterval(() => {
+          if (self.usertype) {
+            clearInterval(timer)
+            switch (type) {
+              case 'global' : 
+                if (self.usertype == "business" || self.usertype == "vip")
+                  resolve(true)
+                else
+                  resolve(false)
+                break
+
+              case 'vip' :
+                if (self.usertype == "vip")
+                  resolve(true)
+                else
+                  resolve(false)
+                break
+
+              case 'company' : 
+                if (self.usertype == "business" || self.usertype == "vip")
+                  resolve(true)
+                else
+                  resolve(false)
+                break
+            }
+          }
+        })
+      })
+    },
   },
 }).$mount('#app')

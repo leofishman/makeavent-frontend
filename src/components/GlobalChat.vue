@@ -1,9 +1,12 @@
 <template>
     <div :style="`height:${chatHeight}px`">
-        <b-tabs v-if="$root.usertype == 'vip'" content-class="mt-3">
-            <b-tab :title="`Sponsorname ` + $root.content.coffeeChat" active>
+        <b-tabs content-class="mt-3">
+            <b-tab :title="`Blockconf ` + $root.content.coffeeChat" active>
                 <div id="chat-field" :style="`height:${chatHeight}px`" class="chat-field">
-                    <div id="messages-box" class="messages-box">
+                    <div v-if="chatAvailable" class="centrify chat-bg-container">
+                        <img class="" src="../assets/logo_dark.svg" alt="">
+                    </div>
+                    <div v-if="chatAvailable" id="messages-box-global" class="messages-box">
                         <div
                             v-for="(el, index) in chatHistory"
                             :class="chatMessageClass(el)"
@@ -21,8 +24,18 @@
                             </div>
                         </div>
                     </div>
+                    <div v-on:click="$root.showMessageToUpgradeBusOrVip(
+                        $root.content.coffeeChat
+                    )" v-else class="centrify section-faded-text">
+                        <div class="red hover">
+                            {{$root.content.upgradeToAccess(
+                                $root.content.business + $root.content.or + $root.content.vip,
+                                $root.content.globalChat
+                            )}}
+                        </div>
+                    </div>
                 </div>
-                <div class="enter-message">
+                <div v-if="chatAvailable" class="enter-message">
                     <div class="quote-enter" v-if="showQuote">
                         <b-row>
                             <b-col md="10">
@@ -47,56 +60,10 @@
                     {{$root.content.replyHint}}
                 </div>                
             </b-tab>
-            <b-tab :title="`Sponsorname ` + $root.content.vipChat">
+            <b-tab :title="`Blockconf ` + $root.content.vipChat">
                 <vipchat></vipchat>
             </b-tab>
         </b-tabs>
-        <div v-else>
-            <div id="chat-field" :style="`height:${chatHeight + 100}px`" class="chat-field">
-                <div id="messages-box" class="messages-box">
-                    <div
-                        v-for="(el, index) in chatHistory"
-                        :class="chatMessageClass(el)"
-                        :key="index"
-                    >
-                        <div style="display: inline-block; position: relative; width: 100%;">
-                            <div v-on:click="openRequestContactModal(el, index)" class="message-title">
-                                {{el.from.name.split(" ")[0]}} {{el.from.company}}
-                            </div>
-                            <div v-on:click="showReplyButton(el, index)" v-html="el.html"></div>
-                        </div>
-                        
-                        <div v-on:click="doReply(el, index)" v-if="showMessageModal === index" class="reply-button" >
-                            <img width="100%" src="../assets/img/reply.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="enter-message">
-                <div class="quote-enter" v-if="showQuote">
-                    <b-row>
-                        <b-col md="10">
-                            {{$root.content.reply}} <strong>@{{quotedName}}</strong> {{quotedMessage}}
-                        </b-col>
-                        <b-col v-on:click="closeReply()" class="close-reply" md="2">
-                            <img style="width:40%; " src="../assets/img/cross.svg" alt="">
-                        </b-col>
-                    </b-row>
-                </div>
-                <textarea 
-                @keydown="sendMessage($event)"
-                v-model="userTextMessage"
-                type="text"
-                :placeholder="$root.content.chatPlaceholder">
-                </textarea>
-            </div>
-            <div class="hint">
-                {{$root.content.chatHint}}
-            </div>
-            <div class="hint">
-                {{$root.content.replyHint}}
-            </div> 
-        </div>
   </div>
 </template>
 
@@ -117,6 +84,7 @@ export default {
         this.showMessageModal = false
         this.chatHeight = window.innerHeight - 300
         this.chatHistory = []
+        this.chatAvailable = false
 
         this.$root.globalchat = io(env.socket, {
             query: {
@@ -146,6 +114,10 @@ export default {
             this.chatHistory.push(data)
         })
 
+        this.$root.isChatAvailable("global").then(res => {
+            this.chatAvailable = res
+        })
+
         return {
             chatHistory: this.chatHistory,
             userTextMessage: this.userTextMessage,
@@ -153,7 +125,9 @@ export default {
             quotedMessage: this.quotedMessage,
             quotedName: this.quotedName,
             showMessageModal: this.showMessageModal,
-            chatHeight: this.chatHeight
+            chatHeight: this.chatHeight,
+
+            chatAvailable: this.chatAvailable
         }
     },
     methods: {
@@ -279,7 +253,7 @@ export default {
 
         // this shit doesn't work
         scrollBehaviour () {
-            let chatlist = document.getElementById('messages-box')
+            let chatlist = document.getElementById('messages-box-global')
             
             chatlist.scrollTo(0, chatlist.scrollHeight)
         },
@@ -287,8 +261,9 @@ export default {
 }
 </script>
 <style lang="css">
-    .nav-tabs .nav-item { 
+    .nav-tabs .nav-item {
         max-width: 50%;
+        width: 50%;
         text-align: center;
     }
     .nav-tabs .nav-item a {

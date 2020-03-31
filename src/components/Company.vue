@@ -2,7 +2,7 @@
     <div>
         <navbar></navbar>
         <b-row>
-            <b-col md="9">
+            <b-col :md="width" style="padding:0px 7px">
                 <b-jumbotron style="height:100%">
                     <template v-slot:header>
                         <b-row>
@@ -65,17 +65,19 @@
                     <div v-html="demo" class="demo-frame top20"></div>
                 </b-jumbotron>
             </b-col>
-            <b-col md="3">
-                <b-jumbotron style="height:100%">
-                    <template v-slot:header>{{$root.content.joinNowTitle}}</template>
+            <b-col :md="width2" style="padding:0px 7px">
+                <b-jumbotron style="height:100%; padding:4rem 0px;" >
+                    <div :style="`padding:0px 2rem; font-size:${width2}rem;`">
+                        {{$root.content.joinNowTitle}}
+                    </div>
 
-                    <div>
+                    <div style="padding:0px 2rem;">
                         <b-button class="join-button" variant="primary" v-on:click="startMeeting()">
                             Join
                         </b-button>
                     </div>
 
-                    <div style="margin-top:50px">
+                    <div style="margin-top:50px; padding:0px 2rem;">
                         <hr class="my-4">
                         <h2>
                             {{
@@ -93,7 +95,7 @@
                     </div>
 
                     <div id="chat-field" :style="`height:${chatHeight}px`" class="chat-field">
-                        <div id="messages-box" class="messages-box">
+                        <div v-if="chatAvailable" id="messages-box" class="messages-box">
                             <div
                                 v-for="(el, index) in chatHistory"
                                 :class="chatMessageClass(el)"
@@ -111,8 +113,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div
+                            v-on:click="$root.showMessageToUpgradeBusOrVip($root.content.chatWith.toLowerCase() + $root.capitalizeFirstLetter(name))"
+                            v-else
+                            class="centrify section-faded-text"
+                        >
+                            <div class="red hover">
+                                {{$root.content.upgradeToAccess(
+                                    $root.content.business + $root.content.or + $root.content.vip,
+                                    $root.content.chatWith.toLowerCase() + $root.capitalizeFirstLetter(name)
+                                )}}
+                            </div>
+                        </div>
                     </div>
-                    <div class="enter-message">
+                    <div v-if="chatAvailable" class="enter-message">
                         <div class="quote-enter" v-if="showQuote">
                             <b-row>
                                 <b-col md="10">
@@ -139,6 +153,9 @@
 
                 </b-jumbotron>
             </b-col>
+            <b-col v-if="showChat" md="2" style="padding:0px 7px">
+                <globalchat></globalchat>
+            </b-col>
         </b-row>
     </div>
 </template>
@@ -158,11 +175,24 @@ export default {
         }
     },
     data () {
+        window.EventBus.$on('open_global_chat', () => {
+            this.width = "8"
+            this.width2 = "2"
+            this.showChat = true
+        })
+
+        window.EventBus.$on('close_global_chat', () => {
+            this.width = "9"
+            this.width2 = "3"
+            this.showChat = false
+        })
+
         this.chatHeight;
         this.chatHistory = [];
         this.userTextMessage = ""
         this.token = this.$root.token
         this.showMessageModal = false
+        this.chatAvailable = false
         
         const name = this.name.toUpperCase()
         const sponsor = Sponsors[this.name.toUpperCase()]
@@ -178,6 +208,11 @@ export default {
         })
 
         let self = this
+
+        this.$root.isChatAvailable("company").then((res) => {
+            self.chatAvailable = res
+        })
+
         // wait until token defined
         this.$root.tokenCheck().then(() => {
             self.chat = io(env.socket, {
@@ -237,7 +272,12 @@ export default {
             socialLogos: socialLogos,
             contacts: sponsor.contacts,
 
-            chat: ""
+            chat: "",
+            width: "9",
+            width2: "3",
+            showChat: false,
+
+            chatAvailable: this.chatAvailable
         }
     },
     methods: {
@@ -551,7 +591,7 @@ export default {
         position: relative;
         display: block;
         border-radius: 5px;
-        padding: 10px;
+        /* padding: 10px; */
     }
     .chat-message {
         padding: 5px 10px;
@@ -630,6 +670,9 @@ export default {
     .messages-box {
         overflow-y: auto;
         height: 100%;
+        z-index: 1;
+        position: relative;
+        pointer-events: all;
     }
     .reply-button {
         display: block;

@@ -308,11 +308,4 @@ export default {
   .margin-15 {
     margin-top:15px;
   }
-  .sticky-chat {
-    position: fixed;
-    top: 62px;
-    width: 100%;
-    z-index: 100;
-    right: 0;
-  }
 </style>

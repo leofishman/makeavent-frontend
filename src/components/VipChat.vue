@@ -1,7 +1,10 @@
 <template>
     <div>
         <div id="chat-field" :style="`height:${chatHeight}px`" class="chat-field">
-            <div id="messages-box" class="messages-box">
+            <div v-if="chatAvailable" class="centrify chat-bg-container">
+                <img class="" src="../assets/logo_dark.svg" alt="">
+            </div>
+            <div v-if="chatAvailable" id="messages-box-vip" class="messages-box">
                 <div
                     v-for="(el, index) in chatHistory"
                     :class="chatMessageClass(el)"
@@ -19,8 +22,13 @@
                     </div>
                 </div>
             </div>
+            <div v-on:click="$root.showMessageToUpgradeStrict('VIP chat', 'vip')" v-else class="centrify section-faded-text">
+                <div class="red hover">
+                    {{$root.content.upgradeToAccess(`VIP`, `VIP chat`)}}
+                </div>
+            </div>
         </div>
-        <div class="enter-message">
+        <div v-if="chatAvailable" class="enter-message">
             <div class="quote-enter" v-if="showQuote">
                 <b-row>
                     <b-col md="10">
@@ -63,6 +71,7 @@ export default {
         this.showMessageModal = false
         this.chatHeight = window.innerHeight - 300
         this.chatHistory = []
+        this.chatAvailable = false
 
         this.$root.vipchat = io(env.socket, {
             query: {
@@ -92,6 +101,10 @@ export default {
             this.chatHistory.push(data)
         })
 
+        this.$root.isChatAvailable("vip").then(res => {
+            this.chatAvailable = res
+        })
+
         return {
             chatHistory: this.chatHistory,
             userTextMessage: this.userTextMessage,
@@ -99,7 +112,9 @@ export default {
             quotedMessage: this.quotedMessage,
             quotedName: this.quotedName,
             showMessageModal: this.showMessageModal,
-            chatHeight: this.chatHeight
+            chatHeight: this.chatHeight,
+
+            chatAvailable: this.chatAvailable
         }
     },
     methods: {
@@ -225,7 +240,7 @@ export default {
 
         // this shit doesn't work
         scrollBehaviour () {
-            let chatlist = document.getElementById('messages-box')
+            let chatlist = document.getElementById('messages-box-vip')
             
             chatlist.scrollTo(0, chatlist.scrollHeight)
         },

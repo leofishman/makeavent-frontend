@@ -13,7 +13,7 @@ export default {
     agenda: "Agenda",
     joinNowTitle: "Enter e-booth",
     team: "team",
-    chatWith: "Chat with",
+    chatWith: "Chat with ",
     chatHint: "Shift + Enter for line break, Enter to send message",
     chatPlaceholder: "Please enter your question here",
     areYouSure: `Please confirm that you want to`,
@@ -50,7 +50,10 @@ export default {
     contactSupport: "If you have issues logging in or did not receive email with password, please contact support at",
     oops: "Oops",
     onlyForVIP: (component, forthem) => {
-        return `We are appologizing, but ${component} is available only for ${forthem} attenders.<br>Would you like to upgrade your ticket?`
+        return `We are appologizing, but <strong>${component}</strong> is available only for ${forthem} attenders.<br>Would you like to upgrade your ticket?`
+    },
+    upgradeFor: (component, forthem, forx) => {
+        return `We are appologizing, but <strong>${component}</strong> is available only for ${forthem} attenders.<br>Would you like to upgrade your ticket for $${forx}.00`
     },
     findInEbooth: "Find me in e-BOOTH",
     findInSpeakers: "Find me in Conference Adenda",
@@ -77,5 +80,11 @@ export default {
     basic: "Basic",
     willBeAtMay: `The conference has not started yet. Please come back after May 14th at ${new Date(startDate).toLocaleString().split(", ")[1]}`,
     followUsOnSocial: "Follow us on social media",
-    chat: "Chat"
+    chat: "Chat",
+    upgradeToAccess: (x, y) => {
+        return `Please upgrade your ticket to ${x} to access ${y}`
+    },
+    or: " or ",
+    globalChat: "Global Chat",
+    chooseTicketType: "Choose ticket type"
 }

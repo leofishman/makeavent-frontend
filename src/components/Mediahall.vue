@@ -2,24 +2,27 @@
     <div>
         <navbar></navbar>
 
-        <b-container>
+        <b-container v-if="ready">
             <b-row style="margin-top:100px;">
                 <b-col>
-                    <div class="hall-block" v-on:click="openMediaPartnerBooth('name')">
-                        Media Partner
+                    <div class="hall-block" v-on:click="openMediaPartnerBooth('0')">
+                        <img v-if="getMediaPartnerSlot('0')" class="absolute-bg-image" style="width:90%; opacity: 1" :src="host + getMediaPartnerSlot('0').logo" alt="">
+                        <div v-else>Media Partner</div>
                     </div>
                 </b-col>
                 <b-col></b-col>
                 <b-col>
-                    <div class="hall-block" v-on:click="openMediaPartnerBooth('name')">
-                        Media Partner
+                    <div class="hall-block" v-on:click="openMediaPartnerBooth('1')">
+                        <img v-if="getMediaPartnerSlot('1')" class="absolute-bg-image" style="width:90%; opacity: 1" :src="host + getMediaPartnerSlot('1').logo" alt="">
+                        <div v-else>Media Partner</div>
                     </div>
                 </b-col>
             </b-row>
             <b-row>
                 <b-col>
-                    <div class="hall-block" v-on:click="openMediaPartnerBooth('name')">
-                        Media Partner
+                    <div class="hall-block" v-on:click="openMediaPartnerBooth('2')">
+                        <img v-if="getMediaPartnerSlot('2')" class="absolute-bg-image" style="width:90%; opacity: 1" :src="host + getMediaPartnerSlot('2').logo" alt="">
+                        <div v-else>Media Partner</div>
                     </div>
                 </b-col>
                 <b-col>
@@ -34,21 +37,24 @@
                     </div>
                 </b-col>
                 <b-col>
-                    <div class="hall-block" v-on:click="openMediaPartnerBooth('name')">
-                        Media Partner
+                    <div class="hall-block" v-on:click="openMediaPartnerBooth('3')">
+                        <img v-if="getMediaPartnerSlot('3')" class="absolute-bg-image" style="width:90%; opacity: 1" :src="host + getMediaPartnerSlot('3').logo" alt="">
+                        <div v-else>Media Partner</div>
                     </div>
                 </b-col>
             </b-row>
             <b-row>
                 <b-col>
-                    <div class="hall-block" v-on:click="openMediaPartnerBooth('name')">
-                        Media Partner
+                    <div class="hall-block" v-on:click="openMediaPartnerBooth('4')">
+                        <img v-if="getMediaPartnerSlot('4')" class="absolute-bg-image" style="width:90%; opacity: 1" :src="host + getMediaPartnerSlot('4').logo" alt="">
+                        <div v-else>Media Partner</div>
                     </div>
                 </b-col>
                 <b-col></b-col>
                 <b-col>
-                    <div class="hall-block" v-on:click="openMediaPartnerBooth('name')">
-                        Media Partner
+                    <div class="hall-block" v-on:click="openMediaPartnerBooth('5')">
+                        <img v-if="getMediaPartnerSlot('5')" class="absolute-bg-image" style="width:90%; opacity: 1" :src="host + getMediaPartnerSlot('5').logo" alt="">
+                        <div v-else>Media Partner</div>
                     </div>
                 </b-col>
             </b-row>
@@ -66,14 +72,25 @@
     </div>
 </template>
 <script>
+import {host} from '../env'
+
 export default {
     data () {
+        this.ready = false
+
+        this.$root.check('MediaPartners').then(_ => {
+            this.ready = true
+        })
+
         return {
+            ready: this.ready,
+            host: host,
             watchMessage: this.$root.content.watchLiveInterview.split("<br>")
         }
     },
     methods: {
-        openMediaPartnerBooth (name) {
+        openMediaPartnerBooth (id) {
+            const name = this.getMediaPartnerSlot(id).name.toLowerCase()
             this.$router.push({
                 path: `/${this.$root.token}/mediahall/${name}`,
             })
@@ -81,6 +98,10 @@ export default {
 
         showInterviewAgenda () {
             window.EventBus.$emit('open-interview-agenda')
+        },
+
+        getMediaPartnerSlot (id) {
+            return this.$root.MediaPartners[id]
         }
     },
 }

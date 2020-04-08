@@ -16,6 +16,9 @@ import BusinessCard from '../components/BusinessCard.vue'
 import Mediahall from '../components/Mediahall.vue'
 import Agenda from '../components/Agenda.vue'
 import MediaPartnerProfile from '../components/MediaPartnerProfile.vue'
+import StartupsDemoDay from '../components/StartupsDemoDay.vue'
+import StartupProfile from '../components/StartupProfile.vue'
+import DemoDayPitchingBooth from '../components/DemoDayPitchingBooth.vue'
 
 import Profile from '../components/profile/Profile.vue'
 import MyInterviews from '../components/profile/MyInterviews.vue'
@@ -147,6 +150,33 @@ const router = new Router({
             }
         },
         {
+            path: '/:id/startupsdemoday',
+            name: "StartupsDemoDay",
+            component: StartupsDemoDay,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/startupsdemoday/:name',
+            name: "StartupProfile",
+            component: StartupProfile,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/ddpb',
+            name: "DemoDayPitchingBooth",
+            component: DemoDayPitchingBooth,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
             path: '/:id/agenda',
             name: "Agenda",
             component: Agenda,
@@ -219,7 +249,9 @@ router.beforeEach((to, from, next) => {
                     window.location.pathname.split("/")[2] != "home" &&
                     window.location.pathname.split("/")[2] != "mediahall" &&
                     window.location.pathname.split("/")[2] != "agenda" &&
-                    window.location.pathname.split("/")[2] != "profile"
+                    window.location.pathname.split("/")[2] != "profile" && 
+                    window.location.pathname.split("/")[2] != "startupsdemoday" &&
+                    window.location.pathname.split("/")[2] != "ddpb"
                 ) {
                     window.location.pathname = `/${window.location.pathname.split("/")[1]}/home`
                 }

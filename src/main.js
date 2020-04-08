@@ -83,14 +83,15 @@ new Vue({
     this.upgradeCost_vip = 0
     this.pendingCards = []
 
-    this.Investors = []
-    this.MediaPartners = []
-    this.Speakers = []
-    this.Speakingagenda = []
-    this.DemoDayAgenda = []
-    this.Sponsors = []
-    this.Startups = []
-    this.Workshop = []
+    this.Investors = undefined
+    this.MediaPartners = undefined
+    this.Speakers = undefined
+    this.Sponsors = undefined
+    this.Startups = undefined
+    this.Workshop = undefined
+    this.Speakingagenda = undefined
+    this.DemoDayAgenda = undefined
+    this.WorkshopAgenda = undefined
 
     this.selectedLanguage = localStorage.selectedLanguage
     if (!this.selectedLanguage || this.selectedLanguage === undefined)
@@ -202,9 +203,19 @@ new Vue({
 
       Speakingagenda: this.Speakingagenda,
       DemoDayAgenda: this.DemoDayAgenda,
+      WorkshopAgenda: this.WorkshopAgenda
     }
   },
   methods: {
+    track (name, url) {            
+      axios.post(`${env.host}/track`, {
+        url: url,
+        profile: name
+      })
+      
+      return url
+    },
+
     getResourses () {
       Axios.get(`${host}/resources?names=investors,mediapartners,speakers,sponsors,startups,workshop`, {
         headers: {
@@ -219,8 +230,21 @@ new Vue({
         this.Startups = res.data.startups
         this.Workshop = res.data.workshop
 
-        this.Speakingagenda = this.Speakers.filter((a, b) => a.time - b.time)
-        this.DemoDayAgenda = this.Workshop.filter((a, b) => a.time - b.time)
+        if (this.Workshop.length > 1) 
+          this.WorkshopAgenda = this.Workshop.filter((a, b) => a.time - b.time)
+        else
+          this.WorkshopAgenda = this.Workshop
+
+        if (this.Speakers.length > 1) 
+          this.Speakingagenda = this.Speakers.filter((a, b) => a.time - b.time)
+        else
+          this.Speakingagenda = this.Speakers
+
+        if (this.Startups.length > 1) 
+          this.DemoDayAgenda = this.Startups.filter((a, b) => a.time - b.time)
+        else
+          this.DemoDayAgenda = this.Startups
+
       })
     },
 
@@ -351,6 +375,7 @@ new Vue({
       return new Promise(async (resolve, reject) => {
         let timer = setInterval(async () => {
           const list = vars.map(el => new Promise((resolve, reject) => {
+            console.log(el, self[el])
             if (self[el])
               resolve(true)
           }))
@@ -983,6 +1008,13 @@ new Vue({
 
               case 'company' : 
                 if (self.usertype == "business" || self.usertype == "vip" || self.usertype == "media" || self.usertype == "startup" || self.usertype == "investor")
+                  resolve(true)
+                else
+                  resolve(false)
+                break
+
+              case 'startup' : 
+                if (self.usertype == "investor")
                   resolve(true)
                 else
                   resolve(false)

@@ -84,10 +84,7 @@
                                 $root.content.chatWith
                             }} {{
                                 name
-                                .slice(0, name.length)[0]
                                 .toUpperCase()
-                                + 
-                                name.slice(1, name.length)
                             }} {{
                                 $root.content.team
                             }}
@@ -95,7 +92,7 @@
                     </div>
 
                     <div id="chat-field" :style="`height:${chatHeight}px`" class="chat-field">
-                        <div v-if="chatAvailable" id="messages-box" class="messages-box">
+                        <div v-if="chatAvailable" id="messages-box-startup" class="messages-box">
                             <div
                                 v-for="(el, index) in chatHistory"
                                 :class="chatMessageClass(el)"
@@ -131,16 +128,14 @@
                             </div>
                         </div>
                         <div
-                            v-on:click="$root.showMessageToUpgradeBusOrVip($root.content.chatWith.toLowerCase() + $root.capitalizeFirstLetter(name))"
-                            v-else
                             class="centrify section-faded-text"
                         >
-                            <div class="red hover">
-                                {{$root.content.upgradeToAccess(
-                                    $root.content.business + $root.content.or + $root.content.vip,
-                                    $root.content.chatWith.toLowerCase() + $root.capitalizeFirstLetter(name)
-                                )}}
-                            </div>
+                            <div class="red hover" v-html="
+                                $root.content.onlyForXWithoutUpgrade(
+                                    $root.content.chatWith.toLowerCase() + $root.capitalizeFirstLetter(name),
+                                    $root.content.investor
+                                )
+                            "></div>
                         </div>
                     </div>
                     <div v-if="chatAvailable" class="enter-message">
@@ -173,58 +168,53 @@
         </b-row>
     </div>
 </template>
-
 <script>
 import axios from 'axios'
-import env from '../env'
+import {host, socket} from '../env'
 import socialLogos from '../assets/img/socials'
 import io from 'socket.io-client'
 
 export default {
-    props: {
-        name: {
-            type: String,
-            default: ""
-        }
-    },
-    data () {
+    data() {
         this.chatHeight;
-        this.chatHistory = [];
-        this.userTextMessage = ""
-        this.token = this.$root.token
+        this.chatHistory      = [];
+        this.userTextMessage  = ""
         this.showMessageModal = false
-        this.chatAvailable = false
-        this.sponsor = ''
-        this.description = ""
-        this.demo = ""
-        this.website = ""
-        this.socials = ""
-        this.contacts = ""
-        this.logo = ""
+        this.chatAvailable    = false
+        this.startup          = ""
+        this.description      = ""
+        this.demo             = ""
+        this.website          = ""
+        this.socials          = ""
+        this.contacts         = ""
+        this.logo             = ""
+        this.name             = ""
 
-        // wait until token and sponsors ready
-        this.$root.check('token Sponsors').then(() => {
-            const name = this.name.toUpperCase()
-            this.sponsor = this.$root.Sponsors.filter(el => el.name == name)[0]
-            this.logo = this.logo
+        // wait until token and startups ready
+        this.$root.check('token Startups').then(() => {
+            this.token = this.$root.token
 
-            this.description = this.sponsor.description
-            this.demo = this.sponsor.demo
-            this.website = this.sponsor.website
-            this.socials = this.sponsor.socials
-            this.contacts = this.sponsor.contacts
-            this.logo = this.sponsor.logo
+            this.name = this.$router.currentRoute.params.name
+            this.startup = this.$root.Startups.filter(el => el.name.toLowerCase() == this.name)[0]
+            this.logo = host + this.startup.logo
+
+            this.description = this.startup.description
+            this.demo = this.startup.demo
+            this.website = this.startup.website
+            this.socials = this.startup.socials
+            this.contacts = this.startup.contacts
+            this.time = this.startup.time
 
             this.ready = true
 
-            this.$root.isChatAvailable("company").then((res) => {
+            this.$root.isChatAvailable("startup").then((res) => {
                 this.chatAvailable = res
             })
 
-            this.chat = io(env.socket, {
+            this.chat = io(socket, {
                 query: {
                     token: this.token,
-                    company: this.name
+                    startup: this.name
                 }
             })
 
@@ -263,7 +253,8 @@ export default {
 
         return {
             ready: false,
-            getInTouch: ["Facebook", "Linkedin", "Telegram"],
+            getInTouch: [],
+            name: this.name,
 
             userTextMessage: this.userTextMessage,
             chatHeight: this.chatHeight,
@@ -289,302 +280,14 @@ export default {
         }
     },
     methods: {
-        chatMessageClass (message) {
-            let admins = []
-            Object.values(this.contacts).map(el => {
-                admins.push(el.email)
-            })
-
-            if (this.$root.isThatMe(message.from.email))
-                return 'chat-message me'
-
-            else if (admins.includes(message.from.email))
-                return 'chat-message admin'
-
-            else
-                return 'chat-message'
-        },
-
-        sendMessage (e) {
-            const id = () => {
-                return Math.random().toString().split(".")[1]
-            }
-            if (e.keyCode == 13 && !e.shiftKey) {
-                e.preventDefault();
-                
-                this.userTextMessage = this.userTextMessage.replace(/\n/g, '<br>')
-
-                if (this.quotedMessage) {
-                    this.chat.emit('new_message', {
-                        quoteId: this.quoteId,
-                        html: `
-                            <div class="quoted-answer">
-                                ${this.quotedMessage}
-                            </div>
-                            ${this.userTextMessage}
-                        `,
-                        id: id(),
-                        message: this.userTextMessage
-                    })
-                }
-                else {
-                    this.chat.emit('new_message', { message:this.userTextMessage, id: id(), html:this.userTextMessage })
-                }
-                this.userTextMessage = ""
-                this.showQuote = ''
-                this.quotedMessage = ''
-                this.quotedName = ''
-            }
-        },
-
-        showReplyButton (el, index) {
-            
-            this.showQuote = false
-            this.quotedMessage = ''
-            this.quotedName = ''
-
-            if (el.from.email != this.$root.profile.email) {
-                if (this.showMessageModal === index)
-                    this.showMessageModal = false
-    
-                else 
-                    this.showMessageModal = index
-            }
-        },
-
-        closeReply () {
-            this.showQuote = false
-            this.quotedMessage = ''
-            this.quotedName = ''
-            this.quoteId = ''
-            this.showMessageModal = false
-        },
-
-        doReply (el, index) {
-            this.showMessageModal = false
-            this.showQuote = true
-            this.quotedMessage = el.message
-            this.quotedName = el.from.name.split(" ")[0]
-            this.quoteId = el.id
-        },
-
-        // this shit doesn't work
         scrollBehaviour () {
-            let chatlist = document.getElementById('messages-box')
+            let chatlist = document.getElementById('messages-box-startup')
             if (chatlist)
                 chatlist.scrollTo(0, chatlist.scrollHeight)
         },
-
-        fireNotification (chatname, data) {
-            let low_chatname = chatname.toLowerCase()
-            
-            if (this.$root.notificationAllowed || Notification.permission == "granted") {
-                window.notification = new Notification(`${data.from.name.split(" ")[0]} from ${data.from.company} replied to you.`, {
-                    icon: `${env.self}/img/sponsors/${chatname}/${chatname}.png`,
-                    body: data.message,
-                })
-                let self = this
-                notification.onclick = function(event) {
-                    event.preventDefault()
-                    // window.open(`${env.self}/${self.$root.token}/company?name=${low_chatname}&reply=${data.id}`)
-                }
-            }
-        },
-
-        focusToReply (id) {
-            let message = this.chatHistory.filter(el => el.id == id)
-
-            if (message.length) {
-                this.doReply(message[0])
-            }
-        }
     },
 }
 </script>
 <style lang="css">
-    .demo-frame {
-        text-align:center
-    }
-    .top40 {
-        margin-top:40px
-    }
-    .top20 {
-        margin-top: 20px
-    }
-    .block-display {
-        display: block;
-    }
-    .block-display:hover {
-        text-decoration: none;
-    }
-    .block-display div {
-        font-size:20px;
-        color: black;
-    }
-    .block-display div:hover {
-        font-size:20px;
-        color: #6f6f6f;
-        text-decoration: none;
-    }
-    .a,a.white {
-        text-decoration: none !important;
-        color:white !important;
-    }
-    .social-icon {
-        height: 40px;
-        font-size:20px;
-    }
-    .social-icon.getInTouch {
-        vertical-align: super;
-    }
-    .contacts {
-        text-align: center;
-        box-shadow: 0px 0px 10px 10px #e2e2e2;
-        border-radius: 20px;
-        background: #343a40;
-        padding: 15px 10px 0px 10px;
-    }
-    .contact-email {
-        font-size: 14px;
-        margin: 15px 0px 10px 0px;
-        color: #bcbcbc;
-    }
-    .contact-name {
-        font-size: 25px;
-        color: #d9d9d9;
-        font-weight: 600;
-        margin-bottom: 15px;
-    }
-    .join-button {
-        width:200px;
-        margin: 20px auto 0px auto;
-        display: block;
-    }
-    .chat-field {
-        background: white;
-        width: 100%;
-        height: auto;
-        position: relative;
-        display: block;
-        border-radius: 5px;
-        /* padding: 10px; */
-    }
-    .chat-message {
-        padding: 5px 10px;
-        display: flex;
-        color: black;
-        font-size: 15px;
-        background: #c8c8ff;
-        margin: 5px;
-        width: fit-content;
-        max-width: 75%;
-        border-radius: 8px;
-        margin-right: auto;
-    }
-    .chat-message:hover {
-        cursor: pointer;
-    }
-    .chat-message.me {
-        background: #c0ffc9;
-        text-align: left;
-        margin-left: auto;
-        margin-right: 0px;
-    }
-    .chat-message.me:hover {
-        cursor: default;
-    }
-    .chat-message.admin {
-        background: #ffdbdb;
-        text-align: left;
-        margin-right: auto;
-        margin-left: 0px;
-    }
-
-    .chat-message.me .message-title {
-        color: #1b6325;
-    }
-    .chat-message.admin .message-title {
-        color: #a90d0d;
-    }
-    .chat-message .message-title {
-        color: #2f2f6f;
-    }
-    .chat-message .message-title:hover {
-        cursor: pointer;
-        font-weight: 600;
-    }
-    .chat-message.me .message-title:hover {
-        cursor: default;
-        font-weight: 100;
-    }
-
-    .enter-message {
-        position: relative;
-        width: 100%;
-        margin: -3px 0px;
-        z-index: 3;
-        border: none;
-        border-top: 1px solid darkgrey;
-        display: block;
-    }
-    .enter-message textarea {
-        width: 100%;
-        resize: none;
-        border: none;
-        padding: 10px 10px 10px 10px;
-        border-top: 1px solid darkgrey;
-        border-radius: 0px 0px 10px 10px;
-    }
-    .enter-message textarea:focus {
-        outline: none;
-    }
-    .hint {
-        padding: 0px 10px;
-        font-size: 12px;
-        color: #a0a0a0;
-    }
-    .messages-box {
-        overflow-y: auto;
-        height: 100%;
-        z-index: 1;
-        position: relative;
-        pointer-events: all;
-    }
-    .reply-button {
-        display: block;
-        position: relative;
-        margin: auto;
-        padding: 0px 10px;
-        opacity: 0.5;
-        max-width:40px;
-        width:fit-content;
-    }
-    .quote-enter {
-        background: #d8d8d8;
-        width: 100%;
-        padding: 0px 10px;
-        word-break: break-all;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .quoted-answer {
-        display: block;
-        width: 100%;
-        padding: 0px 5px;
-        word-break: break-all;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        color: grey;
-        font-style: italic;
-        position: relative;
-    }
-    .close-reply {
-        text-align:right;
-    }
-    .close-reply:hover {
-        cursor: pointer;
-    }
-
+    
 </style>

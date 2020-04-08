@@ -1,6 +1,6 @@
 <template>
     <div :style="`height:${chatHeight}px`">
-        <b-tabs class="mt-3 width-50">
+        <b-tabs v-if="ready" class="mt-3 width-50">
             <b-tab class="width-50" :title="`Blockconf ` + $root.content.coffeeChat" active>
                 <div id="chat-field" :style="`height:${chatHeight}px`" class="chat-field">
                     <div v-if="chatAvailable" class="centrify chat-bg-container">
@@ -101,6 +101,11 @@ export default {
         this.chatHeight = window.innerHeight - 250
         this.chatHistory = []
         this.chatAvailable = false
+        this.ready = false
+
+        this.$root.check('profile').then(_ => {
+            this.ready = true
+        })
 
         this.$root.globalchat = io(env.socket, {
             query: {
@@ -130,6 +135,8 @@ export default {
         })
 
         return {
+            ready: this.ready,
+
             chatHistory: this.chatHistory,
             userTextMessage: this.userTextMessage,
             showQuote: this.showQuote,
@@ -177,11 +184,12 @@ export default {
         chatMessageClass (message) {
             let admins = []
 
-            if (this.$root.isThatMe(message.from.email))
-                return 'chat-message me'
+            if (message.from)
+                if (this.$root.isThatMe(message.from.email))
+                    return 'chat-message me'
 
-            else
-                return 'chat-message'
+                else
+                    return 'chat-message'
         },
 
         showReplyButton (el, index) {

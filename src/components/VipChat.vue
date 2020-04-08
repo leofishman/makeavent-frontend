@@ -1,74 +1,76 @@
 <template>
     <div>
-        <div id="chat-field" :style="`height:${chatHeight}px`" class="chat-field">
-            <div v-if="chatAvailable" class="centrify chat-bg-container">
-                <img class="" src="../assets/logo_dark.svg" alt="">
-            </div>
-            <div v-if="chatAvailable" id="messages-box-vip" class="messages-box">
-                <div
-                    v-for="(el, index) in chatHistory"
-                    :class="chatMessageClass(el)"
-                    :key="index"
-                >
-                    <div style="display: inline-block; position: relative; width: 100%;">
-                        <div v-on:click="$root.showBCrequesttoast(el.from, index)" class="message-title">
-                            {{el.from.name.split(" ")[0]}} ({{el.from.role}} {{el.from.company}})
+        <div v-if="ready">
+            <div id="chat-field" :style="`height:${chatHeight}px`" class="chat-field">
+                <div v-if="chatAvailable" class="centrify chat-bg-container">
+                    <img class="" src="../assets/logo_dark.svg" alt="">
+                </div>
+                <div v-if="chatAvailable" id="messages-box-vip" class="messages-box">
+                    <div
+                        v-for="(el, index) in chatHistory"
+                        :class="chatMessageClass(el)"
+                        :key="index"
+                    >
+                        <div style="display: inline-block; position: relative; width: 100%;">
+                            <div v-on:click="$root.showBCrequesttoast(el.from, index)" class="message-title">
+                                {{el.from.name.split(" ")[0]}} ({{el.from.role}} {{el.from.company}})
+                            </div>
+                            <b-toast
+                                :id="`req-contact-toast-${el.from._id}-${index}`"
+                                :title="$root.content.reqBusCardConfirm"
+                                static
+                                no-auto-hide
+                            >
+                                <b-button
+                                    style="
+                                        line-height:normal;
+                                        margin-left: auto;
+                                        display: block;
+                                    "
+                                    v-on:click="$root.openRequestContactModal(`req-contact-toast-${el.from._id}-${index}`, el.from)"
+                                    variant="primary"
+                                >{{$root.content.yes}}
+                                </b-button>
+                            </b-toast>
+                            <div v-on:click="showReplyButton(el, index)" v-html="el.html"></div>
                         </div>
-                        <b-toast
-                            :id="`req-contact-toast-${el.from._id}-${index}`"
-                            :title="$root.content.reqBusCardConfirm"
-                            static
-                            no-auto-hide
-                        >
-                            <b-button
-                                style="
-                                    line-height:normal;
-                                    margin-left: auto;
-                                    display: block;
-                                "
-                                v-on:click="$root.openRequestContactModal(`req-contact-toast-${el.from._id}-${index}`, el.from)"
-                                variant="primary"
-                            >{{$root.content.yes}}
-                            </b-button>
-                        </b-toast>
-                        <div v-on:click="showReplyButton(el, index)" v-html="el.html"></div>
+                        
+                        <div v-on:click="doReply(el, index)" v-if="showMessageModal === index" class="reply-button" >
+                            <img width="100%" src="../assets/img/reply.png" alt="">
+                        </div>
                     </div>
-                    
-                    <div v-on:click="doReply(el, index)" v-if="showMessageModal === index" class="reply-button" >
-                        <img width="100%" src="../assets/img/reply.png" alt="">
+                </div>
+                <div v-on:click="$root.showMessageToUpgradeStrict('VIP chat', 'vip')" v-else class="centrify section-faded-text">
+                    <div class="red hover">
+                        {{$root.content.upgradeToAccess(`VIP`, `VIP chat`)}}
                     </div>
                 </div>
             </div>
-            <div v-on:click="$root.showMessageToUpgradeStrict('VIP chat', 'vip')" v-else class="centrify section-faded-text">
-                <div class="red hover">
-                    {{$root.content.upgradeToAccess(`VIP`, `VIP chat`)}}
+            <div v-if="chatAvailable" class="enter-message">
+                <div class="quote-enter" v-if="showQuote">
+                    <b-row>
+                        <b-col md="10">
+                            {{$root.content.reply}} <strong>@{{quotedName}}</strong> {{quotedMessage}}
+                        </b-col>
+                        <b-col v-on:click="closeReply()" class="close-reply" md="2">
+                            <img style="width:40%; " src="../assets/img/cross.svg" alt="">
+                        </b-col>
+                    </b-row>
                 </div>
+                <textarea 
+                @keydown="sendMessage($event)"
+                v-model="userTextMessage"
+                type="text"
+                :placeholder="$root.content.chatPlaceholder">
+                </textarea>
+            </div>
+            <div class="hint">
+                {{$root.content.chatHint}}
+            </div>
+            <div class="hint">
+                {{$root.content.replyHint}}
             </div>
         </div>
-        <div v-if="chatAvailable" class="enter-message">
-            <div class="quote-enter" v-if="showQuote">
-                <b-row>
-                    <b-col md="10">
-                        {{$root.content.reply}} <strong>@{{quotedName}}</strong> {{quotedMessage}}
-                    </b-col>
-                    <b-col v-on:click="closeReply()" class="close-reply" md="2">
-                        <img style="width:40%; " src="../assets/img/cross.svg" alt="">
-                    </b-col>
-                </b-row>
-            </div>
-            <textarea 
-            @keydown="sendMessage($event)"
-            v-model="userTextMessage"
-            type="text"
-            :placeholder="$root.content.chatPlaceholder">
-            </textarea>
-        </div>
-        <div class="hint">
-            {{$root.content.chatHint}}
-        </div>
-        <div class="hint">
-            {{$root.content.replyHint}}
-        </div>         
     </div>
 </template>
 <script>
@@ -88,6 +90,11 @@ export default {
         this.chatHeight = window.innerHeight - 250
         this.chatHistory = []
         this.chatAvailable = false
+        this.ready = false
+
+        this.$root.check('profile').then(res => {
+            this.ready = true
+        })
 
         this.$root.vipchat = io(env.socket, {
             query: {
@@ -117,6 +124,8 @@ export default {
         })
 
         return {
+            ready: this.ready, 
+
             chatHistory: this.chatHistory,
             userTextMessage: this.userTextMessage,
             showQuote: this.showQuote,
@@ -163,12 +172,12 @@ export default {
 
         chatMessageClass (message) {
             let admins = []
+            if (message.from)
+                if (this.$root.isThatMe(message.from.email))
+                    return 'chat-message me'
 
-            if (this.$root.isThatMe(message.from.email))
-                return 'chat-message me'
-
-            else
-                return 'chat-message'
+                else
+                    return 'chat-message'
         },
 
         showReplyButton (el, index) {
@@ -177,13 +186,19 @@ export default {
             this.quotedMessage = ''
             this.quotedName = ''
 
-            if (el.from.email != this.$root.profile.email) {
-                if (this.showMessageModal === index)
-                    this.showMessageModal = false
-    
-                else 
-                    this.showMessageModal = index
+            try {
+                if (el.from.email != this.$root.profile.email) {
+                    if (this.showMessageModal === index)
+                        this.showMessageModal = false
+        
+                    else 
+                        this.showMessageModal = index
+                }
             }
+            catch (e) {
+                console.log(e, 197)
+            }
+
         },
 
         closeReply () {

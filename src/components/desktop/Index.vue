@@ -248,8 +248,13 @@
             </b-row>
           </b-col>
 
-          <b-col class="hall-block media-hall" v-on:click="navToWaitPage('mediahall')">
-            Media hall
+          <b-col>
+            <div style="margin-left:auto; margin-right:auto;" class="hall-block media-hall" v-on:click="navToWaitPage('mediahall')">
+              Media hall
+            </div>
+            <div style="margin-left:auto; margin-right:auto;" class="hall-block startups-hall" v-on:click="navToWaitPage('startupsdemoday')">
+              Startups Demo Day
+            </div>
           </b-col>
 
           <b-col style="margin-left:50px;">
@@ -382,6 +387,7 @@ export default {
       switch(name) {
         case "vip" :
         case "mediahall" :
+        case "startupsdemoday" :
           this.$router.push({
             path: `/${this.$root.token}/${name}`
           })
@@ -402,11 +408,9 @@ export default {
     }
   },
   data() {
-    let timer = setInterval(() => {
-      if (this.$root.Sponsors.length) {
-        this.ready = true
-        clearInterval(timer)
-      }
+    this.$root.check('Sponsors').then(_ => {
+      this.ready = true
+      console.log(this.ready, this.$root.Sponsors)
     })
 
     window.EventBus.$on('join-meeting-room', () => {
@@ -442,8 +446,14 @@ export default {
   .media-hall {
     max-width: 250px;
     width: 100%;
-    height: 400px;
-    margin-top: 100px;
+    height: 250px;
     background: aqua;
+  }
+  .startups-hall {
+    max-width: 250px;
+    width: 100%;
+    height: 250px;
+    margin-top: 50px;
+    background: #db84ff;
   }
 </style>

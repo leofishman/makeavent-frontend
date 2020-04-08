@@ -56,6 +56,9 @@ export default {
     onlyForVIP: (component, forthem) => {
         return `We are appologizing, but <strong>${component}</strong> is available only for ${forthem} attenders.<br>Would you like to upgrade your ticket?`
     },
+    onlyForXWithoutUpgrade: (component, forthem) => {
+        return `We are appologizing, but <strong>${component}</strong> is available only for ${forthem} attenders.`
+    },
     upgradeFor: (component, forthem, forx) => {
         return `We are appologizing, but <strong>${component}</strong> is available only for ${forthem} attenders.<br>Would you like to upgrade your ticket for $${forx}.00`
     },
@@ -112,5 +115,10 @@ export default {
     failed: "Failed",
     connected: "Connected",
     pending: "Pending",
-    accept: "Accept"
+    accept: "Accept",
+
+    StartupsDemoDay: {
+        ddpb: 'Demo Day Pitching Booth',
+        investors: "Investors"
+    }
 }

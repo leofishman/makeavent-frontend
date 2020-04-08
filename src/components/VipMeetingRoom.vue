@@ -92,17 +92,13 @@ export default {
         this.vipMembers = []
         this.activiness = []
 
-        let timer = setInterval(async () => {
-            if (this.$root.usertype && this.$root.token) {
-                clearInterval(timer)
-                
-                if ( this.verifyVip() ) {
-                    await this.getVipMembers()
-                    this.adInfoToSpeakers()
+        this.$root.check('usertype token').then(async _ => {
+            if ( this.verifyVip() ) {
+                await this.getVipMembers()
+                this.adInfoToSpeakers()
 
-                    this.displayContent = true
-                }
-            }
+                this.displayContent = true
+            }  
         })
 
         return {

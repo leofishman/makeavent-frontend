@@ -1,6 +1,6 @@
 <template>
     <b-container fluid="lg" style="padding-top:30px;">
-        <b-row style="margin: 0px 0px;" class="justify-content-md-center">
+        <!-- <b-row style="margin: 0px 0px;" class="justify-content-md-center">
             <b-col md="3">
                 <img class="main-logo" src="../../assets/logo.svg" alt="">
             </b-col>
@@ -201,7 +201,7 @@
                 <b-dropdown-item v-on:click="navToWaitPage()">Micro Booth 11</b-dropdown-item>
                 <b-dropdown-item v-on:click="navToWaitPage()">Micro Booth 12</b-dropdown-item>
             </b-dropdown>
-        </b-row>
+        </b-row> -->
     </b-container>
 </template>
 <script>

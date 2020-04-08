@@ -2,8 +2,8 @@
     <div>
         <navbar></navbar>
         <b-row>
-            <b-col :md="width" style="padding:0px 7px">
-                <b-jumbotron style="height:100%">
+            <b-col md="9">
+                <b-jumbotron  v-if="ready" style="height:100%;">
                     <template v-slot:header>
                         <b-row>
                             <b-col md="5">
@@ -34,7 +34,7 @@
                                             <div class="contact-name">
                                                 {{el.name}}
                                             </div>
-                                            <img class="contact-photo" :src="el.photo" alt="">
+                                            <img class="contact-photo" :src="$root.tryGetProfilePhoto(el.email)" alt="">
                                             <div class="contact-name" style="font-size:18px; margin-top:20px">
                                                 {{el.role}}
                                             </div>
@@ -42,9 +42,9 @@
                                                 {{el.email}}
                                             </div>
                                             <b-row>
-                                                <b-col class="hover" v-for="(_el, _key, _index) in el.getInTouch" :key="_index">
-                                                    <b-link :href="_el" target="_blank">
-                                                        <img class="social-icon getInTouch" :src="socialLogos[_key]" alt="">
+                                                <b-col class="hover" v-for="(_el, _index) in getInTouch" :key="_index">
+                                                    <b-link :href="el[_el]" target="_blank">
+                                                        <img class="social-icon getInTouch" :src="socialLogos[_el]" alt="">
                                                     </b-link>
                                                 </b-col>
                                             </b-row>
@@ -65,14 +65,14 @@
                     <div v-html="demo" class="demo-frame top20"></div>
                 </b-jumbotron>
             </b-col>
-            <b-col :md="width2" style="padding:0px 7px">
+            <b-col md="3" style="padding:0px 7px">
                 <b-jumbotron style="height:100%; padding:4rem 0px;" >
-                    <div :style="`padding:0px 2rem; font-size:${width2}rem;`">
+                    <div style="padding:0px 2rem; font-size:1.5rem;">
                         {{$root.content.joinNowTitle}}
                     </div>
 
                     <div style="padding:0px 2rem;">
-                        <b-button class="join-button" variant="primary" v-on:click="startMeeting()">
+                        <b-button class="join-button" variant="primary" v-on:click="/*startMeeting()*/">
                             Join
                         </b-button>
                     </div>
@@ -102,9 +102,26 @@
                                 :key="index"
                             >
                                 <div style="display: inline-block; position: relative; width: 100%;">
-                                    <div v-on:click="openRequestContactModal(el, index)" class="message-title">
+                                    <div v-on:click="$root.showBCrequesttoast(el.from, index)" class="message-title">
                                         {{el.from.name.split(" ")[0]}} ({{el.from.role}} {{el.from.company}})
                                     </div>
+                                    <b-toast
+                                        :id="`req-contact-toast-${el.from._id}-${index}`"
+                                        :title="$root.content.reqBusCardConfirm"
+                                        static
+                                        no-auto-hide
+                                    >
+                                        <b-button
+                                            style="
+                                                line-height:normal;
+                                                margin-left: auto;
+                                                display: block;
+                                            "
+                                            v-on:click="$root.openRequestContactModal(`req-contact-toast-${el.from._id}-${index}`, el.from)"
+                                            variant="primary"
+                                        >{{$root.content.yes}}
+                                        </b-button>
+                                    </b-toast>
                                     <div v-on:click="showReplyButton(el, index)" v-html="el.html"></div>
                                 </div>
                                 
@@ -153,15 +170,11 @@
 
                 </b-jumbotron>
             </b-col>
-            <b-col v-if="showChat" md="2" style="padding:0px 7px">
-                <globalchat></globalchat>
-            </b-col>
         </b-row>
     </div>
 </template>
 
 <script>
-import Sponsors from '../sponsors'
 import axios from 'axios'
 import env from '../env'
 import socialLogos from '../assets/img/socials'
@@ -175,85 +188,83 @@ export default {
         }
     },
     data () {
-        window.EventBus.$on('open_global_chat', () => {
-            this.width = "8"
-            this.width2 = "2"
-            this.showChat = true
-        })
-
-        window.EventBus.$on('close_global_chat', () => {
-            this.width = "9"
-            this.width2 = "3"
-            this.showChat = false
-        })
-
         this.chatHeight;
         this.chatHistory = [];
         this.userTextMessage = ""
         this.token = this.$root.token
         this.showMessageModal = false
         this.chatAvailable = false
-        
-        const name = this.name.toUpperCase()
-        const sponsor = Sponsors[this.name.toUpperCase()]
-        const logo = require(`../assets/img/sponsors/${name}/${name}.png`)
+        this.sponsor = ''
+        this.description = ""
+        this.demo = ""
+        this.website = ""
+        this.socials = ""
+        this.contacts = ""
+        this.logo = ""
 
-        Object.keys(sponsor.contacts).map(el => {
-            try {
-                sponsor.contacts[el].photo = require(`../assets/img/sponsors/${name}/contact${el}.png`)
-            }
-            catch (e) {
-                
-            }
-        })
+        // wait until token and sponsors ready
+        this.$root.check('token Sponsors').then(() => {
+            const name = this.name.toUpperCase()
+            this.sponsor = this.$root.Sponsors.filter(el => el.name == name)[0]
+            this.logo = this.logo
 
-        let self = this
+            this.description = this.sponsor.description
+            this.demo = this.sponsor.demo
+            this.website = this.sponsor.website
+            this.socials = this.sponsor.socials
+            this.contacts = this.sponsor.contacts
+            this.logo = this.sponsor.logo
 
-        this.$root.isChatAvailable("company").then((res) => {
-            self.chatAvailable = res
-        })
+            this.ready = true
 
-        // wait until token defined
-        this.$root.tokenCheck().then(() => {
-            self.chat = io(env.socket, {
+            this.$root.isChatAvailable("company").then((res) => {
+                this.chatAvailable = res
+            })
+
+            this.chat = io(env.socket, {
                 query: {
-                    token: self.token,
-                    company: self.name
+                    token: this.token,
+                    company: this.name
                 }
             })
 
-            self.chat.on('reponse_chat_history', (data) => {
+            this.chat.on('reponse_chat_history', (data) => {
                 // write to variable and render messages from it
-                self.chatHistory = data
+                this.chatHistory = data
+
+                this.chatHeight = window.innerHeight - document.getElementById('chat-field').offsetTop - 180
 
                 // check if page opened as reply to message
                 if (window.location.href.split("&reply=")[1]) {
-                    self.focusToReply(window.location.href.split("&reply=")[1])
+                    this.focusToReply(window.location.href.split("&reply=")[1])
                 }
 
                 // scroll chat to bottom
                 setTimeout(() => {
-                    self.scrollBehaviour()
+                    this.scrollBehaviour()
                 }, 500)
             })
 
-            self.chat.emit('fetch_chat_history')
+            this.chat.emit('fetch_chat_history')
 
-            self.chat.on('new_message_3rdparty', (data) => {
+            this.chat.on('new_message_3rdparty', (data) => {
                 
-                let reply = self.chatHistory.filter(el => self.$root.profile.email == el.from.email && data.quoteId == el.id)
+                let reply = this.chatHistory.filter(el => this.$root.profile.email == el.from.email && data.quoteId == el.id)
                 
                 if (reply.length) {
-                    self.fireNotification(name, data)   
+                    this.fireNotification(name, data)   
                 }
 
-                self.chatHistory.push(data)
+                this.chatHistory.push(data)
                 
-                self.scrollBehaviour()
+                this.scrollBehaviour()
             })
         })
 
         return {
+            ready: false,
+            getInTouch: ["Facebook", "Linkedin", "Telegram"],
+
             userTextMessage: this.userTextMessage,
             chatHeight: this.chatHeight,
             chatHistory: this.chatHistory,
@@ -264,18 +275,15 @@ export default {
             quotedName: '',
             quoteId: '',
 
-            logo: logo,
-            description: sponsor.description,
-            demo: sponsor.demo,
-            website: sponsor.website,
-            socials: sponsor.socials,
+            logo: this.logo,
+            description: this.description,
+            demo: this.demo,
+            website: this.website,
+            socials: this.socials,
             socialLogos: socialLogos,
-            contacts: sponsor.contacts,
+            contacts: this.contacts,
 
             chat: "",
-            width: "9",
-            width2: "3",
-            showChat: false,
 
             chatAvailable: this.chatAvailable
         }
@@ -290,85 +298,13 @@ export default {
             return url
         },
 
-        startMeeting () {
-            document.body.insertAdjacentHTML('afterbegin',`<div id="zmmtg-root"></div><div id="aria-notify-area"></div>`)
-            const { ZoomMtg } = require('@zoomus/websdk')
-            (function(){
-
-                ZoomMtg.preLoadWasm();
-                ZoomMtg.prepareJssdk();
-                
-                var API_KEY = 'bhifkV7cTCmAPzOvg3pZoA';
-                var API_SECRET = 'MdyMRCCvbiZYMi69hoXBrYI2oOoNsnSr7skm';
-
-                document.getElementById('join_meeting').addEventListener('click', function(e){
-                    e.preventDefault();
-
-                    if(!this.form.checkValidity()){
-                        alert("Enter Name and Meeting Number");
-                        return false;
-                    }
-
-                    var meetConfig = {
-                        apiKey: API_KEY,
-                        apiSecret: API_SECRET,
-                        meetingNumber: parseInt(document.getElementById('meeting_number').value),
-                        userName: document.getElementById('display_name').value,
-                        passWord: "329806",
-                        leaveUrl: "http://localhost:8081/1qcHN0Ql3lYamix4JK7BQZrk/company?name=Crypttp",
-                        role: 0
-                    };
-
-
-                    var signature = ZoomMtg.generateSignature({
-                        meetingNumber: meetConfig.meetingNumber,
-                        apiKey: meetConfig.apiKey,
-                        apiSecret: meetConfig.apiSecret,
-                        role: meetConfig.role,
-                        success: function(res){
-                            console.log(res.result);
-                        }
-                    });
-
-                    ZoomMtg.init({
-                        leaveUrl: 'http://www.zoom.us',
-                        isSupportAV: true,
-                        success: function () {
-                            ZoomMtg.join(
-                                {
-                                    meetingNumber: meetConfig.meetingNumber,
-                                    userName: meetConfig.userName,
-                                    signature: signature,
-                                    apiKey: meetConfig.apiKey,
-                                    userEmail: 'email@gmail.com',
-                                    passWord: meetConfig.passWord,
-                                    success: function (res) {
-                                        $('#nav-tool').hide();
-                                        console.log('join meeting success');
-                                    },
-                                    error: function(res) {
-                                        console.log(res);
-                                    }
-                                }
-                            );
-                        },
-                        error: function(res) {
-                            console.log(res);
-                        }
-                    });
-
-                });
-
-            })();
-        },
-
         chatMessageClass (message) {
             let admins = []
-            Object.values(Sponsors[this.name.toUpperCase()].contacts).map(el => {
+            Object.values(this.contacts).map(el => {
                 admins.push(el.email)
             })
 
-            if (message.from.email == this.$root.profile.email)
+            if (this.$root.isThatMe(message.from.email))
                 return 'chat-message me'
 
             else if (admins.includes(message.from.email))
@@ -441,54 +377,6 @@ export default {
             this.quoteId = el.id
         },
 
-        async openRequestContactModal (el, index) {
-            if (el.from.email != this.$root.profile.email) {
-                try {
-                    const response = await axios.post(env.host + "/isSafeSharing", {
-                        from: this.$root.profile,
-                        to: el.from
-                    })
-
-                    window.EventBus.$emit('request_contact_confirmed', response.data)
-                }
-                catch (e) {
-                    const content = this.$root.content
-                    const question = content.areYouSure
-                    + " " + content.request
-                    + " " + el.from.name.split(' ')[0] + '`s'
-                    + " " + content.businessCard
-
-                    let note = content.requestContact(el.from.name.split(' ')[0])
-                    note = this.$root.convertContentWithLineBreaks(note)
-                    
-                    this.$bvModal.msgBoxConfirm([note], {
-                        title: question,
-                        size: 'md',
-                        buttonSize: 'md',
-                        okVariant: 'primary',
-                        okTitle: content.yes,
-                        cancelTitle: content.no,
-                        footerClass: 'p-2',
-                        hideHeaderClose: false,
-                        noCloseOnBackdrop: true,
-                        noCloseOnEsc: true,
-                        centered: true
-                    })
-                    .then(value => {
-                        if (value)
-                            this.chat.emit('request_contact_information', {
-                                from: this.$root.profile,
-                                to: el.from
-                            })
-                        
-                    })
-                    .catch(e => {
-                        this.$bvModal.cancel()
-                    })
-                }
-            }
-        },
-
         // this shit doesn't work
         scrollBehaviour () {
             let chatlist = document.getElementById('messages-box')
@@ -519,9 +407,6 @@ export default {
                 this.doReply(message[0])
             }
         }
-    },
-    mounted() {
-        this.chatHeight = window.innerHeight - document.getElementById('chat-field').offsetTop - 180
     },
 }
 </script>

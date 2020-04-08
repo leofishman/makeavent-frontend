@@ -1,7 +1,7 @@
 <template>
     <div :style="`height:${chatHeight}px`">
-        <b-tabs content-class="mt-3">
-            <b-tab :title="`Blockconf ` + $root.content.coffeeChat" active>
+        <b-tabs class="mt-3 width-50">
+            <b-tab class="width-50" :title="`Blockconf ` + $root.content.coffeeChat" active>
                 <div id="chat-field" :style="`height:${chatHeight}px`" class="chat-field">
                     <div v-if="chatAvailable" class="centrify chat-bg-container">
                         <img class="" src="../assets/logo_dark.svg" alt="">
@@ -13,9 +13,26 @@
                             :key="index"
                         >
                             <div style="display: inline-block; position: relative; width: 100%;">
-                                <div v-on:click="openRequestContactModal(el, index)" class="message-title">
+                                <div v-on:click="$bvToast.show(`req-contact-toast-${el.from._id}-${index}`)" class="message-title">
                                     {{el.from.name.split(" ")[0]}} ({{el.from.role}} {{el.from.company}})
                                 </div>
+                                <b-toast
+                                    :id="`req-contact-toast-${el.from._id}-${index}`"
+                                    :title="$root.content.reqBusCardConfirm"
+                                    static
+                                    no-auto-hide
+                                >
+                                    <b-button
+                                        style="
+                                            line-height:normal;
+                                            margin-left: auto;
+                                            display: block;
+                                        "
+                                        v-on:click="$root.openRequestContactModal(`req-contact-toast-${el.from._id}-${index}`, el.from)"
+                                        variant="primary"
+                                    >{{$root.content.yes}}
+                                    </b-button>
+                                </b-toast>
                                 <div v-on:click="showReplyButton(el, index)" v-html="el.html"></div>
                             </div>
                             
@@ -60,7 +77,7 @@
                     {{$root.content.replyHint}}
                 </div>                
             </b-tab>
-            <b-tab :title="`Blockconf ` + $root.content.vipChat">
+            <b-tab class="width-50" :title="`Blockconf ` + $root.content.vipChat">
                 <vipchat></vipchat>
             </b-tab>
         </b-tabs>
@@ -68,7 +85,6 @@
 </template>
 
 <script>
-import Sponsors from '../sponsors'
 import axios from 'axios'
 import env from '../env'
 import socialLogos from '../assets/img/socials'
@@ -82,7 +98,7 @@ export default {
         this.quotedMessage = ''
         this.quotedName = ''
         this.showMessageModal = false
-        this.chatHeight = window.innerHeight - 300
+        this.chatHeight = window.innerHeight - 250
         this.chatHistory = []
         this.chatAvailable = false
 
@@ -101,11 +117,6 @@ export default {
             if (window.location.href.split("&reply=")[1]) {
                 this.focusToReply(window.location.href.split("&reply=")[1])
             }
-
-            // scroll chat to bottom
-            setTimeout(() => {
-                this.scrollBehaviour()
-            }, 500)
         })
 
         this.$root.globalchat.emit('fetch_chat_history')
@@ -166,7 +177,7 @@ export default {
         chatMessageClass (message) {
             let admins = []
 
-            if (message.from.email == this.$root.profile.email)
+            if (this.$root.isThatMe(message.from.email))
                 return 'chat-message me'
 
             else
@@ -204,69 +215,31 @@ export default {
             this.quoteId = el.id
         },
 
-        async openRequestContactModal (el, index) {
-            if (el.from.email != this.$root.profile.email) {
-                try {
-                    const response = await axios.post(env.host + "/isSafeSharing", {
-                        from: this.$root.profile,
-                        to: el.from
-                    })
-
-                    window.EventBus.$emit('request_contact_confirmed', response.data)
-                }
-                catch (e) {
-                    const content = this.$root.content
-                    const question = content.areYouSure
-                    + " " + content.request
-                    + " " + el.from.name.split(' ')[0] + '`s'
-                    + " " + content.businessCard
-
-                    let note = content.requestContact(el.from.name.split(' ')[0])
-                    note = this.$root.convertContentWithLineBreaks(note)
-
-                    this.$bvModal.msgBoxConfirm([note], {
-                        title: question,
-                        size: 'md',
-                        buttonSize: 'md',
-                        okVariant: 'primary',
-                        okTitle: content.yes,
-                        cancelTitle: content.no,
-                        footerClass: 'p-2',
-                        hideHeaderClose: false,
-                        noCloseOnBackdrop: true,
-                        noCloseOnEsc: true,
-                        centered: true
-                    })
-                    .then(value => {
-                        if (value)
-                            this.$root.globalchat.emit('request_contact_information', {
-                                from: this.$root.profile,
-                                to: el.from
-                            })
-                    })
-                    .catch(e => {
-                        this.$bvModal.cancel()
-                    })
-                }
-            }
-        },
-
         // this shit doesn't work
         scrollBehaviour () {
             let chatlist = document.getElementById('messages-box-global')
-            
-            chatlist.scrollTo(0, chatlist.scrollHeight)
+            if (chatlist)
+                chatlist.scrollTo(0, chatlist.scrollHeight)
         },
+    },
+    mounted() {
+        // scroll chat to bottom
+        this.$root.$on('bv::collapse::state', (collapseId, isJustShown) => {
+            if (collapseId == "sidebar-chat" && isJustShown === true)
+                setTimeout(() => {
+                    this.scrollBehaviour()
+                }, 500)
+        })
     },
 }
 </script>
 <style lang="css">
-    .nav-tabs .nav-item {
+    .width-50 .nav-item  {
         max-width: 50%;
         width: 50%;
         text-align: center;
     }
-    .nav-tabs .nav-item a {
+    .width-50 .nav-item  a {
         font-size: 16px;
         padding: 5px 0px;
         width: 100%;

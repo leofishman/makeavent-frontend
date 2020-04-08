@@ -13,6 +13,13 @@ import Password from '../components/Password.vue'
 import VipMeetingRoom from '../components/VipMeetingRoom.vue'
 import LoginWithTempEmail from '../components/LoginWithTempEmail.vue'
 import BusinessCard from '../components/BusinessCard.vue'
+import Mediahall from '../components/Mediahall.vue'
+import Agenda from '../components/Agenda.vue'
+import MediaPartnerProfile from '../components/MediaPartnerProfile.vue'
+
+import Profile from '../components/profile/Profile.vue'
+import MyInterviews from '../components/profile/MyInterviews.vue'
+import MyBusinessCards from '../components/profile/MyBusinessCards.vue'
 
 Vue.use(Router)
 
@@ -32,6 +39,33 @@ const router = new Router({
             path: '/:id/home',
             name: 'Home',
             component: Home,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/profile',
+            name: 'Profile',
+            component: Profile,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/profile/myinterviews',
+            name: 'MyInterviews',
+            component: MyInterviews,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/profile/businesscards',
+            name: 'MyBusinessCards',
+            component: MyBusinessCards,
             meta: {
                 requiresAuth: true,
                 platformLaunch: true
@@ -91,6 +125,33 @@ const router = new Router({
             component: BusinessCard,
             meta: {
                 requiresAuth: false,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/mediahall',
+            name: "Mediahall",
+            component: Mediahall,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/mediahall/:name',
+            name: "MediaPartnerProfile",
+            component: MediaPartnerProfile,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/agenda',
+            name: "Agenda",
+            component: Agenda,
+            meta: {
+                requiresAuth: true,
                 platformLaunch: true
             }
         }
@@ -155,7 +216,10 @@ router.beforeEach((to, from, next) => {
                     window.location.pathname.split("/")[1] != "noaccess" &&
                     window.location.pathname.split("/")[2] != "company" && 
                     window.location.pathname.split("/")[2] != "vip" &&
-                    window.location.pathname.split("/")[2] != "home"
+                    window.location.pathname.split("/")[2] != "home" &&
+                    window.location.pathname.split("/")[2] != "mediahall" &&
+                    window.location.pathname.split("/")[2] != "agenda" &&
+                    window.location.pathname.split("/")[2] != "profile"
                 ) {
                     window.location.pathname = `/${window.location.pathname.split("/")[1]}/home`
                 }

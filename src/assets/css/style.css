@@ -6,6 +6,37 @@ button {
     max-width: 100%;
 }
 
+.n-light {
+    padding: 20px;
+    border-radius: 5px;
+}
+.n-light .notification-title {
+    color: #0066ff;
+    margin-bottom: 10px;
+}
+.vue-notification {
+    font-size: 16px !important;
+}
+.vue-notification-wrapper {
+    margin: 15px 0px !important;
+    box-shadow: 0px 0px 10px 10px #2a2a2a57 !important;
+}
+.vue-notification-template {
+    background: #ffffffc2 !important;
+}
+.vue-notification-group {
+    right: 10px !important;
+}
+
+.small-centred-image {
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    position: relative;
+    width: 70px !important;
+    height: 70px !important;
+}
+
 .hall-block {
     border-radius: 10px;
     background: white;

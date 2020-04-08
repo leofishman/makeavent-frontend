@@ -11,6 +11,7 @@ export default {
     comebackSoon: "Page will be available when conference starts",
     pageWillBeLater: "Please come back later",
     agenda: "Agenda",
+    mediahall: "Media Hall",
     joinNowTitle: "Enter e-booth",
     team: "team",
     chatWith: "Chat with ",
@@ -21,16 +22,19 @@ export default {
     businessCard: 'business card',
     yes: "Yes",
     no: "No",
+    ok: "Ok",
     requestContact: (p1) => {
-        return `${p1} will receive notification that you requesting contact information.<br>If ${p1} will confirm it you will receive ${p1}'s contact information`
+        return `${p1} will receive notification that you requesting contact information.`
     },
+    reqBusCardConfirm: `Do you want to request business card?`,
     newContactReq: 'New business card request',
     newContactReqNote: (name, company, role) => {
-        return `${name} ${role} at ${company} is requesting your business card.<br>If you agree sharing your contact information click "Yes" unless click "No"`
+        return `${name} ${role} at ${company} is requesting your business card`
     },
     userConfirmedSharingInfo: ({name, role, company}) => {
         return `${name} ${role} at ${company} shared business card with you`
     },
+    howToConfirmBusinessCardSharing: `Go to Profile -> My Business Cards -> Pending and click "accept" to share business card.`,
     print: "Print",
     save: "Save",
     actionsWithBusCard: 'Click save to send card to your email or print to see it now',
@@ -56,7 +60,7 @@ export default {
         return `We are appologizing, but <strong>${component}</strong> is available only for ${forthem} attenders.<br>Would you like to upgrade your ticket for $${forx}.00`
     },
     findInEbooth: "Find me in e-BOOTH",
-    findInSpeakers: "Find me in Conference Adenda",
+    findInSpeakers: "Find me in Conference Agenda",
     findInWorkshop: "Find me in Workshop Agenda",
     requestMyBusinessCard: "Request my business card",
     sheduleAprivateCall: "Sсhedule a private call with me",
@@ -76,9 +80,11 @@ export default {
     openQrCode: "Open QR-code",
     businessCardSavedToEmail: "Amazing.<br>Business card was sent to your email!",
     vip: "VIP",
-    business: "Buiness",
+    vipMeetingRoom: `VIP e-MEETING ROOM`,
+    business: "Business",
+    cards: "Cards",
     basic: "Basic",
-    willBeAtMay: `The conference has not started yet. Please come back after May 14th at ${new Date(startDate).toLocaleString().split(", ")[1]}`,
+    willBeAtMay: `The conference has not started yet. Please come back after May 14th at ${new Date(startDate).toString().split("2020")}`,
     followUsOnSocial: "Follow us on social media",
     chat: "Chat",
     upgradeToAccess: (x, y) => {
@@ -86,5 +92,25 @@ export default {
     },
     or: " or ",
     globalChat: "Global Chat",
-    chooseTicketType: "Choose ticket type"
+    chooseTicketType: "Choose ticket type",
+    watchLiveInterview: "Watch<br>live<br>interview",
+    conferenceAgenda: "Conference Agenda",
+    join: "Join",
+    requestOfflineCopy: "Request recorded copy",
+    success: "Success",
+    offlineMaterialSent: (name) => {
+        return `Offline copy of ${name} lecture was sent to your email`
+    },
+    upcommingInterviews: "Upcomming interviews",
+    nointerviewsScheduled: "There is no upcomming interviews",
+    profile: "Profile",
+    my: "My",
+    page: "Page",
+    interviews: "Interviews",
+    upcomming: "Upcomming",
+    past: "Past",
+    failed: "Failed",
+    connected: "Connected",
+    pending: "Pending",
+    accept: "Accept"
 }

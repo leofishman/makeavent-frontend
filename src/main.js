@@ -1,38 +1,79 @@
+/**
+ * @modules
+ */
 import Vue from 'vue'
 import App from './App.vue'
-import { BootstrapVue, BIconThreeDotsVertical } from 'bootstrap-vue'
+import { BootstrapVue, BSidebar, SidebarPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/css/style.css'
 import { host, socket } from './env'
 import VueSocketIO from 'socket.io-client'
+import qrcode from 'qrcode-generator-es6'
+import Notifications from 'vue-notification'
+import Axios from 'axios'
 
+/**
+ * @router
+ */
 import router from './router'
+
+/**
+ * @content
+ */
 import Content from './content'
 
+/**
+ * @global_components
+ */
 import Navbar from './components/Navbar.vue'
+import NavbarProfile from './components/profile/Navbar.vue'
 import Desktop from './components/desktop/Index.vue'
 import Mobile from './components/mobile/Index.vue'
 import GlobalChat from './components/GlobalChat.vue'
 import VipChat from './components/VipChat.vue'
-import Axios from 'axios';
+import InterviewAgenda from './components/modals/Interview-agenda.vue'
+import OngoingInterview from './components/modals/Ongoing-interviews.vue'
 
+  
+// import { ZoomMtg } from "zoomus-jssdk";
+
+/**
+ * @VUE_uses
+ */
 Vue.use(BootstrapVue)
+Vue.use(SidebarPlugin)
+Vue.use(Notifications)
 Vue.config.productionTip = false
 
+Vue.component('b-sidebar', BSidebar)
+
+/**
+ * @root
+ */
 Vue.component('navbar', Navbar)
 Vue.component('desktop', Desktop)
 Vue.component('mobile', Mobile)
+
+/**
+ * @chats
+ */
 Vue.component('globalchat', GlobalChat)
 Vue.component('vipchat', VipChat)
 
+/**
+ * @interview
+ */
+Vue.component('interview-agenda', InterviewAgenda)
+Vue.component('ongoing-interviews', OngoingInterview)
+
+/**
+ * @profile
+ */
+Vue.component('navbar-profile', NavbarProfile)
+
 const EventBus = new Vue();
 window.EventBus = EventBus
-
-import Sponsors from './sponsors'
-import Speakers from './speakers'
-import Workshop from './workshop'
-import qrcode from 'qrcode-generator-es6'
 
 new Vue({
   router,
@@ -40,12 +81,24 @@ new Vue({
   data() {
     this.upgradeCost_business = 0
     this.upgradeCost_vip = 0
+    this.pendingCards = []
 
-    let selectedLanguage = localStorage.selectedLanguage
-    if (!selectedLanguage || selectedLanguage === undefined)
-      selectedLanguage = "EN"
+    this.Investors = []
+    this.MediaPartners = []
+    this.Speakers = []
+    this.Speakingagenda = []
+    this.DemoDayAgenda = []
+    this.Sponsors = []
+    this.Startups = []
+    this.Workshop = []
+
+    this.selectedLanguage = localStorage.selectedLanguage
+    if (!this.selectedLanguage || this.selectedLanguage === undefined)
+      this.selectedLanguage = "EN"
     
     let self = this
+
+    this.getResourses()
 
     if (this.checkNavShouldBeWithToken()) {
       Axios.get(host+`/login/checkToken?access=${window.location.pathname.split('/')[1]}`, {
@@ -58,6 +111,9 @@ new Vue({
         this.profile = data.profile
         this.token = data.accessLink
         this.usertype = data.type
+        
+        this.getPengingCards()
+        this.getActiveBusinessCards()
 
         window.io = VueSocketIO(socket, {
           query: {
@@ -87,7 +143,7 @@ new Vue({
         })
     
         window.io.on('request_contact_confirmed', (data) => {
-          this.openContactConfirmedModal(data)
+          this.friendRequestAccepted(data)
         })
       })
       .catch(e => {
@@ -95,16 +151,8 @@ new Vue({
       })
     }
 
-    // let waitLogin = setInterval(() => {
-    //   if (this.token && this.profile && this.usertype) {
-    //     clearInterval(waitLogin)
-
-        
-    //   }
-    // }, 100)
-
     window.EventBus.$on('request_contact_confirmed', (data) => {
-      this.openContactConfirmedModal(data)
+      this.friendRequestAccepted(data)
     })
 
     window.EventBus.$on('show_business_card', data => {
@@ -112,11 +160,12 @@ new Vue({
     })
 
     return {
+      selectedLanguage: this.selectedLanguage,
       notificationAllowed: "",
       profile: this.profile,
       usertype: this.usertype,
       token: this.token,
-      content: Content[selectedLanguage],
+      content: Content[this.selectedLanguage],
       globalchat: "",
       vipchat: "",
       rowStyle: {
@@ -139,10 +188,143 @@ new Vue({
 
       business_paypalButtonRendered: false,
       vip_paypalButtonRendered: false,
-      modals: []
+      modals: [],
+
+      pendingCards: this.pendingCards,
+      activeBusinessCards: this.activeBusinessCards,
+
+      Investors: this.Investors,
+      MediaPartners: this.MediaPartners,
+      Speakers: this.Speakers,
+      Sponsors: this.Sponsors,
+      Startups: this.Startups,
+      Workshop: this.Workshop,
+
+      Speakingagenda: this.Speakingagenda,
+      DemoDayAgenda: this.DemoDayAgenda,
     }
   },
   methods: {
+    getResourses () {
+      Axios.get(`${host}/resources?names=investors,mediapartners,speakers,sponsors,startups,workshop`, {
+        headers: {
+          authorization: localStorage.auth
+        }
+      })
+      .then(res => {
+        this.Investors = res.data.investors
+        this.MediaPartners = res.data.mediapartners
+        this.Speakers = res.data.speakers
+        this.Sponsors = res.data.sponsors
+        this.Startups = res.data.startups
+        this.Workshop = res.data.workshop
+
+        this.Speakingagenda = this.Speakers.filter((a, b) => a.time - b.time)
+        this.DemoDayAgenda = this.Workshop.filter((a, b) => a.time - b.time)
+      })
+    },
+
+    joinWebinar (id, leaveUrl) {
+      window.EventBus.$emit('join-meeting-room')
+    },
+
+    getPengingCards () {
+      Axios.get(`${host}/users/bcpending`, {
+        headers: {
+          authorization: localStorage.auth
+        }
+      })
+      .then(res => {
+        this.pendingCards = res.data
+        this.pendingCards.map(el => {
+          el.photo = this.tryGetProfilePhoto(el.email)
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
+    getActiveBusinessCards () {
+      Axios.get(`${host}/users/bcconnected`, {
+        headers: {
+          authorization: localStorage.auth
+        }
+      })
+      .then(res => {
+        this.activeBusinessCards = res.data
+        this.activeBusinessCards.map(el => {
+          el.photo = this.tryGetProfilePhoto(el.email)
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
+    acceptBusinessCard (card) {
+      Axios.post(`${host}/users/acceptBusinessCard`, card, {
+        headers: {
+          authorization: localStorage.auth
+        }
+      })
+      .then(el => {
+        setTimeout(() => {
+          window.EventBus.$emit('close-overlay-by-id', card._id)
+
+        }, 1000)
+      })
+    },
+
+    denyBusinessCardRequest (card) {
+      Axios.post(`${host}/users/denyBusinessCardRequest`, card, {
+        headers: {
+          authorization: localStorage.auth
+        }
+      })
+      .then(el => {
+        window.EventBus.$emit('close-overlay-by-id', card._id)
+      })
+    },
+
+    tryGetProfilePhoto (email) {
+      let image;
+      
+      let haveContacts = this.Sponsors.filter(el => el.contacts !== undefined)
+      haveContacts.map(el => {
+        el.contacts.map((contact, index) => {
+          if (contact.email == email) {
+            image = contact.photo
+          }
+        })
+      })
+
+      if (!image)
+        this.Speakers.map(speaker => {
+          if (speaker.email == email) {
+            image = speaker.photo
+          }
+        })
+
+      if (!image)
+        this.Workshop.map(workshoper => {
+          if (workshoper.email == email) {
+            image = workshoper.photo
+          }
+        })
+
+      return host + image
+    },
+
+    combineContent (names) {
+      let str = ''
+      let arr = names.split(' ')
+      arr.map(el => {
+        str += this.content[el] + ' '
+      })
+      return str
+    },
+
     capitalizeFirstLetter (text) {
       return text.charAt(0).toUpperCase() + text.substring(1);
     },
@@ -163,11 +345,28 @@ new Vue({
         return false
     },
 
+    check (vars) {
+      vars = vars.split(" ")
+      let self = this
+      return new Promise(async (resolve, reject) => {
+        let timer = setInterval(async () => {
+          const list = vars.map(el => new Promise((resolve, reject) => {
+            if (self[el])
+              resolve(true)
+          }))
+          
+          await Promise.all(list)
+          clearInterval(timer)
+          resolve(true)
+        }, 100)
+      })
+    },
+
     tokenCheck () {
       let self = this
       return new Promise(async (resolve, reject) => {
         let timer = setInterval(() => {
-          if (this.token) {
+          if (self.token) {
             clearInterval(timer)
             resolve(true)
           }
@@ -175,101 +374,86 @@ new Vue({
       })
     },
 
-    openIncomingContactRequest (data) {
-      let note = this.content.newContactReqNote(data.name.split(" ")[0], data.company, data.role)
-      note = this.convertContentWithLineBreaks(note)
-
-      this.$bvModal.msgBoxConfirm([note], {
-        title: this.content.newContactReq,
-        size: 'md',
-        buttonSize: 'md',
-        okVariant: 'primary',
-        okTitle: this.content.yes,
-        cancelTitle: this.content.no,
-        footerClass: 'p-2',
-        hideHeaderClose: false,
-        noCloseOnBackdrop: true,
-        noCloseOnEsc: true,
-        centered: true
-      })
-      .then(value => {
-        if (value)
-          window.io.emit('agree_sharing_contact_info', { me: this.profile, to:data })
-      })
-      .catch(e => {
-      })
+    isThatMe (email) {
+      if (this.profile.email == email)
+        return true
+      else
+        return false
     },
 
-    openContactConfirmedModal (data) {
-      const note = this.content.actionsWithBusCard
+    showBCrequesttoast (profile, index) {
+      if (!this.isThatMe(profile.email)) {
+        this.$bvToast.show(`req-contact-toast-${profile._id}-${index}`)
+      }
+    },
 
-      this.$bvModal.msgBoxConfirm(note, {
-        title: this.content.userConfirmedSharingInfo(data),
-        size: 'md',
-        buttonSize: 'md',
-        okVariant: 'primary',
-        okTitle: this.content.print,
-        cancelTitle: this.content.save,
-        footerClass: 'p-2',
-        hideHeaderClose: false,
-        noCloseOnBackdrop: true,
-        noCloseOnEsc: true,
-        centered: true
-      })
-      .then(value => {
-        if (value) {
-          this.openBusinessCard(data)
-        }
-        else {
-          Axios.post(`${host}/data/savebusinesscard`, data, {
+    async openRequestContactModal (id, el) {
+      if (!this.isThatMe(el.email)) {
+        this.$bvToast.hide(id)
+        try {
+          const response = await axios.get(env.host + "/users/bcconnected", {
             headers: {
               authorization: localStorage.auth
             }
           })
-          .then(res => {
-            this.$bvModal.msgBoxOk([this.convertContentWithLineBreaks(this.$root.content.businessCardSavedToEmail)], {
-              title: 'Confirmation',
-              size: 'sm',
-              buttonSize: 'sm',
-              okVariant: 'success',
-              headerClass: 'p-2 border-bottom-0',
-              footerClass: 'p-2 border-top-0',
+
+          const target = response.data.filter(cards => { el.email == cards.email })
+
+          window.EventBus.$emit('request_contact_confirmed', target[0])
+        }
+        catch (e) {
+          const content = this.content
+
+          let note = content.requestContact(el.name.split(' ')[0])
+          let success = content.success
+
+          Axios.post(`${host}/users/savebusinesscard`, {
+            id: this.profile._id,
+            data: el
+          }, {
+            headers: {
+              authorization: localStorage.auth
+            }
+          }).then(res => {
+            window.io.emit('request_contact_information', {
+              from: this.profile,
+              to: el
+            })
+            this.$bvModal.msgBoxOk(note, {
+              title: success,
+              size: 'md',
+              buttonSize: 'md',
+              okVariant: 'primary',
+              okTitle: content.yes,
+              cancelTitle: content.no,
+              footerClass: 'p-2',
               centered: true
             })
           })
         }
-      })
-      .catch(e => {
-        console.log(e)
-      })
+      }
+    },
+
+    openIncomingContactRequest (data) {
+      let note = this.content.newContactReqNote(data.name.split(" ")[0], data.company, data.role)
+
+      this.$notify({
+        group: 'new-connection-request',
+        title: note,
+        text: this.content.howToConfirmBusinessCardSharing,
+        duration: 5000
+      });
+    },
+
+    friendRequestAccepted (data) {
+      this.getPengingCards()
     },
 
     openBusinessCard (data) {
       const h = this.$createElement
       const titleVNode = h('div', { domProps: { innerHTML: data.name } })
       
-      let image;
-
-      if (Sponsors[data.company.toUpperCase()])
-        Object.values(Sponsors[data.company.toUpperCase()].contacts).map((contact, index) => {
-          if (contact.email == data.email) {
-            image = require(`./assets/img/sponsors/${data.company.toUpperCase()}/contact${index+1}.png`)
-          }
-        })
-
-      if (!image)
-        Speakers.map(speaker => {
-          if (speaker.email == data.email) {
-            image = require(`./assets/img/workshopers/${data.name}.png`)
-          }
-        })
-
-      if (!image)
-        Workshop.map(workshoper => {
-          if (workshoper.email == data.email) {
-            image = require(`./assets/img/speakers/${data.name}.png`)
-          }
-        })
+      let image = this.tryGetProfilePhoto(data.email)
 
       let tg;
       let fb;
@@ -312,7 +496,7 @@ new Vue({
               }
             }
           }, [
-            self.$root.content.openQrCode
+            self.content.openQrCode
           ])
         ])
       }
@@ -418,8 +602,8 @@ new Vue({
     showMessageToUpgrade (component, type) {
       const self = this
       const h = this.$createElement
-      const titleVNode = h('div', { domProps: { innerHTML: this.$root.content.oops } })
-      let message = this.$root.content.onlyForVIP(component, type)
+      const titleVNode = h('div', { domProps: { innerHTML: this.content.oops } })
+      let message = this.content.onlyForVIP(component, type)
       message = message.split("<br>")
       
       const messageVNode = h('div', {  }, [
@@ -542,7 +726,7 @@ new Vue({
       const h    = this.$createElement
       const self = this
 
-      let message = this.$root.content.onlyForVIP(component, this.$root.content.business + this.$root.content.or + this.$root.content.vip)
+      let message = this.content.onlyForVIP(component, this.content.business + this.content.or + this.content.vip)
           message = message.split('<br>')
 
       Axios.get(`${host}/ticket/upgrade?type=business`, {
@@ -568,7 +752,7 @@ new Vue({
               h('h5', {
                 class:['modal-title'],
                 domProps: {
-                  innerHTML: this.$root.content.oops
+                  innerHTML: this.content.oops
                 }
               }),
               h('button', {
@@ -579,7 +763,7 @@ new Vue({
                 },
                 on: {
                   click: function () {
-                    self.$root.$emit('bv::hide::modal', 'dual-pay-modal')
+                    self.$emit('bv::hide::modal', 'dual-pay-modal')
                     self[`business_paypalButtonRendered`] = false
                     self[`vip_paypalButtonRendered`] = false
                   }
@@ -663,7 +847,7 @@ new Vue({
         }
       }).then(res => {
         this[`upgradeCost_${type}`] = res.data.amount
-        let message = this.$root.content.upgradeFor(component, this.$root.content.vip, this[`upgradeCost_${type}`])
+        let message = this.content.upgradeFor(component, this.content.vip, this[`upgradeCost_${type}`])
       
         message = message.split('<br>')
   
@@ -676,7 +860,7 @@ new Vue({
               h('h5', {
                 class:['modal-title'],
                 domProps: {
-                  innerHTML: this.$root.content.oops
+                  innerHTML: this.content.oops
                 }
               }),
               h('button', {
@@ -687,7 +871,7 @@ new Vue({
                 },
                 on: {
                   click: function (event) {
-                    self.$root.$emit('bv::hide::modal', 'strict-pay-modal')
+                    self.$emit('bv::hide::modal', 'strict-pay-modal')
                     self[`${type}_paypalButtonRendered`] = false
                   }
                 }
@@ -756,8 +940,8 @@ new Vue({
       
           // Finalize the transaction
           onApprove: function(data, actions) {
-            self.$root.$emit('bv::hide::modal', 'strict-pay-modal')
-            self.$root.$emit('bv::hide::modal', 'dual-pay-modal')
+            self.$emit('bv::hide::modal', 'strict-pay-modal')
+            self.$emit('bv::hide::modal', 'dual-pay-modal')
             self[`${type}_paypalButtonRendered`] = false
 
             return actions.order.capture().then(function(details) {
@@ -784,21 +968,21 @@ new Vue({
             clearInterval(timer)
             switch (type) {
               case 'global' : 
-                if (self.usertype == "business" || self.usertype == "vip")
+                if (self.usertype == "business" || self.usertype == "vip" || self.usertype == "media" || self.usertype == "startup" || self.usertype == "investor")
                   resolve(true)
                 else
                   resolve(false)
                 break
 
               case 'vip' :
-                if (self.usertype == "vip")
+                if (self.usertype == "vip" || self.usertype == "media" || self.usertype == "startup" || self.usertype == "investor")
                   resolve(true)
                 else
                   resolve(false)
                 break
 
               case 'company' : 
-                if (self.usertype == "business" || self.usertype == "vip")
+                if (self.usertype == "business" || self.usertype == "vip" || self.usertype == "media" || self.usertype == "startup" || self.usertype == "investor")
                   resolve(true)
                 else
                   resolve(false)

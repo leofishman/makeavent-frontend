@@ -1,6 +1,6 @@
 <template>
     <b-navbar sticky toggleable="lg" type="dark" style="background:black">
-        <b-navbar-brand :href="`/${$root.$router.currentRoute.params.id}/home`">
+        <b-navbar-brand v-on:click="openPage('home')">
             <img src="../assets/logo.svg" alt="">
         </b-navbar-brand>
 
@@ -8,18 +8,21 @@
 
         <b-collapse v-if="nav" id="nav-collapse" is-nav>
             <b-navbar-nav>
-                <b-nav-item :href="`/${$root.$router.currentRoute.params.id}/home`">{{$root.content.home}}</b-nav-item>
+                <b-nav-item v-on:click="openPage('home')">{{$root.content.home}}</b-nav-item>
+                <b-nav-item v-on:click="openPage('agenda')">{{$root.content.agenda}}</b-nav-item>
+                <b-nav-item v-on:click="openPage('mediahall')">{{$root.content.mediahall}}</b-nav-item>
+                <b-nav-item v-on:click="openPage('vip')">{{$root.content.vipMeetingRoom}}</b-nav-item>
             </b-navbar-nav>
 
             <b-navbar-nav class="ml-auto">
-                <b-navbar-nav v-on:click="openChat()" v-if="!chatIsOpened">
+                <b-nav-item style="color:white" v-on:click="openPage('profile')">
+                    {{$root.content.profile}}
+                    <b-badge v-if="$root.pendingCards.length" variant="light">{{$root.pendingCards.length}}</b-badge>
+                </b-nav-item>
+                
+                <b-navbar-nav v-b-toggle.sidebar-chat>
                     <b-nav-item>
                         {{$root.content.openChat}}
-                    </b-nav-item>
-                </b-navbar-nav>
-                <b-navbar-nav v-on:click="closeChat()" v-if="chatIsOpened">
-                    <b-nav-item>
-                        {{$root.content.closeChat}}
                     </b-nav-item>
                 </b-navbar-nav>
 
@@ -48,14 +51,10 @@ export default {
             window.location.reload()
         },
 
-        openChat () {
-            this.chatIsOpened = true
-            window.EventBus.$emit("open_global_chat")
-        },
-
-        closeChat () {
-            this.chatIsOpened = false
-            window.EventBus.$emit("close_global_chat")
+        openPage (name) {
+            this.$router.push(`/${this.$root.$router.currentRoute.params.id}/${name}`).catch(() => {
+                window.location.reload()
+            })
         }
     },
     data() {

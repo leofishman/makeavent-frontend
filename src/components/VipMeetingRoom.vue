@@ -1,96 +1,96 @@
 <template>
     <div v-if="displayContent">
         <navbar></navbar>
-        <b-row>
-            <b-col :md="width">
-                <b-container fluid="sm" style="width:1250px">
-                    <b-card
-                        v-for="(el, index) in vipMembers" :key="index"
-                        footer-bg-variant="outline-warning"
-                        style="max-width:100%; margin-top:50px;"
-                    >
-                        <b-card-body class="canclick">
-                            <b-row no-gutters>
-                                <b-col md="2" style="text-align:center">
-                                    <img class="contact-photo" :src="el.photo" alt="">
-                                </b-col>
-                                <b-col md="10">
-                                    <b-row>
-                                        <b-col md="8">
-                                            <div style="font-size:32px">
-                                                {{el.name + ' ' + el.role + ' at ' + el.company}}
+        <b-container fluid="sm" style="width:1250px">
+            <b-card
+                v-for="(el, index) in vipMembers" :key="index"
+                footer-bg-variant="outline-warning"
+                style="max-width:100%; margin-top:50px;"
+            >
+                <b-card-body class="canclick">
+                    <b-row no-gutters>
+                        <b-col md="2" style="text-align:center">
+                            <img class="contact-photo" :src="el.photo" alt="">
+                        </b-col>
+                        <b-col md="10">
+                            <b-row>
+                                <b-col md="8">
+                                    <div style="font-size:32px">
+                                        {{el.name + ' ' + el.role + ' at ' + el.company}}
+                                    </div>
+                                    <b-row v-if="$root.isThatMe(el.email)">
+                                        It is you
+                                    </b-row>
+                                    <b-row v-else style="margin-top:20px;">
+                                        <b-col>
+                                            <div class="inline hover fat underline" v-on:click="$root.showBCrequesttoast(el, index)">
+                                                <img class="inline small-link-icon" src="../assets/img/contact.png" width="20px">
+                                                {{$root.content.requestMyBusinessCard}}
                                             </div>
-                                            <b-row style="margin-top:20px;">
-                                                <b-col>
-                                                    <div class="inline hover fat underline" v-on:click="openRequestContactModal(el)">
-                                                        <img class="inline small-link-icon" src="../assets/img/contact.png" width="20px">
-                                                        {{$root.content.requestMyBusinessCard}}
-                                                    </div>
-                                                </b-col>
-                                                <b-col>
-                                                    <div class="underline">
-                                                        <b-link class="hover fat" target="_blank" :href="el.calendly">
-                                                            <img class="inline small-link-icon" src="../assets/img/phone.svg" width="20px">
-                                                            {{$root.content.sheduleAprivateCall}}
-                                                        </b-link>
-                                                    </div>
-                                                </b-col>
-                                            </b-row>
+                                            <b-toast
+                                                :id="`req-contact-toast-${el._id}-${index}`"
+                                                :title="$root.content.reqBusCardConfirm"
+                                                static
+                                                no-auto-hide
+                                            >
+                                                <b-button
+                                                    style="
+                                                        line-height:normal;
+                                                        margin-left: auto;
+                                                        display: block;
+                                                    "
+                                                    v-on:click="$root.openRequestContactModal(`req-contact-toast-${el._id}-${index}`, el)"
+                                                    variant="primary"
+                                                >{{$root.content.yes}}
+                                                </b-button>
+                                            </b-toast>
                                         </b-col>
-                                        <b-col md="4" style="margin:auto;">
-                                            <div v-if="el.booth">
-                                                <div class="inline hover fat right-links" v-on:click="openPage(el.booth)">
-                                                    <img class="inline small-link-icon" src="../assets/img/booth.png">
-                                                    {{$root.content.findInEbooth}}
-                                                </div>
-                                            </div>
-                                            <div v-if="el.speaker">
-                                                <div class="inline hover fat right-links" v-on:click="openPage(el.speaker)">
-                                                    <img class="inline small-link-icon" src="../assets/img/speaker.png">
-                                                    {{$root.content.findInSpeakers}}
-                                                </div>
-                                            </div>
-                                            <div v-if="el.workshop">
-                                                <div class="inline hover fat right-links" v-on:click="openPage(el.workshop)">
-                                                    <img class="inline small-link-icon" src="../assets/img/worksshop.png">
-                                                    {{$root.content.findInWorkshop}}
-                                                </div>
+                                        <b-col>
+                                            <div class="underline">
+                                                <b-link class="hover fat" target="_blank" :href="el.calendly">
+                                                    <img class="inline small-link-icon" src="../assets/img/phone.svg" width="20px">
+                                                    {{$root.content.sheduleAprivateCall}}
+                                                </b-link>
                                             </div>
                                         </b-col>
                                     </b-row>
                                 </b-col>
+                                <b-col md="4" style="margin:auto;">
+                                    <div v-if="el.booth">
+                                        <div class="inline hover fat right-links" v-on:click="openPage(el.booth)">
+                                            <img class="inline small-link-icon" src="../assets/img/booth.png">
+                                            {{$root.content.findInEbooth}}
+                                        </div>
+                                    </div>
+                                    <div v-if="el.speaker">
+                                        <div class="inline hover fat right-links" v-on:click="openPage(el.speaker)">
+                                            <img class="inline small-link-icon" src="../assets/img/speaker.png">
+                                            {{$root.content.findInSpeakers}}
+                                        </div>
+                                    </div>
+                                    <div v-if="el.workshop">
+                                        <div class="inline hover fat right-links" v-on:click="openPage(el.workshop)">
+                                            <img class="inline small-link-icon" src="../assets/img/worksshop.png">
+                                            {{$root.content.findInWorkshop}}
+                                        </div>
+                                    </div>
+                                </b-col>
                             </b-row>
-                        </b-card-body>
-                    </b-card>
-                </b-container>
-            </b-col>
-            <b-col v-if="showChat" md="2" class="sticky-chat">
-                <globalchat></globalchat>
-            </b-col>
-        </b-row>
+                        </b-col>
+                    </b-row>
+                </b-card-body>
+            </b-card>
+        </b-container>
     </div>
 </template>
 <script>
 import axios from 'axios'
 import {host, self} from '../env'
-import Sponsors from '../sponsors'
-import Speakers from '../speakers'
-import Workshop from '../workshop'
 
 export default {
     data() {
         this.vipMembers = []
         this.activiness = []
-
-        window.EventBus.$on('open_global_chat', () => {
-            this.width = "10"
-            this.showChat = true
-        })
-
-        window.EventBus.$on('close_global_chat', () => {
-            this.width = 12
-            this.showChat = false
-        })
 
         let timer = setInterval(async () => {
             if (this.$root.usertype && this.$root.token) {
@@ -108,21 +108,20 @@ export default {
         return {
             displayContent: false,
             vipMembers: this.vipMembers,
-            width: "12",
-            showChat: false
         }
     },
     methods: {
         verifyVip () {
-            if (this.$root.usertype != "vip") {
-                this.$root.showMessageToUpgrade('VIP e-MEETING ROOM', 'VIP')
+            if (this.$root.usertype == "vip" || this.$root.usertype == "media" || this.$root.usertype == "startup" || this.$root.usertype == "investor") {
+                return true
             }
-            return true
+            else 
+                this.$root.showMessageToUpgrade('VIP e-MEETING ROOM', 'VIP')
         },
 
         getVipMembers () {
             return new Promise((resolve, reject) => {
-                axios.get(`${host}/getusers/vip`, {
+                axios.get(`${host}/users/vip`, {
                     headers: {
                         authorization: localStorage.auth
                     }
@@ -144,84 +143,11 @@ export default {
 
         adInfoToSpeakers () {
             this.vipMembers.map(el => {
-                if (Sponsors[el.company.toUpperCase()]) {
-                    const companyName = el.company.toUpperCase()
-                    const company = Sponsors[companyName]
-
-                    Object.values(company.contacts).map((contact, index) => {
-                        if (contact.email == el.email) {
-                            el.photo = require(`../assets/img/sponsors/${companyName}/contact${index+1}.png`)
-                            el.booth = `${self}/${this.$root.token}/company?name=${companyName.toLowerCase()}`
-                        }
-                    })
-
-                    Speakers.map(speaker => {
-                        if (speaker.email == el.email) {
-                            if (!el.photo)
-                                el.photo = require(speaker.photo)
-                            
-                            el.speaker = `1`
-                        }
-                    })
-
-                    Workshop.map(workshoper => {
-                        if (workshoper.email == el.email) {
-                            if (!el.photo)
-                                el.photo = require(workshoper.photo)
-                            
-                            el.workshop = `1`
-                        }
-                    })
-                }
+                if (!el.photo)
+                    el.photo = host + this.$root.tryGetProfilePhoto(el.email)
+                else
+                    el.photo = host + el.photo
             })
-        },
-
-        async openRequestContactModal (el) {
-            if (el.email != this.$root.profile.email) {
-                try {
-                    const response = await axios.post(host + "/isSafeSharing", {
-                        from: this.$root.profile,
-                        to: el
-                    })
-
-                    window.EventBus.$emit('request_contact_confirmed', response.data)
-                }
-                catch (e) {
-                    const content = this.$root.content
-                    const question = content.areYouSure
-                    + " " + content.request
-                    + " " + el.name.split(' ')[0] + '`s'
-                    + " " + content.businessCard
-
-                    let note = content.requestContact(el.name.split(' ')[0])
-                    note = this.$root.convertContentWithLineBreaks(note)
-                    
-                    this.$bvModal.msgBoxConfirm([note], {
-                        title: question,
-                        size: 'md',
-                        buttonSize: 'md',
-                        okVariant: 'primary',
-                        okTitle: content.yes,
-                        cancelTitle: content.no,
-                        footerClass: 'p-2',
-                        hideHeaderClose: false,
-                        noCloseOnBackdrop: true,
-                        noCloseOnEsc: true,
-                        centered: true
-                    })
-                    .then(value => {
-                        if (value)
-                            window.io.emit('request_contact_information', {
-                                from: this.$root.profile,
-                                to: el
-                            })
-                        
-                    })
-                    .catch(e => {
-                        console.log(e)
-                    })
-                }
-            }
         },
 
         openPage (link) {

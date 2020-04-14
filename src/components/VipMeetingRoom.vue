@@ -107,7 +107,7 @@ export default {
         this.vipMembers = []
         this.activiness = []
 
-        this.$root.check('usertype token Sponsors').then(async _ => {
+        this.$root.check('usertype token Sponsors activeBusinessCards').then(async _ => {
             if ( this.verifyVip() ) {
                 await this.getVipMembers()
                 this.adInfoToSpeakers()

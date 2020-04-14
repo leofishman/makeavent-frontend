@@ -223,10 +223,10 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
 
-     if (to.meta.platformLaunch && new Date().getTime() < startDate) {
-         window.location.pathname = '/noaccess'
-     }
-     else {
+    //  if (to.meta.platformLaunch && new Date().getTime() < startDate) {
+    //     window.location.pathname = '/noaccess'
+    //  }
+    //  else {
         if (to.path == "/noaccess") {
             next()
         }
@@ -300,7 +300,7 @@ router.beforeEach((to, from, next) => {
         }
         else 
             next()
-     }
+    //  }
 })
 
 export default router

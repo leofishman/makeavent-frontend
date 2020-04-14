@@ -34,7 +34,7 @@ export default {
     },
     watch: {
         opened: function () {
-            Axios.get(`${host}/interviews/agenda`).then(res => {
+            Axios.get(`${host}/interviews/getByType?type=upcomming`).then(res => {
                 console.log(res)
             })
             .catch(err => {

@@ -26,7 +26,7 @@
                     </div>
                 </b-col>
                 <b-col>
-                    <div class="watch-interview">
+                    <div v-on:click="openLiveInterviewsModal()" class="watch-interview">
                         <div>
                             {{watchMessage[0]}}
                             <br>
@@ -98,6 +98,10 @@ export default {
 
         showInterviewAgenda () {
             window.EventBus.$emit('open-interview-agenda')
+        },
+
+        openLiveInterviewsModal () {
+            window.EventBus.$emit('open-live-interview-modal')
         },
 
         getMediaPartnerSlot (id) {

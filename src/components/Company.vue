@@ -72,8 +72,8 @@
                     </div>
 
                     <div style="padding:0px 2rem;">
-                        <b-button class="join-button" variant="primary" v-on:click="/*startMeeting()*/">
-                            Join
+                        <b-button class="join-button" variant="primary" v-on:click="startMeeting()">
+                            {{$root.content.common.join}}
                         </b-button>
                     </div>
 
@@ -206,18 +206,17 @@ export default {
         this.$root.check('token Sponsors').then(() => {
             const name = this.name.toUpperCase()
             this.sponsor = this.$root.Sponsors.filter(el => el.name == name)[0]
-            this.logo = this.logo
 
             this.description = this.sponsor.description
             this.demo = this.sponsor.demo
             this.website = this.sponsor.website
             this.socials = this.sponsor.socials
             this.contacts = this.sponsor.contacts
-            this.logo = this.sponsor.logo
+            this.logo = env.host + this.sponsor.logo
 
             this.ready = true
 
-            this.$root.isChatAvailable("company").then((res) => {
+            this.$root.checkComponentAccess("companychat").then((res) => {
                 this.chatAvailable = res
             })
 
@@ -397,6 +396,12 @@ export default {
             if (message.length) {
                 this.doReply(message[0])
             }
+        },
+
+        startMeeting () {
+            this.$root.getWebinar(this.sponsor._id).then(webinar => {
+                this.$root.joinWebinar(webinar.zoomWebinarId, "")
+            })
         }
     },
 }
@@ -432,6 +437,7 @@ export default {
     }
     .social-icon {
         height: 40px;
+        width: 40px;
         font-size:20px;
     }
     .social-icon.getInTouch {

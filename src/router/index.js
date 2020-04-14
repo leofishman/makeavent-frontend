@@ -14,11 +14,16 @@ import VipMeetingRoom from '../components/VipMeetingRoom.vue'
 import LoginWithTempEmail from '../components/LoginWithTempEmail.vue'
 import BusinessCard from '../components/BusinessCard.vue'
 import Mediahall from '../components/Mediahall.vue'
-import Agenda from '../components/Agenda.vue'
 import MediaPartnerProfile from '../components/MediaPartnerProfile.vue'
 import StartupsDemoDay from '../components/StartupsDemoDay.vue'
 import StartupProfile from '../components/StartupProfile.vue'
 import DemoDayPitchingBooth from '../components/DemoDayPitchingBooth.vue'
+
+import Agenda from '../components/Agenda.vue'
+import WorkshopAgenda from '../components/WorkshopAgenda.vue'
+
+import Investors from '../components/Investors.vue'
+import InvestFundProfile from '../components/InvestFundProfile.vue'
 
 import Profile from '../components/profile/Profile.vue'
 import MyInterviews from '../components/profile/MyInterviews.vue'
@@ -149,8 +154,8 @@ const router = new Router({
                 platformLaunch: true
             }
         },
-        {
-            path: '/:id/startupsdemoday',
+        {   // startup investment profile
+            path: '/:id/sip',
             name: "StartupsDemoDay",
             component: StartupsDemoDay,
             meta: {
@@ -159,7 +164,7 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/startupsdemoday/:name',
+            path: '/:id/sip/:name',
             name: "StartupProfile",
             component: StartupProfile,
             meta: {
@@ -184,16 +189,44 @@ const router = new Router({
                 requiresAuth: true,
                 platformLaunch: true
             }
+        },
+        {
+            path: '/:id/investors',
+            name: "Investors",
+            component: Investors,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/wa',
+            name: "WorkshopAgenda",
+            component: WorkshopAgenda,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/ifp',
+            name: "InvestFundProfile",
+            component: InvestFundProfile,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            },
+            props: (route) => ({ name: route.query.name })
         }
     ]
 })
 
 router.beforeEach((to, from, next) => {
 
-    if (to.meta.platformLaunch && new Date().getTime() < startDate) {
-        window.location.pathname = '/noaccess'
-    }
-    else {
+     if (to.meta.platformLaunch && new Date().getTime() < startDate) {
+         window.location.pathname = '/noaccess'
+     }
+     else {
         if (to.path == "/noaccess") {
             next()
         }
@@ -250,8 +283,9 @@ router.beforeEach((to, from, next) => {
                     window.location.pathname.split("/")[2] != "mediahall" &&
                     window.location.pathname.split("/")[2] != "agenda" &&
                     window.location.pathname.split("/")[2] != "profile" && 
-                    window.location.pathname.split("/")[2] != "startupsdemoday" &&
-                    window.location.pathname.split("/")[2] != "ddpb"
+                    window.location.pathname.split("/")[2] != "sip" &&
+                    window.location.pathname.split("/")[2] != "ddpb" &&
+                    window.location.pathname.split("/")[2] != "investors"
                 ) {
                     window.location.pathname = `/${window.location.pathname.split("/")[1]}/home`
                 }
@@ -266,7 +300,7 @@ router.beforeEach((to, from, next) => {
         }
         else 
             next()
-    }
+     }
 })
 
 export default router

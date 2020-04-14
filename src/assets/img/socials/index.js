@@ -7,5 +7,7 @@ module.exports = {
     Reddit: require('./reddit.svg'),
     Telegram: require('./telegram.svg'),
     Twitter: require('./twitter.svg'),
-    Website: require('./website.svg')
+    Website: require('./website.svg'),
+    Gitter: require('./gitter.svg'),
+    Youtube: require('./youtube.svg')
 }

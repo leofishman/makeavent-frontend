@@ -15,7 +15,7 @@
                                         <b-link v-on:click="$root.track(name, website)" :href="website" target="_blank" class="block-display">
                                             <div>
                                                 <img class="social-icon" :src="socialLogos['Website']" alt="">
-                                                Website
+                                                {{$root.content.common.Website}}
                                             </div>
                                         </b-link>
                                         <b-link v-for="(el, key, index) in socials" :key="index" v-on:click="track(el)" :href="el" target="_blank" class="block-display">
@@ -72,8 +72,8 @@
                     </div>
 
                     <div style="padding:0px 2rem;">
-                        <b-button class="join-button" variant="primary" v-on:click="/*startMeeting()*/">
-                            Join
+                        <b-button class="join-button" variant="primary" v-on:click="joinWebinar()">
+                            {{$root.content.common.join}}
                         </b-button>
                     </div>
 
@@ -128,12 +128,13 @@
                             </div>
                         </div>
                         <div
+                            v-else
                             class="centrify section-faded-text"
                         >
                             <div class="red hover" v-html="
                                 $root.content.onlyForXWithoutUpgrade(
                                     $root.content.chatWith.toLowerCase() + $root.capitalizeFirstLetter(name),
-                                    $root.content.investor
+                                    $root.content.common.investor
                                 )
                             "></div>
                         </div>
@@ -207,14 +208,14 @@ export default {
 
             this.ready = true
 
-            this.$root.isChatAvailable("startup").then((res) => {
+            this.$root.checkComponentAccess("startupchat").then((res) => {
                 this.chatAvailable = res
             })
 
             this.chat = io(socket, {
                 query: {
                     token: this.token,
-                    startup: this.name
+                    startup: `demoday_${this.name}`
                 }
             })
 
@@ -284,6 +285,115 @@ export default {
             let chatlist = document.getElementById('messages-box-startup')
             if (chatlist)
                 chatlist.scrollTo(0, chatlist.scrollHeight)
+        },
+
+        joinWebinar () {
+            this.$root.getWebinar(this.startup._id).then(webinar => {
+                this.$root.joinWebinar(webinar.zoomWebinarId, "")
+            })
+        },
+
+        chatMessageClass (message) {
+            let admins = []
+            Object.values(this.contacts).map(el => {
+                admins.push(el.email)
+            })
+
+            if (this.$root.isThatMe(message.from.email))
+                return 'chat-message me'
+
+            else if (admins.includes(message.from.email))
+                return 'chat-message admin'
+
+            else
+                return 'chat-message'
+        },
+
+        sendMessage (e) {
+            const id = () => {
+                return Math.random().toString().split(".")[1]
+            }
+            if (e.keyCode == 13 && !e.shiftKey) {
+                e.preventDefault();
+                
+                this.userTextMessage = this.userTextMessage.replace(/\n/g, '<br>')
+
+                if (this.quotedMessage) {
+                    this.chat.emit('new_message', {
+                        quoteId: this.quoteId,
+                        html: `
+                            <div class="quoted-answer">
+                                ${this.quotedMessage}
+                            </div>
+                            ${this.userTextMessage}
+                        `,
+                        id: id(),
+                        message: this.userTextMessage
+                    })
+                }
+                else {
+                    this.chat.emit('new_message', { message:this.userTextMessage, id: id(), html:this.userTextMessage })
+                }
+                this.userTextMessage = ""
+                this.showQuote = ''
+                this.quotedMessage = ''
+                this.quotedName = ''
+            }
+        },
+
+        showReplyButton (el, index) {
+            
+            this.showQuote = false
+            this.quotedMessage = ''
+            this.quotedName = ''
+
+            if (el.from.email != this.$root.profile.email) {
+                if (this.showMessageModal === index)
+                    this.showMessageModal = false
+    
+                else 
+                    this.showMessageModal = index
+            }
+        },
+
+        closeReply () {
+            this.showQuote = false
+            this.quotedMessage = ''
+            this.quotedName = ''
+            this.quoteId = ''
+            this.showMessageModal = false
+        },
+
+        doReply (el, index) {
+            this.showMessageModal = false
+            this.showQuote = true
+            this.quotedMessage = el.message
+            this.quotedName = el.from.name.split(" ")[0]
+            this.quoteId = el.id
+        },
+
+        fireNotification (chatname, data) {
+            let low_chatname = chatname.toLowerCase()
+            
+            if (this.$root.notificationAllowed || Notification.permission == "granted") {
+                window.notification = new Notification(`${data.from.name.split(" ")[0]} from ${data.from.company} replied to you.`, {
+                    icon: `${env.self}/img/sponsors/${chatname}/${chatname}.png`,
+                    body: data.message,
+                })
+                let self = this
+                notification.onclick = function(event) {
+                    event.preventDefault()
+                    // window.open(`${env.self}/${self.$root.token}/company?name=${low_chatname}&reply=${data.id}`)
+                }
+            }
+        },
+
+        focusToReply (id) {
+            let message = this.chatHistory.filter(el => el.id == id)
+
+            if (message.length) {
+                this.doReply(message[0])
+            }
         },
     },
 }

@@ -4,6 +4,8 @@
 
     <interview-agenda></interview-agenda>
     <ongoing-interviews></ongoing-interviews>
+    <zoom-frame></zoom-frame>
+    <error-message></error-message>
 
     <b-sidebar id="sidebar-chat" right title="Chat"  shadow>
       <globalchat></globalchat>

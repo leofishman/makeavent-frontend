@@ -1,14 +1,14 @@
 <template>
     <div>
         <navbar></navbar>
-        <div class="container" style="margin-top:80px;">
+        <div v-if="ready" class="container" style="margin-top:80px;">
             <h1 class="agenda-title">
                 {{$root.content.conferenceAgenda}}
             </h1>
             <b-list-group>
                 
                 <b-list-group-item
-                    v-for="(el, index) in agenda"
+                    v-for="(el, index) in $root.Speakingagenda"
                     :key="index"
                     href="#"
                     :class="
@@ -19,11 +19,11 @@
                     >
                     <b-row>
                         <b-col md="2">
-                            <img :src="el.photo" class="contact-photo">
+                            <img :src="host + el.contact.photo" class="contact-photo">
                         </b-col>
                         <b-col md="8">
-                            <h4 class="mb-1">{{el.name + " " + el.lang[$root.selectedLanguage].role + " " + el.company}}</h4>
-                            <h5 style="margin-top:20px">{{el.lang[$root.selectedLanguage].theme}}</h5>
+                            <h4 class="mb-1">{{el.contact.name + " " + el.contact.role + " " + el.contact.company}}</h4>
+                            <h5 style="margin-top:20px">{{el.theme}}</h5>
                         </b-col>
                         <b-col md="2">
                             <div class="pitch-time-start">{{new Date(el.time).toLocaleString()}}</div>
@@ -31,7 +31,7 @@
                                 <b-button
                                     v-if="eventType(el) == 'finished'"
                                     variant="outline-primary"
-                                    v-on:click="requestOfflineCopy(el.name, el.webinarId)"
+                                    v-on:click="requestOfflineCopy(el.contact.name)"
                                 >
                                     {{$root.content.requestOfflineCopy}}
                                 </b-button>
@@ -39,9 +39,12 @@
                                 <b-button
                                     v-else
                                     variant="outline-primary"
-                                    v-on:click="joinWebinar(el.webinarId)"
+                                    v-on:click="$root.joinWebinar(
+                                        el.webinarId,
+                                        ``
+                                    )"
                                 >
-                                    {{$root.content.join}}
+                                    {{$root.content.common.join}}
                                 </b-button>
                             </div>
                         </b-col>
@@ -56,8 +59,14 @@ import {host} from '../env'
 import Axios from 'axios'
 export default {
     data() {
+        this.ready = false
+        this.$root.check('Speakingagenda').then(_ => {
+            this.ready = true
+        })
+
         return {
-            agenda: this.$root.Speakingagenda
+            host: host,
+            ready: this.ready,
         }
     },
     methods: {
@@ -68,12 +77,8 @@ export default {
                 return 'finished'
         },
 
-        joinWebinar (id) {
-            console.log(id)
-        },
-
         requestOfflineCopy (name, id) {
-            if (this.$root.usertype != 'vip' || this.$root.usertype == "media" || this.$root.usertype == "startup" || this.$root.usertype == "investor")
+            if (this.$root.cloo(this.$root.usertype, 'vip|startup|investor|media'))
                 this.$root.showMessageToUpgradeStrict('access to offline materials', 'VIP')
             else {
                 Axios.post(`${host}/offlinecopy`, {

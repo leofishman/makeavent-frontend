@@ -37,9 +37,12 @@
                             <div style="margin-top:20px; text-align:center;">
                                 <b-button
                                     variant="outline-primary"
-                                    v-on:click="joinWebinar(el.webinarId)"
+                                    v-on:click="$root.joinWebinar(
+                                        el.webinarId,
+                                        `${host}/${$root.token}/ddpb`
+                                    )"
                                 >
-                                    {{$root.content.join}}
+                                    {{$root.content.common.join}}
                                 </b-button>
                             </div>
                         </b-col>
@@ -72,10 +75,6 @@ export default {
                 return 'ongoing'
             else if (new Date().getTime() > Number(el.time )&& new Date().getTime() > Number(el.time )+ 2700000)
                 return 'finished'
-        },
-
-        joinWebinar (id) {
-            console.log(id)
         },
     },
 }

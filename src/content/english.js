@@ -62,9 +62,6 @@ export default {
     upgradeFor: (component, forthem, forx) => {
         return `We are appologizing, but <strong>${component}</strong> is available only for ${forthem} attenders.<br>Would you like to upgrade your ticket for $${forx}.00`
     },
-    findInEbooth: "Find me in e-BOOTH",
-    findInSpeakers: "Find me in Conference Agenda",
-    findInWorkshop: "Find me in Workshop Agenda",
     requestMyBusinessCard: "Request my business card",
     sheduleAprivateCall: "Sсhedule a private call with me",
     titleForLoginWithTempEmail: "Welcome!<br>Manager of your company or Friend purchased ticket for you.<br>Please, provide real contact information and sign in.",
@@ -87,7 +84,7 @@ export default {
     business: "Business",
     cards: "Cards",
     basic: "Basic",
-    willBeAtMay: `The conference has not started yet. Please come back after May 14th at ${new Date(startDate).toString().split("2020")}`,
+    willBeAtMay: `The conference has not started yet. Please come back after May 25th at ${new Date(startDate).toString().split("2020")}`,
     followUsOnSocial: "Follow us on social media",
     chat: "Chat",
     upgradeToAccess: (x, y) => {
@@ -98,7 +95,7 @@ export default {
     chooseTicketType: "Choose ticket type",
     watchLiveInterview: "Watch<br>live<br>interview",
     conferenceAgenda: "Conference Agenda",
-    join: "Join",
+    
     requestOfflineCopy: "Request recorded copy",
     success: "Success",
     offlineMaterialSent: (name) => {
@@ -117,8 +114,53 @@ export default {
     pending: "Pending",
     accept: "Accept",
 
+    common: {
+        Website: "Website",
+        join: "Join",
+        investor: 'Investor',
+        alreadyConnected: "Connected"
+    },
+
     StartupsDemoDay: {
         ddpb: 'Demo Day Pitching Booth',
         investors: "Investors"
+    },
+
+    MediaPartnerProfile: {
+        watchLiveInterview: "Watch live interview"
+    },
+
+    InvestFundProfile: {
+        watchLiveInterview: "Watch live interview"
+    },
+
+    OngoingInterviews: {
+        goingInterviews: "Ongoing interviews",
+        with: "with"
+    },
+
+    ErrorMessageModal: {
+        webinarNotSet: "Preparing webinar..."
+    },
+
+    ErrorMessages: {
+        1: 'We updating webinar host, sorry for the inconvinience'
+    },
+
+    VipMeetingRoom: {
+        findInEbooth: "Find me in e-BOOTH",
+        findInSpeakers: "Find me in Conference Agenda",
+        findInWorkshop: "Find me in Workshop Agenda",
+        findInMediaPartner: "Find me in Media e-BOOTH",
+        findInStartups: "Find me in Startup Demo Day"
+    },
+
+    OngoingWorkshops: {
+        ongoingWorkshops: "Ongoing workshops",
+        title: "Workshop Agenda"
+    },
+
+    ProfileComponent: {
+        toChangePhoto: "Hover to change photo"
     }
 }

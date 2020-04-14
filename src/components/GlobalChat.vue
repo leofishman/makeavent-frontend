@@ -130,7 +130,7 @@ export default {
             this.chatHistory.push(data)
         })
 
-        this.$root.isChatAvailable("global").then(res => {
+        this.$root.checkComponentAccess("globalchat").then(res => {
             this.chatAvailable = res
         })
 

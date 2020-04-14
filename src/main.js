@@ -32,11 +32,14 @@ import Desktop from './components/desktop/Index.vue'
 import Mobile from './components/mobile/Index.vue'
 import GlobalChat from './components/GlobalChat.vue'
 import VipChat from './components/VipChat.vue'
+
+/**
+ * @modals
+ */
 import InterviewAgenda from './components/modals/Interview-agenda.vue'
 import OngoingInterview from './components/modals/Ongoing-interviews.vue'
-
-  
-// import { ZoomMtg } from "zoomus-jssdk";
+import ZoomFrame from './components/modals/Zoom-frame.vue'
+import ErrorModal from './components/modals/Error-message.vue'
 
 /**
  * @VUE_uses
@@ -68,9 +71,19 @@ Vue.component('interview-agenda', InterviewAgenda)
 Vue.component('ongoing-interviews', OngoingInterview)
 
 /**
+ * @Zoom
+ */
+Vue.component('zoom-frame', ZoomFrame)
+
+/**
  * @profile
  */
 Vue.component('navbar-profile', NavbarProfile)
+
+/**
+ * @Error
+ */
+Vue.component('error-message', ErrorModal)
 
 const EventBus = new Vue();
 window.EventBus = EventBus
@@ -99,20 +112,33 @@ new Vue({
     
     let self = this
 
-    this.getResourses()
+    // this code will fetch profile and resources if not loaded for some reason
+    setInterval(() => {
+      if (
+        self.$router.currentRoute.name != "Noaccess" &&
+        self.$router.currentRoute.name != "Password" &&
+        self.$router.currentRoute.name != "LoginThenBusinessCard" && 
+        self.$router.currentRoute.name != "LoginWithTempEmail"
+      ) {
+        if (self.profile === undefined || self.usertype === undefined || self.token === undefined)
+          this.getUser()
+  
+        if (
+            self.Investors === undefined &&
+            self.MediaPartners === undefined &&
+            self.Speakers === undefined &&
+            self.Sponsors === undefined &&
+            self.Startups === undefined &&
+            self.Workshop === undefined
+          )
+            this.getResourses()
+      }
+    }, 1000)
 
     if (this.checkNavShouldBeWithToken()) {
-      Axios.get(host+`/login/checkToken?access=${window.location.pathname.split('/')[1]}`, {
-        headers: {
-          authorization: localStorage.auth
-        }
-      })
-      .then(data => {
-        data = data.data
-        this.profile = data.profile
-        this.token = data.accessLink
-        this.usertype = data.type
-        
+      this.getUser()
+      .then(this.getResourses)
+      .then(_ => {
         this.getPengingCards()
         this.getActiveBusinessCards()
 
@@ -207,6 +233,24 @@ new Vue({
     }
   },
   methods: {
+    getUser () {
+      return new Promise((resolve, reject) => {
+        Axios.get(host+`/login/checkToken?access=${window.location.pathname.split('/')[1]}`, {
+          headers: {
+            authorization: localStorage.auth
+          }
+        })
+        .then(data => {
+          data = data.data
+          this.profile = data.profile
+          this.token = data.accessLink
+          this.usertype = data.type
+
+          resolve(true)
+        })
+      })
+    },
+
     track (name, url) {            
       axios.post(`${env.host}/track`, {
         url: url,
@@ -217,39 +261,61 @@ new Vue({
     },
 
     getResourses () {
-      Axios.get(`${host}/resources?names=investors,mediapartners,speakers,sponsors,startups,workshop`, {
-        headers: {
-          authorization: localStorage.auth
-        }
-      })
-      .then(res => {
-        this.Investors = res.data.investors
-        this.MediaPartners = res.data.mediapartners
-        this.Speakers = res.data.speakers
-        this.Sponsors = res.data.sponsors
-        this.Startups = res.data.startups
-        this.Workshop = res.data.workshop
-
-        if (this.Workshop.length > 1) 
-          this.WorkshopAgenda = this.Workshop.filter((a, b) => a.time - b.time)
-        else
-          this.WorkshopAgenda = this.Workshop
-
-        if (this.Speakers.length > 1) 
-          this.Speakingagenda = this.Speakers.filter((a, b) => a.time - b.time)
-        else
-          this.Speakingagenda = this.Speakers
-
-        if (this.Startups.length > 1) 
-          this.DemoDayAgenda = this.Startups.filter((a, b) => a.time - b.time)
-        else
-          this.DemoDayAgenda = this.Startups
-
+      return new Promise((resolve, reject) => {
+        Axios.get(`${host}/resources?names=investors,mediapartners,speakers,sponsors,startups,workshop,investfunds`, {
+          headers: {
+            authorization: localStorage.auth
+          }
+        })
+        .then(res => {
+          this.Investors = res.data.investors
+          this.MediaPartners = res.data.mediapartners
+          this.Speakers = res.data.speakers
+          this.Sponsors = res.data.sponsors
+          this.Startups = res.data.startups
+          this.Workshop = res.data.workshop
+          this.InvestFunds = res.data.investfunds
+  
+          if (this.Workshop.length > 1) 
+            this.WorkshopAgenda = this.Workshop.filter((a, b) => a.time - b.time)
+          else
+            this.WorkshopAgenda = this.Workshop
+  
+          if (this.Speakers.length > 1) 
+            this.Speakingagenda = this.Speakers.filter((a, b) => a.time - b.time)
+          else
+            this.Speakingagenda = this.Speakers
+  
+          if (this.Startups.length > 1) 
+            this.DemoDayAgenda = this.Startups.filter((a, b) => a.time - b.time)
+          else
+            this.DemoDayAgenda = this.Startups
+          
+          resolve(true)
+        })
       })
     },
 
     joinWebinar (id, leaveUrl) {
-      window.EventBus.$emit('join-meeting-room')
+      window.EventBus.$emit('open-webinar-window', { 
+        meetingNumber: id,
+        leaveUrl: leaveUrl
+      })
+    },
+
+    getWebinar (name) {
+      return new Promise((resolve, reject) => {
+        Axios.get(`${host}/webinars?name=${name}`)
+        .then(res => {
+          resolve(res.data)
+        })
+        .catch(e => {
+          window.EventBus.$emit('show-error-modal', {
+            text: this.$root.content.ErrorMessages[1],
+            errorMessage: 'webinarNotSet'
+          })
+        })
+      })
     },
 
     getPengingCards () {
@@ -308,6 +374,13 @@ new Vue({
       })
       .then(el => {
         window.EventBus.$emit('close-overlay-by-id', card._id)
+      })
+    },
+
+    tryGetCompanyLogo (name) {
+      return new Promise(async (resolve, reject) => {
+        const response = await Axios.get(host + `/data/companylogo/${name}`)
+        resolve(response.data)
       })
     },
 
@@ -375,7 +448,6 @@ new Vue({
       return new Promise(async (resolve, reject) => {
         let timer = setInterval(async () => {
           const list = vars.map(el => new Promise((resolve, reject) => {
-            console.log(el, self[el])
             if (self[el])
               resolve(true)
           }))
@@ -985,36 +1057,54 @@ new Vue({
       }
     },
 
-    isChatAvailable (type) {
+    /**
+     * @description cloo - Check Like Or Operator. Instead of a || b || ...
+     * @param {string} valueToCheck parameter that should appear in options
+     * @param {string} str option to compare value to
+     */
+    cloo (valueToCheck, str) {
+      const arr = str.split("|")
+      if (arr.includes(valueToCheck))
+        return true
+      else
+        return false
+    },
+
+    checkComponentAccess (type) {
       return new Promise ((resolve, reject) => {
-        let self = this
-        let timer = setInterval(() => {
-          if (self.usertype) {
-            clearInterval(timer)
+        this.check('usertype').then(_ => {
+          if (this.usertype) {
             switch (type) {
-              case 'global' : 
-                if (self.usertype == "business" || self.usertype == "vip" || self.usertype == "media" || self.usertype == "startup" || self.usertype == "investor")
+              case 'globalchat' : 
+                if (this.cloo(this.usertype, "business|vip|media|startup|investor"))
                   resolve(true)
                 else
                   resolve(false)
                 break
 
-              case 'vip' :
-                if (self.usertype == "vip" || self.usertype == "media" || self.usertype == "startup" || self.usertype == "investor")
+              case 'vipchat' :
+                if (this.cloo(this.usertype, "vip|media|startup|investor"))
                   resolve(true)
                 else
                   resolve(false)
                 break
 
-              case 'company' : 
-                if (self.usertype == "business" || self.usertype == "vip" || self.usertype == "media" || self.usertype == "startup" || self.usertype == "investor")
+              case 'companychat' : 
+                if (this.cloo(this.usertype, "business|vip|media|startup|investor"))
                   resolve(true)
                 else
                   resolve(false)
                 break
 
-              case 'startup' : 
-                if (self.usertype == "investor")
+              case 'startupchat' : 
+                if (this.usertype == "investor")
+                  resolve(true)
+                else
+                  resolve(false)
+                break
+
+              case "investorslist" :
+                if (this.cloo(this.usertype, 'investor|startup|media'))
                   resolve(true)
                 else
                   resolve(false)
@@ -1024,5 +1114,9 @@ new Vue({
         })
       })
     },
+
+    openModal (name, data) {
+      window.EventBus.$emit(name, data)
+    }
   },
 }).$mount('#app')

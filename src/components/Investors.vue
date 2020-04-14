@@ -3,16 +3,19 @@
         <navbar></navbar>
         <b-container fluid="sm" style="width:1250px">
             <b-card
-                v-for="(el, index) in vipMembers" :key="index"
+                v-for="(el, index) in $root.Investors" :key="index"
                 footer-bg-variant="outline-warning"
                 style="max-width:100%; margin-top:50px;"
             >
                 <b-card-body class="canclick">
                     <b-row no-gutters>
+                        <b-col md="2">
+                            <img width="100%" :src="el.companyLogo" alt="">
+                        </b-col>
                         <b-col md="2" style="text-align:center">
                             <img class="contact-photo" :src="el.photo" alt="">
                         </b-col>
-                        <b-col md="10">
+                        <b-col md="8">
                             <b-row>
                                 <b-col md="8">
                                     <div style="font-size:32px">
@@ -23,12 +26,9 @@
                                     </b-row>
                                     <b-row v-else style="margin-top:20px;">
                                         <b-col>
-                                            <div v-if="!checkIfAlreadyAFriend(el)" class="inline hover fat underline" v-on:click="$root.showBCrequesttoast(el, index)">
+                                            <div class="inline hover fat underline" v-on:click="$root.showBCrequesttoast(el, index)">
                                                 <img class="inline small-link-icon" src="../assets/img/contact.png" width="20px">
                                                 {{$root.content.requestMyBusinessCard}}
-                                            </div>
-                                            <div v-else>
-                                                {{$root.content.common.alreadyConnected}}
                                             </div>
                                             <b-toast
                                                 :id="`req-contact-toast-${el._id}-${index}`"
@@ -59,34 +59,22 @@
                                     </b-row>
                                 </b-col>
                                 <b-col md="4" style="margin:auto;">
-                                    <div v-if="el.sponsors">
-                                        <div class="inline hover fat right-links" v-on:click="openPage('sponsor', el.sponsors)">
+                                    <div v-if="el.booth">
+                                        <div class="inline hover fat right-links" v-on:click="openPage(el.booth)">
                                             <img class="inline small-link-icon" src="../assets/img/booth.png">
-                                            {{content.findInEbooth}}
+                                            {{$root.content.findInEbooth}}
                                         </div>
                                     </div>
-                                    <div v-if="el.speakers">
-                                        <div class="inline hover fat right-links" v-on:click="openPage('speaker', el.speakers)">
+                                    <div v-if="el.speaker">
+                                        <div class="inline hover fat right-links" v-on:click="openPage(el.speaker)">
                                             <img class="inline small-link-icon" src="../assets/img/speaker.png">
-                                            {{content.findInSpeakers}}
+                                            {{$root.content.findInSpeakers}}
                                         </div>
                                     </div>
                                     <div v-if="el.workshop">
-                                        <div class="inline hover fat right-links" v-on:click="openPage('workshop', el.workshop)">
+                                        <div class="inline hover fat right-links" v-on:click="openPage(el.workshop)">
                                             <img class="inline small-link-icon" src="../assets/img/worksshop.png">
-                                            {{content.findInWorkshop}}
-                                        </div>
-                                    </div>
-                                    <div v-if="el.mediapartner">
-                                        <div class="inline hover fat right-links" v-on:click="openPage('mediapartner', el.mediapartner)">
-                                            <img class="inline small-link-icon" src="../assets/img/worksshop.png">
-                                            {{content.findInMediaPartner}}
-                                        </div>
-                                    </div>
-                                    <div v-if="el.startup && $root.usertype == 'investor'">
-                                        <div class="inline hover fat right-links" v-on:click="openPage('startup', el.startup)">
-                                            <img class="inline small-link-icon" src="../assets/img/worksshop.png">
-                                            {{content.findInStartups}}
+                                            {{$root.content.findInWorkshop}}
                                         </div>
                                     </div>
                                 </b-col>
@@ -104,114 +92,36 @@ import {host, self} from '../env'
 
 export default {
     data() {
-        this.vipMembers = []
         this.activiness = []
 
-        this.$root.check('usertype token Sponsors').then(async _ => {
-            if ( this.verifyVip() ) {
-                await this.getVipMembers()
-                this.adInfoToSpeakers()
+        this.$root.check('usertype token Investors').then(async _ => {
+            if ( this.$root.checkComponentAccess('invstorslist') ) {
+                this.adInfoToInvestor()
 
-                this.displayContent = true
+                
             }  
         })
 
         return {
             displayContent: false,
-            vipMembers: this.vipMembers,
-            content: this.$root.content.VipMeetingRoom
         }
     },
     methods: {
-        checkIfAlreadyAFriend (card) {               
-            if (this.$root.activeBusinessCards.filter(el => el._id == card._id ).length)
-                return true
-            else
-                return false
-        },
-
-        verifyVip () {
-            if (this.$root.usertype == "vip" || this.$root.usertype == "media" || this.$root.usertype == "startup" || this.$root.usertype == "investor") {
-                return true
-            }
-            else 
-                this.$root.showMessageToUpgrade('VIP e-MEETING ROOM', 'VIP')
-        },
-
-        getVipMembers () {
-            return new Promise((resolve, reject) => {
-                axios.get(`${host}/users/vip`, {
-                    headers: {
-                        authorization: localStorage.auth
-                    }
-                })
-                .then(res => {
-                    this.vipMembers = res.data
-                    this.vipMembers.sort(function(a, b){
-                        if(a.name < b.name) { return -1; }
-                        if(a.name > b.name) { return 1; }
-                        return 0;
-                    })
-                    resolve(true)
-                })
-                .catch(e => {
-    
-                }) 
-            })
-        },
-
-        adInfoToSpeakers () {
-            this.vipMembers.map(el => {
+        adInfoToInvestor () {
+            this.$root.Investors.map(async el => {
                 if (!el.photo)
                     el.photo = host + this.$root.tryGetProfilePhoto(el.email)
                 else
                     el.photo = host + el.photo
+
+                el.companyLogo = host + await this.$root.tryGetCompanyLogo(el.company)
+
+                this.displayContent = true
             })
         },
 
-        openPage (type, link) {
-            switch (type) {
-                case 'sponsor' :
-                    this.$router.push({
-                        name:"Company",
-                        query: {
-                            name: link
-                        }
-                    })
-                    break;
-
-                case 'speaker' :
-                    this.$router.push({ name: "Agenda" })
-                    break;
-
-                case 'workshop' :
-    
-                case 'mediapartner' :
-                    this.$router.push({
-                        name: "MediaPartnerProfile",
-                        params: {
-                            name: link
-                        }
-                    })
-                    break;
-
-                case 'startup' : 
-                    if (this.$root.cloo(this.$root.usertype, 'investor'))
-                        this.$router.push({
-                            name: "StartupProfile",
-                            params: {
-                                name: link
-                            }
-                        })
-                    else
-                        this.$router.push({
-                            name:"Company",
-                            query: {
-                                name: link
-                            }
-                        })
-                    break;
-            }
+        openPage (link) {
+            this.$router.push(link.split(self)[1])
         }
     },
 }

@@ -1,7 +1,6 @@
 <template>
     <div>
         <navbar></navbar>
-
         <b-container v-if="ready">
             <b-jumbotron style="height:100%;">
                 <template v-slot:header>
@@ -77,14 +76,16 @@
 <script>
 import socialLogos from '../assets/img/socials'
 import {host} from '../env'
-import Axios from 'axios'
 
 export default {
+    props: {
+        name: {
+            default:"",
+            type: String
+        }
+    },
     data() {
         this.ready = false
-        this.name = this.$router.currentRoute.params.name
-
-        this.token = this.$root.token
         this.description = ""
         this.website = ""
         this.socials = ""
@@ -92,24 +93,21 @@ export default {
         this.logo = ""
         this.watchButtonClass = ""
 
-        this.$root.check('MediaPartners').then(async () => {
-            this.mediaCompany = this.$root.MediaPartners.filter(el => el.name == this.name.toUpperCase())[0]
-            
-            this.description = this.mediaCompany.description
-            this.website = this.mediaCompany.website
-            this.socials = this.mediaCompany.socials
-            this.contacts = this.mediaCompany.contacts
-            this.logo = host + this.mediaCompany.logo
+        this.$root.check('InvestFunds').then(() => {
+            this.ifp = this.$root.InvestFunds.filter(el => el.name == this.name.toUpperCase())[0]
+
+            this.description = this.ifp.description
+            this.website = this.ifp.website
+            this.socials = this.ifp.socials
+            this.contacts = this.ifp.contacts
+            this.logo = host + this.ifp.logo
 
             this.ready = true
-
-            await this.getInterviewByMedia()
-            this.loadWatchButtonClass()
         })
 
         return {
             ready: this.ready,
-            content: this.$root.content.MediaPartnerProfile,
+            content: this.$root.content.InvestFundProfile,
 
             description: this.description,
             website: this.website,
@@ -118,55 +116,14 @@ export default {
             logo: this.logo,
             socialLogos: socialLogos,
 
-            interview: this.interview,
             watchButtonClass: this.watchButtonClass
         }
     },
     methods: {
-        getInterviewByMedia () {
-            return new Promise((resolve, reject) => {
-                Axios.get(`${host}/interviews?id=${this.mediaCompany._id}`)
-                .then(res => {
-                    this.interview = res.data
-                    resolve(true)
-                })
-                .catch(e => {})
-            })
-        },
-
-        loadWatchButtonClass () {
-            if (new Date().getTime() > this.interview.time && this.interview.status == 'ongoing') 
-                this.watchButtonClass = 'watch-interview-button active watch-interview'
-            else
-                this.watchButtonClass = 'watch-interview-button'
-        },
-
-        joinWebinar () {
-            this.$root.getWebinar(this.interview._id)
-            .then(webinar => {
-                this.$root.joinWebinar(webinar.zoomWebinarId, "")
-            })
-        }
+        
     },
 }
 </script>
 <style lang="css">
-    .wath-button-block {
-        margin-top:20px;
-        text-align:center;
-    }
-    .watch-interview-button {
-        height: 50px;
-        width:auto;
-        border-radius: 5px;
-        padding: 10px 20px;
-        font-size: 20px;
-        color:white;
-        text-align: center;
-        line-height: 30px;
-    }
-    .watch-interview-button.active {
-        background-color: #ff0000a8 !important;
-        border-color:#ff0000a8 !important;
-    }
+    
 </style>

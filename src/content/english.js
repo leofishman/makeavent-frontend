@@ -66,6 +66,9 @@ export default {
     newContactReqNote: (name, company, role) => {
         return `${name} ${role} at ${company} is requesting your business card`
     },
+    acceptLaterNote: (profile) => {
+        return `<strong>You can accept it later in <a href="${profile}">profile.</a></strong>`
+    },
     userConfirmedSharingInfo: ({name, role, company}) => {
         return `${name} ${role} at ${company} shared business card with you`
     },

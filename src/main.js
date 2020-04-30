@@ -7,7 +7,10 @@ import App from './App.vue'
 import Buefy from 'buefy'
 import '@/assets/css/style.scss'
 
-import { host, socket } from './env'
+import env from './env'
+const host = env.host
+const socket = env.socket
+const selfhost = env.self
 import VueSocketIO from 'socket.io-client'
 import qrcode from 'qrcode-generator-es6'
 import Notifications from 'vue-notification'
@@ -567,62 +570,21 @@ new Vue({
       }
     },
 
-    // async openRequestContactModal (id, el) {
-    //   if (!this.isThatMe(el.email)) {
-    //     this.$bvToast.hide(id)
-    //     try {
-    //       const response = await Axios.get(host + "/users/bcconnected", {
-    //         headers: {
-    //           authorization: localStorage.auth
-    //         }
-    //       })
-
-    //       const target = response.data.filter(cards => { el.email == cards.email })
-
-    //       window.EventBus.$emit('request_contact_confirmed', target[0])
-    //     }
-    //     catch (e) {
-    //       const content = this.content
-
-    //       let note = content.requestContact(el.name.split(' ')[0])
-    //       let success = content.success
-
-    //       Axios.post(`${host}/users/savebusinesscard`, {
-    //         id: this.profile._id,
-    //         data: el
-    //       }, {
-    //         headers: {
-    //           authorization: localStorage.auth
-    //         }
-    //       }).then(res => {
-    //         window.io.emit('request_contact_information', {
-    //           from: this.profile,
-    //           to: el
-    //         })
-    //         this.$bvModal.msgBoxOk(note, {
-    //           title: success,
-    //           size: 'md',
-    //           buttonSize: 'md',
-    //           okVariant: 'primary',
-    //           okTitle: content.yes,
-    //           cancelTitle: content.no,
-    //           footerClass: 'p-2',
-    //           centered: true
-    //         })
-    //       })
-    //     }
-    //   }
-    // },
-
     openIncomingContactRequest (data) {
       let note = this.content.newContactReqNote(data.name.split(" ")[0], data.company, data.role)
+      let note2 = this.content.acceptLaterNote(`${selfhost}/${this.token}/profile`)
 
-      this.$notify({
-        group: 'new-connection-request',
-        title: note,
-        text: this.content.howToConfirmBusinessCardSharing,
-        duration: 5000
-      });
+      this.$buefy.snackbar.open({
+        duration: 5000,
+        message: `
+        ${note}<br>
+        ${note2}  
+        `,
+        position: 'is-bottom-right',
+        type: 'is-primary',
+        actionText: this.content.accept,
+        queue: false,
+      })
     },
 
     friendRequestAccepted (data) {

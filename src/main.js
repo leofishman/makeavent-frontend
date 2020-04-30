@@ -3,10 +3,10 @@
  */
 import Vue from 'vue'
 import App from './App.vue'
-import { BootstrapVue, BSidebar, SidebarPlugin } from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import './assets/css/style.css'
+
+import Buefy from 'buefy'
+import '@/assets/css/style.scss'
+
 import { host, socket } from './env'
 import VueSocketIO from 'socket.io-client'
 import qrcode from 'qrcode-generator-es6'
@@ -27,36 +27,34 @@ import Content from './content'
  * @global_components
  */
 import Navbar from './components/Navbar.vue'
-import NavbarProfile from './components/profile/Navbar.vue'
-import Desktop from './components/desktop/Index.vue'
-import Mobile from './components/mobile/Index.vue'
-import GlobalChat from './components/GlobalChat.vue'
-import VipChat from './components/VipChat.vue'
+import Desktop from './views/desktop/Index.vue'
+// import Mobile from './components/mobile/Index.vue'
+import GlobalChat from './components/Chats/GlobalChat.vue'
+import VipChat from './components/Chats/VipChat.vue'
+import Pagetitle from './components/Pagetitle.vue'
 
 /**
  * @modals
  */
-import InterviewAgenda from './components/modals/Interview-agenda.vue'
-import OngoingInterview from './components/modals/Ongoing-interviews.vue'
-import ZoomFrame from './components/modals/Zoom-frame.vue'
-import ErrorModal from './components/modals/Error-message.vue'
+import InterviewAgenda from './components/Modals/Interview-agenda.vue'
+import OngoingInterview from './components/Modals/Ongoing-interviews.vue'
+import ZoomFrame from './components/Modals/Zoom-frame.vue'
+import ErrorModal from './components/Modals/Error-message.vue'
 
 /**
  * @VUE_uses
  */
-Vue.use(BootstrapVue)
-Vue.use(SidebarPlugin)
+Vue.use(Buefy)
 Vue.use(Notifications)
 Vue.config.productionTip = false
-
-Vue.component('b-sidebar', BSidebar)
 
 /**
  * @root
  */
 Vue.component('navbar', Navbar)
 Vue.component('desktop', Desktop)
-Vue.component('mobile', Mobile)
+Vue.component('Pagetitle', Pagetitle)
+// Vue.component('mobile', Mobile)
 
 /**
  * @chats
@@ -74,11 +72,6 @@ Vue.component('ongoing-interviews', OngoingInterview)
  * @Zoom
  */
 Vue.component('zoom-frame', ZoomFrame)
-
-/**
- * @profile
- */
-Vue.component('navbar-profile', NavbarProfile)
 
 /**
  * @Error
@@ -233,6 +226,58 @@ new Vue({
     }
   },
   methods: {
+    openExternalInBlank (link) {
+      const a = document.createElement('a')
+      a.href = link
+      a.target = "_blank"
+      a.click()
+    },
+
+    isSocial (data) {
+      return [
+        
+      ]
+    },
+
+    navToPage (name) {
+      switch(name) {
+        case "vip" :
+        case "mediahall" :
+        case "sip" :
+        case "wa" : 
+        case "info" :
+        this.$router.push({
+          path: `/${this.$root.token}/${name}`
+        })
+        break;
+
+        default :
+        this.$router.push({
+          path: `/${this.$root.token}/company`,
+          query: {
+            name: name.toLowerCase()
+          }
+        })
+      }
+    },
+
+    joinStage (name) {
+      this.$root.getWebinar(name).then(webinar => {
+        this.$root.joinWebinar(webinar.zoomWebinarId, "")
+      })
+    },
+
+    getSponsorSlot (id) {
+      return this.Sponsors[id]
+    },
+
+    checkIfAlreadyAFriend (card) {               
+      if (this.activeBusinessCards.filter(el => el._id == card._id ).length)
+        return true
+      else
+        return false
+    },
+
     getUser () {
       return new Promise((resolve, reject) => {
         Axios.get(host+`/login/checkToken?access=${window.location.pathname.split('/')[1]}`, {
@@ -252,7 +297,7 @@ new Vue({
     },
 
     track (name, url) {            
-      axios.post(`${env.host}/track`, {
+      Axios.post(`${host}/track`, {
         url: url,
         profile: name
       })
@@ -379,8 +424,12 @@ new Vue({
 
     tryGetCompanyLogo (name) {
       return new Promise(async (resolve, reject) => {
-        const response = await Axios.get(host + `/data/companylogo/${name}`)
-        resolve(response.data)
+        if (name) {
+          const response = await Axios.get(host + `/data/companylogo/${name.toUpperCase()}`)
+          resolve(response.data)
+        }
+        else
+          resolve('')
       })
     },
 
@@ -478,58 +527,92 @@ new Vue({
         return false
     },
 
-    showBCrequesttoast (profile, index) {
-      if (!this.isThatMe(profile.email)) {
-        this.$bvToast.show(`req-contact-toast-${profile._id}-${index}`)
-      }
-    },
-
-    async openRequestContactModal (id, el) {
+    async showBCrequesttoast (el, index) {
       if (!this.isThatMe(el.email)) {
-        this.$bvToast.hide(id)
-        try {
-          const response = await axios.get(env.host + "/users/bcconnected", {
-            headers: {
-              authorization: localStorage.auth
-            }
-          })
+        const response = await Axios.get(host + "/users/bcconnected", {
+          headers: {
+            authorization: localStorage.auth
+          }
+        })
 
-          const target = response.data.filter(cards => { el.email == cards.email })
-
+        const target = response.data.filter(cards => { el.email == cards.email })
+        
+        if (target.length) {
           window.EventBus.$emit('request_contact_confirmed', target[0])
         }
-        catch (e) {
-          const content = this.content
-
-          let note = content.requestContact(el.name.split(' ')[0])
-          let success = content.success
-
-          Axios.post(`${host}/users/savebusinesscard`, {
-            id: this.profile._id,
-            data: el
-          }, {
-            headers: {
-              authorization: localStorage.auth
+        else {
+          this.$buefy.dialog.confirm({
+            message: this.content.reqBusCardConfirm,
+            cancelText: this.content.no,
+            confirmText: this.content.yes,
+            type: 'is-primary',
+  
+            onConfirm: () => {
+              Axios.post(`${host}/users/savebusinesscard`, {
+                id: el._id,
+                data: this.profile
+              }, {
+                headers: {
+                  authorization: localStorage.auth
+                }
+              }).then(res => {
+                window.io.emit('request_contact_information', {
+                  from: this.profile,
+                  to: el
+                })
+              })
             }
-          }).then(res => {
-            window.io.emit('request_contact_information', {
-              from: this.profile,
-              to: el
-            })
-            this.$bvModal.msgBoxOk(note, {
-              title: success,
-              size: 'md',
-              buttonSize: 'md',
-              okVariant: 'primary',
-              okTitle: content.yes,
-              cancelTitle: content.no,
-              footerClass: 'p-2',
-              centered: true
-            })
           })
         }
       }
     },
+
+    // async openRequestContactModal (id, el) {
+    //   if (!this.isThatMe(el.email)) {
+    //     this.$bvToast.hide(id)
+    //     try {
+    //       const response = await Axios.get(host + "/users/bcconnected", {
+    //         headers: {
+    //           authorization: localStorage.auth
+    //         }
+    //       })
+
+    //       const target = response.data.filter(cards => { el.email == cards.email })
+
+    //       window.EventBus.$emit('request_contact_confirmed', target[0])
+    //     }
+    //     catch (e) {
+    //       const content = this.content
+
+    //       let note = content.requestContact(el.name.split(' ')[0])
+    //       let success = content.success
+
+    //       Axios.post(`${host}/users/savebusinesscard`, {
+    //         id: this.profile._id,
+    //         data: el
+    //       }, {
+    //         headers: {
+    //           authorization: localStorage.auth
+    //         }
+    //       }).then(res => {
+    //         window.io.emit('request_contact_information', {
+    //           from: this.profile,
+    //           to: el
+    //         })
+    //         this.$bvModal.msgBoxOk(note, {
+    //           title: success,
+    //           size: 'md',
+    //           buttonSize: 'md',
+    //           okVariant: 'primary',
+    //           okTitle: content.yes,
+    //           cancelTitle: content.no,
+    //           footerClass: 'p-2',
+    //           centered: true
+    //         })
+    //       })
+    //     }
+    //   }
+    // },
 
     openIncomingContactRequest (data) {
       let note = this.content.newContactReqNote(data.name.split(" ")[0], data.company, data.role)

@@ -1,40 +1,63 @@
 <template>
-    <b-navbar sticky toggleable="lg" type="dark" style="background:black">
-        <b-navbar-brand v-on:click="openPage('home')">
-            <img src="../assets/logo.svg" alt="">
-        </b-navbar-brand>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+		<div class="container">
+			<div class="navbar-brand">
+				<a class="navbar-item" v-on:click="openPage('home')">
+					<img src="@/assets/logo_dark.svg" width="112" height="28">
+				</a>
 
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+				<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+				</a>
+			</div>
 
-        <b-collapse v-if="nav" id="nav-collapse" is-nav>
-            <b-navbar-nav>
-                <b-nav-item v-on:click="openPage('home')">{{$root.content.home}}</b-nav-item>
-                <b-nav-item v-on:click="openPage('agenda')">{{$root.content.agenda}}</b-nav-item>
-                <b-nav-item v-on:click="openPage('mediahall')">{{$root.content.mediahall}}</b-nav-item>
-                <b-nav-item v-on:click="openPage('vip')">{{$root.content.vipMeetingRoom}}</b-nav-item>
-            </b-navbar-nav>
+			<div id="navbarBasicExample" class="navbar-menu">
+				<div class="navbar-start">
+					<a class="navbar-item" v-on:click="openPage('home')">{{$root.content.home}}</a>
+					<a class="navbar-item" v-on:click="openPage('agenda')">{{$root.content.agenda}}</a>
+					<a class="navbar-item" v-on:click="openPage('mediahall')">{{$root.content.mediahall}}</a>
+					<a class="navbar-item" v-on:click="openPage('vip')">{{$root.content.toprow.vipMeetingRoom}}</a>
+				</div>
 
-            <b-navbar-nav class="ml-auto">
-                <b-nav-item style="color:white" v-on:click="openPage('profile')">
-                    {{$root.content.profile}}
-                    <b-badge v-if="$root.pendingCards.length" variant="light">{{$root.pendingCards.length}}</b-badge>
-                </b-nav-item>
-                
-                <b-navbar-nav v-b-toggle.sidebar-chat>
-                    <b-nav-item>
-                        {{$root.content.openChat}}
-                    </b-nav-item>
-                </b-navbar-nav>
+				<div class="navbar-end">
+					<div class="navbar-item">
+						<div class="buttons">
+							<a v-on:click="openPage('profile')" class="button is-outlined is-primary">
+								{{$root.content.profile}}
+                                <span class="tag is-info" v-if="$root.pendingCards.length" variant="light">{{$root.pendingCards.length}}</span>
+							</a>
+							<a class="button is-outlined is-primary">
+								{{$root.content.openChat}}
+							</a>
 
-                <b-nav-item-dropdown text="Language" right>
-                    <b-dropdown-item v-on:click="setLanguage('EN')">EN</b-dropdown-item>
-                    <!-- <b-dropdown-item v-on:click="setLanguage('ES')">ES</b-dropdown-item> -->
-                    <b-dropdown-item v-on:click="setLanguage('ZH')">ZH</b-dropdown-item>
-                    <!-- <b-dropdown-item v-on:click="setLanguage('KO')">KO</b-dropdown-item> -->
-                </b-nav-item-dropdown>
-            </b-navbar-nav>
-        </b-collapse>
-    </b-navbar>
+							<div class="navbar-item has-dropdown is-hoverable">
+								<a class="navbar-link button is-primary">
+									Language
+								</a>
+
+								<div class="navbar-dropdown">
+									<a v-on:click="setLanguage('EN')" class="navbar-item">
+										EN
+									</a>
+									<a v-on:click="setLanguage('ES')" class="navbar-item">
+										ES
+									</a>
+                                    <a v-on:click="setLanguage('ZH')" class="navbar-item">
+                                        ZH
+                                    </a>
+                                    <a v-on:click="setLanguage('KO')" class="navbar-item">
+                                        KO
+                                    </a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
 </template>
 <script>
 export default {
@@ -65,21 +88,3 @@ export default {
     },
 }
 </script>
-<style lang="css">
-    .navbar-dark .navbar-nav .nav-link {
-        font-size: 20px;
-        color: rgb(217, 151, 0);
-    }
-    .navbar-dark .navbar-nav .nav-link:hover {
-        font-size: 20px;
-        color: #ffc43d;
-    }
-    .navbar-dark .navbar-nav .nav-link:focus {
-        font-size: 20px;
-        color: rgb(217, 151, 0);
-    }
-    .navbar-dark .navbar-nav .show > .nav-link, .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .nav-link.active {
-        font-size: 20px;
-        color: rgb(217, 151, 0);
-    }
-</style>

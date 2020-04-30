@@ -7,9 +7,9 @@
     <zoom-frame></zoom-frame>
     <error-message></error-message>
 
-    <b-sidebar id="sidebar-chat" right title="Chat"  shadow>
+    <!-- <b-sidebar id="sidebar-chat" right title="Chat"  shadow>
       <globalchat></globalchat>
-    </b-sidebar>
+    </b-sidebar> -->
 
     <notifications classes='n-light' group="new-connection-request" position="bottom right" width="500px"/>
   </div>

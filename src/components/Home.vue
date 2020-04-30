@@ -1,8 +1,9 @@
 <template>
   <div>
     <navbar :nav="true"></navbar>
+    
     <desktop v-if="!isMobileWidth()"></desktop>
-    <mobile v-if="isMobileWidth()"></mobile>
+    <!-- <mobile v-if="isMobileWidth()"></mobile> -->
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 
 export default {
   name: 'Home',
+  components: {},
   data() {
 
     return {

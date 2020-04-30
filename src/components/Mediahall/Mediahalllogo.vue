@@ -1,0 +1,55 @@
+<template>
+	<div
+		v-if="ready"
+		v-on:click="openMediaPartnerBooth(data)"
+		class="tile is-child mediahall-logo box"
+	>
+		<img
+			v-if="getMediaPartnerSlot(data)"
+			:src="host + getMediaPartnerSlot(data).logo" 
+			:alt="`${getMediaPartnerSlot(data).name} - Media partner of blockconf.digital`"
+		>
+		<div v-else>{{content.mp}}</div>
+	</div>
+</template>
+
+<script>
+import {host} from '@/env'
+
+export default {
+	name: "Mediahalllogo",
+	props: {
+		data: String
+	},
+	data () {
+		this.ready = false
+
+        this.$root.check('MediaPartners').then(_ => {
+            this.ready = true
+		})
+		
+		return {
+			ready: this.ready,
+			host: host,
+			
+			content: this.$root.content.Mediahall
+		}
+	},
+	methods: {
+		openMediaPartnerBooth (id) {
+            const name = this.getMediaPartnerSlot(id).name.toLowerCase()
+            this.$router.push({
+                path: `/${this.$root.token}/mediahall/${name}`,
+            })
+		},
+
+        getMediaPartnerSlot (id) {
+            return this.$root.MediaPartners[id]
+		},
+	},
+}
+</script>
+
+<style scoped>
+
+</style>

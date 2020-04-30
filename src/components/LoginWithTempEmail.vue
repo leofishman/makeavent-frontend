@@ -1,118 +1,117 @@
 <template>
-    <div>
-        <img class="logo" src="../assets/logo.svg" alt="">
-        <div class="center" style="overflow-y: auto; max-height: 50%;">
-            <div class="title-2" v-html="$root.content.titleForLoginWithTempEmail"></div>
-            <b-form-group
-                :label="$root.content.name"
-            >
-                <b-form-input v-model="name" :placeholder="$root.content.pleaseEnter + $root.content.name"></b-form-input>
-            </b-form-group>
+    <div id="login">
+        <div class="container">
+            <section class="section section-login">
+                <div class="columns is-centered">
+                    <div class="column is-half-desktop is-one-third-fullhd">
+                        <figure class="image">
+                            <img src="@/assets/logo_dark.svg">
+                        </figure>
+                        
+                        <div class="box">
+                            <p v-html="$root.content.titleForLoginWithTempEmail"></p>
+                            <form>
+                                <b-field :label="$root.content.name"> 
+                                    <b-input v-model="name" :placeholder="$root.content.pleaseEnter + $root.content.name"></b-input>
+                                </b-field>
 
-            <b-row>
-                <b-col>
-                    <b-form-group
-                        :label="$root.content.systemGenerated + $root.content.email"
-                    >
-                        <b-form-input disabled type="password" v-model="email" ></b-form-input>
-                    </b-form-group>
-                </b-col>
-                <b-col>
-                    <b-form-group
-                        :label="$root.content.new + $root.content.email"
-                    >
-                        <b-form-input type="text" v-model="newemail" :placeholder="$root.content.pleaseEnter + $root.content.new.toLowerCase() + $root.content.email"></b-form-input>
-                    </b-form-group>
-                </b-col>
-            </b-row>
+                                <div class="columns">
+                                    <div class="column">
+                                        <b-field :label="$root.content.systemGenerated + $root.content.email">
+                                            <b-input disabled type="password" v-model="email" ></b-input>
+                                        </b-field>
+                                    </div>
+                                    <div class="column">
+                                        <b-field
+                                            :label="$root.content.new + $root.content.email"
+                                        >
+                                            <b-input type="text" v-model="newemail" :placeholder="$root.content.pleaseEnter + $root.content.new.toLowerCase() + $root.content.email"></b-input>
+                                        </b-field>
+                                    </div>
+                                </div>
 
-            <b-row>
-                <b-col>
-                    <b-form-group
-                        :label="$root.content.systemGenerated + $root.content.password"
-                    >
-                        <b-form-input disabled type="password" v-model="password" ></b-form-input>
-                    </b-form-group>
-                </b-col>
-                <b-col>
-                    <b-form-group
-                        :label="$root.content.new + $root.content.password"
-                    >
-                        <b-form-input type="password" v-model="newpassword" :placeholder="$root.content.pleaseEnter + $root.content.new.toLowerCase() + $root.content.password"></b-form-input>
-                    </b-form-group>
-                </b-col>
-            </b-row>
+                                <div class="columns">
+                                    <div class="column">
+                                        <b-field
+                                            :label="$root.content.systemGenerated + $root.content.password"
+                                        >
+                                            <b-input disabled type="password" v-model="password" ></b-input>
+                                        </b-field>
+                                    </div>
+                                    <div class="column">
+                                        <b-field
+                                            :label="$root.content.new + $root.content.password"
+                                        >
+                                            <b-input type="password" v-model="newpassword" :placeholder="$root.content.pleaseEnter + $root.content.new.toLowerCase() + $root.content.password"></b-input>
+                                        </b-field>
+                                    </div>
+                                </div>
+                                
+                                <b-field
+                                    :label="$root.content.companyName"
+                                >
+                                    <b-input type="text" v-model="companyName" :placeholder="$root.content.pleaseEnter + $root.content.companyName"></b-input>
+                                </b-field>
 
-            <b-form-group
-                :label="$root.content.companyName"
-            >
-                <b-form-input type="text" v-model="companyName" :placeholder="$root.content.pleaseEnter + $root.content.companyName"></b-form-input>
-            </b-form-group>
+                                <b-field
+                                    :label="$root.content.role"
+                                >
+                                    <b-input type="text" v-model="role" :placeholder="$root.content.pleaseEnter + $root.content.role"></b-input>
+                                </b-field>
 
-            <b-form-group
-                :label="$root.content.role"
-            >
-                <b-form-input type="text" v-model="role" :placeholder="$root.content.pleaseEnter + $root.content.role"></b-form-input>
-            </b-form-group>
+                                <b-field
+                                    v-if="type == 'vip'"
+                                    label="Calendly"
+                                >
+                                    <b-input type="text" v-model="calendly" :placeholder="$root.content.pleaseEnter + 'Calendly'"></b-input>
+                                    <b-link class="xxx" href="https://calendly.com/signup" target="_blank">
+                                        {{$root.content.dontHave('Calendly')}}
+                                    </b-link>
+                                </b-field>
 
-            <b-form-group
-                v-if="type == 'vip'"
-                label="Calendly"
-            >
-                <b-form-input type="text" v-model="calendly" :placeholder="$root.content.pleaseEnter + 'Calendly'"></b-form-input>
-                <b-link class="xxx" href="https://calendly.com/signup" target="_blank">
-                    {{$root.content.dontHave('Calendly')}}
-                </b-link>
-            </b-form-group>
+                                <b-field
+                                    :label="$root.content.optionalyProvide('Linkedin, Telegram, Facebook')"
+                                ></b-field>
 
-            <b-form-group
-                :label="$root.content.optionalyProvide('Linkedin, Telegram, Facebook')"
-            ></b-form-group>
+                                <!-- <div class="field">
+                                    <b-switch v-model="tgswitch">Telegram</b-switch>
+                                </div>
+                                <b-field label="Telegram">
+                                    <b-input type="text" :disabled="!tgswitch" v-model="tg" :placeholder="$root.content.pleaseEnter + 'TelegramID' + $root.content.example + 'blockconf'"></b-input>
+                                </b-field>
 
-            <b-form-group>
-                <b-input-group
-                    label="Telegram"
-                >
-                    <b-input-group-prepend is-text>
-                        <b-form-checkbox v-model="tgswitch" switch class="mr-n2"></b-form-checkbox>
-                    </b-input-group-prepend>
-                    <b-form-input type="text" :disabled="!tgswitch" v-model="tg" :placeholder="$root.content.pleaseEnter + 'TelegramID' + $root.content.example + 'blockconf'"></b-form-input>
-                </b-input-group>
+                                <div class="field">
+                                    <b-switch v-model="lnswitch">Linkedin</b-switch>
+                                </div>
+                                <b-field label="Linkedin">
+                                    <b-input type="text" :disabled="!lnswitch" v-model="ln" :placeholder="$root.content.pleaseEnter + 'Linkedin'"></b-input>
+                                </b-field>
 
-                <b-input-group
-                    label="Linkedin"
-                >
-                    <b-input-group-prepend is-text>
-                        <b-form-checkbox v-model="lnswitch" switch class="mr-n2"></b-form-checkbox>
-                    </b-input-group-prepend>
-                    <b-form-input type="text" :disabled="!lnswitch" v-model="ln" :placeholder="$root.content.pleaseEnter + 'Linkedin'"></b-form-input>
-                </b-input-group>
+                                <div class="field">
+                                    <b-switch v-model="fbswitch">Facebook</b-switch>
+                                </div>
+                                <b-field label="Facebook">
+                                    <b-input type="text" :disabled="!fbswitch" v-model="fb" :placeholder="$root.content.pleaseEnter + 'Facebook'"></b-input>
+                                </b-field> -->
 
-                <b-input-group
-                    label="Facebook"
-                >
-                    <b-input-group-prepend is-text>
-                        <b-form-checkbox v-model="fbswitch" switch class="mr-n2"></b-form-checkbox>
-                    </b-input-group-prepend>
-                    <b-form-input type="text" :disabled="!fbswitch" v-model="fb" :placeholder="$root.content.pleaseEnter + 'Facebook'"></b-form-input>
-                </b-input-group>
-            </b-form-group>
+                                <b-button :disabled="!buttonready" v-on:click="login()" type="is-primary" size="is-medium">
+                                    {{$root.content.submit}}
+                                </b-button>
 
-            <b-form-group>
-                <b-button :disabled="!buttonready" v-on:click="login()" variant="primary">
-                    {{$root.content.submit}}
-                </b-button>
-            </b-form-group>
-
-            <div class="bottom">
-                {{$root.content.contactSupport}} support@blockconf.digital
-            </div>
+                                <div class="bottom">
+                                    {{$root.content.contactSupport}} support@blockconf.digital
+                                </div>
+                            </form>
+                        </div>
+                    </div>	
+                </div>
+            </section>
         </div>
     </div>
 </template>
 <script>
 import Axios from 'axios'
-import {self, host} from '../env'
+import {self, host} from '@/env'
 
 export default {
     data() {
@@ -200,18 +199,23 @@ export default {
                 this.$router.push(`${data.accessLink}/home?auth=true`)
             })
             .catch(e => {
-                this.$bvModal.msgBoxOk(this.$root.content.wrongPassTitle, {
+                this.$buefy.dialog.alert({
                     title: this.$root.content.error,
-                    size: 'sm',
-                    buttonSize: 'sm',
-                    okVariant: 'success',
-                    headerClass: 'p-2 border-bottom-0',
-                    footerClass: 'p-2 border-top-0',
-                    centered: true
-                })
-                .then(() => {
-                    this.newemail = ""
-                    this.newpassword = ""
+                    message: this.$root.content.wrongPassTitle,
+                    type: 'is-danger',
+                    icon: 'times-circle',
+                    iconPack: 'fa',
+                    ariaRole: 'alertdialog',
+                    ariaModal: true,
+                    canCancel: true,
+                    onCancel: () => {
+                        this.email = ""
+                        this.password = ""    
+                    },
+                    onConfirm: () => {
+                        this.email = ""
+                        this.password = ""    
+                    }
                 })
             })
         },
@@ -377,15 +381,11 @@ export default {
     },
 }
 </script>
-<style lang="css">
-    .title-2 {
-        font-size: 20px;
-        width: 100%;
+<style lang="scss">
+    .bottom {
+        margin-top:30px;
+        font-size:14px;
         text-align: center;
-        margin-bottom: 20px;
-    }
-    a.xxx {
-        color: blue;
-        font-size: 14px;
+        color: grey;
     }
 </style>

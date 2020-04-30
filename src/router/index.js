@@ -6,28 +6,43 @@ import {host, startDate} from '../env'
 /**
  * @components
  */
-import Home from '../components/Home.vue'
-import NoAccess from '../components/NoAccess.vue'
-import Company from '../components/Company.vue'
-import Password from '../components/Password.vue'
-import VipMeetingRoom from '../components/VipMeetingRoom.vue'
-import LoginWithTempEmail from '../components/LoginWithTempEmail.vue'
-import BusinessCard from '../components/BusinessCard.vue'
-import Mediahall from '../components/Mediahall.vue'
-import MediaPartnerProfile from '../components/MediaPartnerProfile.vue'
-import StartupsDemoDay from '../components/StartupsDemoDay.vue'
-import StartupProfile from '../components/StartupProfile.vue'
-import DemoDayPitchingBooth from '../components/DemoDayPitchingBooth.vue'
+import Home from '@/components/Home.vue'
+import Agenda from '@/components/Agenda/Agenda'
+import Investors from '@/components/Investors/Investors'
 
-import Agenda from '../components/Agenda.vue'
-import WorkshopAgenda from '../components/WorkshopAgenda.vue'
+/**
+ * @DemoDay
+ */
+import DemodayPitchingBooth from '@/components/Demoday/DemodayPitchingBooth'
+import StartupsDemoDay from '@/components/Demoday/StartupsDemoDay.vue'
+import StartupProfile from '@/components/Demoday/StartupProfile.vue'
+import InvestFundProfile from '@/components/Demoday/InvestFundProfile.vue'
 
-import Investors from '../components/Investors.vue'
-import InvestFundProfile from '../components/InvestFundProfile.vue'
+/**
+ * @Media
+ */
+import Mediahall from '@/components/Mediahall/Mediahall.vue'
+import Mediapartnerbooth from '@/components/Mediapartnerbooth/Mediapartnerbooth.vue'
 
-import Profile from '../components/profile/Profile.vue'
-import MyInterviews from '../components/profile/MyInterviews.vue'
-import MyBusinessCards from '../components/profile/MyBusinessCards.vue'
+/**
+ * @VIP
+ */
+import VipMeetingRoom from '@/components/Vip/VipMeetingRoom.vue'
+
+/**
+ * @Workshop
+ */
+import WorkshopAgenda from '@/components/Workshop/WorkshopAgenda.vue'
+
+import NoAccess from '@/components/NoAccess.vue'
+import Company from '@/components/CompanyProfile/Company.vue'
+import Login from '@/components/Login.vue'
+import LoginWithTempEmail from '@/components/LoginWithTempEmail.vue'
+import BusinessCard from '@/components/BusinessCard.vue'
+
+import Profile from '@/components/Profile/Profile.vue'
+import MyInterviews from '@/components/Profile/MyInterviews.vue'
+import MyBusinessCards from '@/components/Profile/MyBusinessCards.vue'
 
 Vue.use(Router)
 
@@ -97,7 +112,7 @@ const router = new Router({
         {
             path: '/login',
             name: "Password",
-            component: Password,
+            component: Login,
             meta: {
                 requiresAuth: false
             }
@@ -105,7 +120,7 @@ const router = new Router({
         {
             path: '/login/businesscard/:id',
             name: "LoginThenBusinessCard",
-            component: Password,
+            component: Login,
             meta: {
                 requiresAuth: false,
             }
@@ -148,7 +163,7 @@ const router = new Router({
         {
             path: '/:id/mediahall/:name',
             name: "MediaPartnerProfile",
-            component: MediaPartnerProfile,
+            component: Mediapartnerbooth,
             meta: {
                 requiresAuth: true,
                 platformLaunch: true
@@ -175,7 +190,7 @@ const router = new Router({
         {
             path: '/:id/ddpb',
             name: "DemoDayPitchingBooth",
-            component: DemoDayPitchingBooth,
+            component: DemodayPitchingBooth,
             meta: {
                 requiresAuth: true,
                 platformLaunch: true

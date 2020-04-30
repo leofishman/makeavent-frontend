@@ -5,7 +5,7 @@
 </template>
 <script>
 
-import {host} from '../env'
+import {host} from '@/env'
 import axios from 'axios'
 
 export default {

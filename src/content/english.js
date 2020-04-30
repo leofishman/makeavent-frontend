@@ -1,6 +1,42 @@
 import {startDate} from '../env'
 
 export default {
+    Agenda: {
+        conferenceAgenda: "Conference Agenda",
+    },
+
+    Agendarow: {
+        remind: "Remind",
+        joinSpeach: "Join Speach"
+    },
+
+    Mediahall: {
+        title: "Media Hall",
+        mp: "Media Partner",
+        wli: "Watch Live Interview",
+        ui: "Upcoming Interviews",
+        nois: "There is no upcomming interviews",
+        oi: "Ongoing Interviews",
+        noupi: "There is no ongoing interviews"
+    },
+
+    Mediapartnerbooth: {
+        
+    },
+
+    Profile: {
+        mbc: "My Business Card",
+        mi: "My Interviews"
+    },
+
+    Company: {
+        joinNowTitle: "Enter e-booth",
+    },
+
+    Chat: {
+        chatPlaceholder: "Please enter your question here",
+    },
+
     noAccessTitle:`We are apologizing but You don't have access`,
     sorryAttender: `Sorry our dear attender.`,
     reasonWhyNoAccess: `It seems like you are trying to open conferense in many tabs.<br> We restricted opening many tabs of conference hall for security reasons.<br> Sorry for any inconvinice.`,
@@ -12,11 +48,10 @@ export default {
     pageWillBeLater: "Please come back later",
     agenda: "Agenda",
     mediahall: "Media Hall",
-    joinNowTitle: "Enter e-booth",
+    
     team: "team",
     chatWith: "Chat with ",
     chatHint: "Shift + Enter for line break, Enter to send message",
-    chatPlaceholder: "Please enter your question here",
     areYouSure: `Please confirm that you want to`,
     request: 'request',
     businessCard: 'business card',
@@ -80,7 +115,6 @@ export default {
     openQrCode: "Open QR-code",
     businessCardSavedToEmail: "Amazing.<br>Business card was sent to your email!",
     vip: "VIP",
-    vipMeetingRoom: `VIP e-MEETING ROOM`,
     business: "Business",
     cards: "Cards",
     basic: "Basic",
@@ -93,16 +127,12 @@ export default {
     or: " or ",
     globalChat: "Global Chat",
     chooseTicketType: "Choose ticket type",
-    watchLiveInterview: "Watch<br>live<br>interview",
-    conferenceAgenda: "Conference Agenda",
     
     requestOfflineCopy: "Request recorded copy",
     success: "Success",
     offlineMaterialSent: (name) => {
         return `Offline copy of ${name} lecture was sent to your email`
     },
-    upcommingInterviews: "Upcomming interviews",
-    nointerviewsScheduled: "There is no upcomming interviews",
     profile: "Profile",
     my: "My",
     page: "Page",
@@ -110,20 +140,41 @@ export default {
     upcomming: "Upcomming",
     past: "Past",
     failed: "Failed",
-    connected: "Connected",
-    pending: "Pending",
     accept: "Accept",
+
+    toprow: {
+        infDesk: "Information Desk",
+        stage: "STAGE",
+        vipMeetingRoom: `VIP e-MEETING ROOM`,
+    },
 
     common: {
         Website: "Website",
         join: "Join",
         investor: 'Investor',
-        alreadyConnected: "Connected"
+        alreadyConnected: "Connected",
+        notify: "Notify",
+        reqbizcard: "Request Business Card",
+        at: "at",
+        today: "Today",
+        connected: "Connected",
+        pending: "Pending",
     },
 
     StartupsDemoDay: {
+        sddb: "Startups Demo Day Booth",
         ddpb: 'Demo Day Pitching Booth',
-        investors: "Investors"
+        investors: "Investors",
+        joinPitching: "Join Pitching",
+        ddChat: "Demo Day Chat",
+        agenda: "Agenda",
+        join: "Join",
+        veb: "Visit E-booth",
+        startup: "Startup"
+    },
+
+    Investors: {
+        rem: "Request E-meeting",
     },
 
     MediaPartnerProfile: {
@@ -148,19 +199,14 @@ export default {
     },
 
     VipMeetingRoom: {
-        findInEbooth: "Find me in e-BOOTH",
-        findInSpeakers: "Find me in Conference Agenda",
-        findInWorkshop: "Find me in Workshop Agenda",
-        findInMediaPartner: "Find me in Media e-BOOTH",
-        findInStartups: "Find me in Startup Demo Day"
+        itsyou: "It is you",
+        rbc: "Request my bussiness card",
+        spc: "Schedule a private call whith me",
+        findInEbooth: "Find me in e-booth",
     },
 
     OngoingWorkshops: {
         ongoingWorkshops: "Ongoing workshops",
         title: "Workshop Agenda"
     },
-
-    ProfileComponent: {
-        toChangePhoto: "Hover to change photo"
-    }
 }

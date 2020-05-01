@@ -236,6 +236,11 @@ new Vue({
       a.click()
     },
 
+    isAdmin (contacts) {
+      let x = contacts.filter(el => el.email == this.profile.email)
+      return x.length ? true : false;
+    },
+
     isSocial (data) {
       return [
         

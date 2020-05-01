@@ -6,6 +6,7 @@
     <ongoing-interviews></ongoing-interviews>
     <zoom-frame></zoom-frame>
     <error-message></error-message>
+    <jitsi-modal></jitsi-modal>
 
     <!-- <b-sidebar id="sidebar-chat" right title="Chat"  shadow>
       <globalchat></globalchat>

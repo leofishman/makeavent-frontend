@@ -68,28 +68,25 @@ export default {
             })
             .then(res => {
                 const data = res.data
-                this.$root.usertype = data.type
-                this.$root.token = data.accessLink
-                
-                localStorage.auth = res.headers.authorization
-                
-                return axios.post(`${host}/login/addsocials`, {
-                    email: this.email,
-                    password: this.password,
-                    Telegram: this.tg,
-                    Facebook: this.fb,
-                    Linkedin: this.ln,
-                })
-            })
-            .then(res => {
-                const profile = res.data[0]
-                this.$root.profile = profile
 
-                if (this.$router.currentRoute.fullPath.split('/')[2] == "businesscard")
-                    this.$router.push(`/${this.$root.token}/businesscard?id=${this.$router.currentRoute.fullPath.split('/')[3]}`)
-                
-                else
-                    this.$router.push(`${this.$root.token}/home`)
+                if (data.redirect) {
+                    this.$root.usertype = data.type
+                    this.$root.token = data.accessLink
+                    this.$root.profile = data.profile
+                    this.$router.push(`/loginrtp?access=${this.$root.token}`)
+                }
+                else {
+                    this.$root.usertype = data.type
+                    this.$root.token = data.accessLink
+                    this.$root.profile = data.profile
+                    localStorage.auth = res.headers.authorization
+                    
+                    if (this.$router.currentRoute.fullPath.split('/')[2] == "businesscard")
+                        this.$router.push(`/${this.$root.token}/businesscard?id=${this.$router.currentRoute.fullPath.split('/')[3]}`)
+                    
+                    else
+                        this.$router.push(`${this.$root.token}/home`)
+                }
             })
             .catch(e => {
                 this.$buefy.dialog.alert({

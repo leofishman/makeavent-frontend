@@ -43,6 +43,7 @@ import InterviewAgenda from './components/Modals/Interview-agenda.vue'
 import OngoingInterview from './components/Modals/Ongoing-interviews.vue'
 import ZoomFrame from './components/Modals/Zoom-frame.vue'
 import ErrorModal from './components/Modals/Error-message.vue'
+import Jitsimodal from './components/Modals/Jitsi-modal.vue'
 
 /**
  * @VUE_uses
@@ -72,9 +73,10 @@ Vue.component('interview-agenda', InterviewAgenda)
 Vue.component('ongoing-interviews', OngoingInterview)
 
 /**
- * @Zoom
+ * @Video
  */
 Vue.component('zoom-frame', ZoomFrame)
+Vue.component('jitsi-modal', Jitsimodal)
 
 /**
  * @Error
@@ -255,13 +257,13 @@ new Vue({
         case "wa" : 
         case "info" :
         this.$router.push({
-          path: `/${this.$root.token}/${name}`
+          path: `/${this.token}/${name}`
         })
         break;
 
         default :
         this.$router.push({
-          path: `/${this.$root.token}/company`,
+          path: `/${this.token}/company`,
           query: {
             name: name.toLowerCase()
           }
@@ -270,8 +272,8 @@ new Vue({
     },
 
     joinStage (name) {
-      this.$root.getWebinar(name).then(webinar => {
-        this.$root.joinWebinar(webinar.zoomWebinarId, "")
+      this.getWebinar(name).then(webinar => {
+        this.joinWebinar(webinar)
       })
     },
 
@@ -346,14 +348,22 @@ new Vue({
           
           resolve(true)
         })
+        .catch(e => {
+          if (!localStorage.auth || localStorage.auth == "undefined") {
+            this.$router.push('/login')
+          }
+        })
       })
     },
 
-    joinWebinar (id, leaveUrl) {
-      window.EventBus.$emit('open-webinar-window', { 
-        meetingNumber: id,
-        leaveUrl: leaveUrl
-      })
+    joinWebinar (data) {
+      console.log(data)
+      if (data.platform == "jitsi") {
+        window.EventBus.$emit('open-jitsi-window', data)
+      }
+      else if (data.platform == "zoom") {
+        window.EventBus.$emit('open-webinar-window', data)
+      }
     },
 
     getWebinar (name) {
@@ -364,7 +374,7 @@ new Vue({
         })
         .catch(e => {
           window.EventBus.$emit('show-error-modal', {
-            text: this.$root.content.ErrorMessages[1],
+            text: this.content.ErrorMessages[1],
             errorMessage: 'webinarNotSet'
           })
         })
@@ -490,7 +500,7 @@ new Vue({
         !this.usertype &&
         !this.$router.currentRoute.fullPath.includes('auth=true') &&
         this.$router.currentRoute.path != '/login' &&
-        this.$router.currentRoute.path != '/loginWithTemporaryEmail' &&
+        this.$router.currentRoute.path != '/loginrtp' &&
         this.$router.currentRoute.path != '/noaccess' &&
         !this.$router.currentRoute.fullPath.includes('businesscard')
       )

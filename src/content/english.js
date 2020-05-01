@@ -102,7 +102,7 @@ export default {
     },
     requestMyBusinessCard: "Request my business card",
     sheduleAprivateCall: "Sсhedule a private call with me",
-    titleForLoginWithTempEmail: "Welcome!<br>Manager of your company or Friend purchased ticket for you.<br>Please, provide real contact information and sign in.",
+    titleForLoginWithTempEmail: "Welcome!<br>Please, reset password provided in email for the greater security",
     password: "Password",
     old: "Old ",
     new: "New ",

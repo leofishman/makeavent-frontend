@@ -135,7 +135,7 @@ const router = new Router({
             }
         },
         {
-            path: '/loginWithTemporaryEmail',
+            path: '/loginrtp',
             name: "LoginWithTempEmail",
             component: LoginWithTempEmail,
             meta: {
@@ -263,7 +263,7 @@ router.beforeEach((to, from, next) => {
         else if (to.path == "/" && !localStorage.auth) {
             window.location.pathname = "/login"
         }
-        else if (to.path == "/loginWithTemporaryEmail" && to.query.access) {
+        else if (to.path == "/loginrtp" && to.query.access) {
             localStorage.auth = ''
             next()
         }

@@ -10,18 +10,27 @@
                         
                         <div class="box">
                             <p v-html="$root.content.titleForLoginWithTempEmail"></p>
-                            <form>
+                            <section>
                                 <b-field :label="$root.content.name"> 
-                                    <b-input v-model="name" :placeholder="$root.content.pleaseEnter + $root.content.name"></b-input>
+                                    <b-input
+                                        v-model="name"
+                                        :disabled="disable_name"
+                                        :placeholder="$root.content.pleaseEnter + $root.content.name"
+                                    ></b-input>
                                 </b-field>
 
                                 <div class="columns">
-                                    <div class="column">
+                                    <div v-if="email.includes('@blockconf.digital')" class="column">
                                         <b-field :label="$root.content.systemGenerated + $root.content.email">
                                             <b-input disabled type="password" v-model="email" ></b-input>
                                         </b-field>
                                     </div>
-                                    <div class="column">
+                                    <div v-else class="column">
+                                        <b-field :label="$root.content.email">
+                                            <b-input disabled type="text" v-model="email" ></b-input>
+                                        </b-field>
+                                    </div>
+                                    <div v-if="email.includes('@blockconf.digital')" class="column">
                                         <b-field
                                             :label="$root.content.new + $root.content.email"
                                         >
@@ -50,49 +59,39 @@
                                 <b-field
                                     :label="$root.content.companyName"
                                 >
-                                    <b-input type="text" v-model="companyName" :placeholder="$root.content.pleaseEnter + $root.content.companyName"></b-input>
+                                    <b-input
+                                        type="text"
+                                        :disabled="disable_companyName"
+                                        v-model="companyName"
+                                        :placeholder="$root.content.pleaseEnter + $root.content.companyName"
+                                    ></b-input>
                                 </b-field>
 
                                 <b-field
                                     :label="$root.content.role"
                                 >
-                                    <b-input type="text" v-model="role" :placeholder="$root.content.pleaseEnter + $root.content.role"></b-input>
+                                    <b-input
+                                        type="text"
+                                        :disabled="disable_role"
+                                        v-model="role"
+                                        :placeholder="$root.content.pleaseEnter + $root.content.role"
+                                    ></b-input>
                                 </b-field>
 
                                 <b-field
                                     v-if="type == 'vip'"
                                     label="Calendly"
                                 >
-                                    <b-input type="text" v-model="calendly" :placeholder="$root.content.pleaseEnter + 'Calendly'"></b-input>
+                                    <b-input
+                                        type="text"
+                                        :disable="disable_calendly"
+                                        v-model="calendly"
+                                        :placeholder="$root.content.pleaseEnter + 'Calendly'"
+                                    ></b-input>
                                     <b-link class="xxx" href="https://calendly.com/signup" target="_blank">
                                         {{$root.content.dontHave('Calendly')}}
                                     </b-link>
                                 </b-field>
-
-                                <b-field
-                                    :label="$root.content.optionalyProvide('Linkedin, Telegram, Facebook')"
-                                ></b-field>
-
-                                <!-- <div class="field">
-                                    <b-switch v-model="tgswitch">Telegram</b-switch>
-                                </div>
-                                <b-field label="Telegram">
-                                    <b-input type="text" :disabled="!tgswitch" v-model="tg" :placeholder="$root.content.pleaseEnter + 'TelegramID' + $root.content.example + 'blockconf'"></b-input>
-                                </b-field>
-
-                                <div class="field">
-                                    <b-switch v-model="lnswitch">Linkedin</b-switch>
-                                </div>
-                                <b-field label="Linkedin">
-                                    <b-input type="text" :disabled="!lnswitch" v-model="ln" :placeholder="$root.content.pleaseEnter + 'Linkedin'"></b-input>
-                                </b-field>
-
-                                <div class="field">
-                                    <b-switch v-model="fbswitch">Facebook</b-switch>
-                                </div>
-                                <b-field label="Facebook">
-                                    <b-input type="text" :disabled="!fbswitch" v-model="fb" :placeholder="$root.content.pleaseEnter + 'Facebook'"></b-input>
-                                </b-field> -->
 
                                 <b-button :disabled="!buttonready" v-on:click="login()" type="is-primary" size="is-medium">
                                     {{$root.content.submit}}
@@ -101,7 +100,7 @@
                                 <div class="bottom">
                                     {{$root.content.contactSupport}} support@blockconf.digital
                                 </div>
-                            </form>
+                            </section>
                         </div>
                     </div>	
                 </div>
@@ -117,22 +116,20 @@ export default {
     data() {
         this.buttonready = false
 
-        this.type = ""
         this.password = ""
-        this.email = ""
-        this.newemail = ""
+        this.email = this.$root.profile.email
+        this.newemail = this.email ? this.email : ""
         this.newpassword = ""
-        this.companyName = ""
-        this.role = ""
-        this.name = ""
-        this.calendly = ""
+        this.type = this.$root.profile.type
+        this.companyName = this.$root.profile.company
+        this.role = this.$root.profile.role
+        this.name = this.$root.profile.name
+        this.calendly = this.$root.profile.calendly
 
-        this.tg = ""
-        this.ln = ""
-        this.fb = ""
-        this.tgswitch = false
-        this.fbswitch = false
-        this.lnswitch = false
+        this.disable_companyName = this.companyName ? true : false
+        this.disable_role = this.role ? true : false
+        this.disable_name = this.name ? true : false
+        this.disable_calendly = this.calendly ? true : false
 
         this.fetchPasswordFromDb()
         
@@ -150,12 +147,10 @@ export default {
             name: this.name,
             calendly: this.calendly,
 
-            tg: this.tg,
-            tgswitch: this.tgswitch,
-            ln: this.ln,
-            fb: this.fb,
-            fbswitch: this.fbswitch,
-            lnswitch: this.lnswitch,
+            disable_companyName: this.disable_companyName,
+            disable_role: this.disable_role,
+            disable_name: this.disable_name,
+            disable_calendly: this.disable_calendly,
         }
     },
     methods: {
@@ -183,9 +178,6 @@ export default {
                 role: this.role,
                 name: this.name,
                 calendly: this.calendly,
-                Telegram: this.tg,
-                Linkedin: this.ln,
-                Facebook: this.fb,
             })
             .then(res => {
                 const data = res.data
@@ -220,44 +212,6 @@ export default {
             })
         },
 
-        checkSocials () {
-            if (!this.tgswitch && !this.fbswitch && !this.lnswitch)
-                return true
-                
-            else {
-                let tg = "noneed"
-                let fb = "noneed"
-                let ln = "noneed"
-
-                if (this.tgswitch)
-                    if (this.tg)
-                        tg = true
-                    else 
-                        tg = false
-
-                if (this.lnswitch)
-                    if (this.ln)
-                        ln = true
-                    else 
-                        ln = false
-
-                if (this.fbswitch)
-                    if (this.fb)
-                        fb = true
-                    else
-                        fb = false
-
-                if (
-                    (tg === true || tg == "noneed") &&
-                    (fb === true || fb == "noneed") &&
-                    (ln === true || ln == "noneed")
-                )
-                    return true
-                else 
-                    return false
-            }
-        },
-
         checkInputReadyness () {
             if (/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test(this.newemail) &&
             this.newpassword &&
@@ -265,20 +219,13 @@ export default {
             this.role &&
             this.name) {
                 if (this.type == "vip") {
-                    if (this.calendly) {
-                        if (this.checkSocials())
-                            return true
-                        else
-                            return false
-                    }
+                    if (this.calendly) 
+                        return true
                     else 
                         return false
                 }
-                else if (this.checkSocials())
-                    return true
                 else
-                    return false
-                    
+                    return true
             }
             else 
                 return false
@@ -320,72 +267,20 @@ export default {
                 this.buttonready = true
             else
                 this.buttonready = false
-        },
-        tg: function () {
-            if (this.checkInputReadyness())
-                this.buttonready = true
-            else
-                this.buttonready = false
-        },
-        tgswitch: function () {
-            if (!this.tgswitch) {
-                this.tg = ""
-                if (this.checkInputReadyness())
-                    this.buttonready = true
-                else
-                    this.buttonready = false
-            }
-            else if (this.checkInputReadyness())
-                this.buttonready = true
-            else
-                this.buttonready = false
-        },
-        ln: function () {
-            if (this.checkInputReadyness())
-                this.buttonready = true
-            else
-                this.buttonready = false
-        },
-        lnswitch: function () {
-            if (!this.lnswitch) {
-                this.ln = ""
-                if (this.checkInputReadyness())
-                    this.buttonready = true
-                else
-                    this.buttonready = false
-            }
-            else if (this.checkInputReadyness())
-                this.buttonready = true
-            else
-                this.buttonready = false
-        },
-        fb: function () {
-            if (this.checkInputReadyness())
-                this.buttonready = true
-            else
-                this.buttonready = false
-        },
-        fbswitch: function () {
-            if (!this.fbswitch) {
-                this.fb = ""
-                if (this.checkInputReadyness())
-                    this.buttonready = true
-                else
-                    this.buttonready = false
-            }
-            else if (this.checkInputReadyness())
-                this.buttonready = true
-            else
-                this.buttonready = false
-        },
+        }
     },
 }
 </script>
 <style lang="scss">
-    .bottom {
-        margin-top:30px;
-        font-size:14px;
-        text-align: center;
-        color: grey;
+    #login {
+        .bottom {
+            margin-top:30px;
+            font-size:14px;
+            text-align: center;
+            color: grey;
+        }
+        .label {
+            font-weight: 400;
+        }
     }
 </style>

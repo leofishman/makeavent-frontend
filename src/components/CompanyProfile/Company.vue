@@ -13,7 +13,7 @@
 							
 							<!-- Company logo -->
 							<div>
-								<img src="@/assets/logo-CRYPTTP.png">
+								<img :src="this.logo">
 							</div>
 
 							<!-- Company contacts -->

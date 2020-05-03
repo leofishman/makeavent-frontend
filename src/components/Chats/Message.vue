@@ -1,30 +1,32 @@
 <template>
     <article :class="messageClass()">
-        <h3 v-on:click="$root.showBCrequesttoast(data.from, index)">{{data.from.name.split(" ")[0]}}</h3>
-        <p class="p-message" v-on:click="showReplyButton(data.from, index)" v-html="data.html"></p>
-        <div v-on:click="doReply(data, index)" v-if="showMessageModal === index" class="reply-button" >
-            <img width="100%" src="@/assets/img/reply.png" alt="">
+        <div>
+            <h3 v-on:click="$root.showBCrequesttoast(data.from, index)">{{data.from.name.split(" ")[0]}}</h3>
+            <p class="p-message" v-on:click="showReplyButton(data.from, index)" v-html="data.html"></p>
+            <div v-on:click="doReply(data, index)" v-if="showMessageModal === index" class="reply-button" >
+                <img width="100%" src="@/assets/img/reply.png" alt="">
+            </div>
         </div>
     </article>
 </template>
 <script>
-export default {
-    name: 'Message',
-    props: {
-        data: Object,
-        index: Number,
-        contacts: Array,
-    },
-    data () {
-        return {
-            showMessageModal: false,
-            showQuote: "",
-            quotedMessage: "",
-            quotedName: "",
-            quoteId: "",
-        }
-    },
-    methods: {
+    export default {
+        name: 'Message',
+        props: {
+            data: Object,
+            index: Number,
+            contacts: Array,
+        },
+        data () {
+            return {
+                showMessageModal: false,
+                showQuote: "",
+                quotedMessage: "",
+                quotedName: "",
+                quoteId: "",
+            }
+        },
+        methods: {
         // Just for test
         messageClass () {
             let admins = []
@@ -43,7 +45,7 @@ export default {
         },
 
         showReplyButton (from, index) {
-				
+            
             this.showQuote = false
             this.quotedMessage = ''
             this.quotedName = ''
@@ -51,7 +53,7 @@ export default {
             if (from.email != this.$root.profile.email) {
                 if (this.showMessageModal === index)
                     this.showMessageModal = false
-    
+                
                 else 
                     this.showMessageModal = index
             }
@@ -73,20 +75,20 @@ export default {
             this.quoteId = el.id
 
             window.EventBus.$emit('reply-to-message', {
-				showMessageModal: this.showMessageModal,
+                showMessageModal: this.showMessageModal,
                 showQuote: this.showQuote,
                 quotedMessage: this.quotedMessage,
                 quotedName: this.quotedName,
                 quoteId: this.quoteId,
-			})
+            })
         },
     },
 }
 </script>
 <style lang="scss" scpoed>
-    .quoted-answer {
-        padding: 0px !important;
-        font-style: italic;
-        border-bottom: 1px solid #c6c6c6;
-    }
+.quoted-answer {
+    padding: 0px !important;
+    font-style: italic;
+    border-bottom: 1px solid #c6c6c6;
+}
 </style>

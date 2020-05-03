@@ -889,7 +889,7 @@ p + p {
 	}
 
 	/*  Basic sponsor */
-	@media screen and (min-width: $desktop) {
+	@media screen and (min-width: $tablet) {
 		.basic {
 			margin: auto;
 			height: 100px;
@@ -899,13 +899,13 @@ p + p {
 			}
 		}
 	}
-	@media screen and (min-width: 1280px) {
+	@media screen and (min-width: $widescreen) {
 		.basic {
 			margin: auto;
 			height: 120px;
 		}
 	}
-	@media screen and (min-width: 1360px) {
+	@media screen and (min-width: $fullhd) {
 		.basic {
 			margin: auto;
 			height: 130px;
@@ -1680,7 +1680,7 @@ p + p {
 				justify-content: center;
 				box-shadow: $shadow-1;
 				img {
-					max-width: 225px;
+					max-width: 90%;
 					max-height: 225px;
 				}
 			}

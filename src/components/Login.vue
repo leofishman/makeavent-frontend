@@ -2,8 +2,8 @@
     <div id="login">
 		<div class="container">
 			<section class="section section-login">
-				<div class="columns is-centered">
-					<div class="column is-half-desktop is-one-third-fullhd">
+				<div class="columns is-variable is-8">
+					<div class="column data-login is-two-fifths">
 						<figure class="image">
 							<img src="@/assets/logo_dark.svg">
 						</figure>
@@ -23,15 +23,70 @@
                                 </b-button>
 							</form>
 						</div>
-					</div>	
+					</div>
+                    <div class="column sponsors-login">
+                        <div class="tile is-ancestor has-text-centered">
+                            <div class="tile is-vertical">
+                                <div class="tile is-parent ls-main">
+                                    <!-- Main -->
+                                    <div class="tile is-child box">
+                                        <img src="@/assets/logo-RSK.png">
+                                    </div>
+                                </div>
+                                <div class="tile ls-platinum">
+                                    <!-- Platinum A -->
+                                    <div class="tile is-parent">
+                                        <div class="tile is-child box">
+                                            <img src="@/assets/logo-FAS.png">
+                                        </div>
+                                    </div>
+                                    <!-- Platinum B -->
+                                    <div class="tile is-parent">
+                                        <div class="tile is-child box">
+                                            <img src="@/assets/logo-CRYPTTP.png">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tile ls-gold">
+                                    <!--[YD] If you like, I can made this in separate components, but it was so few, I don't think necessary -->
+                                    <!-- Gold A -->
+                                    <div class="tile is-parent">
+                                        <div class="tile is-child box">
+                                            <img src="@/assets/logo-test1.png">
+                                        </div>
+                                    </div>
+                                    <!-- Gold B -->
+                                    <div class="tile is-parent">
+                                        <div class="tile is-child box">
+                                            <img src="@/assets/logo-FAS.png">
+                                        </div>
+                                    </div>
+                                    <!-- Gold C -->
+                                    <div class="tile is-parent">
+                                        <div class="tile is-child box">
+                                            <img src="@/assets/logo-test2.png">
+                                        </div>
+                                    </div>
+                                    <!-- Gold D -->
+                                    <div class="tile is-parent">
+                                        <div class="tile is-child box">
+                                            <img src="@/assets/logo-RSK.png">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</section>
 		</div>
 	</div>
 </template>
+
 <script>
 import axios from 'axios'
 import { host } from '@/env'
+import Main from '@/components/Sponsors/Main.vue';
 
 export default {
     data() {

@@ -139,8 +139,8 @@ main {
 		margin-top: 1.5rem;
 		margin: auto;
 		width: fit-content;
-		//color: $grey;
-		font-variant: small-caps;
+		color: $grey;
+		text-transform: capitalize;
 		position: relative;		
 		&:before {
 			content: "";
@@ -1734,14 +1734,20 @@ main {
 		}
 	}
 }
-
+.bg-img {
+	position: absolute;
+	img {
+		width: 100vw;
+		height: 100vh;
+	}
+}
 .bg-light-mode {
-	background-color: red;
 	min-height: 100vh;
 }
 .bg-dark-mode {
-	background-color: $dark;
 	min-height: 100vh;
+	background-color: $dark;
+	//background-image: url("../../assets/icon/icon-facebook.svg");
 	.container {
 		h1, p {
 			color: $dark-invert

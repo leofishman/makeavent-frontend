@@ -1,9 +1,15 @@
 <template>
-    <div v-if="ready" id="profile-company">
+    <!-- [YD] The class of this div may vary, depends if the BG is dark or light mode -->
+    <div v-if="ready" id="profile-company" class="bg-light-mode">
+
+        <!-- [YD] this img should be the BG of the company -->
+        <div class="bg-img"><img src="@/assets/bg/bg-02.jpg"></div>
+        <!-- [YD] Should be dynamic $root.Sponsor.backgroundImage -->
+
 		<navbar></navbar>
+
 		<div class="container">
 			<Pagetitle :data="name"/>
-
 			<section class="section section-profile-company">
 				<div class="columns is-variable is-8">
 					<!-- Profile main -->

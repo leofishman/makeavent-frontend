@@ -2,7 +2,7 @@
 	<!-- Profile chat -->
 	<div style="padding:0px">
 		<div v-if="chatAvailable" style="padding:0px">
-			<div id="messages-box" class="chat-bubble is-clearfix">
+			<div id="messages-box" class="chat-bubble">
 				<Message
 					v-for="(el, index) in chatHistory"
 					:key="index"
@@ -21,13 +21,15 @@
 					</div>
 				</div>
 			</div>
-			<textarea 
-				@keydown="sendMessage($event)"
-				v-model="userTextMessage"
-				class="chat-question has-text-grey-light"
-				type="text"
-				:placeholder="content.chatPlaceholder">
-			</textarea>
+			<div class="textarea-message">
+				<textarea 
+					@keydown="sendMessage($event)"
+					v-model="userTextMessage"
+					class="chat-question"
+					type="text"
+					:placeholder="content.chatPlaceholder">
+				</textarea>
+			</div>
 			<div class="chat-helper has-text-grey-light">
 				<p>Shift + Enter for line break, Enter to send message</p>
 			</div>
@@ -199,15 +201,5 @@
 </script>
 
 <style scoped>
-	textarea {
-        width: 100%;
-        resize: none;
-        border: none;
-        padding: 10px 10px 10px 10px;
-        border-top: 1px solid darkgrey;
-        border-radius: 0px 0px 10px 10px;
-    }
-    textarea:focus {
-        outline: none;
-    }
+
 </style>

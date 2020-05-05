@@ -16,6 +16,7 @@ $grey-lighter: #f9f9f9;
 $primary: #9D6DBE;
 $primary-invert: $white;
 $secondary: #FE9677;
+$secondary-invert: $white;
 
 // Radius
 $radius: none;
@@ -130,6 +131,13 @@ main {
 	cursor: pointer;
 }
 
+// BUTTONS //
+//////////////////////////////////////////
+.button.is-secondary {
+	background-color: $secondary;
+	border-color: transparent;
+	color: $secondary-invert;
+}
 
 // TITLE PAGE //
 //////////////////////////////////////////
@@ -493,6 +501,74 @@ main {
 		.ls-gold {
 			img {
 				max-height: 80px;
+			}
+		}
+	}
+}
+
+// REGISTRATION HALL //
+//////////////////////////////////////////
+#registrationhall {
+	margin-top: 0;
+	
+	.data-login {
+		figure {
+			margin: auto;
+			max-width: 50%;
+		}
+		.box {
+			margin-top: 50px;
+			padding: 40px;
+			box-shadow: $shadow-3;
+			h1 {
+				margin-bottom: 10px;
+			}
+			p {
+				font-size: 0.875em;
+			}
+			form {
+				margin-top: 40px;
+				label {
+					font-weight: normal;
+				}
+				.input:focus {
+					background-color: $white;
+				}
+				.button {
+					margin-top: 20px;
+					padding-left: 2em;
+					padding-right: 2em;
+					font-weight: bold;
+					font-variant: small-caps;
+				}
+			}
+		}
+	}
+	.sponsors-login {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-top: 0;
+		padding-bottom: 0;
+		.box {
+			//box-shadow: $shadow-3;
+			background-color: transparent;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			img {
+				max-width: 90%;
+			}
+		}
+		.ls-main {
+			img {
+				max-height: 250px;
+				min-height: 250px;
+			}
+		}
+		.ls-platinum {
+			img {
+				max-height: 100px;
 			}
 		}
 	}
@@ -2166,7 +2242,7 @@ main {
 	width: 350px;
 	height: calc(100vh - 80px);
 	position: fixed;
-	top: 80px;
+	top: 79px;
 	right: 0;
 	background-color: $white;
 	box-shadow: $shadow-1;

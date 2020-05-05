@@ -63,12 +63,14 @@
                             </b-col>
                         </b-row>
                     </div>
-                    <textarea 
-                    @keydown="sendMessage($event)"
-                    v-model="userTextMessage"
-                    type="text"
-                    :placeholder="$root.content.chatPlaceholder">
-                    </textarea>
+                    <div class="textarea-message">
+                        <textarea 
+                        @keydown="sendMessage($event)"
+                        v-model="userTextMessage"
+                        type="text"
+                        :placeholder="$root.content.chatPlaceholder">
+                        </textarea>
+                    </div>
                 </div>
                 <div class="hint">
                     {{$root.content.chatHint}}

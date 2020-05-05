@@ -6,82 +6,82 @@
         <div class="bg-img"><img src="@/assets/bg/bg-02.jpg"></div>
         <!-- [YD] Should be dynamic $root.Sponsor.backgroundImage -->
 
-		<navbar></navbar>
+        <navbar></navbar>
+        
+        <!-- Live Feed -->
+        <LivefeedCreate />
 
-		<div class="container">
-			<Pagetitle :data="name"/>
-			<section class="section section-profile-company">
-				<div class="columns is-variable is-8">
-					<!-- Profile main -->
-					<div class="column is-one-third profile-main">
-						<!-- Profile top-->
-						<div class="profile-top">
-							
-							<!-- Company logo -->
-							<div>
-								<img :src="this.logo">
-							</div>
+        <div class="container">
+            <Pagetitle :data="name"/>
+            <section class="section section-profile-company">
+                <div class="columns is-variable is-8">
+                    <!-- Profile main -->
+                    <div class="column is-one-third profile-main">
+                        <!-- Profile top-->
+                        <div class="profile-top">
 
-							<!-- Company contacts -->
-							<ul class="list-network">
+                            <!-- Company logo -->
+                            <div>
+                                <img :src="this.logo">
+                            </div>
+
+                            <!-- Company contacts -->
+                            <ul class="list-network">
                                 <li v-if="website" v-on:click="openAndTrack(website)">
-									<span>
-										<img src="@/assets/icon/icon-email.svg">
-									</span>
-									{{commonContent.Website}}
-								</li>
-								<li 
-									v-for="(el, key, index) in socials"
-									:key="index"
-									v-on:click="openAndTrack(el)"
-								>
-									<span>
-										<img :src="require(`../../assets/icon/icon-${key.toLowerCase()}.svg`)">
-									</span> 
-									{{key}}
-								</li>
-							</ul>
-						</div>
+                                    <span>
+                                        <img src="@/assets/icon/icon-email.svg">
+                                    </span>
+                                    {{commonContent.Website}}
+                                </li>
+                                <li v-for="(el, key, index) in socials" :key="index" v-on:click="openAndTrack(el)">
+                                    <span>
+                                        <img :src="require(`../../assets/icon/icon-${key.toLowerCase()}.svg`)">
+                                    </span> 
+                                    {{key}}
+                                </li>
+                            </ul>
+                        </div>
 
-						<!-- Profile bottom-->
-						<div class="profile-bottom" v-html="demo"></div>
-					</div>
+                        <!-- Profile bottom-->
+                        <div class="profile-bottom" v-html="demo"></div>
+                    </div>
 
-					<!-- Profile bio -->
-					<div class="column is-two-fifths profile-bio">
-						<div class="tile is-ancestor">
-							<div class="tile is-vertical">
-								
-								<!-- Bio Members -->
-								<div class="tile">
-									<div class="tile is-parent" v-for="(el, index) in contacts" :key="index">
-										<div class="tile is-child">
-											<Member :data="el"/>
-										</div>
-									</div>
-								</div>
+                    <!-- Profile bio -->
+                    <div class="column is-two-fifths profile-bio">
+                        <div class="tile is-ancestor">
+                            <div class="tile is-vertical">
 
-								<!-- Bio text -->
-								<div class="tile is-parent">
-									<article>
+                                <!-- Bio Members -->
+                                <div class="tile">
+                                    <div class="tile is-parent" v-for="(el, index) in contacts" :key="index">
+                                        <div class="tile is-child">
+                                            <Member :data="el"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bio text -->
+                                <div class="tile is-parent">
+                                    <article>
                                         <p v-html="description"></p>
-									</article>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
 
-		<!-- Profile Chat -->
+        <!-- Profile Chat -->
         <div id="chat">
             <div class="chat-top">
                 <h3 class="is-uppercase">{{content.joinNowTitle}}</h3>
             </div>
-		    <Chat :parent="self" :name="name" />
+            <Chat :parent="self" :name="name" />
         </div>
-	</div>
+
+    </div>
     <!-- <div>
         <navbar></navbar>
         <b-row>
@@ -258,39 +258,41 @@
 </template>
 
 <script>
-import axios from 'axios'
-import env from '@/env'
-import socialLogos from '@/assets/img/socials'
-import Pagetitle from '@/components/Pagetitle.vue';
-import Member from './Member.vue';
-import Chat from './Chat.vue';
+    import axios from 'axios'
+    import env from '@/env'
+    import LivefeedCreate from '@/components/LivefeedCreate.vue';
+    import socialLogos from '@/assets/img/socials'
+    import Pagetitle from '@/components/Pagetitle.vue';
+    import Member from './Member.vue';
+    import Chat from './Chat.vue';
 
-export default {
-    props: {
-        name: {
-            type: String,
-            default: ""
-        }
-    },
-    components: {
-        Pagetitle,
-        Member,
-        Chat
-    },
-    data () {
-        this.chatHeight;
-        this.chatHistory = [];
-        this.userTextMessage = ""
-        this.token = this.$root.token
-        this.showMessageModal = false
-        this.chatAvailable = false
-        this.sponsor = ''
-        this.description = ""
-        this.demo = ""
-        this.website = ""
-        this.socials = ""
-        this.contacts = ""
-        this.logo = ""
+    export default {
+        props: {
+            name: {
+                type: String,
+                default: ""
+            }
+        },
+        components: {
+            LivefeedCreate,
+            Pagetitle,
+            Member,
+            Chat
+        },
+        data () {
+            this.chatHeight;
+            this.chatHistory = [];
+            this.userTextMessage = ""
+            this.token = this.$root.token
+            this.showMessageModal = false
+            this.chatAvailable = false
+            this.sponsor = ''
+            this.description = ""
+            this.demo = ""
+            this.website = ""
+            this.socials = ""
+            this.contacts = ""
+            this.logo = ""
 
         // wait until token and sponsors ready
         this.$root.check('token Sponsors').then(() => {

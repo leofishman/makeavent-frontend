@@ -12,7 +12,7 @@
 							<p>{{$root.content.loginWithTicket}}</p>
 							<form>
 								<b-field :label="$root.content.email" >
-									<b-input v-model="email" type="email" validation-message="This email is invalid" :placeholder="$root.content.emailPlaceholder" maxlength="30"></b-input>
+									<b-input v-model="email" type="email" validation-message="This email is invalid" :placeholder="$root.content.emailPlaceholder"></b-input>
 								</b-field>
 
 								<b-field :label="$root.content.password">

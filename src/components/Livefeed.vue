@@ -1,5 +1,5 @@
 <template>
-  <b-sidebar type="is-white livefeed" open position="fixed" :reduce="reduce">
+  <b-sidebar type="is-white livefeed" open position="fixed" :can-cancel="false" :reduce="reduce">
     <div class="feeds">
       <b-field>
         <b-switch v-model="reduce"></b-switch>

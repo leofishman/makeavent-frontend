@@ -39,11 +39,9 @@ import Pagetitle from './components/Pagetitle.vue'
 /**
  * @modals
  */
-import InterviewAgenda from './components/Modals/Interview-agenda.vue'
-import OngoingInterview from './components/Modals/Ongoing-interviews.vue'
-import ZoomFrame from './components/Modals/Zoom-frame.vue'
-import ErrorModal from './components/Modals/Error-message.vue'
-import Jitsimodal from './components/Modals/Jitsi-modal.vue'
+import ErrorMessage from './components/Modals/Error-message.vue'
+import JitsiWebinar from './components/Modals/Jitsi-modal.vue'
+import ZoomWebinar from './components/Modals/Zoom-frame.vue'
 
 /**
  * @VUE_uses
@@ -65,23 +63,6 @@ Vue.component('Pagetitle', Pagetitle)
  */
 Vue.component('globalchat', GlobalChat)
 Vue.component('vipchat', VipChat)
-
-/**
- * @interview
- */
-Vue.component('interview-agenda', InterviewAgenda)
-Vue.component('ongoing-interviews', OngoingInterview)
-
-/**
- * @Video
- */
-Vue.component('zoom-frame', ZoomFrame)
-Vue.component('jitsi-modal', Jitsimodal)
-
-/**
- * @Error
- */
-Vue.component('error-message', ErrorModal)
 
 const EventBus = new Vue();
 window.EventBus = EventBus
@@ -357,12 +338,29 @@ new Vue({
     },
 
     joinWebinar (data) {
-      console.log(data)
       if (data.platform == "jitsi") {
-        window.EventBus.$emit('open-jitsi-window', data)
+        this.$buefy.modal.open({
+          props: {
+            data: data
+          },
+          parent: this,
+          component: JitsiWebinar,
+          hasModalCard: true,
+          customClass: 'custom-class custom-class-2',
+          trapFocus: true
+        })
       }
       else if (data.platform == "zoom") {
-        window.EventBus.$emit('open-webinar-window', data)
+        this.$buefy.modal.open({
+          props: {
+            data: data
+          },
+          parent: this,
+          component: ZoomWebinar,
+          hasModalCard: true,
+          customClass: 'custom-class custom-class-2',
+          trapFocus: true
+        })
       }
     },
 
@@ -373,9 +371,16 @@ new Vue({
           resolve(res.data)
         })
         .catch(e => {
-          window.EventBus.$emit('show-error-modal', {
-            text: this.content.ErrorMessages[1],
-            errorMessage: 'webinarNotSet'
+          this.$buefy.modal.open({
+            parent: this,
+            props: {
+              text: this.content.ErrorMessages[1],
+              errorMessage: 'webinarNotSet'
+            },
+            component: ErrorMessage,
+            hasModalCard: true,
+            customClass: 'custom-class custom-class-2',
+            trapFocus: true
           })
         })
       })

@@ -1,17 +1,21 @@
 const domain = 'webinar.blockconf.digital';
+import toolbar_buttons_basedOnType from './jitsi/toolbar_buttons_basedOnType'
 
 export default class JitsiModal {
   constructor ({ vueapp, data }) {
-    this.token = vueapp.token
     this.name = data.name
+    this.webinarId = data.webinarId
     this.parentNode = data.parentNode
     this.username = vueapp.$root.profile.name
+    this.type = vueapp.$root.profile._id == data.speakerId ? "speaker" : vueapp.$root.usertype
 
-    this.connect()
+    vueapp.$root.getUser().then(
+      this.connect()
+    )
   }
   connect () {
     const options = {
-      roomName: this.name,
+      roomName: this.webinarId,
       width: "100%",
       height: 500,
       parentNode: this.parentNode,
@@ -19,7 +23,7 @@ export default class JitsiModal {
         DEFAULT_BACKGROUND: '#474747',
         DISABLE_VIDEO_BACKGROUND: false,
   
-        INITIAL_TOOLBAR_TIMEOUT: 20000,
+        INITIAL_TOOLBAR_TIMEOUT: 5000,
         TOOLBAR_TIMEOUT: 4000,
         TOOLBAR_ALWAYS_VISIBLE: false,
         DEFAULT_REMOTE_DISPLAY_NAME: this.username,
@@ -39,16 +43,8 @@ export default class JitsiModal {
         LANG_DETECTION: true,
         INVITATION_POWERED_BY: true,
         AUTHENTICATION_ENABLE: true,
-        // TOOLBAR_BUTTONS: [
-        //   'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
-        //   'fodeviceselection', 'hangup', 'profile', 'info', 'chat', 'recording',
-        //   'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
-        //   'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
-        //   'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone'
-        // ],
-        TOOLBAR_BUTTONS: [
-          'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
-        ],
+
+        TOOLBAR_BUTTONS: toolbar_buttons_basedOnType[this.name][this.type],
   
         SETTINGS_SECTIONS: [ 'devices', 'language', 'moderator', 'profile', 'calendar' ],
         VIDEO_LAYOUT_FIT: 'both',
@@ -107,14 +103,14 @@ export default class JitsiModal {
         // sent).
         // startAudioOnly: false,
   
-        // Every participant after the Nth will start audio muted.
-        // startAudioMuted: 10,
-  
+        
         // Video
         // },
-  
+        
+        // Every participant after the Nth will start audio muted.
+        startAudioMuted: 1,
         // Every participant after the Nth will start video muted.
-        // startVideoMuted: 10,
+        startVideoMuted: 1,
   
         // Start calls with video muted. Unlike the option above, this one is only
         // applied locally. FIXME: having these 2 options is confusing.
@@ -419,11 +415,13 @@ export default class JitsiModal {
   
         // Allow all above example options to include a trailing comma and
         // prevent fear when commenting out the last value.
-        makeJsonParserHappy: 'even if last key had a trailing comma'
-  
-        // no configuration value should follow this line.
+        makeJsonParserHappy: 'even if last key had a trailing comma',
     }
     };
-    const api = new JitsiMeetExternalAPI(domain, options);
+    this.jitsiWebinar = new JitsiMeetExternalAPI(domain, options);
+
+    this.jitsiWebinar.addEventListener('participantJoined', (e) => {
+      console.log(e)
+    })
   }
 }

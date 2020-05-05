@@ -31,7 +31,7 @@ export default {
 		data: String
 	},
 	data () {
-		this.interviews
+		this.interviews = false
 		this.ready = false
 		
 		this.getUpcommingInterviews()
@@ -45,8 +45,10 @@ export default {
 	methods: {
 		getUpcommingInterviews () {
 			Axios.get(`${host}/interviews/getByType?type=upcomming`).then(res => {
-				this.interviews = res.data
-				this.ready = true
+				if (res.data.length) {
+					this.interviews = res.data
+					this.ready = true
+				}
             })
             .catch(err => {
                 if (err.response.data.error == "NO UPCOMMING INTERVIEWS") {

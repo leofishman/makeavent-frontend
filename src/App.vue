@@ -2,12 +2,6 @@
   <div id="app">
     <router-view></router-view>
 
-    <interview-agenda></interview-agenda>
-    <ongoing-interviews></ongoing-interviews>
-    <zoom-frame></zoom-frame>
-    <error-message></error-message>
-    <jitsi-modal></jitsi-modal>
-
     <!-- <b-sidebar id="sidebar-chat" right title="Chat"  shadow>
       <globalchat></globalchat>
     </b-sidebar> -->

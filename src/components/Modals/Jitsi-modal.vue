@@ -1,64 +1,72 @@
 <template>
-    <b-modal :width="960" :active.sync="isCardModalActive" scroll="keep">
-        <div class="card">
-            <div class="card-content">
-                <div class="media">
-                    <div class="media-left">
-                        
-                    </div>
-                    <div class="media-content">
-                        <p class="title is-4">John Smith</p>
-                        <p class="subtitle is-6">@johnsmith</p>
-                    </div>
+    <div class="container card webinar-modal">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left">
+                    
                 </div>
-
-                <div class="content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                    <a>#css</a> <a>#responsive</a>
-                    <br>
-                    <small>11:09 PM - 1 Jan 2016</small>
+                <div v-if="speaker && speakingData" class="media-content">
+                    <p class="title is-4">{{data.name}}</p>
+                    <p class="subtitle is-6">{{speaker.name}}</p>
                 </div>
             </div>
-            <div id="jitsi-modal-target" class="card-image">
-                
+
+            <div v-if="speakingData" class="content">
+                {{speakingData.theme}}
+                <a></a>
+                <br>
+                <small>{{new Date(speakingData.time).toLocaleString()}}</small>
             </div>
         </div>
-    </b-modal>
+        <div id="jitsi-modal-target" class="card-image">
+            
+        </div>
+    </div>
 </template>
 <script>
 import jitsi from '@/api/jitsi'
 
 export default {
     name: "Jitsimodal",
-    components: {
-
+    props: {
+        data: Object
     },
     data () {
         return {
+            speakingData: this.speakingData,
+            speaker: this.speaker,
             isCardModalActive: false,
         }
     },
     methods: {
 
     },
-    mounted() {
-        window.EventBus.$on('open-jitsi-window', (data) => {
-            this.isCardModalActive = true
-            let timer = setInterval(() => {
-                if (document.querySelector("#jitsi-modal-target")) {
-                    clearInterval(timer)
-                    new jitsi({
-                        vueapp: this,
-                        data: {
-                            name: data.name,
-                            token: this.$root.token,
-                            parentNode: document.querySelector("#jitsi-modal-target")
-                        }
-                    })
-                }
-            })
+    mounted () {
+        this.isCardModalActive = true
+
+        let timer = setInterval(() => {
+            if (document.querySelector("#jitsi-modal-target")) {
+                clearInterval(timer)
+
+                this.$root.check('Speakers').then(() => {
+                    this.speakers = this.$root.Speakers.filter(el => el.webinarId == this.data.webinarId)
+                    if (this.speakers.length) {
+                        this.speaker = this.speakers[0].contact
+                        this.speakingData = this.speakers[0]
+                        new jitsi({
+                            vueapp: this,
+                            data: {
+                                speakerId: this.speaker._id,
+                                name: this.data.name,
+                                webinarId: this.data.webinarId,
+                                token: this.$root.token,
+                                parentNode: document.querySelector("#jitsi-modal-target")
+                            }
+                        })
+                    }
+                })
+            }
         })
-    },
+    }
 }
 </script>

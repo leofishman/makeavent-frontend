@@ -658,39 +658,6 @@ main {
 			}
 		}
 	}
-	.livefeed-create {
-		text-align: center;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		position: relative;
-		&:before {
-			content: "+";
-			position: absolute;
-			top: 0;
-			margin: auto;
-			width: 50px;
-			height: 50px;
-			color: $secondary;
-			font-weight: bold;
-			font-size: 25px;
-			border: 2px dashed;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			border-radius: 100px;
-			transition: all 0.2s ease-out;
-		}
-		p {
-			margin-top: 60px;
-		}
-		&:hover {
-			&:before {
-				transform: scale(1.1);
-			}
-		}
-	}
 	.is-mini {
 		.media-content {
 			display: none;
@@ -803,6 +770,40 @@ main {
 			&+.story {
 				margin-left: 50px;
 			}
+		}
+	}
+}
+.story-create {
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	position: relative;
+	&:before {
+		content: "+";
+		position: absolute;
+		top: 0;
+		margin: auto;
+		width: 50px;
+		height: 50px;
+		color: $secondary;
+		font-weight: bold;
+		font-size: 25px;
+		border: 2px dashed;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 100px;
+		transition: all 0.2s ease-out;
+	}
+	p {
+		margin-top: 60px;
+		font-size: 14px;
+	}
+	&:hover {
+		&:before {
+			transform: scale(1.1);
 		}
 	}
 }

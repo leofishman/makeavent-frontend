@@ -9,7 +9,7 @@
         <navbar></navbar>
         
         <!-- Live Feed -->
-        <LivefeedCreate />
+        <Storycreate />
 
         <div class="container">
             <Pagetitle :data="name"/>
@@ -260,7 +260,7 @@
 <script>
     import axios from 'axios'
     import env from '@/env'
-    import LivefeedCreate from '@/components/LivefeedCreate.vue';
+    import Storycreate from '@/components/Stories/StoryCreate.vue';
     import socialLogos from '@/assets/img/socials'
     import Pagetitle from '@/components/Pagetitle.vue';
     import Member from './Member.vue';
@@ -274,7 +274,7 @@
             }
         },
         components: {
-            LivefeedCreate,
+            Storycreate,
             Pagetitle,
             Member,
             Chat

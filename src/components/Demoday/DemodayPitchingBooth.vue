@@ -16,6 +16,7 @@
 					<div class="column is-4 demoaction">
 						<div class="box shadow-2 click demoday-join">
 							<h3>{{content.joinPitching}}</h3>
+							<img src="@/assets/icon/icon-join.png">
 						</div>
 						<div class="box shadow-2 click demoday-chat">
 							<h3>{{content.ddChat}}</h3>

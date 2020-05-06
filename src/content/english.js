@@ -50,6 +50,17 @@ export default {
         chatPlaceholder: "Please enter your question here",
     },
 
+    Storycreate: {
+        newStoryButton: "New story",
+    },
+
+    Newstory: {
+        modalTitle: "New Story",
+        title: "New Story Title",
+        promotionalContent: "Your Content",
+        submit: "Submit"
+    },
+
     noAccessTitle:`We are apologizing but You don't have access`,
     sorryAttender: `Sorry our dear attender.`,
     reasonWhyNoAccess: `It seems like you are trying to open conferense in many tabs.<br> We restricted opening many tabs of conference hall for security reasons.<br> Sorry for any inconvinice.`,

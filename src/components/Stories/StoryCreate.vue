@@ -1,8 +1,8 @@
 <template>
-  <b-sidebar type="is-white livefeed" open position="fixed" :reduce="reduce">
+  <b-sidebar type="is-white livefeed" open position="fixed" :reduce="reduce" :can-cancel="false">
     <div class="feeds" @click="Newstory = true">
       <div class="story-create">
-        <p>New story</p>
+        <p>{{content.newStoryButton}}</p>
       </div>
     </div>
 
@@ -25,11 +25,12 @@
     data() {
       return {
         reduce: true,
-        canCancel: false,
         isSwitched: false,
         isSwitchedCustom: 'Open',
 
-        Newstory: false
+        Newstory: false,
+
+        content: this.$root.content.Storycreate
       }
     }
   };

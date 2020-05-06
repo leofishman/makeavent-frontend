@@ -30,47 +30,46 @@
                                 <div class="tile is-parent ls-main">
                                     <!-- Main -->
                                     <div class="tile is-child box">
-                                        <img src="@/assets/logo-RSK.png">
+                                        <img src="">
                                     </div>
                                 </div>
                                 <div class="tile ls-platinum">
                                     <!-- Platinum A -->
                                     <div class="tile is-parent">
                                         <div class="tile is-child box">
-                                            <img src="@/assets/logo-FAS.png">
+                                            <img src="">
                                         </div>
                                     </div>
                                     <!-- Platinum B -->
                                     <div class="tile is-parent">
                                         <div class="tile is-child box">
-                                            <img src="@/assets/logo-CRYPTTP.png">
+                                            <img src="">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tile ls-gold">
-                                    <!--[YD] If you like, I can made this in separate components, but it was so few, I don't think necessary -->
                                     <!-- Gold A -->
                                     <div class="tile is-parent">
                                         <div class="tile is-child box">
-                                            <img src="@/assets/logo-test1.png">
+                                            <img :src="rsk">
                                         </div>
                                     </div>
                                     <!-- Gold B -->
                                     <div class="tile is-parent">
                                         <div class="tile is-child box">
-                                            <img src="@/assets/logo-FAS.png">
+                                            <img :src="fas">
                                         </div>
                                     </div>
                                     <!-- Gold C -->
                                     <div class="tile is-parent">
                                         <div class="tile is-child box">
-                                            <img src="@/assets/logo-test2.png">
+                                            <img :src="crypttp">
                                         </div>
                                     </div>
                                     <!-- Gold D -->
                                     <div class="tile is-parent">
                                         <div class="tile is-child box">
-                                            <img src="@/assets/logo-RSK.png">
+                                            <img src="">
                                         </div>
                                     </div>
                                 </div>
@@ -102,6 +101,16 @@ export default {
 
         this.inputsReady = false
 
+        this.$root.tryGetCompanyLogo('RSK').then(res => { 
+            this.rsk = host + res
+        })
+        this.$root.tryGetCompanyLogo('CRYPTTP').then(res => { 
+            this.crypttp = host + res
+        })
+        this.$root.tryGetCompanyLogo('FAS').then(res => { 
+            this.fas = host + res
+        })
+
         return {
             email: this.email,
             password: this.password,
@@ -113,6 +122,10 @@ export default {
             tgswitch: this.tgswitch,
             fbswitch: this.fbswitch,
             lnswitch: this.lnswitch,
+
+            rsk: "",
+            crypttp: "",
+            fas: "",
         }
     },
     methods: {

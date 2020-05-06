@@ -39,10 +39,12 @@ import Meetup from '@/components/Meetup/Meetup.vue'
  */
 import WorkshopAgenda from '@/components/Workshop/WorkshopAgenda.vue'
 
-import NoAccess from '@/components/NoAccess.vue'
-import Company from '@/components/CompanyProfile/Company.vue'
 import Login from '@/components/Login.vue'
 import LoginWithTempEmail from '@/components/LoginWithTempEmail.vue'
+import RegistrationHall from '@/components/RegistrationHall'
+
+import NoAccess from '@/components/NoAccess.vue'
+import Company from '@/components/CompanyProfile/Company.vue'
 import BusinessCard from '@/components/BusinessCard.vue'
 
 import Profile from '@/components/Profile/Profile.vue'
@@ -118,6 +120,14 @@ const router = new Router({
             path: '/login',
             name: "Password",
             component: Login,
+            meta: {
+                requiresAuth: false
+            }
+        },
+        {
+            path: "/reghall",
+            name: "RegistrationHall",
+            component: RegistrationHall,
             meta: {
                 requiresAuth: false
             }
@@ -256,7 +266,7 @@ router.beforeEach((to, from, next) => {
     //     window.location.pathname = '/noaccess'
     //  }
     //  else {
-        if (to.path == "/noaccess") {
+        if (to.path == "/noaccess" || to.path == "/reghall") {
             next()
         }
         else if (to.path == "/" && localStorage.auth) {

@@ -116,7 +116,9 @@ new Vue({
         self.$router.currentRoute.name != "Noaccess" &&
         self.$router.currentRoute.name != "Password" &&
         self.$router.currentRoute.name != "LoginThenBusinessCard" && 
-        self.$router.currentRoute.name != "LoginWithTempEmail"
+        self.$router.currentRoute.name != "LoginWithTempEmail" &&
+        self.$router.currentRoute.name != "Login" &&
+        self.$router.currentRoute.name != "RegistrationHall"
       ) {
         if (self.profile === undefined || self.usertype === undefined || self.token === undefined)
           this.getUser()
@@ -501,6 +503,7 @@ new Vue({
         !this.$router.currentRoute.fullPath.includes('auth=true') &&
         this.$router.currentRoute.path != '/login' &&
         this.$router.currentRoute.path != '/loginrtp' &&
+        this.$router.currentRoute.path != '/reghall' &&
         this.$router.currentRoute.path != '/noaccess' &&
         !this.$router.currentRoute.fullPath.includes('businesscard')
       )

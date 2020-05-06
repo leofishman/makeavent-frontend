@@ -6,8 +6,8 @@
 			</div>
 			<div class="column agenda-name">
 				<div class="has-text-centered">
-					<h3 class="click">{{data.contact.name}} <strong>{{data.contact.role}}</strong></h3>
-					<h4 class="has-text-grey-light is-uppercase click">{{data.contact.company}}</h4>
+					<h3 v-on:click="$root.tryBusinessCard(data.contact)" class="click">{{data.contact.name}} <strong>{{data.contact.role}}</strong></h3>
+					<h4 v-on:click="$root.navToPage(data.contact.company)" class="has-text-grey-light is-uppercase click">{{data.contact.company}}</h4>
 				</div>
 			</div>
 			<div class="column investors-fundname is-uppercase">
@@ -18,8 +18,8 @@
 			</div>
 			<div class="column agenda-touch is-uppercase">
 				<div class="has-text-centered">
-					<h3 class="click">{{content.remind}}</h3>
-					<h3 class="click">{{content.joinSpeach}}</h3>
+					<h3 @click="$root.addReminder(data, reminder)" class="click">{{content.remind}}</h3>
+					<h3 :class="data.time > new Date().getTime() ? 'disabled' : ''" @click="$root.joinStage(data.stage)" class="click">{{content.joinSpeach}}</h3>
 				</div>
 			</div>
 		</div>
@@ -36,6 +36,7 @@ export default {
 	},
 	data () {
 		return {
+            reminder: this.$root.content.reminders[0],
 			host: host,
 			content: this.$root.content.Agendarow
 		}
@@ -66,7 +67,7 @@ export default {
                         component: `
                         <div class="modal-card" style="width: auto">
                             <header class="modal-card-head">
-                                ${this.$root.content.success}
+                                ${this.$root.content.common.success}
                             </header>
                             <section class="modal-card-body">
                                 <p>

@@ -16,7 +16,7 @@
 								</b-field>
 
 								<b-field :label="$root.content.password">
-									<b-input v-model="password" type="password" :placeholder="$root.content.passwordPlaceholderFromEmail" password input></b-input>
+									<b-input id="login-password-input" v-model="password" type="password" :placeholder="$root.content.passwordPlaceholderFromEmail" password input></b-input>
 								</b-field>
 								<b-button :disabled="!inputsReady" v-on:click="login()" type="is-primary" size="is-medium">
                                     {{$root.content.submit}}
@@ -59,6 +59,16 @@ export default {
             fbswitch: this.fbswitch,
             lnswitch: this.lnswitch,
         }
+    },
+    mounted () {
+        let input = document.getElementById("login-password-input")
+        let self = this
+        input.addEventListener('keyup', function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                self.login()
+            }
+        })
     },
     methods: {
         login () {

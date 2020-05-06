@@ -31,7 +31,8 @@ export default {
     },
     data() {
         this.ready = false
-        this.$root.check('Speakingagenda').then(_ => {
+        
+        this.$root.check('Speakingagenda.length').then(_ => {
             this.ready = true
         })
 

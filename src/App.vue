@@ -1,13 +1,8 @@
 <template>
-  <div id="app">
+  <main id="app">
     <router-view></router-view>
-
-    <!-- <b-sidebar id="sidebar-chat" right title="Chat"  shadow>
-      <globalchat></globalchat>
-    </b-sidebar> -->
-
     <notifications classes='n-light' group="new-connection-request" position="bottom right" width="500px"/>
-  </div>
+  </main>
 </template>
 
 <script>

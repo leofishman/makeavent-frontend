@@ -44,14 +44,14 @@
                                         <b-field
                                             :label="$root.content.systemGenerated + $root.content.password"
                                         >
-                                            <b-input disabled type="password" v-model="password" ></b-input>
+                                            <b-input id="loginwithtemp1-password-input" disabled type="password" v-model="password" ></b-input>
                                         </b-field>
                                     </div>
                                     <div class="column">
                                         <b-field
                                             :label="$root.content.new + $root.content.password"
                                         >
-                                            <b-input type="password" v-model="newpassword" :placeholder="$root.content.pleaseEnter + $root.content.new.toLowerCase() + $root.content.password"></b-input>
+                                            <b-input id="loginwithtemp2-password-input" type="password" v-model="newpassword" :placeholder="$root.content.pleaseEnter + $root.content.new.toLowerCase() + $root.content.password"></b-input>
                                         </b-field>
                                     </div>
                                 </div>
@@ -152,6 +152,23 @@ export default {
             disable_name: this.disable_name,
             disable_calendly: this.disable_calendly,
         }
+    },
+    mounted () {
+        let input1 = document.getElementById("loginwithtemp1-password-input")
+        let input2 = document.getElementById("loginwithtemp2-password-input")
+        let self = this
+        input1.addEventListener('keyup', function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                self.login()
+            }
+        })
+        input2.addEventListener('keyup', function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                self.login()
+            }
+        })
     },
     methods: {
         fetchPasswordFromDb () {

@@ -1,11 +1,11 @@
 <template>
-  <div id="home">
+  <div style="margin-left: 0px;" id="home">
 
     <!-- Live Feed -->
-    <Livefeed />
+    <Livefeed v-if="false" />
 
     <!-- Stories -->
-    <Stories />
+    <Stories v-if="false" />
     
     <div class="container" v-if="!joinMeeting && ready">
        <!-- Top row -->
@@ -256,22 +256,47 @@
         </div>
       </section>
     </div>
+
+    <b-sidebar
+      type="is-light"
+      :fullheight="true"
+      :fullwidth="false"
+      :overlay="true"
+      :right="true"
+      :can-cancel="false"
+      :open.sync="$root.openGlobalChat"
+    >
+      <div>
+        <section style="padding-top:80px; overflow:hidden; background:white;">
+          <b-tabs class="chat" style="width:600px; pointer-events:all" type="is-toggle" expanded >
+            <b-tab-item :label="`Blockconf ` + $root.content.common.coffeeChat">
+              <Chat checkAccess="globalchat" :parent="self" type="globalchat" name="global" />
+            </b-tab-item>
+            <b-tab-item :label="`Blockconf ` + $root.content.common.vipChat">
+              <Chat checkAccess="vipchat" :parent="self" type="vipchat" name="vip" />
+            </b-tab-item>
+          </b-tabs>
+        </section>
+      </div>
+    </b-sidebar>
   </div>
 </template>
 <script>
 import Axios from 'axios'
 import {host} from '../../env'
 
-import Stories from '@/components/Stories.vue';
-import Livefeed from '@/components/Livefeed.vue';
-import Toprow from '@/components/Toprow.vue';
-import Main from '@/components/Sponsors/Main.vue';
-import Platinum from '@/components/Sponsors/Platinum.vue';
-import Gold from '@/components/Sponsors/Gold.vue';
-import Silver from '@/components/Sponsors/Silver.vue';
-import Bronze from '@/components/Sponsors/Bronze.vue';
-import Basic from '@/components/Sponsors/Basic.vue';
+import Stories from '@/components/Stories.vue'
+import Livefeed from '@/components/Livefeed.vue'
+import Toprow from '@/components/Toprow.vue'
+import Main from '@/components/Sponsors/Main.vue'
+import Platinum from '@/components/Sponsors/Platinum.vue'
+import Gold from '@/components/Sponsors/Gold.vue'
+import Silver from '@/components/Sponsors/Silver.vue'
+import Bronze from '@/components/Sponsors/Bronze.vue'
+import Basic from '@/components/Sponsors/Basic.vue'
 import Eworkshop from '@/components/Eworkshop.vue'
+
+import Chat from '@/components/CompanyProfile/Chat'
 
 export default {
   name: "desktop",
@@ -285,7 +310,8 @@ export default {
     Silver,
     Bronze,
     Basic,
-    Eworkshop
+    Eworkshop,
+    Chat
   },
   methods: {
     metting () {
@@ -303,7 +329,10 @@ export default {
       joinMeeting: false,
       host: host,
 
-      ready: false
+      ready: false,
+      
+      contacts: [], //
+      self: this    // this two vars needed for chat
     }
   },
 }

@@ -33,6 +33,14 @@ export default {
         submit: "Submit"
     },
 
+    Meetup: {
+        title: "e-Meetup",
+        intro: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
+    },
+    Booth: {
+        title: "lorem ipsum",
+    },
+
     Mediapartnerbooth: {
         
     },
@@ -72,6 +80,7 @@ export default {
     pageWillBeLater: "Please come back later",
     agenda: "Agenda",
     mediahall: "Media Hall",
+    eMeetup: "e-Meetup",
     
     team: "team",
     chatWith: "Chat with ",

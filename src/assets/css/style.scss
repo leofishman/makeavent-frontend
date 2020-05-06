@@ -164,7 +164,7 @@ main {
 }
 
 /* Page title Primary */
-#demoday, #profile, #profile-company {
+#demoday, #profile, #profile-company, #profile-booth {
 	.title {
 		&:before {
 			background-color: $primary;
@@ -1613,16 +1613,7 @@ main {
 			}
 		}
 		.profile-main {
-			.profile-top {
-				margin-bottom: 60px;
-				display: flex;
-				> div {
-					margin-right: 30px;
-					img {
-						box-shadow: $shadow-1;
-					}
-				}
-			}
+			
 			.profile-bottom {
 				padding: 25px;
 				padding-left: 160px;
@@ -2268,6 +2259,114 @@ main {
 			}
 		}
 	}
+}
+
+// MEETUP //
+//////////////////////////////////////////
+#meetup {
+	.section-meetup {
+		padding-top: 0;
+		p {
+			margin: auto;
+			width: 70%;
+		}
+		.meetup-sponsors {
+			margin-top: 50px;
+			div {
+				display: flex;
+				align-items: center;
+				justify-content: space-evenly;
+				.col {
+					width: 350px;
+					margin-bottom: 100px;
+				}
+				.box {
+					margin: 0;
+					box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+					position: relative;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					img {
+						max-width: 90%;
+						max-height: 90%;
+					}
+					
+					&:before {
+						content: "";
+						top: -18px;
+						left: -18px;
+						width: 36px;
+						height: 36px;
+						position: absolute;
+						border: solid 5px $secondary;
+					}
+					&:after {
+						content: "";
+						top: 40px;
+						left: -18px;
+						width: 36px;
+						height: 36px;
+						position: absolute;
+						border: solid 5px $secondary;
+					}
+				}
+			}
+			.ms-main {
+				width: 350px;
+				height: 350px;
+			}
+			.ms-platinum {
+				width: 250px;
+				height: 250px;
+			}
+			.ms-gold {
+				width: 200px;
+				height: 200px;
+			}
+		}
+	}
+}
+
+// booth //
+//////////////////////////////////////////
+#profile-booth {
+    .profile-top {
+    	margin-top: -11px;
+        margin-bottom: 60px;
+        > div {
+            width: 100%;
+            height: 260px;
+            background-color: $white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: $shadow-1;
+            img {
+                max-width: 90%;
+                max-height: 225px;
+            }
+        }
+        .list-network {
+        	margin-top: 20px;
+        }
+        p {
+        	margin-top: 20px;
+        }
+    }
+    .member + .member {
+        	margin-top: 20px;
+        }
+    .screen {
+    	margin-left: 20px;
+        padding: 20px;
+        width: 100%;
+        height: 500px;
+        border: solid 5px grey;
+        border-radius: 30px;
+        background-color: black;
+    }
 }
 
 // CHAT //

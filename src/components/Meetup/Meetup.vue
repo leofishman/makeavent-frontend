@@ -1,31 +1,76 @@
 <template>
-    <div id="meetup">
+	<div id="meetup">
 		<navbar></navbar>
 		<div class="container">
-			<Pagetitle />
+			<Pagetitle :data="content.title"/>
 
-			<section class="section section-media-hall">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			<section class="section section-meetup">
+				<p class="has-text-centered">{{content.intro}}</p>
+
+				<div class="meetup-sponsors">
+					<div>
+						<div class="col">
+							<!-- Main sponsor -->
+							<article class="box ms-main" v-on:click="openPage('booth')">
+								<img src="@/assets/logo-FAS.png">
+							</article>
+						</div>
+						<div class="col">
+							<!-- Gold sponsor -->
+							<article class="box ms-platinum" v-on:click="openPage('booth')">
+								<img src="@/assets/logo-FAS.png">
+							</article>
+						</div>
+					</div>
+					<div>
+						<div class="col">
+							<!-- Platinum sponsor -->
+							<article class="box ms-gold" v-on:click="openPage('booth')">
+								<img src="@/assets/logo-test2.png">
+							</article>
+						</div>
+						<div class="col">
+							<!-- Platinum sponsor -->
+							<article class="box ms-gold" v-on:click="openPage('booth')">
+								<img src="@/assets/logo-FAS.png">
+							</article>
+						</div>
+					</div>
+				</div>
+
 			</section>
 		</div>
 
 	</div>
 </template>
 <script>
-import Pagetitle from '@/components/Pagetitle.vue';
+	import Pagetitle from '@/components/Pagetitle.vue';
 
-export default {
-    name: "Meetup",
-    components: {
-        Pagetitle,
+	export default {
+		name: "Meetup",
+		components: {
+			Pagetitle,
+		},
+		props: {
+			data: String
+		},
+		methods: {
+
+        openPage (name) {
+            this.$router.push(`/${this.$root.$router.currentRoute.params.id}/${name}`).catch(() => {
+                window.location.reload()
+            })
+        }
     },
-    props: {
-        data: String
-    }
-}
+		data () {
+			return {
+				content: this.$root.content.Meetup
+			}
+		}
+	}
 </script>
+
+<style lang="scss">
+
+
+</style>

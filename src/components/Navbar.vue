@@ -28,7 +28,7 @@
 								{{$root.content.profile}}
                                 <span class="tag is-info" v-if="$root.pendingCards.length" variant="light">{{$root.pendingCards.length}}</span>
 							</a>
-							<a class="button is-outlined is-primary">
+							<a v-on:click="$root.switchOpen()" class="button is-outlined is-primary">
 								{{$root.content.openChat}}
 							</a>
 

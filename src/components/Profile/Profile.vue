@@ -1,6 +1,7 @@
 <template>
 	<div id="profile">
 		<navbar></navbar>
+
 		<div class="container" v-if="ready">
 			<Pagetitle :data="profile.name"/>
 
@@ -130,6 +131,7 @@
 
 <script>
 	import {host} from '@/env'
+	import axios from 'axios'
 	import Pagetitle from '@/components/Pagetitle.vue';
 	import Businesscardconected from '@/components/Profile/Businesscardconected.vue';
 	import Businesscardpending from '@/components/Profile/Businesscardpending.vue';
@@ -169,7 +171,9 @@
 				ready: this.ready,
 				profile: this.profile,
 				activeTab: 0,
-				activeTabInterview: 0
+				activeTabInterview: 0,
+				
+				file: ""
 			}
 		},
 		methods: {
@@ -178,12 +182,15 @@
 			},
 
 			changeClickedStatus (name) {
-				console.log(this.profileParamsFocus[name])
 				if (this.profileParamsFocus[name])
 					this.profileParamsFocus[name] = false
 				else
 					this.profileParamsFocus[name] = true
-			}
+			},
+
+			saveFile () {
+				this.file = this.$refs.file.files[0];
+			},
 		},
 	}
 </script>

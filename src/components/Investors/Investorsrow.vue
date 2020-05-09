@@ -5,10 +5,10 @@
 				<img :src="data.photo">
 			</div>
 			<div class="column investors-name">
-				<h3 class="has-text-centered click">{{data.name}} <strong>{{data.role}}</strong></h3>
+				<h3 @click="$root.tryBusinessCard(data)" class="has-text-centered click">{{data.name}} <strong>{{data.role}}</strong></h3>
 			</div>
 			<div class="column investors-fundname is-uppercase">
-				<h3 class="has-text-centered has-text-grey-light click">{{data.company}}</h3>
+				<h3 @click="openInvestorBooth(data.company)" class="has-text-centered has-text-grey-light click">{{data.company}}</h3>
 			</div>
 			<div class="column investors-flag">
 				<img class="has-text-centered" src="@/assets/icon-target.svg">
@@ -32,7 +32,14 @@
 			}
 		},
 		methods: {
-
+			openInvestorBooth (name) {
+				this.$router.push({
+					name: "InvestFundProfile",
+					query: {
+						name: name.toLowerCase()
+					}
+				})
+			},
 		}
 	}
 </script>

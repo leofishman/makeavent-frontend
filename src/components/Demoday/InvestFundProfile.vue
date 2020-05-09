@@ -1,83 +1,80 @@
 <template>
-    <div>
-        <navbar></navbar>
-        <b-container v-if="ready">
-            <b-jumbotron style="height:100%;">
-                <template v-slot:header>
-                    <b-row>
-                        <b-col md="5">
-                            <b-row style="position:relative">
-                                <b-col>
-                                    <img class="centrify" style="position:relative" width="90%" :src="logo" alt="">
-                                </b-col>
-                                <b-col >
-                                    <b-link v-on:click="$root.track(name, website)" :href="website" target="_blank" class="block-display">
-                                        <div>
-                                            <img class="social-icon" :src="socialLogos['Website']" alt="">
-                                            Website
-                                        </div>
-                                    </b-link>
-                                    <b-link v-for="(el, key, index) in socials" :key="index" v-on:click="track(el)" :href="el" target="_blank" class="block-display">
-                                        <div v-if="el">
-                                            <img class="social-icon" :src="socialLogos[key]" alt="">
-                                            {{key}}
-                                        </div>
-                                    </b-link>
-                                </b-col>
-                            </b-row>
-                            <div class="wath-button-block">
-                                <b-button
-                                    v-bind:class="[watchButtonClass]"
-                                    :disabled="!watchButtonClass.includes('active')"
-                                    v-on:click="joinWebinar()"
-                                >
-                                    {{content.watchLiveInterview}}
-                                </b-button>
-                            </div>
-                        </b-col>
-                        <b-col md="7">
-                            <b-row>
-                                <b-col style="padding:0px 5%;" v-for="(el, key, index) in contacts" :key="index">
-                                    <div class="contacts">
-                                        <div class="contact-name">
-                                            {{el.name}}
-                                        </div>
-                                        <img class="contact-photo" :src="$root.tryGetProfilePhoto(el.email)" alt="">
-                                        <div class="contact-name" style="font-size:18px; margin-top:20px">
-                                            {{el.role}}
-                                        </div>
-                                        <div class="contact-email">
-                                            {{el.email}}
-                                        </div>
-                                        <!-- <b-row> -->
-                                            <div style="display:inline-block" class="hover" v-for="(_el, key, _index) in socialLogos" :key="_index">
-                                                <b-link v-if="el[key]" :href="el[key]" target="_blank">
-                                                    <img class="social-icon getInTouch" :src="socialLogos[key]" alt="">
-                                                </b-link>
-                                            </div>
-                                        <!-- </b-row> -->
-                                    </div>
-                                </b-col>
-                            </b-row>
-                        </b-col>
-                    </b-row>
-                </template>
+    <div v-if="ready" id="profile-company">
+		<navbar></navbar>
+		<div class="container">
+			<Pagetitle :data="name"/>
 
-                <template v-slot:lead>
-                    <hr class="my-4">
-                    <div class="top40" v-html="description"></div>
-                </template>
+			<section class="section section-profile-company">
+				<div class="columns is-variable is-8">
+					<!-- Profile main -->
+					<div class="column is-two-fifth profile-main">
+						<!-- Profile top-->
+						<div class="profile-top">
+							
+							<!-- Company logo -->
+							<div>
+								<img :src="this.logo">
+							</div>
 
-                <hr class="my-4">
-            </b-jumbotron>
-        </b-container>
-    </div>
+							<!-- Company contacts -->
+							<ul class="list-network">
+                                <li v-if="website" v-on:click="openAndTrack(website)">
+									<span>
+										<img src="@/assets/icon/icon-email.svg">
+									</span>
+									{{commonContent.Website}}
+								</li>
+								<li 
+									v-for="(el, key, index) in socials"
+									:key="index"
+									v-on:click="openAndTrack(el)"
+								>
+									<span>
+										<img :src="require(`../../assets/icon/icon-${key.toLowerCase()}.svg`)">
+									</span> 
+									{{key}}
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- Profile bio -->
+					<div class="column is-three-fifths profile-bio">
+						<div class="tile is-ancestor">
+							<div class="tile is-vertical">
+								
+								<!-- Bio Members -->
+								<div class="tile">
+									<div class="tile is-parent" v-for="(el, index) in contacts" :key="index">
+										<div class="tile is-child">
+											<Member :data="el"/>
+										</div>
+									</div>
+								</div>
+
+								<!-- Bio text -->
+								<div class="tile is-parent">
+									<article>
+                                        <p v-html="description"></p>
+									</article>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
 </template>
 <script>
 import socialLogos from '@/assets/img/socials'
 import {host} from '@/env'
+import Member from '@/components/CompanyProfile/Member'
 
 export default {
+    components: {
+        Member
+    },
     props: {
         name: {
             default:"",
@@ -95,7 +92,7 @@ export default {
 
         this.$root.check('InvestFunds').then(() => {
             this.ifp = this.$root.InvestFunds.filter(el => el.name == this.name.toUpperCase())[0]
-
+            
             this.description = this.ifp.description
             this.website = this.ifp.website
             this.socials = this.ifp.socials
@@ -108,6 +105,7 @@ export default {
         return {
             ready: this.ready,
             content: this.$root.content.InvestFundProfile,
+            commonContent: this.$root.content.common,
 
             description: this.description,
             website: this.website,

@@ -37,7 +37,13 @@ export default {
         chatPlaceholder: "Please enter your question here",
     },
 
-    noAccessTitle:`We are apologizing but You don't have access`,
+    reminders: {
+        0: 'will start speaking in 10 minutes',
+    },
+
+    noAccessTitle: (to) => { return `We are apologizing but You don't have access to ${to}`},
+
+    
     sorryAttender: `Sorry our dear attender.`,
     reasonWhyNoAccess: `It seems like you are trying to open conferense in many tabs.<br> We restricted opening many tabs of conference hall for security reasons.<br> Sorry for any inconvinice.`,
     buyTicket: (type) => {
@@ -57,7 +63,7 @@ export default {
     businessCard: 'business card',
     yes: "Yes",
     no: "No",
-    ok: "Ok",
+    
     requestContact: (p1) => {
         return `${p1} will receive notification that you requesting contact information.`
     },
@@ -87,12 +93,10 @@ export default {
     error: "Error",
     openChat: "Open Chat",
     closeChat: "Close Chat",
-    vipChat: "VIP Chat",
-    coffeeChat: "Coffee-break Chat",
+    
     contactSupport: "If you have issues logging in or did not receive email with password, please contact support at",
-    oops: "Oops",
-    onlyForVIP: (component, forthem) => {
-        return `We are appologizing, but <strong>${component}</strong> is available only for ${forthem} attenders.<br>Would you like to upgrade your ticket?`
+    onlyForUsertype: (component, forthem) => {
+        return `We are appologizing, but <strong>${component}</strong> is available only for ${forthem} attenders.<br><br>Would you like to upgrade your ticket?`
     },
     onlyForXWithoutUpgrade: (component, forthem) => {
         return `We are appologizing, but <strong>${component}</strong> is available only for ${forthem} attenders.`
@@ -132,7 +136,6 @@ export default {
     chooseTicketType: "Choose ticket type",
     
     requestOfflineCopy: "Request recorded copy",
-    success: "Success",
     offlineMaterialSent: (name) => {
         return `Offline copy of ${name} lecture was sent to your email`
     },
@@ -162,6 +165,14 @@ export default {
         today: "Today",
         connected: "Connected",
         pending: "Pending",
+        close: "Close",
+        success: "Success",
+        itsYou: "It is you :)",
+        ok: "Ok",
+        oops: "Oops",
+        vipChat: "VIP Chat",
+        coffeeChat: "Coffee-break Chat",
+        replyHint: 'Right mouse click to reply'
     },
 
     StartupsDemoDay: {
@@ -194,11 +205,13 @@ export default {
     },
 
     ErrorMessageModal: {
-        webinarNotSet: "Preparing webinar..."
+        webinarNotSet: "Preparing webinar...",
+        oops: "Oops"
     },
 
     ErrorMessages: {
-        1: 'We updating webinar host, sorry for the inconvinience'
+        1: 'We updating webinar host, sorry for the inconvinience',
+        2: 'We appologies, but there is a error adding reminder for you.<br>Please contact <b>support@blockconf.digital</b>'
     },
 
     VipMeetingRoom: {
@@ -212,4 +225,8 @@ export default {
         ongoingWorkshops: "Ongoing workshops",
         title: "Workshop Agenda"
     },
+
+    Upgradeticket: {
+
+    }
 }

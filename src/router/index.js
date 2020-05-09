@@ -38,7 +38,6 @@ import NoAccess from '@/components/NoAccess.vue'
 import Company from '@/components/CompanyProfile/Company.vue'
 import Login from '@/components/Login.vue'
 import LoginWithTempEmail from '@/components/LoginWithTempEmail.vue'
-import BusinessCard from '@/components/BusinessCard.vue'
 
 import Profile from '@/components/Profile/Profile.vue'
 import MyInterviews from '@/components/Profile/MyInterviews.vue'
@@ -118,14 +117,6 @@ const router = new Router({
             }
         },
         {
-            path: '/login/businesscard/:id',
-            name: "LoginThenBusinessCard",
-            component: Login,
-            meta: {
-                requiresAuth: false,
-            }
-        },
-        {
             path: '/:id/vip',
             name: "Vip",
             component: VipMeetingRoom,
@@ -140,15 +131,6 @@ const router = new Router({
             component: LoginWithTempEmail,
             meta: {
                 requiresAuth: false,
-            }
-        },
-        {
-            path: '/:id/businesscard',
-            name: "BusinessCard",
-            component: BusinessCard,
-            meta: {
-                requiresAuth: false,
-                platformLaunch: true
             }
         },
         {
@@ -265,9 +247,6 @@ router.beforeEach((to, from, next) => {
         }
         else if (to.path == "/loginrtp" && to.query.access) {
             localStorage.auth = ''
-            next()
-        }
-        else if (to.path.split('/')[2] == "businesscard") {
             next()
         }
         else if (!localStorage.auth) {

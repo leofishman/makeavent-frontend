@@ -63,7 +63,7 @@
                                 </div>
                             </div>
                             <div
-                                v-if="$root.cloo($root.usertype, 'investor|startup')"
+                                v-if="$root.cloo($root.usertype, 'investor|startup|media')"
                                 v-on:click="$router.push(`/${$root.token}/investors`)"
                                 class="tile is-child box click has-background-light investors"
                             >

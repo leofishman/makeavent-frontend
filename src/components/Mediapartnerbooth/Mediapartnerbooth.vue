@@ -40,8 +40,8 @@
 
 						<!-- Profile bottom-->
 						<div
+							@click="$root.joinStage(name)"
 							class="profile-bottom"
-							v-on:click="joinWebinar()"
 						>
 							<img src="@/assets/watch-interview.jpg">
 						</div>
@@ -97,7 +97,7 @@
 			this.logo = ""
 			this.watchButtonClass = ""
 
-			this.$root.check('MediaPartners').then(async () => {
+			this.$root.check('MediaPartners MediaPartners.length').then(async () => {
 				this.mediaCompany = this.$root.MediaPartners.filter(el => el.name == this.name.toUpperCase())[0]
 				
 				this.description = this.mediaCompany.description
@@ -113,6 +113,7 @@
 			})
 			return {
 				ready: this.ready,
+				name: this.name.toUpperCase(),
 				content: this.$root.content.Mediapartnerbooth,
 				commonContent: this.$root.content.common,
 
@@ -144,13 +145,6 @@
 					this.watchButtonClass = 'watch-interview-button active watch-interview'
 				else
 					this.watchButtonClass = 'watch-interview-button'
-			},
-
-			joinWebinar () {
-				this.$root.getWebinar(this.interview._id)
-				.then(webinar => {
-					this.$root.joinWebinar(webinar.zoomWebinarId, "")
-				})
 			},
 
 			openAndTrack (link) {

@@ -15,7 +15,7 @@
                                     href="#"
                                     class="flex-column align-items-start"
                                     style="margin-top:5px;"
-                                    v-on:click="$root.openBusinessCard(el)"
+                                    v-on:click="$root.tryBusinessCard(el)"
                                 >
                                     <b-row>
                                         <b-col md="2">

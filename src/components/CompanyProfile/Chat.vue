@@ -16,8 +16,8 @@
 					<div class="column is-four-fifths" style="padding:10px;">
 						{{$root.content.reply}} <strong>@{{quotedName}}</strong> {{quotedMessage}}
 					</div>
-					<div v-on:click="closeReply()" class="column close-reply" style="padding:10px;">
-						<img style="width:40%; " src="@/assets/img/cross.svg" alt="">
+					<div v-on:click="closeReply()" class="column close-reply click" style="padding:10px;">
+						<img style="width:16%; opacity:50%" src="@/assets/img/cross.svg" alt="">
 					</div>
 				</div>
 			</div>
@@ -35,15 +35,12 @@
 			</div>
 		</div>
 		<div
-			v-on:click="$root.showMessageToUpgradeBusOrVip($root.content.chatWith.toLowerCase() + $root.capitalizeFirstLetter(name))"
+			v-on:click="isUpgradable()"
 			v-else
-			class="centrify section-faded-text"
-		>
-			<div class="red hover">
-				{{$root.content.upgradeToAccess(
-					$root.content.business + $root.content.or + $root.content.vip,
-					$root.content.chatWith.toLowerCase() + $root.capitalizeFirstLetter(name)
-				)}}
+			class="chat-bubble click"
+		>	
+			<div class="centrify-content">
+				{{isUpdagradable}}
 			</div>
 		</div>
 	</div>
@@ -53,6 +50,7 @@
 	import Message from '../Chats/Message'
 	import {socket} from '@/env'
 	import io from 'socket.io-client'
+	import AccessLevels from '@/api/accessLevels'
 
 	export default {
 		name: "Chat",
@@ -61,7 +59,9 @@
 		},
 		props: {
 			parent: Object,
-			name: String
+			name: String,
+			type: String,
+			checkAccess: String
 		},
 		data () {
 			this.showMessageModal = ''
@@ -70,8 +70,49 @@
 			this.quotedName = ''
 			this.quoteId = ''
 
-			this.$root.checkComponentAccess("companychat").then((res) => {
-                this.chatAvailable = res
+			this.$root.checkComponentAccess(this.checkAccess).then((res) => {
+				this.$root.tokenCheck().then(() => {
+					this.getElseContent()
+
+					this.chat = io(socket, {
+						query: {
+							token: this.$root.token,
+							[this.type]: this.name
+						}
+					})
+
+					this.chatAvailable = res
+
+					this.chat.on('reponse_chat_history', (data) => {
+						// write to variable and render messages from it
+						this.chatHistory = data
+
+						// check if page opened as reply to message
+						if (window.location.href.split("&reply=")[1]) {
+							this.focusToReply(window.location.href.split("&reply=")[1])
+						}
+
+						// scroll chat to bottom
+						setTimeout(() => {
+							this.scrollBehaviour()
+						}, 500)
+					})
+
+					this.chat.emit('fetch_chat_history')
+
+					this.chat.on('new_message_3rdparty', (data) => {
+						
+						let reply = this.chatHistory.filter(el => this.$root.profile.email == el.from.email && data.quoteId == el.id)
+						
+						if (reply.length) {
+							this.fireNotification(name, data)   
+						}
+
+						this.chatHistory.push(data)
+						
+						this.scrollBehaviour()
+					})
+				})
 			})
 			
 			window.EventBus.$on('reply-to-message', (e) => {
@@ -80,43 +121,6 @@
 				this.quotedMessage = e.quotedMessage
 				this.quotedName = e.quotedName
 				this.quoteId = e.quoteId
-			})
-
-            this.chat = io(socket, {
-                query: {
-                    token: this.$root.token,
-                    company: this.name
-                }
-            })
-
-            this.chat.on('reponse_chat_history', (data) => {
-                // write to variable and render messages from it
-				this.chatHistory = data
-
-                // check if page opened as reply to message
-                if (window.location.href.split("&reply=")[1]) {
-                    this.focusToReply(window.location.href.split("&reply=")[1])
-                }
-
-                // scroll chat to bottom
-                setTimeout(() => {
-                    this.scrollBehaviour()
-                }, 500)
-            })
-
-            this.chat.emit('fetch_chat_history')
-
-            this.chat.on('new_message_3rdparty', (data) => {
-                
-                let reply = this.chatHistory.filter(el => this.$root.profile.email == el.from.email && data.quoteId == el.id)
-                
-                if (reply.length) {
-                    this.fireNotification(name, data)   
-                }
-
-                this.chatHistory.push(data)
-                
-                this.scrollBehaviour()
 			})
 			
 			return {
@@ -129,10 +133,29 @@
 				showMessageModal:this.showMessageModal,
 				quotedMessage: this.quotedMessage,
 				quotedName: this.quotedName,
-				quoteId: this.quoteId
+				quoteId: this.quoteId,
+
+				isUpdagradable: ""
 			}
 		},
 		methods: {
+
+			getElseContent () {
+				if (AccessLevels[this.checkAccess].includes('business') || AccessLevels[this.checkAccess].includes('vip')) {
+					this.isUpdagradable = this.$root.content.upgradeToAccess(
+						this.$root.content.business + this.$root.content.or + this.$root.content.vip,
+						this.$root.content.chatWith.toLowerCase() + this.$root.capitalizeFirstLetter(name)
+					)
+				}
+				else
+					this.isUpdagradable = this.$root.content.noAccessTitle(this.$root.content.StartupsDemoDay.ddChat)
+			},
+
+			isUpgradable () {
+				if (AccessLevels[this.checkAccess].includes('business') || AccessLevels[this.checkAccess].includes('vip')) {
+					this.$root.showMessageToUpgradeBusOrVip(this.$root.content.chatWith.toLowerCase() + this.$root.capitalizeFirstLetter(this.name))
+				}
+			},
 
 			sendMessage (e) {
 				const id = () => {
@@ -166,7 +189,6 @@
 				}
 			},
 
-			// this shit doesn't work
 			scrollBehaviour () {
 				let chatlist = document.getElementById('messages-box')
 				if (chatlist)
@@ -196,6 +218,15 @@
 					this.doReply(message[0])
 				}
 			},
+
+			closeReply () {
+				this.showQuote = false
+                this.quotedMessage = ''
+                this.quotedName = ''
+                this.quoteId = ''
+                this.showMessageModal = false
+				window.EventBus.$emit('close-reply')
+			}
 		}
 	}
 </script>

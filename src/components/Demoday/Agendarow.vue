@@ -9,16 +9,12 @@
 			</div>
 			<div class="column is-one-quarter">
 				<h3>
-					<a href="#" class="agenda-link-1">{{content.veb}}</a>
+					<a @click="$root.openStartupProfile(data._id)" class="agenda-link-1">{{content.veb}}</a>
 				</h3>
 			</div>
 			<div class="column is-one-quarter agenda-touch click">
-				<h3 v-on:click="$root.joinWebinar(
-					data.webinarId,
-					`${host}/${$root.token}/ddpb`
-				)"
-				class="agenda-touch"
-				>{{content.join}}</h3>
+				<h3 @click="$root.addReminderCompany(data, reminder)" class="click">{{remind}}</h3>
+				<h3 v-on:click="$root.joinWebinar(data.webinarId, '')" class="agenda-touch">{{content.join}}</h3>
 			</div>
 		</div>
 	</div>
@@ -32,11 +28,13 @@ export default {
     },
     data () {
         return {
+			reminder: this.$root.content.reminders,
+			remind: this.$root.content.Agendarow.remind,
             content: this.$root.content.StartupsDemoDay
         }
     },
     methods: {
-
+		
     }
 }
 </script>

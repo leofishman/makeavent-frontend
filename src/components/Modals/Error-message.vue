@@ -2,13 +2,13 @@
     <form action="">
         <div class="modal-card" style="width: auto">
             <header class="modal-card-head">
-                <p class="modal-card-title">{{title}}</p>
+                <p class="modal-card-title" v-html="title"></p>
             </header>
             <section class="modal-card-body">
-                <p>{{text}}</p>
+                <p v-html="text"></p>
             </section>
             <footer class="modal-card-foot">
-                <button class="button" type="button" @click="$parent.close()">Close</button>
+                <button class="button" type="button" @click="$parent.close()">{{$root.content.common.close}}</button>
             </footer>
         </div>
     </form>

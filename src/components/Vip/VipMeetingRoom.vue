@@ -50,11 +50,11 @@ export default {
     },
     methods: {
         verifyVip () {
-            if (this.$root.usertype == "vip" || this.$root.usertype == "media" || this.$root.usertype == "startup" || this.$root.usertype == "investor") {
+            if (this.$root.cloo(this.$root.usertype, 'vip|media|startup|investor')) {
                 return true
             }
             else 
-                this.$root.showMessageToUpgrade('VIP e-MEETING ROOM', 'VIP')
+                this.$root.showMessageToUpgradeStrict('VIP e-MEETING ROOM', 'vip')
         },
 
         getVipMembers () {

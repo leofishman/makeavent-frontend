@@ -1,11 +1,17 @@
 <template>
     <article :class="messageClass()">
         <div>
-            <h3 v-on:click="$root.showBCrequesttoast(data.from, index)">{{data.from.name.split(" ")[0]}}</h3>
-            <p class="p-message" v-on:click="showReplyButton(data.from, index)" v-html="data.html"></p>
-            <div v-on:click="doReply(data, index)" v-if="showMessageModal === index" class="reply-button" >
-                <img width="100%" src="@/assets/img/reply.png" alt="">
-            </div>
+            <h3 v-on:click="$root.tryBusinessCard(data.from, index)">{{data.from.name.split(" ")[0]}}</h3>
+            <b-tooltip
+                :label="$root.content.common.replyHint"
+                :active="showMessageModal === index"
+                position="is-right"
+                always
+                class="reply-button"
+            >
+                <p :id="data.id" class="p-message" v-on:click="showReplyButton(data.from, index)" v-html="data.html">
+                </p>
+            </b-tooltip>
         </div>
     </article>
 </template>
@@ -18,6 +24,16 @@
             contacts: Array,
         },
         data () {
+            let self = this
+
+            window.EventBus.$on('close-reply', (msg) => {
+                this.showQuote = false
+                this.quotedMessage = ''
+                this.quotedName = ''
+                this.quoteId = ''
+                this.showMessageModal = false
+            })
+
             return {
                 showMessageModal: false,
                 showQuote: "",
@@ -59,13 +75,7 @@
             }
         },
 
-        closeReply () {
-            this.showQuote = false
-            this.quotedMessage = ''
-            this.quotedName = ''
-            this.quoteId = ''
-            this.showMessageModal = false
-        },
+        
 
         doReply (el, index) {
             this.showMessageModal = false
@@ -83,6 +93,16 @@
             })
         },
     },
+    mounted () {
+        let self = this
+        document.getElementById(this.data.id).addEventListener('contextmenu', function(ev) {
+            ev.preventDefault();
+            
+            self.doReply(self.data, self.index)
+
+            return false;
+        }, false);
+    }
 }
 </script>
 <style lang="scss" scpoed>

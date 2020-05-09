@@ -91,11 +91,7 @@ export default {
                     this.$root.profile = data.profile
                     localStorage.auth = res.headers.authorization
                     
-                    if (this.$router.currentRoute.fullPath.split('/')[2] == "businesscard")
-                        this.$router.push(`/${this.$root.token}/businesscard?id=${this.$router.currentRoute.fullPath.split('/')[3]}`)
-                    
-                    else
-                        this.$router.push(`${this.$root.token}/home`)
+                    this.$router.push(`${this.$root.token}/home`)
                 }
             })
             .catch(e => {

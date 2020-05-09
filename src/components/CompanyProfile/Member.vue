@@ -3,7 +3,7 @@
 		<figure>
 			<img :src="$root.tryGetProfilePhoto(data.email)">
 		</figure>
-		<h1>{{data.name}}</h1>
+		<h1 class="click" @click="$root.tryBusinessCard(data)">{{data.name}}</h1>
 		<h2>{{data.role}}</h2>
 		<h3>{{data.email}}</h3>
 		<nav>

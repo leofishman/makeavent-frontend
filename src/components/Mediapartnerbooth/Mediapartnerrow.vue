@@ -11,7 +11,7 @@
 			</div>
 			<div class="column row-touch is-uppercase">
 				<div class="has-text-centered">
-					<h3 class="click">{{content.reqbizcard}}</h3>
+					<h3 @click="$root.tryBusinessCard(content)" class="click">{{content.reqbizcard}}</h3>
 				</div>
 			</div>
 		</div>

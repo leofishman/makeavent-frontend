@@ -30,8 +30,6 @@ import Content from './content'
  */
 import Navbar from './components/Navbar.vue'
 import Desktop from './views/desktop/Index.vue'
-import GlobalChat from './components/Chats/GlobalChat.vue'
-import VipChat from './components/Chats/VipChat.vue'
 import Pagetitle from './components/Pagetitle.vue'
 
 /**
@@ -47,6 +45,8 @@ import ZoomWebinar from './components/Modals/Zoom-frame.vue'
 import Bcardpreview from '@/components/Popups/Bcardpreview'
 import Upgradeticket from '@/components/Popups/Upgradeticket'
 
+import AccessLevels from '@/api/accessLevels'
+
 /**
  * @VUE_uses
  */
@@ -61,12 +61,6 @@ Vue.component('navbar', Navbar)
 Vue.component('desktop', Desktop)
 Vue.component('Pagetitle', Pagetitle)
 // Vue.component('mobile', Mobile)
-
-/**
- * @chats
- */
-Vue.component('globalchat', GlobalChat)
-Vue.component('vipchat', VipChat)
 
 const EventBus = new Vue();
 window.EventBus = EventBus
@@ -177,8 +171,8 @@ new Vue({
       usertype: this.usertype,
       token: this.token,
       content: Content[this.selectedLanguage],
-      globalchat: "",
-      vipchat: "",
+
+      openGlobalChat: false,
 
       business_paypalButtonRendered: false,
       vip_paypalButtonRendered: false,
@@ -200,6 +194,13 @@ new Vue({
     }
   },
   methods: {
+    switchOpen () {
+      if (this.openGlobalChat)
+        this.openGlobalChat = false
+      else
+        this.openGlobalChat = true
+    },
+
     openExternalInBlank (link) {
       const a = document.createElement('a')
       a.href = link
@@ -240,15 +241,54 @@ new Vue({
       }
     },
 
+    openStartupProfile (id) {
+			
+			let focus_startup = this.Startups.filter(el => el._id == id)[0]
+			
+			const name = focus_startup.name.toLowerCase()
+			if (this.cloo(this.usertype, 'investor|media')) {
+				this.$router.push({
+					path: `/${this.token}/sip/${name}`
+				}).catch(e => {
+					console.log(e)
+				})
+			}
+			// only investor or media can see startup investment profile
+			else {
+				this.$router.push({
+					path: `/${this.token}/company?name=${name}`
+				}).catch(e => {
+					console.log(e)
+				})
+			}
+		},
+
     joinStage (name) {
       this.getWebinar(name).then(webinar => {
         this.joinWebinar(webinar)
       })
     },
 
+    addReminderCompany (data, theme) {
+      console.log(data)
+      Axios.post(host + `/reminders/new`, {
+        time: data.time,
+        reason: `${data.name} ${theme}`
+      }, {
+        headers: {
+          authorization: localStorage.auth
+        }
+      })
+      .then((res) => {
+        this.$buefy.dialog.alert(this.content.common.success)
+      })
+      .catch(err => {
+        this.createError(this.content.ErrorMessages[2], 'oops')
+      })
+    },
+
     addReminder (data, theme) {
       Axios.post(host + `/reminders/new`, {
-        email: data.contact.email,
         time: data.time,
         reason: `${data.contact.name} ${data.contact.role} ${data.contact.company} ${theme}`
       }, {
@@ -567,8 +607,7 @@ new Vue({
         !this.$router.currentRoute.fullPath.includes('auth=true') &&
         this.$router.currentRoute.path != '/login' &&
         this.$router.currentRoute.path != '/loginrtp' &&
-        this.$router.currentRoute.path != '/noaccess' &&
-        !this.$router.currentRoute.fullPath.includes('businesscard')
+        this.$router.currentRoute.path != '/noaccess'
       )
         return true
       else
@@ -665,11 +704,6 @@ new Vue({
 
     friendRequestAccepted (data) {
       this.getPengingCards()
-    },
-
-    joinChats () {
-      this.joinGlobalChat()
-      this.joinVipChat()
     },
 
     upgradeTicket(type) {
@@ -836,42 +870,42 @@ new Vue({
           if (this.usertype) {
             switch (type) {
               case 'globalchat' : 
-                if (this.cloo(this.usertype, "business|vip|media|startup|investor"))
+                if (this.cloo(this.usertype, AccessLevels.globalchat))
                   resolve(true)
                 else
                   resolve(false)
                 break
 
               case 'vipchat' :
-                if (this.cloo(this.usertype, "vip|media|startup|investor"))
+                if (this.cloo(this.usertype, AccessLevels.vipchat))
                   resolve(true)
                 else
                   resolve(false)
                 break
 
               case 'companychat' : 
-                if (this.cloo(this.usertype, "business|vip|media|startup|investor"))
+                if (this.cloo(this.usertype, AccessLevels.companychat))
                   resolve(true)
                 else
                   resolve(false)
                 break
 
               case 'startupchat' : 
-                if (this.usertype == "investor")
+                if (this.cloo(this.usertype, AccessLevels.startupchat))
                   resolve(true)
                 else
                   resolve(false)
                 break
 
               case "investorslist" :
-                if (this.cloo(this.usertype, 'investor|startup|media'))
+                if (this.cloo(this.usertype, AccessLevels.investorslist))
                   resolve(true)
                 else
                   resolve(false)
                 break
 
               case "bcrequest" : 
-                if (this.cloo(this.usertype, "business|vip|media|startup|investor"))
+                if (this.cloo(this.usertype, AccessLevels.bcrequest))
                   resolve(true)
                 else
                   resolve(false)

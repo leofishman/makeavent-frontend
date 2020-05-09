@@ -10,38 +10,42 @@
 				<div class="columns is-variable is-8">
 
 					<div class="column is-7">
-						<Agenda/>
-					</div>
-
-					<div class="column is-4 demoaction">
-						<div class="box shadow-2 click demoday-join">
-							<h3>{{content.joinPitching}}</h3>
-						</div>
-						<div class="box shadow-2 click demoday-chat">
-							<h3>{{content.ddChat}}</h3>
-						</div>
+						<Agenda />
 					</div>
 				</div>
 			</section>
 		</div>
+
+		<div id="chat">
+            <div class="chat-top">
+                <h3 @click="$root.joinStage('demoday')" class="is-uppercase">{{content.joinPitching}}</h3>
+            </div>
+		    <Chat :checkAccess="'startupchat'" :parent="self" type="startup" name="demodaychat" />
+        </div>
 	</div>
 </template>
 
 <script>
-import Pagetitle from '@/components/Pagetitle.vue';
+import Pagetitle from '@/components/Pagetitle.vue'
+import Chat from '@/components/CompanyProfile/Chat.vue'
 import Agenda from './Agenda.vue'
+import {socket} from '@/env'
+import io from 'socket.io-client'
 
 export default {
     name: "Demoday",
     components: {
         Pagetitle,
-        Agenda
+		Agenda,
+		Chat
     },
     props: {
         data: String
     },
-    data () {
+    data () {		
         return {
+			self: this,
+			contacts: [], // this var always empty here, needed for chat
             content: this.$root.content.StartupsDemoDay
         }
     },

@@ -1,23 +1,10 @@
 <template>
     <div class="container card webinar-modal">
-        <div class="card-content">
-            <div class="media">
-                <div class="media-left">
-                    
-                </div>
-                <div v-if="speaker && speakingData" class="media-content">
-                    <p class="title is-4">{{data.name}}</p>
-                    <p class="subtitle is-6">{{speaker.name}}</p>
-                </div>
-            </div>
-
-            <div v-if="speakingData" class="content">
-                {{speakingData.theme}}
-                <a></a>
-                <br>
-                <small>{{new Date(speakingData.time).toLocaleString()}}</small>
-            </div>
-        </div>
+        <SpeakingTitle
+            :webinarName="data.name"
+            :speaker="speaker"
+            :speakingData="speakingData"
+        />
         <div id="jitsi-modal-target" class="card-image">
             
         </div>
@@ -25,9 +12,13 @@
 </template>
 <script>
 import jitsi from '@/api/jitsi'
+import SpeakingTitle from '@/components/Modals/SpeakingTitle'
 
 export default {
     name: "Jitsimodal",
+    components: {
+        SpeakingTitle
+    },
     props: {
         data: Object
     },
@@ -35,21 +26,19 @@ export default {
         return {
             speakingData: this.speakingData,
             speaker: this.speaker,
-            isCardModalActive: false,
         }
     },
     methods: {
 
     },
     mounted () {
-        this.isCardModalActive = true
 
         let timer = setInterval(() => {
             if (document.querySelector("#jitsi-modal-target")) {
                 clearInterval(timer)
 
-                this.$root.check('Speakers').then(() => {
-                    this.speakers = this.$root.Speakers.filter(el => el.webinarId == this.data.webinarId)
+                this.$root.check('Speakers Speakingagenda').then(() => {
+                    this.speakers = this.$root.Speakingagenda.filter(el => el.stage == this.data.name)
                     if (this.speakers.length) {
                         this.speaker = this.speakers[0].contact
                         this.speakingData = this.speakers[0]

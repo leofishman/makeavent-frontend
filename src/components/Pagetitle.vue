@@ -1,6 +1,6 @@
 <template>
 	<section class="section title-page">
-		<h1 class="title has-text-centered has-text-grey">{{data}}</h1>
+		<h1 class="title has-text-centered">{{data}}</h1>
 	</section>
 </template>
 

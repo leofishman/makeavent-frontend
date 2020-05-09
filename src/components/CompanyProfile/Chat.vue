@@ -232,5 +232,4 @@
 </script>
 
 <style scoped>
-	
 </style>

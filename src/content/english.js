@@ -20,6 +20,27 @@ export default {
         noupi: "There is no ongoing interviews"
     },
 
+    RegistrationHall: {
+        title: "Registration Hall",
+        intro: "Please fill in the information that you would like to include in your virtual business card. This business card is the 'request only' and will be available only to people whose requests you confirmed. BlockConf Digital will not use this information for any other purposes.",
+        email: "Email",
+        emailValidation: "This email is invalid",
+        linkedin: "Linkedin",
+        facebook: "Facebook",
+        telegram: "Telegram",
+        urlValidation: "This url is invalid",
+        photo: "Photo",
+        submit: "Submit"
+    },
+
+    Meetup: {
+        title: "e-Meetup",
+        intro: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
+    },
+    Booth: {
+        title: "lorem ipsum",
+    },
+
     Mediapartnerbooth: {
         
     },
@@ -54,6 +75,7 @@ export default {
     pageWillBeLater: "Please come back later",
     agenda: "Agenda",
     mediahall: "Media Hall",
+    eMeetup: "e-Meetup",
     
     team: "team",
     chatWith: "Chat with ",

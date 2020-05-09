@@ -30,6 +30,16 @@ import Mediapartnerbooth from '@/components/Mediapartnerbooth/Mediapartnerbooth.
 import VipMeetingRoom from '@/components/Vip/VipMeetingRoom.vue'
 
 /**
+ * @MEETUP
+ */
+import Meetup from '@/components/Meetup/Meetup.vue'
+
+/**
+ * @Booth
+ */
+import Booth from '@/components/Meetup/Booth.vue'
+
+/**
  * @Workshop
  */
 import WorkshopAgenda from '@/components/Workshop/WorkshopAgenda.vue'
@@ -120,6 +130,24 @@ const router = new Router({
             path: '/:id/vip',
             name: "Vip",
             component: VipMeetingRoom,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/meetup',
+            name: "Meetup",
+            component: Meetup,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/booth',
+            name: "Booth",
+            component: Booth,
             meta: {
                 requiresAuth: true,
                 platformLaunch: true
@@ -273,6 +301,8 @@ router.beforeEach((to, from, next) => {
                     window.location.pathname.split("/")[1] != "noaccess" &&
                     window.location.pathname.split("/")[2] != "company" && 
                     window.location.pathname.split("/")[2] != "vip" &&
+                    window.location.pathname.split("/")[2] != "meetup" &&
+                    window.location.pathname.split("/")[2] != "booth" &&
                     window.location.pathname.split("/")[2] != "home" &&
                     window.location.pathname.split("/")[2] != "mediahall" &&
                     window.location.pathname.split("/")[2] != "agenda" &&

@@ -1,5 +1,5 @@
 // Import font
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap');
 
 // Import Bulma's core
 //@import "~bulma/sass/utilities/_all";
@@ -167,6 +167,14 @@ main {
 .reply-button {
 	&:hover {
 		cursor: pointer;
+	}
+}
+.reply-block {
+	height: 40px;
+	padding: 10px;
+	margin: 0px;
+	.tile.is-ancestor {
+		margin: 0px;
 	}
 }
 
@@ -485,7 +493,7 @@ main {
 			form {
 				margin-top: 40px;
 				label {
-					display: none;
+					display: block;
 				}
 				.input:focus {
 					background-color: $white;
@@ -501,8 +509,14 @@ main {
 		}
 	}
 	.sponsors-login {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-top: 0;
+		padding-bottom: 0;
 		.box {
-			box-shadow: $shadow-3;
+			//box-shadow: $shadow-3;
+			// background-color: transparent;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -512,18 +526,13 @@ main {
 		}
 		.ls-main {
 			img {
-				max-height: 200px;
-				min-height: 200px;
+				max-height: 250px;
+				min-height: 250px;
 			}
 		}
 		.ls-platinum {
 			img {
-				max-height: 120px;
-			}
-		}
-		.ls-gold {
-			img {
-				max-height: 80px;
+				max-height: 100px;
 			}
 		}
 	}
@@ -531,8 +540,8 @@ main {
 
 // REGISTRATION HALL //
 //////////////////////////////////////////
-#registrationhall {
-	margin-top: 0;
+#registrationhall, #logintempemail {
+	margin-top: -80px;
 	
 	.data-login {
 		figure {
@@ -549,9 +558,11 @@ main {
 			p {
 				font-size: 0.875em;
 			}
-			form {
+			section {
 				margin-top: 40px;
-				label {
+				.label {
+					font-weight: 400;
+					display: block;
 					font-weight: normal;
 				}
 				.input:focus {
@@ -575,7 +586,7 @@ main {
 		padding-bottom: 0;
 		.box {
 			//box-shadow: $shadow-3;
-			background-color: transparent;
+			// background-color: transparent;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -1523,110 +1534,110 @@ main {
 	}
 }
 
-	// VIP //
-	//////////////////////////////////////////
-	#vip {
-		.section-vip {
-			padding-top: 0;
-			.box {
-				padding-top: 22px;
-				padding-bottom: 22px;
-				.column {
+// VIP //
+//////////////////////////////////////////
+#vip {
+	.section-vip {
+		padding-top: 0;
+		.box {
+			padding-top: 22px;
+			padding-bottom: 22px;
+			.column {
+				display: flex;
+				align-items: center;
+				+.column {
+					border-left: solid 1px $light;
+				}
+				.has-text-centered {
+					width: 100%;
+				}
+			}
+			.vip-pic {
+				margin: -10px;
+				padding: 0;
+				img {
+					width: 240px;
+					height: 160px;
+					border-right: solid 10px $secondary;
+					object-fit: cover;
+				}
+			}
+			.column.vip-name {
+				border-left: 0;
+				h3 {
+					font-size: 100%;
+					font-weight: 400;
+					strong {
+						text-transform: uppercase;
+						font-weight: $weight-bold;
+					}
+				}
+			}
+			.vip-touch {
+				ul {
+					margin-bottom: 0;
+					margin-left: 20px;
+				}
+				li {
+					padding-left: 45px;
+					min-height: 25px;
+					line-height: 1;
+					position: relative;
+					font-size: 90%;
+					font-weight: bold;
+					cursor: pointer;
 					display: flex;
 					align-items: center;
-					+.column {
-						border-left: solid 1px $light;
+					+li {
+						margin-top: 10px;
 					}
-					.has-text-centered {
-						width: 100%;
-					}
-				}
-				.vip-pic {
-					margin: -10px;
-					padding: 0;
-					img {
-						width: 240px;
-						height: 160px;
-						border-right: solid 10px $secondary;
-						object-fit: cover;
-					}
-				}
-				.column.vip-name {
-					border-left: 0;
-					h3 {
-						font-size: 100%;
-						font-weight: 400;
-						strong {
-							text-transform: uppercase;
-							font-weight: $weight-bold;
-						}
-					}
-				}
-				.vip-touch {
-					ul {
-						margin-bottom: 0;
-						margin-left: 20px;
-					}
-					li {
-						padding-left: 45px;
-						min-height: 25px;
-						line-height: 1;
-						position: relative;
-						font-size: 90%;
-						font-weight: bold;
+					&:before {
+						left: 0;
+						content: "";
 						cursor: pointer;
-						display: flex;
-						align-items: center;
-						+li {
-							margin-top: 10px;
-						}
+						text-align: center; 
+						font-size: 2em;
+						width: 25px;
+						height: 25px;
+						position: absolute;
+						background-color: $primary;
+						background-position: center;
+						background-repeat: no-repeat;
+						background-size: 70%;
+						box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+					}
+					&:nth-child(1n) {
 						&:before {
-							left: 0;
-							content: "";
-							cursor: pointer;
-							text-align: center; 
-							font-size: 2em;
-							width: 25px;
-							height: 25px;
-							position: absolute;
-							background-color: $primary;
-							background-position: center;
-							background-repeat: no-repeat;
-							background-size: 70%;
-							box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+							background-image: url("../../assets/icon/icon-user.svg");
 						}
-						&:nth-child(1n) {
-							&:before {
-								background-image: url("../../assets/icon/icon-user.svg");
-							}
+					}
+					&:nth-child(2n) {
+						&:before {
+							background-image: url("../../assets/icon/icon-call.svg");
 						}
-						&:nth-child(2n) {
-							&:before {
-								background-image: url("../../assets/icon/icon-call.svg");
-							}
-						}
-						&:nth-child(3n) {
-							&:before {
-								background-image: url("../../assets/icon/icon-search.svg");
-							}
+					}
+					&:nth-child(3n) {
+						&:before {
+							background-image: url("../../assets/icon/icon-search.svg");
 						}
 					}
 				}
-				&:nth-child(even) {
-					.vip-pic {
-						img {
-							border-right: solid 10px $primary;
-						}
+			}
+			&:nth-child(even) {
+				.vip-pic {
+					img {
+						border-right: solid 10px $primary;
 					}
-					li {
-						&:before {
-							background-color: $secondary;
-						}
+				}
+				li {
+					&:before {
+						background-color: $secondary;
 					}
 				}
 			}
 		}
 	}
+}
 
 // PROFILE //
 //////////////////////////////////////////
@@ -1639,7 +1650,16 @@ main {
 			}
 		}
 		.profile-main {
-			
+			.profile-top {
+				margin-bottom: 60px;
+				display: flex;
+				> div {
+					margin-right: 30px;
+					img {
+						box-shadow: $shadow-1;
+					}
+				}
+			}
 			.profile-bottom {
 				padding: 25px;
 				padding-left: 160px;
@@ -2382,8 +2402,8 @@ main {
         }
     }
     .member + .member {
-        	margin-top: 20px;
-        }
+		margin-top: 20px;
+	}
     .screen {
     	margin-left: 20px;
         padding: 20px;
@@ -2392,7 +2412,106 @@ main {
         border: solid 5px grey;
         border-radius: 30px;
         background-color: black;
-    }
+	}
+	.title-page {
+		padding-bottom: 1rem !important;
+	}
+}
+
+
+%chat-bubble {
+	margin-top: 57px;
+	padding: 10px;
+	height: calc(100vh - 290px);
+	overflow: auto;
+	position: relative;
+	article {
+		display: flex;
+		justify-content: flex-start;
+		h3 {
+			margin-bottom: 3px;
+		}
+		p {
+			padding: 10px 20px;
+			border-radius: 10px;
+			font-size: 0.9em;
+			cursor: pointer;
+		}
+		+article {
+			margin-top: 18px;
+		}
+	}
+	.bubble-mine {
+		display: flex;
+		justify-content: flex-end;
+		h3 {
+			text-align: right;
+		}
+		p {
+			background-color: $light;
+		}
+	}
+	.bubble-remote {
+		p {
+			color: $white;
+			background-color: $blue;
+		}
+	}
+	.bubble-admin {
+		p {
+			color: $white;
+			background-color: $danger;
+		}
+	}
+}
+
+%textarea-message {
+	padding: 10px;
+	background-color: $grey-lighter;
+	border-top: solid 1px $grey-light;
+	border-bottom: solid 1px $grey-light;
+	textarea {
+		padding: 0;
+		width: 100%;
+		height: 90px;
+		resize: none;
+		border: none;
+		color: $black;
+		background-color: $grey-lighter;
+		&:focus {
+			outline: red 3px;
+		}
+	}
+}
+%chat-helper {
+	padding: 10px;
+	font-size: 0.8em;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.reply-button {
+
+}
+
+#globalchat, #vipchat {
+	.chat-bubble {
+		@extend %chat-bubble;
+		margin-top: 0px;
+	}
+	.textarea-message {
+		@extend %textarea-message;
+	}
+	.chat-helper {
+		@extend %chat-helper;
+	}
+}
+
+#chats-sidebar {
+	.tab-content {
+		padding: 0px;
+	}
 }
 
 // CHAT //
@@ -2435,76 +2554,10 @@ main {
 		@extend %chat-bubble;
 	}
 	.textarea-message {
-		padding: 10px;
-		background-color: $grey-lighter;
-		border-top: solid 1px $grey-light;
-		border-bottom: solid 1px $grey-light;
-		textarea {
-			padding: 0;
-			width: 100%;
-			height: 90px;
-			resize: none;
-			border: none;
-			color: $black;
-			background-color: $grey-lighter;
-			&:focus {
-				outline: red 3px;
-			}
-		}
+		@extend %textarea-message;
 	}
 	.chat-helper {
-		padding: 10px;
-		font-size: 0.8em;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-	}
-}
-%chat-bubble {
-	margin-top: 57px;
-	padding: 10px;
-	height: calc(100vh - 290px);
-	overflow: auto;
-	position: relative;
-	article {
-		display: flex;
-		justify-content: flex-start;
-		h3 {
-			margin-bottom: 3px;
-		}
-		p {
-			padding: 10px 20px;
-			border-radius: 10px;
-			font-size: 0.9em;
-			cursor: pointer;
-		}
-		+article {
-			margin-top: 18px;
-		}
-	}
-	.bubble-mine {
-		display: flex;
-		justify-content: flex-end;
-		h3 {
-			text-align: right;
-		}
-		p {
-			background-color: $light;
-		}
-	}
-	/* @Bogdan Sizov please have a look at suggested collors, because white text on green bad seen.*/
-	.bubble-remote {
-		p {
-			color: $white;
-			background-color: $blue;
-		}
-	}
-	/* @Bogdan Sizov admin class required, since we need to differentiate admin messages from others */
-	.bubble-admin {
-		p {
-			color: $white;
-			background-color: $danger;
-		}
+		@extend %chat-helper;
 	}
 }
 

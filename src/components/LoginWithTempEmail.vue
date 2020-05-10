@@ -1,13 +1,13 @@
 <template>
-    <div id="login">
+    <div id="logintempemail">
         <div class="container">
-            <section class="section section-login">
-                <div class="columns is-centered">
-                    <div class="column is-half-desktop is-one-third-fullhd">
+            <section class="section section-registrationhall">
+                <div class="columns is-variable is-8">
+                    <div class="column data-login">
                         <figure class="image">
                             <img src="@/assets/logo_dark.svg">
                         </figure>
-                        
+
                         <div class="box">
                             <p v-html="$root.content.titleForLoginWithTempEmail"></p>
                             <section>
@@ -88,9 +88,9 @@
                                         v-model="calendly"
                                         :placeholder="$root.content.pleaseEnter + 'Calendly'"
                                     ></b-input>
-                                    <b-link class="xxx" href="https://calendly.com/signup" target="_blank">
+                                    <a class="xxx" href="https://calendly.com/signup" target="_blank">
                                         {{$root.content.dontHave('Calendly')}}
-                                    </b-link>
+                                    </a>
                                 </b-field>
 
                                 <b-button :disabled="!buttonready" v-on:click="login()" type="is-primary" size="is-medium">
@@ -102,7 +102,11 @@
                                 </div>
                             </section>
                         </div>
-                    </div>	
+                    </div>
+
+                    <div class="column sponsors-login">
+                        <SponsorsCol />
+                    </div>
                 </div>
             </section>
         </div>
@@ -111,8 +115,12 @@
 <script>
 import Axios from 'axios'
 import {self, host} from '@/env'
+import SponsorsCol from '@/components/SponsorsCol'
 
 export default {
+    components: {
+        SponsorsCol
+    },
     data() {
         this.buttonready = false
 
@@ -295,9 +303,6 @@ export default {
             font-size:14px;
             text-align: center;
             color: grey;
-        }
-        .label {
-            font-weight: 400;
         }
     }
 </style>

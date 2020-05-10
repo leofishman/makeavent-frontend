@@ -19,10 +19,11 @@
             </div>
 			<div v-else class="column vip-touch is-uppercase">
 				<ul>
-					<li v-if="!$root.checkIfAlreadyAFriend(data)">{{content.rbc}}</li>
+					<li v-on:click="$root.tryBusinessCard(data)" v-if="!$root.checkIfAlreadyAFriend(data)">{{content.rbc}}</li>
                     <li class="connected" v-else>{{$root.content.common.alreadyConnected}}</li>
-					<li>{{content.spc}}</li>
-					<li>{{content.findInEbooth}}</li>
+					<!-- NOT RELEASED -->
+                    <li >{{content.spc}}</li>
+					<li v-if="data.company" v-on:click="$root.navToPage(data.company)">{{content.findInEbooth}}</li>
 				</ul>
 			</div>
 		</div>

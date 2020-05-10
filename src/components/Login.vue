@@ -3,14 +3,14 @@
 		<div class="container">
 			<section class="section section-login">
 				<div class="columns is-variable is-8">
-					<div class="column data-login is-two-fifths">
+					<div class="column data-login">
 						<figure class="image">
 							<img src="@/assets/logo_dark.svg">
 						</figure>
 						
 						<div class="box">
 							<p>{{$root.content.loginWithTicket}}</p>
-							<form>
+							<section>
 								<b-field :label="$root.content.email" >
 									<b-input v-model="email" type="email" validation-message="This email is invalid" :placeholder="$root.content.emailPlaceholder"></b-input>
 								</b-field>
@@ -21,61 +21,11 @@
 								<b-button :disabled="!inputsReady" v-on:click="login()" type="is-primary" size="is-medium">
                                     {{$root.content.submit}}
                                 </b-button>
-							</form>
+							</section>
 						</div>
 					</div>
                     <div class="column sponsors-login">
-                        <div class="tile is-ancestor has-text-centered">
-                            <div class="tile is-vertical">
-                                <div class="tile is-parent ls-main">
-                                    <!-- Main -->
-                                    <div class="tile is-child box">
-                                        <img src="@/assets/logo-RSK.png">
-                                    </div>
-                                </div>
-                                <div class="tile ls-platinum">
-                                    <!-- Platinum A -->
-                                    <div class="tile is-parent">
-                                        <div class="tile is-child box">
-                                            <img src="@/assets/logo-FAS.png">
-                                        </div>
-                                    </div>
-                                    <!-- Platinum B -->
-                                    <div class="tile is-parent">
-                                        <div class="tile is-child box">
-                                            <img src="@/assets/logo-CRYPTTP.png">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tile ls-gold">
-                                    <!--[YD] If you like, I can made this in separate components, but it was so few, I don't think necessary -->
-                                    <!-- Gold A -->
-                                    <div class="tile is-parent">
-                                        <div class="tile is-child box">
-                                            <img src="@/assets/logo-test1.png">
-                                        </div>
-                                    </div>
-                                    <!-- Gold B -->
-                                    <div class="tile is-parent">
-                                        <div class="tile is-child box">
-                                            <img src="@/assets/logo-FAS.png">
-                                        </div>
-                                    </div>
-                                    <!-- Gold C -->
-                                    <div class="tile is-parent">
-                                        <div class="tile is-child box">
-                                            <img src="@/assets/logo-test2.png">
-                                        </div>
-                                    </div>
-                                    <!-- Gold D -->
-                                    <div class="tile is-parent">
-                                        <div class="tile is-child box">
-                                            <img src="@/assets/logo-RSK.png">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <SponsorsCol />
                     </div>
 				</div>
 			</section>
@@ -87,8 +37,12 @@
 import axios from 'axios'
 import { host } from '@/env'
 import Main from '@/components/Sponsors/Main.vue';
+import SponsorsCol from '@/components/SponsorsCol'
 
 export default {
+    components: {
+        SponsorsCol
+    },
     data() {
         this.email = ''
         this.password = ''
@@ -96,6 +50,7 @@ export default {
         this.tg = ""
         this.fb = ""
         this.ln = ""
+
         this.tgswitch = false
         this.fbswitch = false
         this.lnswitch = false
@@ -110,6 +65,7 @@ export default {
             tg: this.tg,
             fb: this.fb,
             ln: this.ln,
+
             tgswitch: this.tgswitch,
             fbswitch: this.fbswitch,
             lnswitch: this.lnswitch,

@@ -11,12 +11,12 @@
 					:contacts="parent.contacts"
 				/>
 			</div>
-			<div v-if="showQuote">
-				<div class="columns" style="padding:0px;">
-					<div class="column is-four-fifths" style="padding:10px;">
-						{{$root.content.reply}} <strong>@{{quotedName}}</strong> {{quotedMessage}}
+			<div class="reply-block" v-if="showQuote">
+				<div class="tile is-ancestor">
+					<div class="whitespaces tile is-10">
+						{{$root.content.reply}}&nbsp;<strong>@{{quotedName}}</strong>&nbsp;{{quotedMessage}}
 					</div>
-					<div v-on:click="closeReply()" class="column close-reply click" style="padding:10px;">
+					<div v-on:click="closeReply()" class="click tile is-2">
 						<img style="width:16%; opacity:50%" src="@/assets/img/cross.svg" alt="">
 					</div>
 				</div>
@@ -232,4 +232,8 @@
 </script>
 
 <style scoped>
+.whitespaces {
+	white-space: break-spaces;
+    word-break: break-all;
+}
 </style>

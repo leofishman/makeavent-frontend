@@ -3,7 +3,7 @@
     <div v-if="ready" id="profile-company" class="bg-light-mode">
 
         <!-- [YD] this img should be the BG of the company -->
-        <div class="bg-img"><img src="@/assets/bg/bg-02.jpg"></div>
+        <!-- <div class="bg-img"><img src="@/assets/bg/bg-02.jpg"></div> -->
         <!-- [YD] Should be dynamic $root.Sponsor.backgroundImage -->
 
         <navbar></navbar>
@@ -84,41 +84,41 @@
 </template>
 
 <script>
-    import axios from 'axios'
-    import env from '@/env'
-    import Storycreate from '@/components/Stories/StoryCreate.vue';
-    import socialLogos from '@/assets/img/socials'
-    import Pagetitle from '@/components/Pagetitle.vue';
-    import Member from './Member.vue';
-    import Chat from './Chat.vue';
+import axios from 'axios'
+import env from '@/env'
+import Storycreate from '@/components/Stories/StoryCreate.vue';
+import socialLogos from '@/assets/img/socials'
+import Pagetitle from '@/components/Pagetitle.vue';
+import Member from './Member.vue';
+import Chat from './Chat.vue';
 
-    export default {
-        props: {
-            name: {
-                type: String,
-                default: ""
-            }
-        },
-        components: {
-            Storycreate,
-            Pagetitle,
-            Member,
-            Chat
-        },
-        data () {
-            this.chatHeight;
-            this.chatHistory = [];
-            this.userTextMessage = ""
-            this.token = this.$root.token
-            this.showMessageModal = false
-            this.chatAvailable = false
-            this.sponsor = ''
-            this.description = ""
-            this.demo = ""
-            this.website = ""
-            this.socials = ""
-            this.contacts = ""
-            this.logo = ""
+export default {
+    props: {
+        name: {
+            type: String,
+            default: ""
+        }
+    },
+    components: {
+        Storycreate,
+        Pagetitle,
+        Member,
+        Chat
+    },
+    data () {
+        this.chatHeight;
+        this.chatHistory = [];
+        this.userTextMessage = ""
+        this.token = this.$root.token
+        this.showMessageModal = false
+        this.chatAvailable = false
+        this.sponsor = ''
+        this.description = ""
+        this.demo = ""
+        this.website = ""
+        this.socials = ""
+        this.contacts = ""
+        this.logo = ""
 
         // wait until token and sponsors ready
         this.$root.check('token Sponsors').then(() => {

@@ -15,11 +15,11 @@
 
 			<div id="navbarBasicExample" class="navbar-menu">
 				<div class="navbar-start">
+					<a class="navbar-item" v-on:click="openPage('meetup')">{{$root.content.eMeetup}}</a>
 					<a class="navbar-item" v-on:click="openPage('home')">{{$root.content.home}}</a>
 					<a class="navbar-item" v-on:click="openPage('agenda')">{{$root.content.agenda}}</a>
 					<a class="navbar-item" v-on:click="openPage('mediahall')">{{$root.content.mediahall}}</a>
 					<a class="navbar-item" v-on:click="openPage('vip')">{{$root.content.toprow.vipMeetingRoom}}</a>
-					<a class="navbar-item" v-on:click="openPage('meetup')">{{$root.content.eMeetup}}</a>
 				</div>
 
 				<div class="navbar-end">

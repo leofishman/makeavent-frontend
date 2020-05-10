@@ -267,13 +267,13 @@
       :open.sync="$root.openGlobalChat"
     >
       <div>
-        <section style="padding-top:80px; overflow:hidden; background:white;">
+        <section id="chats-sidebar" style="padding-top:80px; overflow:hidden; background:white;">
           <b-tabs class="chat" style="width:600px; pointer-events:all" type="is-toggle" expanded >
             <b-tab-item :label="`Blockconf ` + $root.content.common.coffeeChat">
-              <Chat checkAccess="globalchat" :parent="self" type="globalchat" name="global" />
+              <Chat id="globalchat" checkAccess="globalchat" :parent="self" type="globalchat" name="global" />
             </b-tab-item>
             <b-tab-item :label="`Blockconf ` + $root.content.common.vipChat">
-              <Chat checkAccess="vipchat" :parent="self" type="vipchat" name="vip" />
+              <Chat id="vipchat" checkAccess="vipchat" :parent="self" type="vipchat" name="vip" />
             </b-tab-item>
           </b-tabs>
         </section>

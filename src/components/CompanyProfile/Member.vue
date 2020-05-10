@@ -1,8 +1,13 @@
 <template>
 	<div class="box member">
+		<img src="@/assets/icon/icon-search.svg" alt="">
+		<img src="@/assets/icon/icon-user.svg" alt="">
+
+
 		<figure>
 			<img :src="$root.tryGetProfilePhoto(data.email)">
 		</figure>
+
 		<h1 class="click" @click="$root.tryBusinessCard(data)">{{data.name}}</h1>
 		<h2>{{data.role}}</h2>
 		<h3>{{data.email}}</h3>

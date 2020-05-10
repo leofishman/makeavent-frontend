@@ -39,6 +39,7 @@ export default {
     },
     Booth: {
         title: "lorem ipsum",
+        joinNowTitle: "Join E-booth"
     },
 
     Mediapartnerbooth: {
@@ -58,6 +59,10 @@ export default {
         chatPlaceholder: "Please enter your question here",
     },
 
+    Storycreate: {
+        newStoryButton: "New story",
+    },
+
     reminders: {
         0: 'will start speaking in 10 minutes',
     },
@@ -75,7 +80,7 @@ export default {
     pageWillBeLater: "Please come back later",
     agenda: "Agenda",
     mediahall: "Media Hall",
-    eMeetup: "e-Meetup",
+    eMeetup: "E-Meetup",
     
     team: "team",
     chatWith: "Chat with ",

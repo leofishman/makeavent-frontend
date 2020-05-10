@@ -41,7 +41,9 @@
 </script>
 
 <style lang="scss">
-label.label {
-	display: none;
+#Newstory {
+	label.label {
+		display: none;
+	}
 }
 </style>

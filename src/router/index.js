@@ -44,10 +44,12 @@ import Booth from '@/components/Meetup/Booth.vue'
  */
 import WorkshopAgenda from '@/components/Workshop/WorkshopAgenda.vue'
 
-import NoAccess from '@/components/NoAccess.vue'
-import Company from '@/components/CompanyProfile/Company.vue'
 import Login from '@/components/Login.vue'
 import LoginWithTempEmail from '@/components/LoginWithTempEmail.vue'
+import RegistrationHall from '@/components/RegistrationHall'
+
+import NoAccess from '@/components/NoAccess.vue'
+import Company from '@/components/CompanyProfile/Company.vue'
 
 import Profile from '@/components/Profile/Profile.vue'
 import MyInterviews from '@/components/Profile/MyInterviews.vue'
@@ -127,6 +129,14 @@ const router = new Router({
             }
         },
         {
+            path: "/reghall",
+            name: "RegistrationHall",
+            component: RegistrationHall,
+            meta: {
+                requiresAuth: false
+            }
+        },
+        {
             path: '/:id/vip',
             name: "Vip",
             component: VipMeetingRoom,
@@ -151,7 +161,8 @@ const router = new Router({
             meta: {
                 requiresAuth: true,
                 platformLaunch: true
-            }
+            },
+            props: (route) => ({ name: route.query.name })
         },
         {
             path: '/loginrtp',
@@ -252,7 +263,7 @@ router.beforeEach((to, from, next) => {
     //     window.location.pathname = '/noaccess'
     //  }
     //  else {
-        if (to.path == "/noaccess") {
+        if (to.path == "/noaccess" || to.path == "/reghall") {
             next()
         }
         else if (to.path == "/" && localStorage.auth) {

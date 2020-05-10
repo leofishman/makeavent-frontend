@@ -11,57 +11,33 @@
                         <div class="box">
                             <h1 class="is-size-3">{{content.title}}</h1>
                             <p>{{content.intro}}</p>
-                            <form>
+                            <section>
                                 <b-field :label="content.email">
                                     <b-input v-model="email" type="email" :validation-message="content.emailValidation"></b-input>
                                 </b-field>
                                 <b-field :label="content.linkedin">
-                                    <b-input type="url" :validation-message="content.urlValidation"></b-input>
+                                    <b-input v-model="linkedin" type="url" :validation-message="content.urlValidation"></b-input>
                                 </b-field>
                                 <b-field :label="content.facebook">
-                                    <b-input type="url" :validation-message="content.urlValidation"></b-input>
+                                    <b-input v-model="facebook" type="url" :validation-message="content.urlValidation"></b-input>
                                 </b-field>
                                 <b-field :label="content.telegram">
-                                    <b-input type="url" :validation-message="content.urlValidation"></b-input>
+                                    <b-input v-model="telegram" type="url" :validation-message="content.urlValidation"></b-input>
                                 </b-field>
                                 <b-field :label="content.photo">
-                                    <b-input type="file" :validation-message="content.urlValidation"></b-input>
+                                    <b-input v-model="photo" type="file" :validation-message="content.urlValidation"></b-input>
                                 </b-field>
 
-                                <b-button :disabled="!inputsReady" type="is-secondary" size="is-medium">
-                                    {{content.submit}}
-                                </b-button>
-                            </form>
+                            </section>
+                            <b-button @click="save()" :disabled="!inputsReady" type="is-secondary" size="is-medium">
+                                {{content.submit}}
+                            </b-button>
                         </div>
                     </div>
 
                     <div class="column sponsors-login">
-                        <div class="tile is-ancestor has-text-centered">
-                            <div class="tile is-vertical">
-                                <div class="tile is-parent ls-main">
-                                    <!-- Main -->
-                                    <div class="tile is-child box">
-                                        <img src="@/assets/logo-RSK.png">
-                                    </div>
-                                </div>
-                                <div class="tile is-vertical ls-platinum">
-                                    <!-- Platinum A -->
-                                    <div class="tile is-parent">
-                                        <div class="tile is-child box">
-                                            <img src="@/assets/logo-FAS.png">
-                                        </div>
-                                    </div>
-                                    <!-- Platinum B -->
-                                    <div class="tile is-parent">
-                                        <div class="tile is-child box">
-                                            <img src="@/assets/logo-CRYPTTP.png">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <SponsorsCol />
                     </div>
-
                 </div>
             </section>
         </div>
@@ -69,13 +45,47 @@
 </template>
 
 <script>
-    export default {
-        name: "RegistrationHall",
-        data () {
+import Axios from 'axios'
+import {host} from '@/env'
+import SponsorsCol from '@/components/SponsorsCol'
 
-            return {
-                content: this.$root.content.RegistrationHall
-            }
+export default {
+    name: "RegistrationHall",
+    components: {
+        SponsorsCol
+    },
+    data () {
+        this.email = ""
+        this.linkedin = ""
+        this.facebook = ""
+        this.telegram = ""
+        this.photo = ""
+
+        return {
+            email: this.email,
+            linkedin: this.linkedin,
+            facebook: this.facebook,
+            telegram: this.telegram,
+            photo: this.photo,
+
+            inputsReady: true,
+
+            content: this.$root.content.RegistrationHall,
         }
-    }
+    },
+    methods: {
+        save () {
+            Axios.post(host + `/login/socials_reg`, {
+                businessemail: this.email,
+                Linkedin: this.linkedin,
+                Facebook: this.facebook,
+                Telegram: this.telegram,
+            }, {
+                headers: {
+                    authorization: localStorage.auth
+                }
+            })
+        }
+    },
+}
 </script>

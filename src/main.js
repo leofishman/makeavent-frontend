@@ -44,6 +44,7 @@ import ZoomWebinar from './components/Modals/Zoom-frame.vue'
  */
 import Bcardpreview from '@/components/Popups/Bcardpreview'
 import Upgradeticket from '@/components/Popups/Upgradeticket'
+import Privatecall from '@/components/Popups/Privatecall'
 
 import AccessLevels from '@/api/accessLevels'
 
@@ -214,24 +215,55 @@ new Vue({
       return x.length ? true : false;
     },
 
-    isSocial (data) {
-      return [
-        
-      ]
+    privateCall (contact) {
+      this.createError(this.content.ErrorMessages[0], 'explorer')
+      // if (!this.isThatMe(contact.email)) {
+      //   this.checkComponentAccess('privatecall')
+      //   .then(haveAccessToPc => {
+      //     if (haveAccessToPc) {
+      //       this.$buefy.modal.open({
+      //         parent: this,
+      //         props: {
+      //           contact: contact
+      //         },
+      //         component: Privatecall,
+      //         hasModalCard: true,
+      //         customClass: 'privatecall',
+      //         trapFocus: true
+      //       })
+      //     }
+      //     else {
+      //       this.showMessageToUpgradeStrict('Private call', 'vip')
+      //     }
+      //   })
+      // }
+      // else 
+      //   this.$buefy.dialog.alert(this.content.common.itsYou)
     },
 
     navToPage (name) {
       switch(name) {
         case "vip" :
         case "mediahall" :
-        case "sip" :
         case "wa" : 
         case "info" :
-        this.$router.push({
-          path: `/${this.token}/${name}`
-        })
-        break;
+          this.$router.push({
+            path: `/${this.token}/${name}`
+          })
+          break;
 
+        case "sip" :
+          this.checkComponentAccess('startupdemoday')
+          .then(res => {
+            if (res)
+              this.$router.push({
+                path: `/${this.token}/${name}`
+              })
+            else
+              this.createError(this.content.ErrorMessages[3], 'oops')
+          })
+          break;
+          
         default :
         this.$router.push({
           path: `/${this.token}/company`,
@@ -247,7 +279,7 @@ new Vue({
 			let focus_startup = this.Startups.filter(el => el._id == id)[0]
 			
 			const name = focus_startup.name.toLowerCase()
-			if (this.cloo(this.usertype, 'investor|media')) {
+			if (this.cloo(this.usertype, 'investor')) {
 				this.$router.push({
 					path: `/${this.token}/sip/${name}`
 				}).catch(e => {
@@ -271,37 +303,39 @@ new Vue({
     },
 
     addReminderCompany (data, theme) {
-      Axios.post(host + `/reminders/new`, {
-        time: data.time,
-        reason: `${data.name} ${theme}`
-      }, {
-        headers: {
-          authorization: localStorage.auth
-        }
-      })
-      .then((res) => {
-        this.$buefy.dialog.alert(this.content.common.success)
-      })
-      .catch(err => {
-        this.createError(this.content.ErrorMessages[2], 'oops')
-      })
+      this.createError(this.content.ErrorMessages[0], 'explorer')
+      // Axios.post(host + `/reminders/new`, {
+      //   time: data.time,
+      //   reason: `${data.name} ${theme}`
+      // }, {
+      //   headers: {
+      //     authorization: localStorage.auth
+      //   }
+      // })
+      // .then((res) => {
+      //   this.$buefy.dialog.alert(this.content.common.success)
+      // })
+      // .catch(err => {
+      //   this.createError(this.content.ErrorMessages[2], 'oops')
+      // })
     },
 
     addReminder (data, theme) {
-      Axios.post(host + `/reminders/new`, {
-        time: data.time,
-        reason: `${data.contact.name} ${data.contact.role} ${data.contact.company} ${theme}`
-      }, {
-        headers: {
-          authorization: localStorage.auth
-        }
-      })
-      .then((res) => {
-        this.$buefy.dialog.alert(this.content.common.success)
-      })
-      .catch(err => {
-        this.createError(this.content.ErrorMessages[2], 'oops')
-      })
+      this.createError(this.content.ErrorMessages[0], 'explorer')
+      // Axios.post(host + `/reminders/new`, {
+      //   time: data.time,
+      //   reason: `${data.contact.name} ${data.contact.role} ${data.contact.company} ${theme}`
+      // }, {
+      //   headers: {
+      //     authorization: localStorage.auth
+      //   }
+      // })
+      // .then((res) => {
+      //   this.$buefy.dialog.alert(this.content.common.success)
+      // })
+      // .catch(err => {
+      //   this.createError(this.content.ErrorMessages[2], 'oops')
+      // })
     },
 
     getSponsorSlot (id) {
@@ -317,29 +351,31 @@ new Vue({
     },
 
     tryBusinessCard (el) {
-      this.checkComponentAccess('bcrequest')
-      .then(haveAccessToBc => {
-        if (haveAccessToBc) {
-          if (this.checkIfAlreadyAFriend(el)) {
-            this.$buefy.modal.open({
-              parent: this,
-              props: {
-                data: el
-              },
-              component: Bcardpreview,
-              hasModalCard: true,
-              customClass: 'bcardpreview',
-              trapFocus: true
-            })
-          }
-          else {
-            this.showBCrequesttoast(el)
-          }
-        }
-        else {
-          this.showMessageToUpgradeBusOrVip('Business Cards')
-        }
-      })
+      this.createError(this.content.ErrorMessages[0], 'explorer')
+
+      // this.checkComponentAccess('bcrequest')
+      // .then(haveAccessToBc => {
+      //   if (haveAccessToBc) {
+      //     if (this.checkIfAlreadyAFriend(el)) {
+      //       this.$buefy.modal.open({
+      //         parent: this,
+      //         props: {
+      //           data: el
+      //         },
+      //         component: Bcardpreview,
+      //         hasModalCard: true,
+      //         customClass: 'bcardpreview',
+      //         trapFocus: true
+      //       })
+      //     }
+      //     else {
+      //       this.showBCrequesttoast(el)
+      //     }
+      //   }
+      //   else {
+      //     this.showMessageToUpgradeBusOrVip('Business Cards')
+      //   }
+      // })
     },
 
     checkIfAlreadyAFriend (card) {    
@@ -476,7 +512,12 @@ new Vue({
           resolve(res.data)
         })
         .catch(e => {
-          this.createError(this.content.ErrorMessages[1], 'webinarNotSet')
+          if (e.response.data.error == "MEETUP TIME") {
+            this.createError(this.content.ErrorMessages[0], 'explorer')
+          }
+          else {
+            this.createError(this.content.ErrorMessages[1], 'webinarNotSet')
+          }
         })
       })
     },
@@ -877,49 +918,10 @@ new Vue({
       return new Promise ((resolve, reject) => {
         this.check('usertype').then(_ => {
           if (this.usertype) {
-            switch (type) {
-              case 'globalchat' : 
-                if (this.cloo(this.usertype, AccessLevels.globalchat))
-                  resolve(true)
-                else
-                  resolve(false)
-                break
-
-              case 'vipchat' :
-                if (this.cloo(this.usertype, AccessLevels.vipchat))
-                  resolve(true)
-                else
-                  resolve(false)
-                break
-
-              case 'companychat' : 
-                if (this.cloo(this.usertype, AccessLevels.companychat))
-                  resolve(true)
-                else
-                  resolve(false)
-                break
-
-              case 'startupchat' : 
-                if (this.cloo(this.usertype, AccessLevels.startupchat))
-                  resolve(true)
-                else
-                  resolve(false)
-                break
-
-              case "investorslist" :
-                if (this.cloo(this.usertype, AccessLevels.investorslist))
-                  resolve(true)
-                else
-                  resolve(false)
-                break
-
-              case "bcrequest" : 
-                if (this.cloo(this.usertype, AccessLevels.bcrequest))
-                  resolve(true)
-                else
-                  resolve(false)
-                break
-            }
+            if (this.cloo(this.usertype, AccessLevels[type]))
+              resolve(true)
+            else
+              resolve(false)
           }
         })
       })
@@ -927,6 +929,14 @@ new Vue({
 
     openModal (name, data) {
       window.EventBus.$emit(name, data)
+    }
+  },
+  watch: {
+    openGlobalChat: function (ev) {
+      setTimeout(() => {
+        document.getElementById('globalchat-global-messages-box').scrollTo(0, window.outerHeight)
+        document.getElementById('vipchat-vip-messages-box').scrollTo(0, window.outerHeight)
+      }, 500)
     }
   },
 }).$mount('#app')

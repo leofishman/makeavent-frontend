@@ -44,7 +44,7 @@ export default {
 	},
 	methods: {
 		getOngoinInterviews () {
-			Axios.get(`${host}/interviews/getByType?type=ongoing`).then(res => {
+			Axios.get(`${host}/interviews/getByType?type=interview&status=ongoing`).then(res => {
 				if (res.data.length) {
 					this.interviews = res.data
 					this.ready = true

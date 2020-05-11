@@ -63,6 +63,7 @@
 							<h2>{{content.mbc}}</h2>
 							<b-tabs v-model="activeTab">
 								<b-tab-item :label="$root.content.common.connected">
+									Business card will be available 25 of May, when the conference starts
 									<Businesscardconected
 										v-for="(el, index) in $root.activeBusinessCards"
 										:key="index"
@@ -79,6 +80,7 @@
 											</b-tag> 
 										</span>
 									</template>
+									Business card will be available 25 of May, when the conference starts
 									<Businesscardpending
 										v-for="(el, index) in $root.pendingCards"
 										:key="index"
@@ -88,7 +90,8 @@
 							</b-tabs>
 						</div>
 
-						<div class="my-interviews">
+						<!-- NOT RELEASED -->
+						<!-- <div class="my-interviews">
 							<h2>{{content.mi}}</h2>
 							<b-tabs v-model="activeTabInterview">
 								<b-tab-item label="Upcoming" class="interview-upcoming">
@@ -121,7 +124,7 @@
 									</div>
 								</b-tab-item>
 							</b-tabs>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</section>

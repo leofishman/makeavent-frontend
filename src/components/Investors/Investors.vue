@@ -39,12 +39,18 @@ export default {
     data () {
         this.activiness = []
 
-        this.$root.check('usertype token Investors').then(async _ => {
-            if ( this.$root.checkComponentAccess('invstorslist') ) {
-                this.adInfoToInvestor()
-
-                
-            }  
+        this.$root.checkComponentAccess('startupdemoday')
+        .then(res => {
+            if (res) {
+                this.$root.check('usertype token Investors').then(async _ => {
+                    if ( this.$root.checkComponentAccess('invstorslist') ) {
+                        this.adInfoToInvestor()
+                    }  
+                })
+            }
+            else {
+                this.$router.push('/')
+            }
         })
 
         return {

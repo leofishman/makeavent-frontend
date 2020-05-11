@@ -44,7 +44,7 @@ export default {
 	},
 	methods: {
 		getUpcommingInterviews () {
-			Axios.get(`${host}/interviews/getByType?type=upcomming`).then(res => {
+			Axios.get(`${host}/interviews/getByType?type=webinar&status=upcomming`).then(res => {
 				if (res.data.length) {
 					this.interviews = res.data
 					this.ready = true

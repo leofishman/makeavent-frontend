@@ -256,29 +256,6 @@
         </div>
       </section>
     </div>
-
-    <b-sidebar
-      type="is-light"
-      :fullheight="true"
-      :fullwidth="false"
-      :overlay="true"
-      :right="true"
-      :can-cancel="false"
-      :open.sync="$root.openGlobalChat"
-    >
-      <div>
-        <section id="chats-sidebar" style="padding-top:80px; overflow:hidden; background:white;">
-          <b-tabs class="chat" style="width:600px; pointer-events:all" type="is-toggle" expanded >
-            <b-tab-item :label="`Blockconf ` + $root.content.common.coffeeChat">
-              <Chat id="globalchat" checkAccess="globalchat" :parent="self" type="globalchat" name="global" />
-            </b-tab-item>
-            <b-tab-item :label="`Blockconf ` + $root.content.common.vipChat">
-              <Chat id="vipchat" checkAccess="vipchat" :parent="self" type="vipchat" name="vip" />
-            </b-tab-item>
-          </b-tabs>
-        </section>
-      </div>
-    </b-sidebar>
   </div>
 </template>
 <script>
@@ -296,8 +273,6 @@ import Bronze from '@/components/Sponsors/Bronze.vue'
 import Basic from '@/components/Sponsors/Basic.vue'
 import Eworkshop from '@/components/Eworkshop.vue'
 
-import Chat from '@/components/CompanyProfile/Chat'
-
 export default {
   name: "desktop",
   components: {
@@ -310,8 +285,7 @@ export default {
     Silver,
     Bronze,
     Basic,
-    Eworkshop,
-    Chat
+    Eworkshop
   },
   methods: {
     metting () {
@@ -330,9 +304,6 @@ export default {
       host: host,
 
       ready: false,
-      
-      contacts: [], //
-      self: this    // this two vars needed for chat
     }
   },
 }

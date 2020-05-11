@@ -14,26 +14,26 @@
 </template>
 
 <script>
-  //import Feed from '@/components/Livefeed/Feed.vue'
-  import Newstory from '@/components/Stories/Newstory.vue'
+import Newstory from '@/components/Stories/Newstory.vue'
 
-  export default {
-    name: 'Storycreate',
-    components: {
-      Newstory
-    },
-    data() {
-      return {
-        reduce: true,
-        isSwitched: false,
-        isSwitchedCustom: 'Open',
+export default {
+  name: 'Storycreate',
+  components: {
+    Newstory
+  },
+  data() {
 
-        Newstory: false,
+    return {
+      reduce: true,
+      isSwitched: false,
+      isSwitchedCustom: 'Open',
 
-        content: this.$root.content.Storycreate
-      }
+      Newstory: false,
+
+      content: this.$root.content.Storycreate
     }
-  };
+  }
+};
 </script>
 
 <style lang="scss">

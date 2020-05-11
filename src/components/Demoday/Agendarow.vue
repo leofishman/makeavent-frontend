@@ -14,7 +14,7 @@
 			</div>
 			<div class="column is-one-quarter agenda-touch click">
 				<h3 @click="$root.addReminderCompany(data, reminder)" class="click">{{remind}}</h3>
-				<h3 v-on:click="$root.joinWebinar(data.webinarId, '')" class="agenda-touch">{{content.join}}</h3>
+				<h3 v-on:click="$root.joinStage('dmd'+data.name, '')" class="agenda-touch">{{content.join}}</h3>
 			</div>
 		</div>
 	</div>

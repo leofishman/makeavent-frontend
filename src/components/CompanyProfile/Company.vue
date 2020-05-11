@@ -2,14 +2,14 @@
     <!-- [YD] The class of this div may vary, depends if the BG is dark or light mode -->
     <div v-if="ready" id="profile-company" class="bg-light-mode">
 
-        <!-- [YD] this img should be the BG of the company -->
-        <!-- <div class="bg-img"><img src="@/assets/bg/bg-02.jpg"></div> -->
-        <!-- [YD] Should be dynamic $root.Sponsor.backgroundImage -->
+        <!-- NOT RELEASED -->
+        {{bg}}
+        <div v-if="bg" class="bg-img"><img :src="host + bg"></div>
 
         <navbar></navbar>
         
-        <!-- Live Feed -->
-        <Storycreate />
+        <!-- NOT RELEASED -->
+        <Storycreate v-if="$root.isAdmin(contacts)"/>
 
         <div class="container">
             <Pagetitle :data="name"/>
@@ -119,6 +119,7 @@ export default {
         this.socials = ""
         this.contacts = ""
         this.logo = ""
+        this.bg = ""
 
         // wait until token and sponsors ready
         this.$root.check('token Sponsors').then(() => {
@@ -130,6 +131,7 @@ export default {
             this.website = this.sponsor.website
             this.socials = this.sponsor.socials
             this.contacts = this.sponsor.contacts
+            this.bg = this.sponsor.backgroundImage
             this.logo = env.host + this.sponsor.logo
 
             this.ready = true
@@ -160,6 +162,9 @@ export default {
             socials: this.socials,
             socialLogos: socialLogos,
             contacts: this.contacts,
+
+            host: env.host,
+            bg: this.bg,
 
             chat: "",
 

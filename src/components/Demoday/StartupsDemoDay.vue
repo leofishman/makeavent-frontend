@@ -1,5 +1,5 @@
 <template>
-    <div id="startups">
+    <div v-if="ready" id="startups">
         <navbar></navbar>
 
         <div class="container">
@@ -63,7 +63,6 @@
                                 </div>
                             </div>
                             <div
-                                v-if="$root.cloo($root.usertype, 'investor|startup|media')"
                                 v-on:click="$router.push(`/${$root.token}/investors`)"
                                 class="tile is-child box click has-background-light investors"
                             >
@@ -90,7 +89,18 @@ export default {
     },
     data() {
         this.content = this.$root.content.StartupsDemoDay
+
+        this.$root.checkComponentAccess('startupdemoday')
+        .then(res => {
+            if (res)
+                this.ready = true
+            else
+                this.$root.createError(this.content.ErrorMessages[3], 'oops')
+        })
+
         return {
+            ready: false,
+
             host: host,
             show: true,
             content: this.content

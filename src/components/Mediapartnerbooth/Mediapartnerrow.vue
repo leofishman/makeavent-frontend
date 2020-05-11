@@ -2,7 +2,7 @@
 	<div class="box">
 		<div class="columns">
 			<div class="column row-pic">
-				<img :src="$root.tryGetProfilePhoto(data.email)">
+				<img :src="host + data.photo">
 			</div>
 			<div class="column row-name">
 				<div class="has-text-centered">
@@ -19,17 +19,19 @@
 </template>
 
 <script>
-	export default {
-		name: "Mediapartnerrow",
-		props: {
-			data: Object
-		},
-		data () {
-			return {
-				content: this.$root.content.common
-			}
+import {host} from '@/env' 
+export default {
+	name: "Mediapartnerrow",
+	props: {
+		data: Object
+	},
+	data () {
+		return {
+			content: this.$root.content.common,
+			host: host
 		}
 	}
+}
 </script>
 
 <style scoped>

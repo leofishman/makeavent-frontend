@@ -88,18 +88,25 @@ export default {
         this.socials = ""
         this.contacts = ""
         this.logo = ""
-        this.watchButtonClass = ""
+		this.watchButtonClass = ""
+		
+		this.$root.checkComponentAccess('startupdemoday')
+        .then(res => {
+            if (res) {
+				this.$root.check('InvestFunds').then(() => {
+					this.ifp = this.$root.InvestFunds.filter(el => el.name == this.name.toUpperCase())[0]
+					
+					this.description = this.ifp.description
+					this.website = this.ifp.website
+					this.socials = this.ifp.socials
+					this.contacts = this.ifp.contacts
+					this.logo = host + this.ifp.logo
 
-        this.$root.check('InvestFunds').then(() => {
-            this.ifp = this.$root.InvestFunds.filter(el => el.name == this.name.toUpperCase())[0]
-            
-            this.description = this.ifp.description
-            this.website = this.ifp.website
-            this.socials = this.ifp.socials
-            this.contacts = this.ifp.contacts
-            this.logo = host + this.ifp.logo
-
-            this.ready = true
+					this.ready = true
+				})
+			}
+            else
+                this.$root.createError(this.content.ErrorMessages[3], 'oops')
         })
 
         return {

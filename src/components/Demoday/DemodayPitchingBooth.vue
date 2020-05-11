@@ -1,5 +1,5 @@
 <template>
-	<div id="demoday" class="has-background-white-ter">
+	<div v-if="ready" id="demoday" class="has-background-white-ter">
 		<navbar></navbar>
 
 		<div class="container">
@@ -42,8 +42,17 @@ export default {
     props: {
         data: String
     },
-    data () {		
+    data () {
+		this.$root.checkComponentAccess('startupdemoday')
+        .then(res => {
+            if (res)
+                this.ready = true
+            else
+                this.$root.createError(this.content.ErrorMessages[3], 'oops')
+        })
+
         return {
+			ready: false,
 			self: this,
 			contacts: [], // this var always empty here, needed for chat
             content: this.$root.content.StartupsDemoDay

@@ -61,14 +61,33 @@ export default {
 
     Storycreate: {
         newStoryButton: "New story",
+        
     },
 
     reminders: {
         0: 'will start speaking in 10 minutes',
     },
 
+    Privatecall: {
+        reqPrivateCall: `Do you want to request private call?`,
+        checkAvailability: "",
+        selectDateAndTime: ""
+    },
+
     noAccessTitle: (to) => { return `We are apologizing but You don't have access to ${to}`},
 
+    reqBusCardConfirm: `Do you want to request business card?`,
+    newContactReq: 'New business card request',
+    newContactReqNote: (name, company, role) => {
+        return `${name} ${role} at ${company} is requesting your business card`
+    },
+    acceptLaterNote: (profile) => {
+        return `<strong>You can accept it later in <a href="${profile}">profile.</a></strong>`
+    },
+    userConfirmedSharingInfo: ({name, role, company}) => {
+        return `${name} ${role} at ${company} shared business card with you`
+    },
+    howToConfirmBusinessCardSharing: `Go to Profile -> My Business Cards -> Pending and click "accept" to share business card.`,
     
     sorryAttender: `Sorry our dear attender.`,
     reasonWhyNoAccess: `It seems like you are trying to open conferense in many tabs.<br> We restricted opening many tabs of conference hall for security reasons.<br> Sorry for any inconvinice.`,
@@ -94,18 +113,7 @@ export default {
     requestContact: (p1) => {
         return `${p1} will receive notification that you requesting contact information.`
     },
-    reqBusCardConfirm: `Do you want to request business card?`,
-    newContactReq: 'New business card request',
-    newContactReqNote: (name, company, role) => {
-        return `${name} ${role} at ${company} is requesting your business card`
-    },
-    acceptLaterNote: (profile) => {
-        return `<strong>You can accept it later in <a href="${profile}">profile.</a></strong>`
-    },
-    userConfirmedSharingInfo: ({name, role, company}) => {
-        return `${name} ${role} at ${company} shared business card with you`
-    },
-    howToConfirmBusinessCardSharing: `Go to Profile -> My Business Cards -> Pending and click "accept" to share business card.`,
+    
     print: "Print",
     save: "Save",
     actionsWithBusCard: 'Click save to send card to your email or print to see it now',
@@ -216,6 +224,7 @@ export default {
 
     Investors: {
         rem: "Request E-meeting",
+        rbc: "Request my business card"
     },
 
     MediaPartnerProfile: {
@@ -233,12 +242,15 @@ export default {
 
     ErrorMessageModal: {
         webinarNotSet: "Preparing webinar...",
-        oops: "Oops"
+        oops: "Oops",
+        explorer: "We love that you are an explorer"
     },
 
     ErrorMessages: {
+        0: 'This will be available <b>25 of May</b>',
         1: 'We updating webinar host, sorry for the inconvinience',
-        2: 'We appologies, but there is a error adding reminder for you.<br>Please contact <b>support@blockconf.digital</b>'
+        2: 'We appologies, but there is a error adding reminder for you.<br>Please contact <b>support@blockconf.digital</b>',
+        3: 'We appologies, but <b>Startups Demo Day</b> available only for <b>Investors, Startups and Media Partners</b>'
     },
 
     VipMeetingRoom: {

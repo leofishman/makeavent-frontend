@@ -1,8 +1,24 @@
 <template>
 	<!-- Profile chat -->
 	<div style="padding:0px">
-		<div v-if="chatAvailable" style="padding:0px">
-			<div id="messages-box" class="chat-bubble">
+		<div v-if="chatAvailable" style="padding:0px;">
+			<div :id="`${type}-${name}-messages-box`" class="chat-bubble">
+				<div
+					@click="isUpgradable()"
+					v-if="$root.usertype == 'basic'"
+					class="click"
+					style="
+						top: 50%;
+						-webkit-transform: translate(0%, -50%);
+						transform: translate(0, -50%);
+						position: relative;
+						right: 10% !important;
+						width: 300px;
+						position: fixed !important;
+					"
+				>
+					This chat won't be available 25 of May unless you upgrade to business or vip
+				</div>
 				<Message
 					v-for="(el, index) in chatHistory"
 					:key="index"
@@ -21,6 +37,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="textarea-message">
 				<textarea 
 					@keydown="sendMessage($event)"
@@ -35,12 +52,12 @@
 			</div>
 		</div>
 		<div
-			v-on:click="isUpgradable()"
 			v-else
 			class="chat-bubble click"
 		>	
-			<div class="centrify-content">
-				{{isUpdagradable}}
+			<div class="centrify-content" v-html="$root.content.ErrorMessages[0]">
+				<!-- v-on:click="isUpgradable()" -->
+				<!-- {{isUpdagradable}} -->
 			</div>
 		</div>
 	</div>
@@ -74,44 +91,48 @@
 				this.$root.tokenCheck().then(() => {
 					this.getElseContent()
 
-					this.chat = io(socket, {
-						query: {
-							token: this.$root.token,
-							[this.type]: this.name
-						}
-					})
-
-					this.chatAvailable = res
-
-					this.chat.on('reponse_chat_history', (data) => {
-						// write to variable and render messages from it
-						this.chatHistory = data
-
-						// check if page opened as reply to message
-						if (window.location.href.split("&reply=")[1]) {
-							this.focusToReply(window.location.href.split("&reply=")[1])
-						}
-
-						// scroll chat to bottom
-						setTimeout(() => {
+					if (this.type == "globalchat" || this.type == "vipchat") {
+						this.chat = io(socket, {
+							query: {
+								token: this.$root.token,
+								[this.type]: this.name
+							}
+						})
+	
+						// this.chatAvailable = res
+						this.chatAvailable = res
+	
+						this.chat.on('reponse_chat_history', (data) => {
+							// write to variable and render messages from it
+							this.chatHistory = data
+	
+							// check if page opened as reply to message
+							if (window.location.href.split("&reply=")[1]) {
+								this.focusToReply(window.location.href.split("&reply=")[1])
+							}
+	
+							// scroll chat to bottom
+							setTimeout(() => {
+								this.scrollBehaviour()
+							}, 500)
+						})
+	
+						this.chat.emit('fetch_chat_history')
+	
+						this.chat.on('new_message_3rdparty', (data) => {
+							
+							let reply = this.chatHistory.filter(el => this.$root.profile.email == el.from.email && data.quoteId == el.id)
+							
+							if (reply.length) {
+								this.fireNotification(name, data)   
+							}
+	
+							this.chatHistory.push(data)
+							
 							this.scrollBehaviour()
-						}, 500)
-					})
+						})
+					}
 
-					this.chat.emit('fetch_chat_history')
-
-					this.chat.on('new_message_3rdparty', (data) => {
-						
-						let reply = this.chatHistory.filter(el => this.$root.profile.email == el.from.email && data.quoteId == el.id)
-						
-						if (reply.length) {
-							this.fireNotification(name, data)   
-						}
-
-						this.chatHistory.push(data)
-						
-						this.scrollBehaviour()
-					})
 				})
 			})
 			
@@ -190,7 +211,7 @@
 			},
 
 			scrollBehaviour () {
-				let chatlist = document.getElementById('messages-box')
+				let chatlist = document.getElementById(`${this.type}-${this.name}-messages-box`)
 				if (chatlist)
 					chatlist.scrollTo(0, chatlist.scrollHeight)
 			},

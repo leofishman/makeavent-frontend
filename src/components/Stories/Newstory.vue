@@ -1,6 +1,6 @@
 <template>
 	<div id="Newstory" class="card">
-		<div class="card-content">
+		<!-- <div class="card-content">
 			<h1 class="title">{{content.modalTitle}}</h1>
 			<div>
 				<p>{{content.promotional}}</p>
@@ -17,27 +17,27 @@
 					{{content.submit}}
 				</b-button>
 			</form>
-		</div>
+		</div> -->
 	</div>
 </template>
 
 <script>
-	import Axios from 'axios'
-	import {host} from '@/env'
+import Axios from 'axios'
+import {host} from '@/env'
 
-	export default {
-		name: "Newstory",
-		components: {},
-		props: {
-			data: String
-		},
-		data () {
-
-			return {
-				content: this.$root.content.Newstory
-			}
+export default {
+	name: "Newstory",
+	components: {},
+	props: {
+		data: String
+	},
+	data () {
+		this.$root.createError(this.$root.content.ErrorMessages[0], 'explorer')
+		return {
+			content: this.$root.content.Newstory
 		}
 	}
+}
 </script>
 
 <style lang="scss">

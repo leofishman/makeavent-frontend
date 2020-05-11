@@ -84,36 +84,43 @@ export default {
         Member
     },
     data() {
-        this.chatHeight;
-        this.chatHistory      = [];
-        this.userTextMessage  = ""
-        this.showMessageModal = false
-        this.chatAvailable    = false
-        this.startup          = ""
-        this.description      = ""
-        this.demo             = ""
-        this.website          = ""
-        this.socials          = ""
-        this.contacts         = ""
-        this.logo             = ""
-        this.name             = ""
+        this.$root.checkComponentAccess('startupprofile')
+        .then(res => {
+            if (!res)
+                this.ready = false
+            else {
+                this.chatHeight;
+                this.chatHistory      = [];
+                this.userTextMessage  = ""
+                this.showMessageModal = false
+                this.chatAvailable    = false
+                this.startup          = ""
+                this.description      = ""
+                this.demo             = ""
+                this.website          = ""
+                this.socials          = ""
+                this.contacts         = ""
+                this.logo             = ""
+                this.name             = ""
 
-        // wait until token and startups ready
-        this.$root.check('token Startups').then(() => {
-            this.token = this.$root.token
+                // wait until token and startups ready
+                this.$root.check('token Startups').then(() => {
+                    this.token = this.$root.token
 
-            this.name = this.$router.currentRoute.params.name
-            this.startup = this.$root.Startups.filter(el => el.name.toLowerCase() == this.name)[0]
-            this.logo = host + this.startup.logo
+                    this.name = this.$router.currentRoute.params.name
+                    this.startup = this.$root.Startups.filter(el => el.name.toLowerCase() == this.name)[0]
+                    this.logo = host + this.startup.logo
 
-            this.description = this.startup.description
-            this.demo = this.startup.demo
-            this.website = this.startup.website
-            this.socials = this.startup.socials
-            this.contacts = this.startup.contacts
-            this.time = this.startup.time
+                    this.description = this.startup.description
+                    this.demo = this.startup.demo
+                    this.website = this.startup.website
+                    this.socials = this.startup.socials
+                    this.contacts = this.startup.contacts
+                    this.time = this.startup.time
 
-            this.ready = true
+                    this.ready = true
+                })
+            }
         })
 
         return {

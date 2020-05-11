@@ -1,11 +1,11 @@
 <template>
 	<div class="box member">
-		<img src="@/assets/icon/icon-search.svg" alt="">
-		<img src="@/assets/icon/icon-user.svg" alt="">
-
+		<img v-on:click="$root.tryBusinessCard(data)" src="@/assets/icon/icon-user.svg" class="member-action click left">
+		<!-- NOT RELEASED -->
+		<img v-on:click="$root.privateCall(data)" src="@/assets/icon/icon-call.svg" class="member-action click right">
 
 		<figure>
-			<img :src="$root.tryGetProfilePhoto(data.email)">
+			<img :src="host + data.photo">
 		</figure>
 
 		<h1 class="click" @click="$root.tryBusinessCard(data)">{{data.name}}</h1>
@@ -26,12 +26,19 @@
 </template>
 
 <script>
-	export default {
-		name: "Member",
-		props: {
-			data: Object
+import {host} from '@/env'
+
+export default {
+	name: "Member",
+	props: {
+		data: Object
+	},
+	data () {
+		return {
+			host: host
 		}
 	}
+}
 </script>
 
 <style scoped>

@@ -10,10 +10,11 @@
 			<div class="column investors-fundname is-uppercase">
 				<h3 @click="openInvestorBooth(data.company)" class="has-text-centered has-text-grey-light click">{{data.company}}</h3>
 			</div>
-			<div class="column investors-flag">
-				<img class="has-text-centered" src="@/assets/icon-target.svg">
+			<div @click="$root.tryBusinessCard(data)" class="click column investors-flag is-uppercase">
+				<!-- <img class="has-text-centered" src="@/assets/icon-target.svg"> -->
+				<h3 class="has-text-centered">{{content.rbc}}</h3>
 			</div>
-			<div class="column investors-touch is-uppercase">
+			<div @click="$root.privateCall(data)" class="click column investors-touch is-uppercase">
 				<h3 class="has-text-centered">{{content.rem}}</h3>
 			</div>
 		</div>

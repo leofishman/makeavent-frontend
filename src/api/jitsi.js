@@ -1,4 +1,4 @@
-const domain = 'webinar.blockconf.digital';
+const domain = 'meet.jit.si';
 import toolbar_buttons_basedOnType from './jitsi/toolbar_buttons_basedOnType'
 
 export default class JitsiModal {

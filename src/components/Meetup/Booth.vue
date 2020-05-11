@@ -21,7 +21,7 @@
                             </div>
 
                             <div class="join-button-parent">
-                                <b-button @click="$root.joinStage(name)" type="is-danger" outlined class="is-uppercase">{{content.joinNowTitle}}</b-button>
+                                <b-button @click="$root.joinStage('meetup'+name)" type="is-danger" outlined class="is-uppercase">{{content.joinNowTitle}}</b-button>
                             </div>
 
                             <!-- Company contacts -->

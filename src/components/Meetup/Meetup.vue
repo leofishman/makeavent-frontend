@@ -16,7 +16,7 @@
 							</article>
 						</div>
 						<div class="col">
-							<!-- Gold sponsor -->
+							<!-- Platinum sponsor -->
 							<article class="click box ms-platinum" v-on:click="openPage('rsk')">
 								<img :src="host + $root.getSponsorByName('rsk').logo">
 							</article>
@@ -24,13 +24,13 @@
 					</div>
 					<div>
 						<div class="col">
-							<!-- Platinum sponsor -->
+							<!-- Gold sponsor -->
 							<article class="click box ms-gold" v-on:click="openPage('decred')">
 								<img :src="host + $root.getSponsorByName('decred').logo">
 							</article>
 						</div>
 						<div class="col">
-							<!-- Platinum sponsor -->
+							<!-- Gold sponsor -->
 							<article class="click box ms-gold" v-on:click="openPage('dash')">
 								<img :src="host + $root.getSponsorByName('dash').logo">
 							</article>

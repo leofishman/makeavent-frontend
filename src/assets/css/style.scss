@@ -103,7 +103,7 @@ p + p {
 //////////////////////////////////////////
 body {
 	background-color: $white-ter;
-	min-height: 100vh;
+	min-height: calc( 100vh - 80px );
 }
 main {
 	margin-top: 5rem;
@@ -448,7 +448,7 @@ main {
 
 // ANIMATIONS //
 //////////////////////////////////////////
-.stage, .main, .platinum, .gold, .silver, .bronze, .basic, .ms-main, .ms-platinum, .ms-gold{
+.stage, .main, .platinum, .gold, .silver, .bronze, .basic, .ms-main, .ms-platinum, .ms-gold, .social-list a {
 	transition: all 0.3s ease-out;
 	&:hover {
 		transform: scale(1.1);
@@ -2407,7 +2407,7 @@ main {
 // booth //
 //////////////////////////////////////////
 #profile-booth {
-    .profile-top {
+	.profile-top {
 		margin-top: -11px;
 		margin-bottom: 60px;
 		> div {
@@ -2430,10 +2430,10 @@ main {
 			margin-top: 20px;
 		}
 	}
-    .member + .member {
+	.member + .member {
 		margin-top: 20px;
 	}
-    .screen {
+	.screen {
 		margin-left: 20px;
 		padding: 20px;
 		width: 100%;
@@ -2622,6 +2622,40 @@ main {
 			img {
 				opacity: 0.5;
 			}
+		}
+	}
+}
+
+// NO ACCESS //
+//////////////////////////////////////////
+#noaccess {
+	.section {
+		margin-left: auto;
+		margin-right: auto;
+		h2 {
+			font-size: 2em;
+			font-weight: 300;
+		}
+		@media screen and (min-width: $desktop) {
+			max-width: 70%;
+			h2 {
+				font-size: 2.5em;
+			}
+		}
+	}
+	.social-list {
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 50px;
+		@media screen and (min-width: $desktop) {
+			margin-top: 100px;
+			max-width: 50%;
+		}
+		h3 {
+			font-size: 1.5em;
+		}
+		a {
+			display: block;
 		}
 	}
 }

@@ -117,7 +117,7 @@ new Vue({
 
     if (this.checkNavShouldBeWithToken()) {
       this.getUser()
-      .then(this.getResourses)
+      .then(this.getResourses())
       .then(_ => {
         this.getPengingCards()
         this.getActiveBusinessCards()
@@ -406,6 +406,11 @@ new Vue({
         .then(data => {
           data = data.data
           this.profile = data.profile
+
+          if (!this.profile.Linkedin && !this.profile.Facebook && !this.profile.Telegram && !this.profile.photo) {
+            this.$router.push('/reghall')
+          }
+
           this.token = data.accessLink
           this.usertype = data.type
 

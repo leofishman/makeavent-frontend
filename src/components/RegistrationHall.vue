@@ -22,16 +22,34 @@
                                     <b-input v-model="facebook" type="url" :validation-message="content.urlValidation"></b-input>
                                 </b-field>
                                 <b-field :label="content.telegram">
-                                    <b-input v-model="telegram" type="url" :validation-message="content.urlValidation"></b-input>
+                                    <b-input v-model="telegram" type="text" :validation-message="content.urlValidation"></b-input>
                                 </b-field>
                                 <b-field :label="content.photo">
-                                    <b-input v-model="photo" type="file" :validation-message="content.urlValidation"></b-input>
+                                    <input
+                                        enctype="multipart/form-data"
+                                        type="file"
+                                        id="file"
+                                        ref="file"
+                                        name="userProfilePhoto"
+                                        v-on:change="handleFileUpload()"
+                                    >
                                 </b-field>
 
                             </section>
-                            <b-button @click="save()" :disabled="!inputsReady" type="is-secondary" size="is-medium">
-                                {{content.submit}}
-                            </b-button>
+
+                            <div class="columns is-centred">
+                                <div class="column has-text-centered">
+                                    <b-button class="is-child" @click="save()" :disabled="!inputsReady" type="is-secondary" size="is-medium">
+                                        {{content.submit}}
+                                    </b-button>
+                                </div>
+                                <div class="column has-text-centered">
+                                    <b-button class="is-child" @click="skip()" :disabled="!inputsReady" type="is-secondary" size="is-medium">
+                                        {{content.skip}}
+                                    </b-button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -61,6 +79,8 @@ export default {
         this.telegram = ""
         this.photo = ""
 
+        console.log(this.$refs)
+
         return {
             email: this.email,
             linkedin: this.linkedin,
@@ -74,6 +94,10 @@ export default {
         }
     },
     methods: {
+        handleFileUpload () {
+            this.photo = this.$refs.file.files[0];
+        },
+
         save () {
             Axios.post(host + `/login/socials_reg`, {
                 businessemail: this.email,
@@ -85,6 +109,28 @@ export default {
                     authorization: localStorage.auth
                 }
             })
+            .then(res => {
+                if (this.photo) {
+                    let formData = new FormData();
+                    formData.append('userProfilePhoto', this.photo);
+
+                    console.log(formData)
+    
+                    return Axios.post(`${host}/login/profilephoto`, formData, {
+                        headers: { authorization: localStorage.auth }
+                    })
+                }
+                else {
+                    return true
+                }
+            })
+            .then(() => {
+                this.$router.push('/')
+            })
+        },
+
+        skip () {
+            this.$router.push('/')
         }
     },
 }

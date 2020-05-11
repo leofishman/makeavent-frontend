@@ -87,62 +87,69 @@
 			this.quotedName = ''
 			this.quoteId = ''
 
-			this.$root.checkComponentAccess(this.checkAccess).then((res) => {
-				this.$root.tokenCheck().then(() => {
-					this.getElseContent()
-
-					if (this.type == "globalchat" || this.type == "vipchat") {
-						this.chat = io(socket, {
-							query: {
-								token: this.$root.token,
-								[this.type]: this.name
-							}
-						})
+			if (this.$router.currentRoute.path != '/login' &&
+				this.$router.currentRoute.path != '/loginrtp' &&
+				this.$router.currentRoute.path != '/reghall' &&
+				this.$router.currentRoute.path != '/noaccess'
+			) {
+				this.$root.checkComponentAccess(this.checkAccess).then((res) => {
+					this.$root.tokenCheck().then(() => {
+						this.getElseContent()
 	
-						// this.chatAvailable = res
-						this.chatAvailable = res
-	
-						this.chat.on('reponse_chat_history', (data) => {
-							// write to variable and render messages from it
-							this.chatHistory = data
-	
-							// check if page opened as reply to message
-							if (window.location.href.split("&reply=")[1]) {
-								this.focusToReply(window.location.href.split("&reply=")[1])
-							}
-	
-							// scroll chat to bottom
-							setTimeout(() => {
+						if (this.type == "globalchat" || this.type == "vipchat") {
+							this.chat = io(socket, {
+								query: {
+									token: this.$root.token,
+									[this.type]: this.name
+								}
+							})
+		
+							// this.chatAvailable = res
+							this.chatAvailable = res
+		
+							this.chat.on('reponse_chat_history', (data) => {
+								// write to variable and render messages from it
+								this.chatHistory = data
+		
+								// check if page opened as reply to message
+								if (window.location.href.split("&reply=")[1]) {
+									this.focusToReply(window.location.href.split("&reply=")[1])
+								}
+		
+								// scroll chat to bottom
+								setTimeout(() => {
+									this.scrollBehaviour()
+								}, 500)
+							})
+		
+							this.chat.emit('fetch_chat_history')
+		
+							this.chat.on('new_message_3rdparty', (data) => {
+								
+								let reply = this.chatHistory.filter(el => this.$root.profile.email == el.from.email && data.quoteId == el.id)
+								
+								if (reply.length) {
+									this.fireNotification(name, data)   
+								}
+		
+								this.chatHistory.push(data)
+								
 								this.scrollBehaviour()
-							}, 500)
-						})
+							})
+						}
 	
-						this.chat.emit('fetch_chat_history')
-	
-						this.chat.on('new_message_3rdparty', (data) => {
-							
-							let reply = this.chatHistory.filter(el => this.$root.profile.email == el.from.email && data.quoteId == el.id)
-							
-							if (reply.length) {
-								this.fireNotification(name, data)   
-							}
-	
-							this.chatHistory.push(data)
-							
-							this.scrollBehaviour()
-						})
-					}
-
+					})
 				})
-			})
-			
-			window.EventBus.$on('reply-to-message', (e) => {
-				this.showMessageModal = e.showMessageModal
-				this.showQuote = e.showQuote
-				this.quotedMessage = e.quotedMessage
-				this.quotedName = e.quotedName
-				this.quoteId = e.quoteId
-			})
+				
+				window.EventBus.$on('reply-to-message', (e) => {
+					this.showMessageModal = e.showMessageModal
+					this.showQuote = e.showQuote
+					this.quotedMessage = e.quotedMessage
+					this.quotedName = e.quotedName
+					this.quoteId = e.quoteId
+				})
+			}
+
 			
 			return {
 				userTextMessage: "",

@@ -35,9 +35,9 @@
                     </div>
                 </div>
                 <!-- Gold C -->
-                <div @click="$root.openExternalInBlank(getSponsor('decreed').website)" class="click tile is-parent">
+                <div @click="$root.openExternalInBlank(getSponsor('decred').website)" class="click tile is-parent">
                     <div class="tile is-child box">
-                        <img style="object-fit:contain;" :src="host + getSponsor('decreed').logo">
+                        <img style="object-fit:contain;" :src="host + getSponsor('decred').logo">
                     </div>
                 </div>
                 <!-- Gold D -->

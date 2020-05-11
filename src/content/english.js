@@ -23,14 +23,15 @@ export default {
     RegistrationHall: {
         title: "Registration Hall",
         intro: "Please fill in the information that you would like to include in your virtual business card. This business card is the 'request only' and will be available only to people whose requests you confirmed. BlockConf Digital will not use this information for any other purposes.",
-        email: "Email",
+        email: "Business Email (optional)",
         emailValidation: "This email is invalid",
-        linkedin: "Linkedin",
-        facebook: "Facebook",
-        telegram: "Telegram",
+        linkedin: "Linkedin (optional)",
+        facebook: "Facebook (optional)",
+        telegram: "Telegram (optional)",
         urlValidation: "This url is invalid",
-        photo: "Photo",
-        submit: "Submit"
+        photo: "Photo (optional)",
+        submit: "Submit",
+        skip: "Skip"
     },
 
     Meetup: {

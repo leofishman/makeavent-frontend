@@ -39,7 +39,10 @@ export default {
                 this.adInfoToSpeakers()
 
                 this.displayContent = true
-            }  
+            }
+            else {
+                this.$router.push('/')
+            }
         })
 
         return {

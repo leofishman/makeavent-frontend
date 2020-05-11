@@ -19,18 +19,18 @@
                                     ></b-input>
                                 </b-field>
 
-                                <div class="columns">
-                                    <div v-if="email.includes('@blockconf.digital')" class="column">
+                                <div class="columns only-bot-margin">
+                                    <div v-if="email.includes('@blockconf.digital')" class="column nopadding" style="padding-right:5px !important;">
                                         <b-field :label="$root.content.systemGenerated + $root.content.email">
                                             <b-input disabled type="password" v-model="email" ></b-input>
                                         </b-field>
                                     </div>
-                                    <div v-else class="column">
+                                    <div v-else class="column nopadding" style="padding-right:5px !important;">
                                         <b-field :label="$root.content.email">
                                             <b-input disabled type="text" v-model="email" ></b-input>
                                         </b-field>
                                     </div>
-                                    <div v-if="email.includes('@blockconf.digital')" class="column">
+                                    <div v-if="email.includes('@blockconf.digital')" class="column nopadding" style="padding-left:5px !important">
                                         <b-field
                                             :label="$root.content.new + $root.content.email"
                                         >
@@ -39,15 +39,15 @@
                                     </div>
                                 </div>
 
-                                <div class="columns">
-                                    <div class="column">
+                                <div class="columns only-bot-margin">
+                                    <div class="column nopadding" style="padding-right:5px !important">
                                         <b-field
                                             :label="$root.content.systemGenerated + $root.content.password"
                                         >
                                             <b-input id="loginwithtemp1-password-input" disabled type="password" v-model="password" ></b-input>
                                         </b-field>
                                     </div>
-                                    <div class="column">
+                                    <div class="column nopadding" style="padding-left:5px !important">
                                         <b-field
                                             :label="$root.content.new + $root.content.password"
                                         >
@@ -80,17 +80,22 @@
 
                                 <b-field
                                     v-if="type == 'vip'"
-                                    label="Calendly"
                                 >
+                                    <template slot="label">
+                                        <div>
+                                            Calendly
+                                            <a class="xxx" href="https://calendly.com/signup" target="_blank">
+                                                {{$root.content.dontHave('Calendly')}}
+                                            </a>
+                                        </div>
+                                    </template>
                                     <b-input
                                         type="text"
+                                        pattern="^https://calendly.com/"
                                         :disable="disable_calendly"
-                                        v-model="calendly"
+                                        v-model="calendly" 
                                         :placeholder="$root.content.pleaseEnter + 'Calendly'"
                                     ></b-input>
-                                    <a class="xxx" href="https://calendly.com/signup" target="_blank">
-                                        {{$root.content.dontHave('Calendly')}}
-                                    </a>
                                 </b-field>
 
                                 <b-button :disabled="!buttonready" v-on:click="login()" type="is-primary" size="is-medium">
@@ -124,22 +129,28 @@ export default {
     data() {
         this.buttonready = false
 
-        this.password = ""
-        this.email = this.$root.profile.email
-        this.newemail = this.email ? this.email : ""
-        this.newpassword = ""
-        this.type = this.$root.profile.type
-        this.companyName = this.$root.profile.company
-        this.role = this.$root.profile.role
-        this.name = this.$root.profile.name
-        this.calendly = this.$root.profile.calendly
+        if (!this.$root.profile) {
+            this.$router.push('/login')
+        }
+        else {
+            this.password = ""
+            this.email = this.$root.profile.email
+            this.newemail = this.email ? this.email : ""
+            this.newpassword = ""
+            this.type = this.$root.profile.type
+            this.companyName = this.$root.profile.company
+            this.role = this.$root.profile.role
+            this.name = this.$root.profile.name
+            this.calendly = this.$root.profile.calendly
+    
+            this.disable_companyName = this.companyName ? true : false
+            this.disable_role = this.role ? true : false
+            this.disable_name = this.name ? true : false
+            this.disable_calendly = this.calendly ? true : false
+    
+            this.fetchPasswordFromDb()
+        }
 
-        this.disable_companyName = this.companyName ? true : false
-        this.disable_role = this.role ? true : false
-        this.disable_name = this.name ? true : false
-        this.disable_calendly = this.calendly ? true : false
-
-        this.fetchPasswordFromDb()
         
         return {
             buttonready: this.buttonready,
@@ -244,7 +255,7 @@ export default {
             this.role &&
             this.name) {
                 if (this.type == "vip") {
-                    if (this.calendly) 
+                    if (/(^https:\/\/calendly.com\/)/.test(this.calendly))
                         return true
                     else 
                         return false
@@ -304,5 +315,13 @@ export default {
             text-align: center;
             color: grey;
         }
+    }
+    .only-bot-margin {
+        margin-top: 0px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .nopadding {
+        padding: 0px !important;
     }
 </style>

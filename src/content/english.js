@@ -162,7 +162,7 @@ export default {
     basic: "Basic",
     willBeAtMay: `The conference has not started yet. Please come back after May 25th at ${new Date(startDate).toString().split("2020")}`,
     followUsOnSocial: "Follow us on social media",
-    chat: "Chat",
+    chat: "Chat with Us",
     upgradeToAccess: (x, y) => {
         return `Please upgrade your ticket to ${x} to access ${y}`
     },

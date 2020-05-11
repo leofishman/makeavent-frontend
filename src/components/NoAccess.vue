@@ -4,32 +4,38 @@
             <navbar :nav="false"></navbar>
             <section class="section has-text-centered">
                 <div>
-                <h2>{{$root.content.willBeAtMay}}</h2>
-                <div class="social-list">
-                    <h3>{{$root.content.followUsOnSocial}}</h3>
-                    <div class="columns">
-                        <div class="column">
-                            <a href="https://www.linkedin.com/company/blockconf/about/" target="_blank">
-                                <img class="big-social-icons" src="@/assets/img/socials/linkedin.svg">
-                            </a>
+                    <h2>{{$root.content.willBeAtMay}}</h2>
+
+
+                    <div class="social-list">
+                        <h3>{{$root.content.chat}}</h3>
+                        <div class="columns">
+                            <div class="column is-one-quarter">
+                                <a href="https://t.me/joinchat/KEgr4EZFEGXXusLTSyM96g" target="_blank">
+                                    <img class="big-social-icons" src="@/assets/img/socials/telegram.svg">
+                                </a>
+                            </div>
                         </div>
-                        <div class="column">
-                            <a href="https://twitter.com/BlockconfD" target="_blank">
-                                <img class="big-social-icons" src="@/assets/img/socials/twitter.svg">
-                            </a>
+
+
+                        <h3>{{$root.content.followUsOnSocial}}</h3>
+                        <div class="columns">
+                            <div class="column is-one-quarter">
+                                <a href="https://www.linkedin.com/company/blockconf/about/" target="_blank">
+                                    <img class="big-social-icons" src="@/assets/img/socials/linkedin.svg">
+                                </a>
+                            </div>
+                            <div class="column is-one-quarter">
+                                <a href="https://twitter.com/BlockconfD" target="_blank">
+                                    <img class="big-social-icons" src="@/assets/img/socials/twitter.svg">
+                                </a>
+                            </div>
+                            <div class="column is-one-quarter">
+                                <a href="https://t.me/blockconf" target="_blank">
+                                    <img class="big-social-icons" src="@/assets/img/socials/telegram.svg">
+                                </a>
+                            </div>
                         </div>
-                        <div class="column">
-                            <a href="https://t.me/blockconf" target="_blank">
-                                <img class="big-social-icons" src="@/assets/img/socials/telegram.svg">
-                            </a>
-                        </div>
-                        <div class="column">
-                            <a href="https://t.me/joinchat/KEgr4EZFEGXXusLTSyM96g" target="_blank">
-                                <img class="big-social-icons" src="@/assets/img/socials/telegram.svg">
-                                <p>{{$root.content.chat}}</p>
-                            </a>
-                        </div>
-                    </div>
                     </div>
                     <!--<b-row>
                         <b-link target="_blank" class="col" href="https://www.linkedin.com/company/blockconf/about/">

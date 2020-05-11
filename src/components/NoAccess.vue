@@ -1,43 +1,60 @@
 <template>
-    <div>
-        <navbar :nav="false"></navbar>
-        <div class="centerBigTitle">
-            {{$root.content.willBeAtMay}}
-            <div style="margin-top: 50px;">
-                <div class="social-media-title">
-                    {{$root.content.followUsOnSocial}}
+    <div id="noaccess">
+        <div class="container">
+            <navbar :nav="false"></navbar>
+            <section class="section has-text-centered">
+                <div>
+                    <a target="_blank" href="https://www.kaspersky.com/">
+                        <img class="noaccess-logo" :src="host + '/static/img/sponsors/KASPERSKY/KASPERSKY.png'" alt="">
+                    </a>
+
+                    <h2>{{$root.content.willBeAtMay}}</h2>
+
+                    <div class="social-list">
+                        <h3>{{$root.content.followUsOnSocial}}</h3>
+                        <div class="columns">
+                            <div class="column is-one-quarter">
+                                <a href="https://www.linkedin.com/company/blockconf/about/" target="_blank">
+                                    <img class="big-social-icons" src="@/assets/img/socials/linkedin.svg">
+                                </a>
+                            </div>
+                            <div class="column is-one-quarter">
+                                <a href="https://twitter.com/BlockconfD" target="_blank">
+                                    <img class="big-social-icons" src="@/assets/img/socials/twitter.svg">
+                                </a>
+                            </div>
+                            <div class="column is-one-quarter">
+                                <a href="https://t.me/BlockConfDigital" target="_blank">
+                                    <img class="big-social-icons" src="@/assets/img/socials/telegram.svg">
+                                </a>
+                            </div>
+                            <div class="column is-one-quarter">
+                                <a href="https://www.facebook.com/BlockConfDigital/" target="_blank">
+                                    <img class="big-social-icons" src="@/assets/img/socials/facebook.svg">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <b-row style="margin-top: 20px;">
-                    <b-link target="_blank" class="col" href="https://www.linkedin.com/company/blockconf/about/">
-                        <img class="big-social-icons" src="@/assets/img/socials/linkedin.svg">
-                    </b-link>
-
-                    <b-link target="_blank" class="col" href="https://twitter.com/BlockconfD">
-                        <img class="big-social-icons" src="@/assets/img/socials/twitter.svg">
-                    </b-link>
-
-                    <b-link target="_blank" class="col" href="https://t.me/blockconf">
-                        <img class="big-social-icons" src="@/assets/img/socials/telegram.svg">
-                    </b-link>
-
-                    <b-link target="_blank" class="col" href="https://t.me/joinchat/KEgr4EZFEGXXusLTSyM96g">
-                        <img class="big-social-icons" src="@/assets/img/socials/telegram.svg">
-                        <div class="social-icon-label">{{$root.content.chat}}</div>
-                    </b-link>
-                </b-row>
-            </div>
+            </section>
         </div>
     </div>
 </template>
 
 <script>
-
+import {host} from '@/env'
 export default {
     name: "Noaccess",
     data() {
         return {
-
+            host: host
         }
     },
 }
 </script>
+<style lang="scss">
+    .noaccess-logo {
+        margin: 0px 0px 40px 0px;
+        width: 350px;
+    }
+</style>

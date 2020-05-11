@@ -15,13 +15,18 @@
                     </div>
                 </div>
                 <!-- Platinum B -->
+                <!-- <div @click="$root.openExternalInBlank(getSponsor('crypttp').website)" class="click tile is-parent">
+                    <div class="tile is-child box">
+                        <img style="object-fit:contain;" :src="host + getSponsor('crypttp').logo">
+                    </div>
+                </div> -->
+            </div>
+            <div class="tile ls-gold">
                 <div @click="$root.openExternalInBlank(getSponsor('crypttp').website)" class="click tile is-parent">
                     <div class="tile is-child box">
                         <img style="object-fit:contain;" :src="host + getSponsor('crypttp').logo">
                     </div>
                 </div>
-            </div>
-            <div class="tile ls-gold">
                 <!-- Gold A -->
                 <div @click="$root.openExternalInBlank(getSponsor('fas').website)" class="click tile is-parent">
                     <div class="tile is-child box">
@@ -29,6 +34,13 @@
                     </div>
                 </div>
                 <!-- Gold B -->
+                <div @click="$root.openExternalInBlank(getSponsor('sto managers').website)" class="click tile is-parent">
+                    <div class="tile is-child box">
+                        <img style="object-fit:contain;" :src="host + getSponsor('sto managers').logo">
+                    </div>
+                </div>
+            </div>
+            <div class="tile ls-silver">
                 <div @click="$root.openExternalInBlank(getSponsor('dash').website)" class="click tile is-parent">
                     <div class="tile is-child box">
                         <img style="object-fit:contain;" :src="host + getSponsor('dash').logo">
@@ -41,11 +53,6 @@
                     </div>
                 </div>
                 <!-- Gold D -->
-                <div @click="$root.openExternalInBlank(getSponsor('sto managers').website)" class="click tile is-parent">
-                    <div class="tile is-child box">
-                        <img style="object-fit:contain;" :src="host + getSponsor('sto managers').logo">
-                    </div>
-                </div>
             </div>
         </div>
     </div>

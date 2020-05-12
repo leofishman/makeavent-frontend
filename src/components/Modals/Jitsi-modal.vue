@@ -38,7 +38,7 @@ export default {
                 clearInterval(timer)
 
                 this.$root.check('Speakers Speakingagenda').then(() => {
-                    this.speakers = this.$root.Speakingagenda.filter(el => el.stage.toUpperCase() == this.data.nametoUpperCase())
+                    this.speakers = this.$root.Speakingagenda.filter(el => el.stage.toUpperCase() == this.data.name.toUpperCase())
                     if (this.speakers.length) {
                         this.speaker = this.speakers[0].contact
                         this.speakingData = this.speakers[0]

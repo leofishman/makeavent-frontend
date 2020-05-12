@@ -48,17 +48,13 @@
 
                     <!-- Profile bio -->
                     <div class="column is-two-fifths profile-bio">
+                        <div class="columns is-multiline">
+                            <div class="column is-half padding-top-20" v-for="(el, index) in contacts" :key="index">
+                                <Member :data="el"/>
+                            </div>
+                        </div>
                         <div class="tile is-ancestor">
                             <div class="tile is-vertical">
-
-                                <!-- Bio Members -->
-                                <div class="tile">
-                                    <div class="tile is-parent" v-for="(el, index) in contacts" :key="index">
-                                        <div class="tile is-child">
-                                            <Member :data="el"/>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <!-- Bio text -->
                                 <div class="tile is-parent">

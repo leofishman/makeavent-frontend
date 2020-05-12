@@ -7,7 +7,7 @@
 			<section class="section section-profile-company">
 				<div class="columns is-variable is-8">
 					<!-- Profile main -->
-					<div class="column is-two-fifth profile-main">
+					<div class="column is-one-third profile-main">
 						<!-- Profile top-->
 						<div class="profile-top">
 							
@@ -39,18 +39,14 @@
 					</div>
 
 					<!-- Profile bio -->
-					<div class="column is-three-fifths profile-bio">
+					<div class="column is-two-third profile-bio">
+						<div class="columns is-multiline">
+                            <div class="column is-one-third padding-top-20" v-for="(el, index) in contacts" :key="index">
+                                <Member :data="el"/>
+                            </div>
+                        </div>
 						<div class="tile is-ancestor">
 							<div class="tile is-vertical">
-								
-								<!-- Bio Members -->
-								<div class="tile">
-									<div class="tile is-parent" v-for="(el, index) in contacts" :key="index">
-										<div class="tile is-child">
-											<Member :data="el"/>
-										</div>
-									</div>
-								</div>
 
 								<!-- Bio text -->
 								<div class="tile is-parent">

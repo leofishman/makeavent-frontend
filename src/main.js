@@ -714,7 +714,7 @@ new Vue({
     async showBCrequesttoast (el, index) {
       if (!this.isThatMe(el.email)) {
         this.$buefy.dialog.confirm({
-          message: this.content.reqBusCardConfirm,
+          message: this.content.BusinessCard.reqBusCardConfirm,
           cancelText: this.content.no,
           confirmText: this.content.yes,
           type: 'is-primary',
@@ -741,7 +741,7 @@ new Vue({
     },
 
     openIncomingContactRequest (data) {
-      let note = this.content.newContactReqNote(data.name.split(" ")[0], data.company, data.role)
+      let note = this.content.BusinessCard.newContactReqNote(data.name.split(" ")[0], data.company, data.role)
       let note2 = this.content.acceptLaterNote(`${selfhost}/${this.token}/profile`)
 
       this.$buefy.snackbar.open({

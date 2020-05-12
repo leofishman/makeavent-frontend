@@ -1,4 +1,4 @@
-import {startDate} from '../env'
+import {startDate, meetupDate} from '../env'
 
 export default {
     Agenda: {
@@ -43,10 +43,6 @@ export default {
         joinNowTitle: "Join E-booth"
     },
 
-    Mediapartnerbooth: {
-        
-    },
-
     Profile: {
         mbc: "My Business Card",
         mi: "My Interviews"
@@ -62,11 +58,10 @@ export default {
 
     Storycreate: {
         newStoryButton: "New story",
-        
     },
 
     reminders: {
-        0: 'will start speaking in 10 minutes',
+        0: "will start speaking in 10 minutes",
     },
 
     Privatecall: {
@@ -75,23 +70,23 @@ export default {
         selectDateAndTime: ""
     },
 
+    BusinessCard: {
+        reqBusCardConfirm: "Do you want to request business card?",
+        newContactReqNote: (name, company, role) => {
+            return `${name} ${role} at ${company} is requesting your business card`
+        },
+    },
+
     noAccessTitle: (to) => { return `We are apologizing but You don't have access to ${to}`},
 
-    reqBusCardConfirm: `Do you want to request business card?`,
-    newContactReq: 'New business card request',
-    newContactReqNote: (name, company, role) => {
-        return `${name} ${role} at ${company} is requesting your business card`
-    },
     acceptLaterNote: (profile) => {
         return `<strong>You can accept it later in <a href="${profile}">profile.</a></strong>`
     },
     userConfirmedSharingInfo: ({name, role, company}) => {
         return `${name} ${role} at ${company} shared business card with you`
     },
-    howToConfirmBusinessCardSharing: `Go to Profile -> My Business Cards -> Pending and click "accept" to share business card.`,
+    howToConfirmBusinessCardSharing: "Go to Profile -> My Business Cards -> Pending and click 'accept' to share business card.",
     
-    sorryAttender: `Sorry our dear attender.`,
-    reasonWhyNoAccess: `It seems like you are trying to open conferense in many tabs.<br> We restricted opening many tabs of conference hall for security reasons.<br> Sorry for any inconvinice.`,
     buyTicket: (type) => {
         return `Buy ${type} ticket`
     },
@@ -161,7 +156,8 @@ export default {
     business: "Business",
     cards: "Cards",
     basic: "Basic",
-    willBeAtMay: `The conference has not started yet. Please come back after May 25th at ${new Date(startDate).toString().split("2020")}`,
+    willBeAtMay: `Meetup will be on ${new Date(meetupDate).toString().split("2020")}<br>Main Conference starts on ${new Date(startDate).toString().split("2020")}`,
+    // The conference has not started yet. Please come back 14th of May at ${}`,
     followUsOnSocial: "Follow us on social media",
     chat: "Chat with Us",
     upgradeToAccess: (x, y) => {

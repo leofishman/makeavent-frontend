@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import axios from 'axios'
-import {host, startDate} from '../env'
+import {host, startDate, meetupDate} from '../env'
 
 /**
  * @components
@@ -125,7 +125,8 @@ const router = new Router({
             name: "Password",
             component: Login,
             meta: {
-                requiresAuth: false
+                requiresAuth: false,
+                platformLaunch: true
             }
         },
         {
@@ -133,7 +134,8 @@ const router = new Router({
             name: "RegistrationHall",
             component: RegistrationHall,
             meta: {
-                requiresAuth: false
+                requiresAuth: false,
+                platformLaunch: true
             }
         },
         {
@@ -170,6 +172,7 @@ const router = new Router({
             component: LoginWithTempEmail,
             meta: {
                 requiresAuth: false,
+                platformLaunch: true
             }
         },
         {
@@ -259,11 +262,11 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
 
-    //  if (to.meta.platformLaunch && new Date().getTime() < startDate) {
-    //     window.location.pathname = '/noaccess'
-    //  }
-    //  else {
-        if (to.path == "/noaccess" || to.path == "/reghall") {
+    if (to.meta.platformLaunch && new Date().getTime() < meetupDate) {
+        window.location.pathname = '/noaccess'
+    }
+    else {
+        if (to.path == "/noaccess") {
             next()
         }
         else if (to.path == "/" && localStorage.auth) {
@@ -335,7 +338,7 @@ router.beforeEach((to, from, next) => {
         }
         else 
             next()
-    //  }
+    }
 })
 
 export default router

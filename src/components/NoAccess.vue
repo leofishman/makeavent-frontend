@@ -8,7 +8,7 @@
                         <img class="noaccess-logo" :src="host + '/static/img/sponsors/KASPERSKY/KASPERSKY.png'" alt="">
                     </a>
 
-                    <h2>{{$root.content.willBeAtMay}}</h2>
+                    <h2 v-html="$root.content.willBeAtMay"></h2>
 
                     <div class="social-list">
                         <h3>{{$root.content.followUsOnSocial}}</h3>

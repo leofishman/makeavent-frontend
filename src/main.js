@@ -674,7 +674,13 @@ new Vue({
       let self = this
 
       return new Promise(async (resolve, reject) => {
+        let period = 0
         let timer = setInterval(async () => {
+          period += 100
+          if (period >= 5000) {
+            clearInterval(timer)
+            reject(vars)
+          }
           const list = vars.map(el => new Promise((resolve, reject) => {
             if (el.split('.')[1] == "length") {
               if (self[el.split('.')[0]])
@@ -928,7 +934,7 @@ new Vue({
             else
               resolve(false)
           }
-        })
+        }).catch(e => console.log(`${e} inaccessible`))
       })
     },
 

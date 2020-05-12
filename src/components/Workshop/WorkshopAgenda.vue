@@ -65,7 +65,7 @@ export default {
             this.list = this.$root.WorkshopAgenda
 
             this.ready = true
-        })
+        }).catch(e => console.log(`${e} inaccessible`))
         
         return {
             host: host,

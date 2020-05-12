@@ -94,7 +94,7 @@ export default {
         .then(res => {
             if (res) {
 				this.$root.check('InvestFunds').then(() => {
-					this.ifp = this.$root.InvestFunds.filter(el => el.name == this.name.toUpperCase())[0]
+					this.ifp = this.$root.InvestFunds.filter(el => el.name.toUpperCase() == this.name.toUpperCase())[0]
 					
 					this.description = this.ifp.description
 					this.website = this.ifp.website
@@ -103,7 +103,7 @@ export default {
 					this.logo = host + this.ifp.logo
 
 					this.ready = true
-				})
+				}).catch(e => console.log(`${e} inaccessible`))
 			}
             else
                 this.$root.createError(this.content.ErrorMessages[3], 'oops')

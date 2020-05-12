@@ -108,7 +108,7 @@ export default {
                     this.token = this.$root.token
 
                     this.name = this.$router.currentRoute.params.name
-                    this.startup = this.$root.Startups.filter(el => el.name.toLowerCase() == this.name)[0]
+                    this.startup = this.$root.Startups.filter(el => el.name.toUppercase() == this.name.toUppercase())[0]
                     this.logo = host + this.startup.logo
 
                     this.description = this.startup.description
@@ -119,7 +119,7 @@ export default {
                     this.time = this.startup.time
 
                     this.ready = true
-                })
+                }).catch(e => console.log(`${e} inaccessible`))
             }
         })
 

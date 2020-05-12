@@ -1,12 +1,14 @@
 <template>
-    <div v-if="ready" class="tile is-vertical agenda box">
+    <div class="tile is-vertical agenda box">
         <h2>{{content.agenda}}</h2>
 
-        <Agendarow
-            v-for="(data, index) in agenda"
-            :key="index"
-            :data="data"
-        />
+        <div v-if="ready">
+            <Agendarow
+                v-for="(data, index) in agenda"
+                :key="index"
+                :data="data"
+            />
+        </div>
     </div>
 </template>
 
@@ -28,7 +30,7 @@ export default {
         this.$root.check('DemoDayAgenda').then(_ => {
             this.ready = true
             this.agenda = this.$root.DemoDayAgenda
-        })
+        }).catch(e => console.log(`${e} inaccessible`))
 
         return {
             host: host,

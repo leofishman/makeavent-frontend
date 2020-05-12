@@ -124,7 +124,7 @@ export default {
         // wait until token and sponsors ready
         this.$root.check('token Sponsors').then(() => {
             const name = this.name.toUpperCase()
-            this.sponsor = this.$root.Sponsors.filter(el => el.name == name)[0]
+            this.sponsor = this.$root.Sponsors.filter(el => el.name.toUpperCase() == name.toUpperCase())[0]
 
             this.description = this.sponsor.description
             this.demo = this.sponsor.demo
@@ -135,7 +135,7 @@ export default {
             this.logo = env.host + this.sponsor.logo
 
             this.ready = true
-        })
+        }).catch(e => console.log(`${e} inaccessible`))
 
         return {
             self: this,

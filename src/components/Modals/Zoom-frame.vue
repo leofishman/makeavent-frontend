@@ -25,7 +25,7 @@ export default {
         this.html = ""
 
         this.$root.check('Speakers Speakingagenda').then(() => {
-            this.speakers = this.$root.Speakingagenda.filter(el => el.stage == this.data.name)
+            this.speakers = this.$root.Speakingagenda.filter(el => el.stage.toUpperCase() == this.data.name.toUpperCase())
             if (this.speakers.length) {
                 this.speaker = this.speakers[0].contact
                 this.speakingData = this.speakers[0]
@@ -45,7 +45,7 @@ export default {
                     document.getElementById('zoom-iframe').contentWindow.document.write(this.html)
                 })
             }
-        })
+        }).catch(e => console.log(`${e} inaccessible`))
 
         return {
             speakingData: this.speakingData,

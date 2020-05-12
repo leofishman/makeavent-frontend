@@ -98,7 +98,7 @@
 			this.watchButtonClass = ""
 
 			this.$root.check('MediaPartners MediaPartners.length').then(async () => {
-				this.mediaCompany = this.$root.MediaPartners.filter(el => el.name == this.name.toUpperCase())[0]
+				this.mediaCompany = this.$root.MediaPartners.filter(el => el.name.toUpperCase() == this.name.toUpperCase())[0]
 				
 				this.description = this.mediaCompany.description
 				this.website = this.mediaCompany.website
@@ -110,7 +110,7 @@
 
 				await this.getInterviewByMedia()
 				this.loadWatchButtonClass()
-			})
+			}).catch(e => console.log(`${e} inaccessible`))
 			return {
 				ready: this.ready,
 				name: this.name.toUpperCase(),

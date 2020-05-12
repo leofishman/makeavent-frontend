@@ -297,7 +297,7 @@ export default {
   data() {
     this.$root.check('Sponsors').then(_ => {
       this.ready = true
-    })
+    }).catch(e => console.log(`${e} inaccessible`))
 
     return {
       joinMeeting: false,

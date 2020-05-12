@@ -165,7 +165,7 @@
 			this.$root.check('profile').then(() => {
 				this.profile = this.$root.profile
 				this.ready = true
-			})
+			}).catch(e => console.log(`${e} inaccessible`))
 
 			return {
 				profileParamsFocus: this.profileParamsFocus,

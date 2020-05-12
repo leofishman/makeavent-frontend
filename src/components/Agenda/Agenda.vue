@@ -1,14 +1,14 @@
 <template>
-    <div v-if="ready" id="agenda">
+    <div id="agenda">
         <navbar></navbar>
 
-        <div class="container">
+        <div  class="container">
 
             <Pagetitle :data="content.conferenceAgenda"/>
 
             <section class="section section-agenda">
                 <div class="columns is-multiline">
-                    <div class="column is-full">
+                    <div v-if="ready" class="column is-full">
                         <Agendarow
                             v-for="(el, index) in $root.Speakingagenda"
                             :key="index"
@@ -31,10 +31,10 @@ export default {
     },
     data() {
         this.ready = false
-        
+
         this.$root.check('Speakingagenda.length').then(_ => {
             this.ready = true
-        })
+        }).catch(e => console.log(`${e} inaccessible`))
 
         return {
             content: this.$root.content.Agenda,

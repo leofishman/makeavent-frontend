@@ -46,7 +46,7 @@ export default {
                     if ( this.$root.checkComponentAccess('invstorslist') ) {
                         this.adInfoToInvestor()
                     }  
-                })
+                }).catch(e => console.log(`${e} inaccessible`))
             }
             else {
                 this.$router.push('/')

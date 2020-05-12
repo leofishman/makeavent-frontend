@@ -38,7 +38,7 @@ export default {
                 clearInterval(timer)
 
                 this.$root.check('Speakers Speakingagenda').then(() => {
-                    this.speakers = this.$root.Speakingagenda.filter(el => el.stage == this.data.name)
+                    this.speakers = this.$root.Speakingagenda.filter(el => el.stage.toUpperCase() == this.data.nametoUpperCase())
                     if (this.speakers.length) {
                         this.speaker = this.speakers[0].contact
                         this.speakingData = this.speakers[0]
@@ -53,7 +53,7 @@ export default {
                             }
                         })
                     }
-                })
+                }).catch(e => console.log(`${e} inaccessible`))
             }
         })
     }

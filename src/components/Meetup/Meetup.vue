@@ -67,7 +67,7 @@ export default {
 
 		this.$root.check('Sponsors').then(() => {
 			this.ready = true
-		})
+		}).catch(e => console.log(`${e} inaccessible`))
 		return {
 			ready: this.ready,
 

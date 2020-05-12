@@ -5,9 +5,7 @@
 			<div class="tile is-child box shadow-1 stage click">
 				<div class="has-text-centered">
 					<figure class="image is-100x100">
-						<!-- <img src="@/assets/info-desk.svg"> -->
-						<img v-if="$root.getSponsorSlot('1').logo" :src="host + $root.getSponsorSlot('1').logo" alt="">
-            			<img v-else src="@/assets/info-desk.svg" alt="">
+            			<img src="@/assets/info-desk.png" alt="">
 					</figure>
 					<h3>
 						{{content.infDesk}}
@@ -19,13 +17,12 @@
 		<div v-on:click="$root.joinStage('stage1')" class="tile is-parent">
 			<div class="tile is-child box shadow-1 stage click">
 				<div class="has-text-centered">
-					<figure class="image is-100x100">
-						<!-- <img src="@/assets/icon-stage.png"> -->
+					<figure class="image is-150x200">
+            			<img class="icon-stage-with-sponsor" src="@/assets/icon-stage.png" alt="">
 						<img v-if="$root.getSponsorSlot('2').logo" :src="host + $root.getSponsorSlot('2').logo" alt="">
-            			<img v-else src="@/assets/icon-stage.png" alt="">
 					</figure>
 					<h3>
-						{{content.stage}}
+						{{content.stage}} 1
 					</h3>
 				</div>
 			</div>
@@ -44,13 +41,12 @@
 		<div v-on:click="$root.joinStage('stage2')" class="tile is-parent">
 			<div class="tile is-child box shadow-1 stage click">
 				<div class="has-text-centered">
-					<figure class="image is-100x100">
-						<!-- <img src="@/assets/icon-stage.png"> -->
+					<figure class="image is-150x200">
+            			<img class="icon-stage-with-sponsor" src="@/assets/icon-stage.png" alt="">
 						<img v-if="$root.getSponsorSlot('3').logo" :src="host + $root.getSponsorSlot('3').logo" alt="">
-            			<img v-else src="@/assets/icon-stage.png" alt="">
 					</figure>
 					<h3>
-						{{content.stage}}
+						{{content.stage}} 2
 					</h3>
 				</div>
 			</div>
@@ -62,7 +58,7 @@
 					<figure class="image is-100x100">
 						<!-- <img src="@/assets/viproom-icon.svg"> -->
 						<img v-if="$root.getSponsorSlot('4').logo" :src="host + $root.getSponsorSlot('4').logo" alt="">
-            			<img v-else src="@/assets/viproom-icon.svg" alt="">
+            			<img v-else src="@/assets/viproom-icon.png" alt="">
 					</figure>
 					<h3>
 						{{content.vipMeetingRoom}}
@@ -74,22 +70,24 @@
 </template>
 
 <script>
-	export default {
-		name: "Toprow",
-		props: {
-			data: String
-		},
-		data () {
-			return {
-				content: this.$root.content.toprow
-			}
-		},
-		methods: {
-			
-		},
-	}
+import {host} from '@/env'
+
+export default {
+	name: "Toprow",
+	props: {
+		data: String
+	},
+	data () {
+		return {
+			content: this.$root.content.toprow,
+			host: host
+		}
+	},
+	methods: {
+		
+	},
+}
 </script>
 
-<style scoped>
-
+<style <style lang="scss">
 </style>

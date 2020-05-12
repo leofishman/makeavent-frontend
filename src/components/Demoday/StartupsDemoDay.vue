@@ -28,6 +28,12 @@
                             <Fundbrand fundName="UVECON"/>
                         </div>
                         <div class="column">
+                            <Fundbrand fundName="SANCTUM"/>
+                        </div>
+                        <div class="column">
+                            <Fundbrand fundName="VU VENTURE PARTNERS"/>
+                        </div>
+                        <div class="column">
                             <Fundbrand fundName="FAS"/>
                         </div>
                     </div>
@@ -37,7 +43,7 @@
 
             <section class="section section-startbottom">
                 <div class="tile is-ancestor level">
-                    <div class="tile is-vertical is-4 startup-brand level-left">
+                    <div class="tile is-vertical is-5 startup-brand level-left">
                         <div v-if="$root.Startups" class="tile">
 
                             <div class="tile is-vertical is-parent">
@@ -52,10 +58,16 @@
                                 <Startuplogo id="5"/>
                             </div>
 
+                            <div class="tile is-parent is-vertical">
+                                <Startuplogo id="6"/>
+                                <Startuplogo id="7"/>
+                                <Startuplogo id="8"/>
+                            </div>
+
                         </div>
                     </div>
 
-                    <div class="tile is-parent is-7 level-right">
+                    <div class="tile is-parent is-6 level-right">
                         <div class="tile is-vertical">
                             <div v-on:click="$router.push(`/${$root.token}/ddpb`)" class="tile is-child box click has-background-light demo-day">
                                 <div class="has-text-centered">

@@ -917,6 +917,16 @@ main {
 				margin: auto;
 				margin-bottom: 20px;
 			}
+			.icon-stage-with-sponsor {
+				width: 75px !important;
+				margin: auto;
+				margin-bottom: 20px;
+			}
+			.is-150x200 {
+				width: 200px;
+				height: 150px;
+				margin: auto;
+			}
 			&:after, &:before {
 				content: "";
 				position: absolute;

@@ -22,17 +22,17 @@
 									<span>
 										<img src="@/assets/icon/icon-email.svg">
 									</span>
-									{{commonContent.Website}}
+									<a>{{commonContent.Website}}</a>
 								</li>
 								<li 
 									v-for="(el, key, index) in socials"
 									:key="index"
 									v-on:click="openAndTrack(el)"
 								>
-									<span>
+									<span v-if="el">
 										<img :src="require(`../../assets/icon/icon-${key.toLowerCase()}.svg`)">
 									</span> 
-									{{key}}
+									<a v-if="el">{{key}}</a>
 								</li>
 							</ul>
 						</div>

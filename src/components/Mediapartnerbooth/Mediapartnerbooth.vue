@@ -40,7 +40,7 @@
 
 						<!-- Profile bottom-->
 						<div
-							@click="$root.joinStage(name)"
+							@click="$root.joinStage('interview'+name)"
 							class="profile-bottom"
 						>
 							<img src="@/assets/watch-interview.jpg">

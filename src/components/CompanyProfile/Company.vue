@@ -72,7 +72,7 @@
         <!-- Profile Chat -->
         <div id="chat">
             <div class="chat-top">
-                <h3 @click="$root.joinStage(name)" class="is-uppercase">{{content.joinNowTitle}}</h3>
+                <h3 @click="$root.joinStage('sponsorbooth'+name)" class="is-uppercase">{{content.joinNowTitle}}</h3>
             </div>
 		    <Chat :checkAccess="'companychat'" type="company" :parent="self" :name="name" />
         </div>
@@ -171,12 +171,6 @@ export default {
         openAndTrack (link) {
             this.$root.track(name, link)
             this.$root.openExternalInBlank(link)
-        },
-
-        startMeeting () {
-            this.$root.getWebinar(this.sponsor._id).then(webinar => {
-                this.$root.joinWebinar(webinar.zoomWebinarId, "")
-            })
         }
     },
 }

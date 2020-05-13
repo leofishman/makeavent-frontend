@@ -204,7 +204,8 @@ export default {
         oops: "Oops",
         vipChat: "VIP Chat",
         coffeeChat: "Coffee-break Chat",
-        replyHint: 'Right mouse click to reply'
+        replyHint: 'Right mouse click to reply',
+        webinarNotStarted: "Webinar not started yet"
     },
 
     StartupsDemoDay: {

@@ -480,28 +480,36 @@ new Vue({
     },
 
     joinWebinar (data) {
-      if (data.platform == "jitsi") {
-        this.$buefy.modal.open({
-          props: {
-            data: data
-          },
-          parent: this,
-          component: JitsiWebinar,
-          hasModalCard: true,
-          customClass: 'custom-class custom-class-2',
-          trapFocus: true
-        })
+      if (new Date().getTime() > data.time) {
+        if (data.platform == "jitsi") {
+          this.$buefy.modal.open({
+            props: {
+              data: data
+            },
+            parent: this,
+            component: JitsiWebinar,
+            hasModalCard: true,
+            customClass: 'custom-class custom-class-2',
+            trapFocus: true
+          })
+        }
+        else if (data.platform == "zoom") {
+          this.$buefy.modal.open({
+            props: {
+              data: data
+            },
+            parent: this,
+            component: ZoomWebinar,
+            hasModalCard: true,
+            customClass: 'custom-class custom-class-2',
+            trapFocus: true
+          })
+        }
       }
-      else if (data.platform == "zoom") {
-        this.$buefy.modal.open({
-          props: {
-            data: data
-          },
-          parent: this,
-          component: ZoomWebinar,
-          hasModalCard: true,
-          customClass: 'custom-class custom-class-2',
-          trapFocus: true
+      else {
+        this.$buefy.dialog.alert({
+          title: this.content.common.webinarNotStarted,
+          message: `Please return at ${new Date(Number(data.time)).toLocaleString()}`,
         })
       }
     },

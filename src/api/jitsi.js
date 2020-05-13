@@ -9,6 +9,23 @@ export default class JitsiModal {
     this.username = vueapp.$root.profile.name
     this.type = vueapp.$root.profile._id == data.speakerId ? "speaker" : vueapp.$root.usertype
 
+    this.webinarType = ""
+
+    if (this.name.includes('stage'))
+      this.webinarType = this.name
+    
+    else if (this.name.includes('sponsorbooth'))
+      this.webinarType = 'sponsorbooth'
+
+    else if (this.name == 'demoday')
+      this.webinarType = "demoday"
+
+    else if (this.name.includes("interview"))
+      this.webinarType = "interview"
+
+    else if (this.name.includes('meetup'))
+      this.webinarType = "meetup"
+
     vueapp.$root.getUser().then(
       this.connect()
     )
@@ -44,7 +61,7 @@ export default class JitsiModal {
         INVITATION_POWERED_BY: true,
         AUTHENTICATION_ENABLE: true,
 
-        TOOLBAR_BUTTONS: toolbar_buttons_basedOnType[this.name][this.type],
+        TOOLBAR_BUTTONS: toolbar_buttons_basedOnType[this.webinarType][this.type],
   
         SETTINGS_SECTIONS: [ 'devices', 'language', 'moderator', 'profile', 'calendar' ],
         VIDEO_LAYOUT_FIT: 'both',
@@ -84,12 +101,12 @@ export default class JitsiModal {
       },
       configOverwrite: {
         hosts: {
-          domain: 'webinar.blockconf.digital',  
-          muc: 'conference.webinar.blockconf.digital'
+          domain: 'meet.jit.si',  
+          muc: 'conference.meet.jit.si'
         },
   
-        bosh: '//webinar.blockconf.digital/http-bind',
-        websocket: 'wss://webinar.blockconf.digital/xmpp-websocket',
+        bosh: '//meet.jit.si/http-bind',
+        websocket: 'wss://meet.jit.si/xmpp-websocket',
   
         clientNode: 'http://jitsi.org/jitsimeet',  
         testing: {
@@ -98,6 +115,8 @@ export default class JitsiModal {
         },
         enableNoAudioDetection: true,
         enableNoisyMicDetection: true,
+
+        useNicks: false,
   
         // Start the conference in audio only mode (no video is being received nor
         // sent).
@@ -108,9 +127,9 @@ export default class JitsiModal {
         // },
         
         // Every participant after the Nth will start audio muted.
-        startAudioMuted: 1,
+        startAudioMuted: 0,
         // Every participant after the Nth will start video muted.
-        startVideoMuted: 1,
+        startVideoMuted: 0,
   
         // Start calls with video muted. Unlike the option above, this one is only
         // applied locally. FIXME: having these 2 options is confusing.
@@ -128,9 +147,9 @@ export default class JitsiModal {
         //     appKey: '<APP_KEY>' // Specify your app key here.
         //     // A URL to redirect the user to, after authenticating
         //     // by default uses:
-        //     // 'https://webinar.blockconf.digital/static/oauth.html'
+        //     // 'https://meet.jit.si/static/oauth.html'
         //     redirectURI:
-        //          'https://webinar.blockconf.digital/subfolder/static/oauth.html'
+        //          'https://meet.jit.si/subfolder/static/oauth.html'
         // },
         // When integrations like dropbox are enabled only that will be shown,
         // by enabling fileRecordingsServiceEnabled, we show both the integrations
@@ -234,7 +253,7 @@ export default class JitsiModal {
   
             // The STUN servers that will be used in the peer to peer connections
             stunServers: [
-                // { urls: 'stun:webinar.blockconf.digital:4446' },
+                // { urls: 'stun:meet.jit.si:4446' },
                 { urls: 'stun:meet-jit-si-turnrelay.jitsi.net:443' }
             ],
   

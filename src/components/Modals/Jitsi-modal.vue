@@ -41,6 +41,7 @@ export default {
                     this.speakers = this.$root.Speakingagenda.filter(el => el.stage.toUpperCase() == this.data.name.toUpperCase())
                     if (this.speakers.length) {
                         this.speaker = this.speakers[0].contact
+
                         this.speakingData = this.speakers[0]
                         new jitsi({
                             vueapp: this,
@@ -53,7 +54,7 @@ export default {
                             }
                         })
                     }
-                }).catch(e => console.log(`${e} inaccessible`))
+                })
             }
         })
     }

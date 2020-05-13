@@ -276,7 +276,7 @@ router.beforeEach((to, from, next) => {
                 }
             })
             .then(res => {
-                window.location.pathname = res.data + '/home'
+                window.location.pathname = res.data + '/meetup'
             })
             .catch(e => {
                 console.log(e)

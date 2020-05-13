@@ -262,10 +262,10 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
 
-    if (to.meta.platformLaunch && new Date().getTime() < meetupDate) {
-        window.location.pathname = '/noaccess'
-    }
-    else {
+     if (to.meta.platformLaunch && new Date().getTime() < meetupDate) {
+         window.location.pathname = '/noaccess'
+     }
+     else {
         if (to.path == "/noaccess") {
             next()
         }

@@ -9,7 +9,7 @@
 						</figure>
 						
 						<div class="box">
-							<p>{{$root.content.loginWithTicket}}</p>
+							<p style="margin-bottom:20px;">{{$root.content.loginWithTicket}}</p>
 							<section>
 								<b-field :label="$root.content.email" >
 									<b-input v-model="email" type="email" validation-message="This email is invalid" :placeholder="$root.content.emailPlaceholder"></b-input>
@@ -18,9 +18,16 @@
 								<b-field :label="$root.content.password">
 									<b-input id="login-password-input" v-model="password" type="password" :placeholder="$root.content.passwordPlaceholderFromEmail" password input></b-input>
 								</b-field>
-								<b-button :disabled="!inputsReady" v-on:click="login()" type="is-primary" size="is-medium">
-                                    {{$root.content.submit}}
-                                </b-button>
+                                <div class="tile">
+                                    <div>
+                                        <b-button :disabled="!inputsReady" v-on:click="login()" type="is-primary" size="is-medium">
+                                            {{$root.content.submit}}
+                                        </b-button>
+                                    </div>
+                                    <div @click="navToReg()" class="click column">
+                                        {{$root.content.common.noAccount}}
+                                    </div>
+                                </div>
 							</section>
 						</div>
 					</div>
@@ -82,6 +89,10 @@ export default {
         })
     },
     methods: {
+        navToReg () {
+            this.$router.push('/register')
+        },
+
         login () {
             axios.post(`${host}/login`, {
                 email: this.email,

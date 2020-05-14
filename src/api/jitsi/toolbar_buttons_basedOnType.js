@@ -75,10 +75,10 @@ const meetup = {
         'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone'
     ],
     basic: [
-        'fullscreen'
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera',
     ],
     business: [
-        'fullscreen', 'raisehand', 'chat'
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera',
     ],
     vip: [
         'fullscreen', 'raisehand', 'chat', 'microphone', 'camera',

@@ -40,9 +40,9 @@ export default {
 
                 this.displayContent = true
             }
-            else {
-                this.$router.push('/')
-            }
+            // else {
+            //     this.$router.push('/')
+            // }
         }).catch(e => console.log(`${e} inaccessible`))
 
         return {

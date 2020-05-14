@@ -47,6 +47,7 @@ import WorkshopAgenda from '@/components/Workshop/WorkshopAgenda.vue'
 import Login from '@/components/Login.vue'
 import LoginWithTempEmail from '@/components/LoginWithTempEmail.vue'
 import RegistrationHall from '@/components/RegistrationHall'
+import Register from '@/components/Register'
 
 import NoAccess from '@/components/NoAccess.vue'
 import Company from '@/components/CompanyProfile/Company.vue'
@@ -124,6 +125,15 @@ const router = new Router({
             path: '/login',
             name: "Password",
             component: Login,
+            meta: {
+                requiresAuth: false,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/register',
+            name: "Register",
+            component: Register,
             meta: {
                 requiresAuth: false,
                 platformLaunch: true
@@ -261,7 +271,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-
     // if (to.meta.platformLaunch && new Date().getTime() < meetupDate) {
     //     window.location.pathname = '/noaccess'
     // }
@@ -287,13 +296,22 @@ router.beforeEach((to, from, next) => {
         else if (to.path == "/" && !localStorage.auth) {
             window.location.pathname = "/login"
         }
+        else if (to.path == "/register" && !localStorage.auth) {
+            next()
+        }
         else if (to.path == "/loginrtp" && to.query.access) {
             localStorage.auth = ''
             next()
         }
         else if (!localStorage.auth) {
-            if (window.location.pathname.split("/")[1] != "login" && window.location.pathname.split("/")[1] != "noaccess") 
+            if (
+                window.location.pathname.split("/")[1] != "login" &&
+                window.location.pathname.split("/")[1] != "noaccess" &&
+                window.location.pathname.split("/")[1] != "loginrtp" &&
+                window.location.pathname.split("/")[1] != "register"
+            ) {
                 window.location.pathname = "/login"
+            }
             
             else
                 next()
@@ -313,6 +331,7 @@ router.beforeEach((to, from, next) => {
                 if (
                     window.location.pathname.split("/")[1] != "login" &&
                     window.location.pathname.split("/")[1] != "noaccess" &&
+                    window.location.pathname.split("/")[1] != "register" &&
                     window.location.pathname.split("/")[2] != "company" && 
                     window.location.pathname.split("/")[2] != "vip" &&
                     window.location.pathname.split("/")[2] != "meetup" &&

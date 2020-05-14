@@ -1,5 +1,6 @@
 const domain = 'meet.jit.si';
 import toolbar_buttons_basedOnType from './jitsi/toolbar_buttons_basedOnType'
+import {startDate} from '@/env'
 
 export default class JitsiModal {
   constructor ({ vueapp, data }) {
@@ -8,6 +9,10 @@ export default class JitsiModal {
     this.parentNode = data.parentNode
     this.username = vueapp.$root.profile.name
     this.type = vueapp.$root.profile._id == data.speakerId ? "speaker" : vueapp.$root.usertype
+
+    if (vueapp.$root.usertype == "basic") {
+      vueapp.$root.showMessageToUpgradeBusOrVip(`During the main conference <b>${new Date(startDate).toLocaleString()}</b> you won't have access to microphone, video or raise hand in webinars. If you want to keep that feature please <b style="color:#9D6DBE">Upgrade</b> your ticket to Business or Vip`)
+    }
 
     this.webinarType = ""
 

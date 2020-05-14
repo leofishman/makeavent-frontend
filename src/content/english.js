@@ -28,15 +28,17 @@ export default {
         linkedin: "Linkedin (optional)",
         facebook: "Facebook (optional)",
         telegram: "Telegram (optional)",
-        urlValidation: "This url is invalid",
         photo: "Photo (optional)",
+        urlValidation: "This url is invalid",
         submit: "Submit",
         skip: "Skip"
     },
 
     Meetup: {
         title: "e-Meetup",
-        intro: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
+        intro: `Welcome to BlockConf Digital Virtual Meetup with Kaspersky, RSK, Decred, and Dash.<br><br>
+        We opened our virtual doors today to let you test BlockConf Digital and our virtual hall. We are constantly working to make our solution better. Our team will appreciate any feedback as in this way we will be able to deliver the best experience for you during the main event on <b>${new Date(startDate).toLocaleString()}</b>.<br><br>
+        BlockConf Digital is powered by make.A.vent, a disruptive solution for the event industry.`,
     },
     Booth: {
         title: "lorem ipsum",
@@ -152,10 +154,12 @@ export default {
     example: ", Example: ",
     openQrCode: "Open QR-code",
     businessCardSavedToEmail: "Amazing.<br>Business card was sent to your email!",
+    cards: "Cards",
+
     vip: "VIP",
     business: "Business",
-    cards: "Cards",
     basic: "Basic",
+
     willBeAtMay: `Meetup will be on ${new Date(meetupDate).toString().split("2020")}<br>Main Conference starts on ${new Date(startDate).toString().split("2020")}`,
     // The conference has not started yet. Please come back 14th of May at ${}`,
     followUsOnSocial: "Follow us on social media",
@@ -165,7 +169,6 @@ export default {
     },
     or: " or ",
     globalChat: "Global Chat",
-    chooseTicketType: "Choose ticket type",
     
     requestOfflineCopy: "Request recorded copy",
     offlineMaterialSent: (name) => {
@@ -205,7 +208,9 @@ export default {
         vipChat: "VIP Chat",
         coffeeChat: "Coffee-break Chat",
         replyHint: 'Right mouse click to reply',
-        webinarNotStarted: "Webinar not started yet"
+        webinarNotStarted: "Webinar not started yet",
+        noAccount: "Don't have account? Register!",
+        haveAccount: "Already have account? Login!"
     },
 
     StartupsDemoDay: {
@@ -248,7 +253,8 @@ export default {
         0: 'This will be available <b>25 of May</b>',
         1: 'We updating webinar host, sorry for the inconvinience',
         2: 'We appologies, but there is a error adding reminder for you.<br>Please contact <b>support@blockconf.digital</b>',
-        3: 'We appologies, but <b>Startups Demo Day</b> available only for <b>Investors, Startups and Media Partners</b>'
+        3: 'We appologies, but <b>Startups Demo Day</b> available only for <b>Investors, Startups and Media Partners</b>',
+        4: 'Please provide at least 1 social network or photo. This is necessary so that your business contacts can identify you'
     },
 
     VipMeetingRoom: {
@@ -264,6 +270,19 @@ export default {
     },
 
     Upgradeticket: {
+        chooseTicketType: "Please choose ticket type",
+        ticketType: "Ticket type"
+    },
 
+    Register: {
+        title: "Please provide your registration details.<br><br>All the information will be included in your <b>business card</b>.<br>This business card is the <b>'request only'</b> and will be available only to people whose requests you confirmed.<br>BlockConf Digital <b>will not</b> use this information for any other purposes.",
+        chooseTicketType: "Choose ticket type",
+        reqFree: "Investor or Media?",
+        linkedin: "Linkedin (optional)",
+        facebook: "Facebook (optional)",
+        telegram: "Telegram (optional)",
+        photo: "Photo (optional)",
+        free: "Free",
+        
     }
 }

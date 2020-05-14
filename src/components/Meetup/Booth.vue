@@ -9,7 +9,7 @@
         <div class="container">
             <Pagetitle :data="name"/>
             <section class="section section-profile-company">
-                <div class="columns is-variable is-8">
+                <div class="columns">
                     <!-- Profile main -->
                     <div class="column is-one-third profile-main">
                         <!-- Profile top-->
@@ -48,7 +48,7 @@
                     <!-- Profile bio -->
                     <div class="column is-two-third profile-bio">
                         <div class="columns is-multiline">
-                            <div class="column is-one-third padding-top-20" v-for="(el, index) in contacts" :key="index">
+                            <div class="column" v-for="(el, index) in contacts" :key="index">
                                 <Member :data="el"/>
                             </div>
                         </div>

@@ -11,7 +11,7 @@
 						
 						<!-- Profile top-->
 						<div class="profile-top">
-							<div>
+							<div class="profile-avatar">
 								<img :src="host + profile.photo">
 							</div>
 							<ul class="list-network">

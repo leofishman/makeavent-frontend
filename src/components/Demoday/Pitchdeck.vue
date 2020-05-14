@@ -1,14 +1,16 @@
 <template>
-	<article class="pitchdeck-download box">
+	<article @click="$root.openExternalInBlank(data.url)" class="pitchdeck-download box">
 		<img src="@/assets/icon/icon-pitchdeck-download.png" alt="Download">
 		<div>
-			<p>File name</p>
-			<h3>Download Pitch Deck</h3>
+			<p>{{data.name}}</p>
 		</div>
 	</article>
 </template>
 <script>
 	export default {
-		name: "Pitchdeck"
+		name: "Pitchdeck",
+		props: {
+			data: Object
+		}
 	}
 </script>

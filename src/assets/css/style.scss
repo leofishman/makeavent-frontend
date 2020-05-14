@@ -2034,6 +2034,7 @@ main {
 		color: $secondary;
 		font-weight: normal;
 		overflow: hidden;
+		word-break: break-all;
 	}
 	nav {
 		margin-top: 30px;
@@ -2736,4 +2737,9 @@ main {
 			display: block;
 		}
 	}
+}
+
+.speaking-theme {
+    max-height: 35px;
+    overflow: auto;
 }

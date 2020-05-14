@@ -22,7 +22,7 @@
                                         @click="$root.navToPage(speaker.company)"
                                     >{{speaker.role + " " + speaker.company}}</span>
                                 </p>
-                                <p class="is-6">{{speakingData.theme}}</p>
+                                <p class="speaking-theme is-6">{{speakingData.theme}}</p>
                             </div>
                         </div>
                     </div>

@@ -218,7 +218,7 @@ export default {
                         this.updateSocials()
                         this.updateProfilePhoto()
     
-                        this.$router.push(`${this.$root.token}/meetup`)
+                        this.$router.push('/')
                     })
                     .catch(e => {
                         this.$root.createError(e.toString(), 'oops')

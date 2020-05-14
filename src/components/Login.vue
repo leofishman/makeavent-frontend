@@ -114,7 +114,7 @@ export default {
                     this.$root.profile = data.profile
                     localStorage.auth = res.headers.authorization
                     
-                    this.$router.push(`${this.$root.token}/meetup`)
+                    this.$router.push(`/`)
                 }
             })
             .catch(e => {

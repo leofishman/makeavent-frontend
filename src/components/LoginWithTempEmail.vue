@@ -79,25 +79,6 @@
                                     ></b-input>
                                 </b-field>
 
-                                <b-field
-                                    v-if="type == 'vip'"
-                                >
-                                    <template slot="label">
-                                        <div>
-                                            Calendly
-                                            <a class="xxx" href="https://calendly.com/signup" target="_blank">
-                                                {{$root.content.dontHave('Calendly')}}
-                                            </a>
-                                        </div>
-                                    </template>
-                                    <b-input
-                                        type="text"
-                                        pattern="^https://calendly.com/"
-                                        :disable="disable_calendly"
-                                        v-model="calendly" 
-                                        :placeholder="$root.content.pleaseEnter + 'Calendly'"
-                                    ></b-input>
-                                </b-field>
 
                                 <b-button :disabled="!buttonready" v-on:click="login()" type="is-primary" size="is-medium">
                                     {{$root.content.submit}}
@@ -225,7 +206,7 @@ export default {
                 
                 localStorage.auth = res.headers.authorization
 
-                this.$router.push(`${data.accessLink}/meetup?auth=true`)
+                this.$router.push(`${data.accessLink}/login?auth=true`)
             })
             .catch(e => {
                 this.$buefy.dialog.alert({
@@ -255,14 +236,7 @@ export default {
             this.companyName &&
             this.role &&
             this.name) {
-                if (this.type == "vip") {
-                    if (/(^https:\/\/calendly.com\/)/.test(this.calendly))
-                        return true
-                    else 
-                        return false
-                }
-                else
-                    return true
+                return true
             }
             else 
                 return false
@@ -299,12 +273,6 @@ export default {
             else
                 this.buttonready = false
         },
-        calendly: function () {
-            if (this.checkInputReadyness())
-                this.buttonready = true
-            else
-                this.buttonready = false
-        }
     },
 }
 </script>

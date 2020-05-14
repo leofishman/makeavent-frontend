@@ -239,13 +239,13 @@ export default {
             this.role &&
             this.type &&
             this.name) {
-                if (this.type == "vip") {
+                /*if (this.type == "vip") {
                     if (/(^https:\/\/calendly.com\/)/.test(this.calendly))
                         return true
                     else 
                         return false
                 }
-                else
+                else*/
                     return true
             }
             else 

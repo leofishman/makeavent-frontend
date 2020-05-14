@@ -121,7 +121,7 @@ export default {
                 }
             })
             .then(() => {
-                this.$router.push(`${this.$root.token}/meetup`)
+                this.$router.push(`/`)
             })
         },
 

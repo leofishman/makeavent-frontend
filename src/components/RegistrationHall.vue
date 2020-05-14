@@ -79,8 +79,6 @@ export default {
         this.telegram = ""
         this.photo = ""
 
-        console.log(this.$refs)
-
         return {
             email: this.email,
             linkedin: this.linkedin,
@@ -123,7 +121,7 @@ export default {
                 }
             })
             .then(() => {
-                this.$router.push('/')
+                this.$router.push(`${this.$root.token}/meetup`)
             })
         },
 

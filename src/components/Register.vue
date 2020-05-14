@@ -9,6 +9,7 @@
                         </figure>
 
                         <div class="box">
+                            <p style="margin:10px 0px;">For the better experience our team recommends to use Google Chrome</p>
                             <p v-html="content.title"></p>
                             <section>
                                 <b-field :label="$root.content.email">
@@ -217,7 +218,7 @@ export default {
                         this.updateSocials()
                         this.updateProfilePhoto()
     
-                        this.$router.push('/')
+                        this.$router.push(`${this.$root.token}/meetup`)
                     })
                     .catch(e => {
                         this.$root.createError(e.toString(), 'oops')

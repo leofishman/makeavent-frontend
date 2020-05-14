@@ -1,5 +1,6 @@
 <template>
     <div class="container card webinar-modal">
+        <img class="click webinar-close-icon" src="@/assets/icon/icon-close-black.svg" v-on:click="$parent.close()" />
         <SpeakingTitle
             :webinarName="data.name"
             :speaker="speaker"
@@ -29,7 +30,7 @@ export default {
         }
     },
     methods: {
-
+        
     },
     mounted () {
 
@@ -47,6 +48,7 @@ export default {
                             vueapp: this,
                             data: {
                                 speakerId: this.speaker._id,
+                                host: this.data.host,
                                 name: this.data.name,
                                 webinarId: this.data.webinarId,
                                 token: this.$root.token,
@@ -60,3 +62,11 @@ export default {
     }
 }
 </script>
+<style lang="scss">
+    .webinar-close-icon {
+        position: absolute;
+        right: 20px;
+        width: 20px;
+        top: 20px;
+    }
+</style>

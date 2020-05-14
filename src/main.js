@@ -491,6 +491,7 @@ new Vue({
             parent: this,
             component: JitsiWebinar,
             hasModalCard: true,
+            canCancel: false,
             customClass: 'custom-class custom-class-2',
             trapFocus: true
           })

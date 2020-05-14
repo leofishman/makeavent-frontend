@@ -9,6 +9,7 @@
 						</figure>
 						
 						<div class="box">
+                            <p style="margin:10px 0px;">For the better experience our team recommends to use Google Chrome</p>
 							<p style="margin-bottom:20px;">{{$root.content.loginWithTicket}}</p>
 							<section>
 								<b-field :label="$root.content.email" >
@@ -113,7 +114,7 @@ export default {
                     this.$root.profile = data.profile
                     localStorage.auth = res.headers.authorization
                     
-                    this.$router.push(`${this.$root.token}/home`)
+                    this.$router.push(`${this.$root.token}/meetup`)
                 }
             })
             .catch(e => {

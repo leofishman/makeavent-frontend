@@ -316,10 +316,16 @@ router.beforeEach((to, from, next) => {
             else
                 next()
         }
-        else if (window.location.pathname.split("/")[2] == "home" && to.query.auth == "true") {
+        else if (
+            (
+                window.location.pathname.split("/")[2] == "home" ||
+                window.location.pathname.split("/")[2] == "meetup"
+            )
+                && to.query.auth == "true"
+        ) {
             window.location.search = ""
             to.query = {}
-            window.location.pathname = `/${window.location.pathname.split("/")[1]}/home`
+            window.location.pathname = `/${window.location.pathname.split("/")[1]}/${window.location.pathname.split("/")[2]}`
         }
         else if (!to.fullPath.includes('auth=true') && window.location.pathname.split("/")[1] != "login") {
             axios.get(host + `/login/checkToken?access=${window.location.pathname.split("/")[1]}`, {

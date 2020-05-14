@@ -9,6 +9,7 @@
                         </figure>
 
                         <div class="box">
+                            <p style="margin:10px 0px;">For the better experience our team recommends to use Google Chrome</p>
                             <p v-html="$root.content.titleForLoginWithTempEmail"></p>
                             <section>
                                 <b-field :label="$root.content.name"> 
@@ -224,7 +225,7 @@ export default {
                 
                 localStorage.auth = res.headers.authorization
 
-                this.$router.push(`${data.accessLink}/home?auth=true`)
+                this.$router.push(`${data.accessLink}/meetup?auth=true`)
             })
             .catch(e => {
                 this.$buefy.dialog.alert({

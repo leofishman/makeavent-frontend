@@ -39,7 +39,7 @@
 
 						<!-- Profile bottom-->
 						<div class="profile-bottom">
-                            <PitchDeck />
+                            <PitchDeck v-for="(el, index) in pitchDeck" :key="index" :data="el"/>
                         </div>
 					</div>
 
@@ -98,6 +98,7 @@ export default {
                 this.contacts         = ""
                 this.logo             = ""
                 this.name             = ""
+                this.pitchDeck        = []
 
                 // wait until token and startups ready
                 this.$root.check('token Startups').then(() => {
@@ -113,6 +114,7 @@ export default {
                     this.socials = this.startup.socials
                     this.contacts = this.startup.contacts
                     this.time = this.startup.time
+                    this.pitchDeck = this.startup.pitchDeck
 
                     this.ready = true
                 }).catch(e => console.log(`${e} inaccessible`))
@@ -140,6 +142,7 @@ export default {
             website: this.website,
             socials: this.socials,
             contacts: this.contacts,
+            pitchDeck: this.pitchDeck,
 
             chat: "",
 

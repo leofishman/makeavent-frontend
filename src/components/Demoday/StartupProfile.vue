@@ -40,6 +40,8 @@
 						<!-- Profile bottom-->
 						<div class="profile-bottom">
                             <PitchDeck />
+                            <PitchDeck />
+                            <PitchDeck />
                         </div>
 					</div>
 

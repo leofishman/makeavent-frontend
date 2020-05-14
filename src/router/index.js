@@ -47,6 +47,7 @@ import WorkshopAgenda from '@/components/Workshop/WorkshopAgenda.vue'
 import Login from '@/components/Login.vue'
 import LoginWithTempEmail from '@/components/LoginWithTempEmail.vue'
 import RegistrationHall from '@/components/RegistrationHall'
+import Register from '@/components/Register'
 
 import NoAccess from '@/components/NoAccess.vue'
 import Company from '@/components/CompanyProfile/Company.vue'
@@ -124,6 +125,15 @@ const router = new Router({
             path: '/login',
             name: "Password",
             component: Login,
+            meta: {
+                requiresAuth: false,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/register',
+            name: "Register",
+            component: Register,
             meta: {
                 requiresAuth: false,
                 platformLaunch: true
@@ -287,21 +297,36 @@ router.beforeEach((to, from, next) => {
         else if (to.path == "/" && !localStorage.auth) {
             window.location.pathname = "/login"
         }
+        else if (to.path == "/register" && !localStorage.auth) {
+            next()
+        }
         else if (to.path == "/loginrtp" && to.query.access) {
             localStorage.auth = ''
             next()
         }
         else if (!localStorage.auth) {
-            if (window.location.pathname.split("/")[1] != "login" && window.location.pathname.split("/")[1] != "noaccess") 
+            if (
+                window.location.pathname.split("/")[1] != "login" &&
+                window.location.pathname.split("/")[1] != "noaccess" &&
+                window.location.pathname.split("/")[1] != "loginrtp" &&
+                window.location.pathname.split("/")[1] != "register"
+            ) {
                 window.location.pathname = "/login"
+            }
             
             else
                 next()
         }
-        else if (window.location.pathname.split("/")[2] == "home" && to.query.auth == "true") {
+        else if (
+            (
+                window.location.pathname.split("/")[2] == "home" ||
+                window.location.pathname.split("/")[2] == "meetup"
+            )
+                && to.query.auth == "true"
+        ) {
             window.location.search = ""
             to.query = {}
-            window.location.pathname = `/${window.location.pathname.split("/")[1]}/home`
+            window.location.pathname = `/${window.location.pathname.split("/")[1]}/${window.location.pathname.split("/")[2]}`
         }
         else if (!to.fullPath.includes('auth=true') && window.location.pathname.split("/")[1] != "login") {
             axios.get(host + `/login/checkToken?access=${window.location.pathname.split("/")[1]}`, {
@@ -313,6 +338,7 @@ router.beforeEach((to, from, next) => {
                 if (
                     window.location.pathname.split("/")[1] != "login" &&
                     window.location.pathname.split("/")[1] != "noaccess" &&
+                    window.location.pathname.split("/")[1] != "register" &&
                     window.location.pathname.split("/")[2] != "company" && 
                     window.location.pathname.split("/")[2] != "vip" &&
                     window.location.pathname.split("/")[2] != "meetup" &&

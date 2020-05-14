@@ -98,7 +98,8 @@ new Vue({
         self.$router.currentRoute.name != "LoginThenBusinessCard" && 
         self.$router.currentRoute.name != "LoginWithTempEmail" &&
         self.$router.currentRoute.name != "Login" &&
-        self.$router.currentRoute.name != "RegistrationHall"
+        self.$router.currentRoute.name != "RegistrationHall" &&
+        self.$router.currentRoute.name != "Register"
       ) {
         if (self.profile === undefined || self.usertype === undefined || self.token === undefined)
           this.getUser()
@@ -110,8 +111,9 @@ new Vue({
             self.Sponsors === undefined &&
             self.Startups === undefined &&
             self.Workshop === undefined
-          )
+          ) {
             this.getResourses()
+          }
       }
     }, 1000)
 
@@ -489,6 +491,7 @@ new Vue({
             parent: this,
             component: JitsiWebinar,
             hasModalCard: true,
+            canCancel: false,
             customClass: 'custom-class custom-class-2',
             trapFocus: true
           })
@@ -670,7 +673,8 @@ new Vue({
         this.$router.currentRoute.path != '/login' &&
         this.$router.currentRoute.path != '/loginrtp' &&
         this.$router.currentRoute.path != '/reghall' &&
-        this.$router.currentRoute.path != '/noaccess'
+        this.$router.currentRoute.path != '/noaccess' &&
+        this.$router.currentRoute.path != '/register'
       )
         return true
       else
@@ -816,7 +820,7 @@ new Vue({
       this[`business_paypalButtonRendered`] = false
       this[`vip_paypalButtonRendered`] = false
 
-      let message = this.content.onlyForUsertype(component, this.content.business + this.content.or + this.content.vip)
+      let message = component
 
       Axios.get(`${host}/ticket/upgrade?type=business`, {
         headers: {
@@ -864,28 +868,31 @@ new Vue({
         }
       }).then(res => {
         this[`upgradeCost_${type}`] = res.data.amount
-        let message = this.content.upgradeFor(component, this.content.vip, this[`upgradeCost_${type}`])
 
-        let self = this
-
-        this.$buefy.modal.open({
-          parent: this,
-          props: {
-            title: this.content.common.oops,
-            message: message,
-            type: type,
-            types: [
-              'vip'
-            ]
-          },
-          component: Upgradeticket,
-          hasModalCard: true,
-          customClass: 'upgradeticket',
-          trapFocus: true,
-          onCancel: function () {
-            self[`${type}_paypalButtonRendered`] = false
-          }
-        })
+        if (component) {
+          let message = this.content.upgradeFor(component, this.content.vip, this[`upgradeCost_${type}`])
+  
+          let self = this
+  
+          this.$buefy.modal.open({
+            parent: this,
+            props: {
+              title: this.content.common.oops,
+              message: message,
+              type: type,
+              types: [
+                type
+              ]
+            },
+            component: Upgradeticket,
+            hasModalCard: true,
+            customClass: 'upgradeticket',
+            trapFocus: true,
+            onCancel: function () {
+              self[`${type}_paypalButtonRendered`] = false
+            }
+          })
+        }
       })
     },
 

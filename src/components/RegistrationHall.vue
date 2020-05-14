@@ -22,7 +22,7 @@
                                     <b-input v-model="facebook" type="url" :validation-message="content.urlValidation"></b-input>
                                 </b-field>
                                 <b-field :label="content.telegram">
-                                    <b-input v-model="telegram" type="text" :validation-message="content.urlValidation"></b-input>
+                                    <b-input v-model="telegram" type="url" :validation-message="content.urlValidation"></b-input>
                                 </b-field>
                                 <b-field :label="content.photo">
                                     <input
@@ -79,8 +79,6 @@ export default {
         this.telegram = ""
         this.photo = ""
 
-        console.log(this.$refs)
-
         return {
             email: this.email,
             linkedin: this.linkedin,
@@ -113,8 +111,6 @@ export default {
                 if (this.photo) {
                     let formData = new FormData();
                     formData.append('userProfilePhoto', this.photo);
-
-                    console.log(formData)
     
                     return Axios.post(`${host}/login/profilephoto`, formData, {
                         headers: { authorization: localStorage.auth }
@@ -125,7 +121,7 @@ export default {
                 }
             })
             .then(() => {
-                this.$router.push('/')
+                this.$router.push(`${this.$root.token}/meetup`)
             })
         },
 

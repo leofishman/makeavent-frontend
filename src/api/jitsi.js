@@ -1,5 +1,6 @@
 const domain = 'meet.jit.si';
 import toolbar_buttons_basedOnType from './jitsi/toolbar_buttons_basedOnType'
+import {startDate} from '@/env'
 
 export default class JitsiModal {
   constructor ({ vueapp, data }) {
@@ -7,7 +8,13 @@ export default class JitsiModal {
     this.webinarId = data.webinarId
     this.parentNode = data.parentNode
     this.username = vueapp.$root.profile.name
-    this.type = vueapp.$root.profile._id == data.speakerId ? "speaker" : vueapp.$root.usertype
+
+    const host = vueapp.$root.Sponsors.filter(el => el.name.toUpperCase() == data.host.toUpperCase())[0]
+    this.type = host.contacts.filter(el => el._id == vueapp.$root.profile._id).length ? "speaker" : vueapp.$root.usertype
+
+    if (vueapp.$root.usertype == "basic") {
+      vueapp.$root.showMessageToUpgradeBusOrVip(`During the main conference <b>${new Date(startDate).toLocaleString()}</b> you won't have access to microphone, video or raise hand in webinars. If you want to keep that feature please <b style="color:#9D6DBE">Upgrade</b> your ticket to Business or Vip`)
+    }
 
     this.webinarType = ""
 
@@ -26,13 +33,15 @@ export default class JitsiModal {
     else if (this.name.includes('meetup'))
       this.webinarType = "meetup"
 
-    vueapp.$root.getUser().then(
-      this.connect()
-    )
+    vueapp.$root.getUser()
+    .then(this.connect())
   }
   connect () {
     const options = {
       roomName: this.webinarId,
+      userInfo: {
+        displayName: this.username
+      },
       width: "100%",
       height: 500,
       parentNode: this.parentNode,
@@ -43,7 +52,7 @@ export default class JitsiModal {
         INITIAL_TOOLBAR_TIMEOUT: 5000,
         TOOLBAR_TIMEOUT: 4000,
         TOOLBAR_ALWAYS_VISIBLE: false,
-        DEFAULT_REMOTE_DISPLAY_NAME: this.username,
+        DEFAULT_REMOTE_DISPLAY_NAME: '',
         SHOW_JITSI_WATERMARK: false,
         JITSI_WATERMARK_LINK: 'https://jitsi.org',
         SHOW_WATERMARK_FOR_GUESTS: false,
@@ -117,23 +126,18 @@ export default class JitsiModal {
         enableNoisyMicDetection: true,
 
         useNicks: false,
+
+        userInfo: {
+          displayName: this.username
+        },
+        disableRemoteMute: this.type != 'speaker' ? true : false,
+        remoteVideoMenu: {
+          disableKick: this.type != 'speaker' ? true : false
+        },
+
+        startAudioMuted: 1,
+        startVideoMuted: 1,
   
-        // Start the conference in audio only mode (no video is being received nor
-        // sent).
-        // startAudioOnly: false,
-  
-        
-        // Video
-        // },
-        
-        // Every participant after the Nth will start audio muted.
-        startAudioMuted: 0,
-        // Every participant after the Nth will start video muted.
-        startVideoMuted: 0,
-  
-        // Start calls with video muted. Unlike the option above, this one is only
-        // applied locally. FIXME: having these 2 options is confusing.
-        // startWithVideoMuted: false,
         desktopSharingChromeExtId: null,
         desktopSharingChromeSources: [ 'screen', 'window', 'tab' ],
         desktopSharingChromeMinExtVersion: '0.1',
@@ -372,75 +376,12 @@ export default class JitsiModal {
         //    downloadAppsUrl: 'https://docs.example.com/our-apps.html'
         // },
   
-        // Options related to the remote participant menu.
-        // remoteVideoMenu: {
-        //     // If set to true the 'Kick out' button will be disabled.
-        //     disableKick: true
-        // },
   
-        // If set to true all muting operations of remote participants will be disabled.
-        // disableRemoteMute: true,
-  
-        // List of undocumented settings used in jitsi-meet
-        /**
-         _immediateReloadThreshold
-        autoRecord
-        autoRecordToken
-        debug
-        debugAudioLevels
-        deploymentInfo
-        dialInConfCodeUrl
-        dialInNumbersUrl
-        dialOutAuthUrl
-        dialOutCodesUrl
-        disableRemoteControl
-        displayJids
-        etherpad_base
-        externalConnectUrl
-        firefox_fake_device
-        googleApiApplicationClientID
-        iAmRecorder
-        iAmSipGateway
-        microsoftApiApplicationClientID
-        peopleSearchQueryTypes
-        peopleSearchUrl
-        requireDisplayName
-        tokenAuthUrl
-        */
-  
-        // List of undocumented settings used in lib-jitsi-meet
-        /**
-         _peerConnStatusOutOfLastNTimeout
-        _peerConnStatusRtcMuteTimeout
-        abTesting
-        avgRtpStatsN
-        callStatsConfIDNamespace
-        callStatsCustomScriptUrl
-        desktopSharingSources
-        disableAEC
-        disableAGC
-        disableAP
-        disableHPF
-        disableNS
-        enableLipSync
-        enableTalkWhileMuted
-        forceJVB121Ratio
-        hiddenDomain
-        ignoreStartMuted
-        nick
-        startBitrate
-        */
-  
-  
-        // Allow all above example options to include a trailing comma and
-        // prevent fear when commenting out the last value.
         makeJsonParserHappy: 'even if last key had a trailing comma',
     }
     };
     this.jitsiWebinar = new JitsiMeetExternalAPI(domain, options);
 
-    this.jitsiWebinar.addEventListener('participantJoined', (e) => {
-      console.log(e)
-    })
+    return true
   }
 }

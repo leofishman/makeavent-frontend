@@ -181,7 +181,8 @@
 
 			isUpgradable () {
 				if (AccessLevels[this.checkAccess].includes('business') || AccessLevels[this.checkAccess].includes('vip')) {
-					this.$root.showMessageToUpgradeBusOrVip(this.$root.content.chatWith.toLowerCase() + this.$root.capitalizeFirstLetter(this.name))
+					let msg = this.$root.content.onlyForUsertype(this.$root.content.chatWith.toLowerCase() + this.$root.capitalizeFirstLetter(this.name), this.$root.content.business + this.$root.content.or + this.$root.content.vip)
+					this.$root.showMessageToUpgradeBusOrVip(msg)
 				}
 			},
 

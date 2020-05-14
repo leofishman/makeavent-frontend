@@ -75,22 +75,22 @@ const meetup = {
         'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone'
     ],
     basic: [
-        'fullscreen'
+        'fullscreen', 'raisehand', 'chat',
     ],
     business: [
-        'fullscreen', 'raisehand', 'chat'
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
     ],
     vip: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera',
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
     ],
     media: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera',
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
     ],
     investor: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera',
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
     ],
     startup: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera',
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
     ]
 }
 

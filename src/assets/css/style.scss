@@ -144,6 +144,14 @@ main {
 	padding: 20px;
 }
 
+.price {
+	color: $primary;
+	font-size: 32px;
+	font-weight: 900;
+	text-align: center;
+	margin-top: 10px;
+}
+
 // TITLE PAGE //
 //////////////////////////////////////////
 .title-page {
@@ -603,7 +611,7 @@ main {
 
 // REGISTRATION HALL //
 //////////////////////////////////////////
-#registrationhall, #logintempemail {
+#registrationhall,#logintempemail,#register {
 	margin-top: -80px;
 	
 	.data-login {
@@ -2025,6 +2033,7 @@ main {
 		cursor: pointer;
 		color: $secondary;
 		font-weight: normal;
+		overflow: hidden;
 	}
 	nav {
 		margin-top: 30px;

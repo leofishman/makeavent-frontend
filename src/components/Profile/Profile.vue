@@ -53,7 +53,8 @@
 						<!-- Profile bottom-->
 						<div class="profile-bottom box">
 							<div class="profile-brand">
-								<img class="level-left" :src="`${host}/static/img/sponsors/${profile.company.toUpperCase()}/${profile.company.toUpperCase()}.png`">
+								<img v-if="!profile.company" class="level-left" :src="`${host}/static/img/brand-default.png`">
+								<img v-else class="level-left" :src="`${host}/static/img/sponsors/${profile.company.toUpperCase()}/${profile.company.toUpperCase()}.png`">
 							</div>
 							<h3>{{profile.role}}</h3>
 						</div>

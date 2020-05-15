@@ -1756,11 +1756,10 @@ main {
 				margin-bottom: 60px;
 				display: flex;
 				.profile-avatar {
-					margin-right: 30px;
+					margin-right: 20px;
 					img {
 						box-shadow: $shadow-1;
 						width: 160px;
-						height: 160px;
 						background-color: $grey-light;
 					}
 				}

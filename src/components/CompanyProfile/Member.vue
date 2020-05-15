@@ -5,7 +5,8 @@
 		<img v-on:click="$root.privateCall(data)" src="@/assets/icon/icon-call.svg" class="member-action click right">
 
 		<figure>
-			<img :src="host + data.photo">
+			<img v-if="!data.photo" src="@/assets/user.svg" alt="">
+			<img v-else :src="host + data.photo">
 		</figure>
 
 		<h1 class="click" @click="$root.tryBusinessCard(data)">{{data.name}}</h1>

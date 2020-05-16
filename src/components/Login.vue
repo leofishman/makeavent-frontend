@@ -140,43 +140,8 @@ export default {
         },
 
         checkInputs () {
-            if (this.email && this.password) {
-                if (!this.tgswitch && !this.fbswitch && !this.lnswitch)
-                    return true
-                    
-                else {
-                    let tg = "noneed"
-                    let fb = "noneed"
-                    let ln = "noneed"
-    
-                    if (this.tgswitch)
-                        if (this.tg)
-                            tg = true
-                        else 
-                            tg = false
-    
-                    if (this.lnswitch)
-                        if (this.ln)
-                            ln = true
-                        else 
-                            ln = false
-    
-                    if (this.fbswitch)
-                        if (this.fb)
-                            fb = true
-                        else
-                            fb = false
-    
-                    if (
-                        (tg === true || tg == "noneed") &&
-                        (fb === true || fb == "noneed") &&
-                        (ln === true || ln == "noneed")
-                    )
-                        return true
-                    else 
-                        return false
-                }
-            }
+            if (this.email && this.password)
+                return true
             else
                 return false
         },
@@ -194,64 +159,7 @@ export default {
                 this.inputsReady = true
             else
                 this.inputsReady = false
-        },
-        tg: function () {
-            if (this.checkInputs())
-                this.inputsReady = true
-            else
-                this.inputsReady = false
-        },
-        tgswitch: function () {
-            if (!this.tgswitch) {
-                this.tg = ""
-                if (this.checkInputs())
-                    this.inputsReady = true
-                else
-                    this.inputsReady = false
-            }
-            else if (this.checkInputs())
-                this.inputsReady = true
-            else
-                this.inputsReady = false
-        },
-        ln: function () {
-            if (this.checkInputs())
-                this.inputsReady = true
-            else
-                this.inputsReady = false
-        },
-        lnswitch: function () {
-            if (!this.lnswitch) {
-                this.ln = ""
-                if (this.checkInputs())
-                    this.inputsReady = true
-                else
-                    this.inputsReady = false
-            }
-            else if (this.checkInputs())
-                this.inputsReady = true
-            else
-                this.inputsReady = false
-        },
-        fb: function () {
-            if (this.checkInputs())
-                this.inputsReady = true
-            else
-                this.inputsReady = false
-        },
-        fbswitch: function () {
-            if (!this.fbswitch) {
-                this.fb = ""
-                if (this.checkInputs())
-                    this.inputsReady = true
-                else
-                    this.inputsReady = false
-            }
-            else if (this.checkInputs())
-                this.inputsReady = true
-            else
-                this.inputsReady = false
-        },
+        }
     },
 }
 </script>

@@ -43,12 +43,12 @@ export default {
         data: String
     },
     data () {
-		this.$root.checkComponentAccess('startupdemoday')
+		this.$root.checkComponentAccess('startupdemodaypitchingbooth')
         .then(res => {
             if (res)
                 this.ready = true
             else
-                this.$root.createError(this.content.ErrorMessages[3], 'oops')
+                this.$root.createError(this.$root.content.ErrorMessages[5], 'oops')
         })
 
         return {

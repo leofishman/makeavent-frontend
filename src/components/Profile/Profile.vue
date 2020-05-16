@@ -11,7 +11,7 @@
 						
 						<!-- Profile top-->
 						<div class="profile-top">
-							<div>
+							<div class="profile-avatar">
 								<img :src="host + profile.photo">
 							</div>
 							<ul class="list-network">
@@ -53,7 +53,8 @@
 						<!-- Profile bottom-->
 						<div class="profile-bottom box">
 							<div class="profile-brand">
-								<img class="level-left" :src="`${host}/static/img/sponsors/${profile.company.toUpperCase()}/${profile.company.toUpperCase()}.png`">
+								<img v-if="!profile.company" class="level-left" :src="`${host}/static/img/brand-default.png`">
+								<img v-else class="level-left" :src="`${host}/static/img/sponsors/${profile.company.toUpperCase()}/${profile.company.toUpperCase()}.png`">
 							</div>
 							<h3>{{profile.role}}</h3>
 						</div>
@@ -91,11 +92,12 @@
 						</div>
 
 						<!-- NOT RELEASED -->
-						<!-- <div class="my-interviews">
+						<div class="my-interviews">
 							<h2>{{content.mi}}</h2>
 							<b-tabs v-model="activeTabInterview">
 								<b-tab-item label="Upcoming" class="interview-upcoming">
-									<div class="interview-today">
+									Interviews will be available 25 of May, when the conference starts
+									<!-- <div class="interview-today">
 										<h2 class="date-turn">{{$root.content.common.today}}</h2>
 										<Interviewsupcoming />
 									</div>
@@ -103,28 +105,30 @@
 									<div class="interview-tomorrow">
 										<h2 class="date-turn">23.04.19</h2>
 										<Interviewsupcoming />
-									</div>
+									</div> -->
 								</b-tab-item>
 
 								<b-tab-item label="Past" class="interview-past">
-									<div class="interview-today">
+									Interviews will be available 25 of May, when the conference starts
+									<!-- <div class="interview-today">
 										<h2 class="date-turn">13.03.19</h2>
 										<Interviewspast />
 									</div>
 									<div class="interview-tomorrow">
 										<h2 class="date-turn">23.01.19</h2>
 										<Interviewspast />
-									</div>
+									</div> -->
 								</b-tab-item>
 
 								<b-tab-item label="Failed" class="interview-failed">
-									<div class="interview-today">
+									Interviews will be available 25 of May, when the conference starts
+									<!-- <div class="interview-today">
 										<h2 class="date-turn">13.03.19</h2>
 										<Interviewsfailed />
-									</div>
+									</div> -->
 								</b-tab-item>
 							</b-tabs>
-						</div> -->
+						</div>
 					</div>
 				</div>
 			</section>

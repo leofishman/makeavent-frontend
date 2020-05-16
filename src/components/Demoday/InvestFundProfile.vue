@@ -90,7 +90,7 @@ export default {
         .then(res => {
             if (res) {
 				this.$root.check('InvestFunds').then(() => {
-					this.ifp = this.$root.InvestFunds.filter(el => el.name.toUpperCase() == this.name.toUpperCase())[0]
+					this.ifp = this.$root.InvestFunds.filter(el => compare(el.name, this.name))[0]
 					
 					this.description = this.ifp.description
 					this.website = this.ifp.website

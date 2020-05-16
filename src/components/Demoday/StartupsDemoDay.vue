@@ -22,6 +22,12 @@
                             <Fundbrand fundName="MASTER VENTURES" />
                         </div>
                         <div class="column">
+                            <Fundbrand fundName="BLOCKCHAIN VALLEY VENTURES"/>
+                        </div>
+                        <div class="column">
+                            <Fundbrand fundName="IBC MEDIA"/>
+                        </div>
+                        <div class="column">
                             <Fundbrand fundName="DRAPER CYGNUS" />
                         </div>
                         <div class="column">
@@ -69,7 +75,7 @@
 
                     <div class="tile is-parent is-6 level-right">
                         <div class="tile is-vertical">
-                            <div v-on:click="$router.push(`/${$root.token}/ddpb`)" class="tile is-child box click has-background-light demo-day">
+                            <div v-on:click="goToPitchingBooth()" class="tile is-child box click has-background-light demo-day">
                                 <div class="has-text-centered">
                                     <h3>{{content.ddpb}}</h3>
                                 </div>
@@ -107,7 +113,7 @@ export default {
             if (res)
                 this.ready = true
             else
-                this.$root.createError(this.content.ErrorMessages[3], 'oops')
+                this.$root.createError(this.$root.content.ErrorMessages[3], 'oops')
         })
 
         return {
@@ -116,6 +122,17 @@ export default {
             host: host,
             show: true,
             content: this.content
+        }
+    },
+    methods: {
+        goToPitchingBooth () {
+            this.$root.checkComponentAccess('startupdemodaypitchingbooth')
+            .then(res => {
+                if (res)
+                    this.$router.push(`/${this.$root.token}/ddpb`)
+                else
+                    this.$root.createError(this.$root.content.ErrorMessages[5], 'oops')
+            })
         }
     },
 }

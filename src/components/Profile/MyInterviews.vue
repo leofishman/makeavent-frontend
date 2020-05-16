@@ -29,9 +29,9 @@ import Axios from 'axios'
 import {host} from '@/env'
 export default {
     data() {
+        this.allInterviews = []
         this.$root.tokenCheck().then(() => {
-            this.getInterviews()
-
+            // this.getInterviews()
         })
         return {
             allInterviews: this.allInterviews

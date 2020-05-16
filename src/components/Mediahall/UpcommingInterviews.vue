@@ -51,7 +51,7 @@ export default {
 				}
             })
             .catch(err => {
-                if (err.response.data.error == "NO UPCOMMING INTERVIEWS") {
+                if (compare(err.response.data.error, "NO UPCOMMING INTERVIEWS")) {
                     this.interviews = false
                 }
             })

@@ -123,12 +123,10 @@ export default {
             this.companyName = this.$root.profile.company
             this.role = this.$root.profile.role
             this.name = this.$root.profile.name
-            this.calendly = this.$root.profile.calendly
     
             this.disable_companyName = this.companyName ? true : false
             this.disable_role = this.role ? true : false
             this.disable_name = this.name ? true : false
-            this.disable_calendly = this.calendly ? true : false
     
             this.fetchPasswordFromDb()
         }
@@ -146,12 +144,10 @@ export default {
             companyName: this.companyName,
             role: this.role,
             name: this.name,
-            calendly: this.calendly,
 
             disable_companyName: this.disable_companyName,
             disable_role: this.disable_role,
             disable_name: this.disable_name,
-            disable_calendly: this.disable_calendly,
         }
     },
     mounted () {
@@ -195,7 +191,6 @@ export default {
                 companyName: this.companyName,
                 role: this.role,
                 name: this.name,
-                calendly: this.calendly,
             })
             .then(res => {
                 const data = res.data
@@ -206,7 +201,7 @@ export default {
                 
                 localStorage.auth = res.headers.authorization
 
-                this.$router.push(`${data.accessLink}/login?auth=true`)
+                this.$router.push(`/`)
             })
             .catch(e => {
                 this.$buefy.dialog.alert({

@@ -1053,6 +1053,9 @@ main {
 		width: 380px;
 		height: 380px;
 		position: relative;
+		img {
+			max-width: 85%;
+		}
 		:before {
 			content: "";
 			width: 30px;
@@ -1752,10 +1755,12 @@ main {
 			.profile-top {
 				margin-bottom: 60px;
 				display: flex;
-				> div {
-					margin-right: 30px;
+				.profile-avatar {
+					margin-right: 20px;
 					img {
 						box-shadow: $shadow-1;
+						width: 160px;
+						background-color: $grey-light;
 					}
 				}
 			}
@@ -2016,6 +2021,7 @@ main {
 			border: solid 2px $secondary;
 			border-top-width: 15px;
 			object-fit: cover;
+			background-color: $secondary;
 		}
 	}
 	h1 {
@@ -2035,6 +2041,12 @@ main {
 		font-weight: normal;
 		overflow: hidden;
 		word-break: break-all;
+	}
+	.truncate {
+		width: 250px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	nav {
 		margin-top: 30px;

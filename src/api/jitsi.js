@@ -9,10 +9,10 @@ export default class JitsiModal {
     this.parentNode = data.parentNode
     this.username = vueapp.$root.profile.name
 
-    const host = vueapp.$root.Sponsors.filter(el => el.name.toUpperCase() == data.host.toUpperCase())[0]
-    this.type = host.contacts.filter(el => el._id == vueapp.$root.profile._id).length ? "speaker" : vueapp.$root.usertype
+    const host = vueapp.$root.Sponsors.filter(el => compare(el.name, data.host))[0]
+    this.type = host.contacts.filter(el => compare(el._id, vueapp.$root.profile._id)).length ? "speaker" : vueapp.$root.usertype
 
-    if (vueapp.$root.usertype == "basic") {
+    if (compare(vueapp.$root.usertype, "basic")) {
       vueapp.$root.showMessageToUpgradeBusOrVip(`During the main conference <b>${new Date(startDate).toLocaleString()}</b> you won't have access to microphone, video or raise hand in webinars. If you want to keep that feature please <b style="color:#9D6DBE">Upgrade</b> your ticket to Business or Vip`)
     }
 
@@ -24,7 +24,7 @@ export default class JitsiModal {
     else if (this.name.includes('sponsorbooth'))
       this.webinarType = 'sponsorbooth'
 
-    else if (this.name == 'demoday')
+    else if (compare(this.name, 'demoday'))
       this.webinarType = "demoday"
 
     else if (this.name.includes("interview"))
@@ -130,9 +130,9 @@ export default class JitsiModal {
         userInfo: {
           displayName: this.username
         },
-        disableRemoteMute: this.type != 'speaker' ? true : false,
+        disableRemoteMute: !compare(this.type, 'speaker') ? true : false,
         remoteVideoMenu: {
-          disableKick: this.type != 'speaker' ? true : false
+          disableKick: !compare(this.type, 'speaker') ? true : false
         },
 
         startAudioMuted: 1,

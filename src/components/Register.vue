@@ -41,20 +41,20 @@
                                                 <option value="vip">{{$root.content.vip}}</option>
                                             </b-select>
                                         </b-field>
-                                        <div class="price" v-if="type == 'basic'">
+                                        <div class="price" v-if="$root.compare(type, 'basic')">
                                             {{content.free}}
                                         </div>
-                                        <div class="price" v-else-if="type == 'business' || type == 'vip'">
+                                        <div class="price" v-else-if="$root.compare(type, 'business') || $root.compare(type, 'vip')">
                                             ${{price}}
                                         </div>
                                     </div>
-                                    <div v-if="type == 'basic'" class="content column nopadding">
+                                    <div v-if="$root.compare(type, 'basic')" class="content column nopadding">
                                         <ol type='1'>
                                             <li>Access to the conference hall with e-booths</li>
                                             <li>Access to e-stages with lectures and panel discussions</li>
                                         </ol>
                                     </div>
-                                    <div v-if="type == 'business'" class="content column nopadding">
+                                    <div v-if="$root.compare(type, 'business')" class="content column nopadding">
                                         <ol type='1'>
                                             <li>All in Basic +</li>
                                             <li>Participation and networking at e-booths</li>
@@ -64,7 +64,7 @@
                                             <li>E-Workshops</li>
                                         </ol>
                                     </div>
-                                    <div v-if="type == 'vip'" class="content column nopadding">
+                                    <div v-if="$root.compare(type, 'vip')" class="content column nopadding">
                                         <ol type='1'>
                                             <li>All in Business +</li>
                                             <li>Asking questions to guest speakers</li>
@@ -74,19 +74,7 @@
                                             <li>Access to offline materials</li>
                                         </ol>
                                     </div>
-                                </div>
-
-                                <b-field v-if="type == 'vip'">
-                                    <template slot="label">
-                                        <div>
-                                            Calendly
-                                            <a class="xxx" href="https://calendly.com/signup" target="_blank">
-                                                {{$root.content.dontHave('Calendly')}}
-                                            </a>
-                                        </div>
-                                    </template>
-                                    <b-input type="text" pattern="^https://calendly.com/" v-model="calendly"></b-input>
-                                </b-field> -->
+                                </div> -->
 
                                 <p style="margin:20px 0px;">{{$root.content.ErrorMessages[4]}}</p>
                                 <div>
@@ -155,7 +143,6 @@ export default {
         this.companyName = ""
         this.role = ""
         this.name = ""
-        this.calendly = ""
         this.photo = ""
         this.linkedin = ""
         this.facebook = ""
@@ -172,7 +159,6 @@ export default {
             companyName: this.companyName,
             role: this.role,
             name: this.name,
-            calendly: this.calendly,
             photo: this.photo,
             linkedin: this.linkedin,
             facebook: this.facebook,
@@ -192,7 +178,7 @@ export default {
         },
 
         async register () {
-            if (this.type == 'basic') {
+            if (compare(this.type, 'basic')) {
                 if (!this.linkedin && !this.facebook && !this.telegram && !this.photo) {
                     this.$root.createError(this.$root.content.ErrorMessages[4], 'oops')
                 }
@@ -202,7 +188,6 @@ export default {
                         companyName: this.companyName,
                         role: this.role,
                         name: this.name,
-                        calendly: this.calendly,
                         // shouldPay: await this.GetTicketPrice(),
                         shouldPay: 0,
                         tickets: 1,
@@ -239,14 +224,7 @@ export default {
             this.role &&
             this.type &&
             this.name) {
-                /*if (this.type == "vip") {
-                    if (/(^https:\/\/calendly.com\/)/.test(this.calendly))
-                        return true
-                    else 
-                        return false
-                }
-                else*/
-                    return true
+                return true
             }
             else 
                 return false
@@ -305,21 +283,15 @@ export default {
             else
                 this.buttonready = false
         },
-        calendly: function () {
-            if (this.checkInputReadyness())
-                this.buttonready = true
-            else
-                this.buttonready = false
-        },
-        type: function () {
-            this.GetTicketPrice().then(res => {
-                this.price = res
-            })
-            if (this.checkInputReadyness())
-                this.buttonready = true
-            else
-                this.buttonready = false
-        }
+        // type: function () {
+        //     this.GetTicketPrice().then(res => {
+        //         this.price = res
+        //     })
+        //     if (this.checkInputReadyness())
+        //         this.buttonready = true
+        //     else
+        //         this.buttonready = false
+        // }
     },
 }
 </script>

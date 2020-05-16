@@ -50,7 +50,7 @@ export default {
         },
 
         requestOfflineCopy (name, id) {
-            if (this.$root.cloo(this.$root.usertype, 'vip|startup|investor|media'))
+            if (this.$root.cloo(toUp(this.$root.usertype), toUp('vip|startup|investor|media')))
                 this.$root.showMessageToUpgradeStrict('access to offline materials', 'VIP')
             else {
                 Axios.post(`${host}/offlinecopy`, {

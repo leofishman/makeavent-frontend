@@ -17,13 +17,13 @@
 		<div v-on:click="$root.joinStage('stage1')" class="tile is-parent">
 			<div class="tile is-child box shadow-1 stage click">
 				<div class="has-text-centered">
-					<figure class="image is-150x200">
-            			<img class="icon-stage-with-sponsor" src="@/assets/icon-stage.png" alt="">
-						<img v-if="$root.getSponsorSlot('2').logo" :src="host + $root.getSponsorSlot('2').logo" alt="">
-					</figure>
-					<h3>
-						{{content.stage}} 1
+					<h1 style="font-size:30px;">
+						{{content.stage1}}
+					</h1>
+					<h3 style="margin:20px 0px;">
+						{{content.sponsored}}
 					</h3>
+					<img width="70%" v-if="$root.getSponsorSlot('2').logo" :src="host + $root.getSponsorSlot('2').logo" alt="">
 				</div>
 			</div>
 		</div>
@@ -41,13 +41,13 @@
 		<div v-on:click="$root.joinStage('stage2')" class="tile is-parent">
 			<div class="tile is-child box shadow-1 stage click">
 				<div class="has-text-centered">
-					<figure class="image is-150x200">
-            			<img class="icon-stage-with-sponsor" src="@/assets/icon-stage.png" alt="">
-						<img v-if="$root.getSponsorSlot('3').logo" :src="host + $root.getSponsorSlot('3').logo" alt="">
-					</figure>
-					<h3>
-						{{content.stage}} 2
+					<h1 style="font-size:30px;">
+						{{content.stage2}}
+					</h1>
+					<h3 style="margin:20px 0px;">
+						{{content.sponsored}}
 					</h3>
+					<img width="70%" v-if="$root.getSponsorSlot('3').logo" :src="host + $root.getSponsorSlot('2').logo" alt="">
 				</div>
 			</div>
 		</div>

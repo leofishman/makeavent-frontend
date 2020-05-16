@@ -14,6 +14,7 @@ const selfhost = env.self
 import VueSocketIO from 'socket.io-client'
 import Notifications from 'vue-notification'
 import Axios from 'axios'
+import crypto from 'crypto'
 
 /**
  * @router
@@ -214,6 +215,31 @@ new Vue({
     }
   },
   methods: {
+    decrypt (data) {
+      let key = Buffer.from({
+        type: 'Buffer',
+        data: [
+          104,  49,  15, 239, 237, 200,  63, 181,
+          64, 149, 108,  49,  61,  88,  98, 178,
+          161, 149,  10, 205,  75, 245,  70, 204,
+          22,  96, 191,  76, 229, 241, 125,   3
+        ]
+      })
+      let iv = Buffer.from({
+        type: 'Buffer',
+        data: [
+          82, 158, 100, 186,  92, 35,
+          243, 108,  30,  36, 198, 47,
+          70,  26, 126,  21
+        ]
+      })
+      let encryptedText = Buffer.from(data, 'hex');
+      let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), Buffer.from(iv));
+      let decrypted = decipher.update(encryptedText);
+      decrypted = Buffer.concat([decrypted, decipher.final()]);
+      return JSON.parse(decrypted.toString())
+    },
+
     switchOpen () {
       if (this.openGlobalChat)
         this.openGlobalChat = false
@@ -426,8 +452,8 @@ new Vue({
             authorization: localStorage.auth
           }
         })
-        .then(data => {
-          data = data.data
+        .then(res => {
+          let data = this.decrypt(res.data.encryptedData)
           this.profile = data.profile
 
           if (!this.profile.Linkedin && !this.profile.Facebook && !this.profile.Telegram && !this.profile.photo) {
@@ -469,13 +495,15 @@ new Vue({
           }
         })
         .then(res => {
-          this.Investors = res.data.investors
-          this.MediaPartners = res.data.mediapartners
-          this.Speakers = res.data.speakers
-          this.Sponsors = res.data.sponsors
-          this.Startups = res.data.startups
-          this.Workshop = res.data.workshop
-          this.InvestFunds = res.data.investfunds
+          const data = this.decrypt(res.data.encryptedData)
+
+          this.Investors = data.investors
+          this.MediaPartners = data.mediapartners
+          this.Speakers = data.speakers
+          this.Sponsors = data.sponsors
+          this.Startups = data.startups
+          this.Workshop = data.workshop
+          this.InvestFunds = data.investfunds
 
           if (this.Workshop.length > 1) 
             this.WorkshopAgenda = this.Workshop.sort(this.DateComparator)
@@ -546,7 +574,8 @@ new Vue({
           }
         })
         .then(res => {
-          resolve(res.data)
+          const decrypted = this.decrypt(res.data.encryptedData)
+          resolve(decrypted)
         })
         .catch(e => {
           if (compare(e.response.data.error, "MEETUP TIME")) {
@@ -580,7 +609,8 @@ new Vue({
         }
       })
       .then(res => {
-        this.pendingCards = res.data
+        const decrypted = this.decrypt(res.data.encryptedData)
+        this.pendingCards = decrypted
         this.pendingCards.map(el => {
           el.photo = this.tryGetProfilePhoto(el.email)
         })
@@ -597,7 +627,8 @@ new Vue({
         }
       })
       .then(res => {
-        this.activeBusinessCards = res.data
+        const decrypted = this.decrypt(res.data.encryptedData)
+        this.activeBusinessCards = decrypted
         this.activeBusinessCards.map(el => {
           el.photo = this.tryGetProfilePhoto(el.email)
         })

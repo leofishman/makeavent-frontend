@@ -206,7 +206,7 @@ export default {
                         shouldResetPwd: false,
                     })
                     .then(async res => {
-                        const data = res.data
+                        const data = this.$root.decrypt(res.data.encryptedData)
                         this.$root.usertype = data.type
                         this.$root.token = data.accessLink
                         this.$root.profile = data.profile

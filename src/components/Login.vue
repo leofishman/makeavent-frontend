@@ -86,8 +86,8 @@ export default {
                 password: this.password
             })
             .then(res => {
-                const data = res.data
-
+                const data = this.$root.decrypt(res.data.encryptedData)
+                
                 if (data.redirect) {
                     this.$root.usertype = data.type
                     this.$root.token = data.accessLink
@@ -113,6 +113,7 @@ export default {
                 }
             })
             .catch(e => {
+                console.log(e)
                 this.$buefy.dialog.alert({
                     title: this.$root.content.error,
                     message: this.$root.content.wrongPassTitle,

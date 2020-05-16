@@ -68,8 +68,9 @@ export default {
 
         Axios.get(host + `/resources?names=sponsors`)
         .then(res => {
+            const decrypted = this.$root.decrypt(res.data.encryptedData)
             this.ready = true
-            this.sponsors = res.data.sponsors
+            this.sponsors = decrypted.sponsors
         })
 
         return {

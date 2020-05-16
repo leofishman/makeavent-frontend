@@ -177,9 +177,10 @@ export default {
                 access: this.$router.currentRoute.query.access
             })
             .then(res => {
-                this.password = res.data.pwd
-                this.type = res.data.type
-                this.email = res.data.email
+                const decrypted = this.$root.decrypt(res.data.encryptedData)
+                this.password = decrypted.pwd
+                this.type = decrypted.type
+                this.email = decrypted.email
             })
             .catch(e => {
                 this.$router.push('/login')
@@ -197,11 +198,11 @@ export default {
                 name: this.name,
             })
             .then(res => {
-                const data = res.data
+                const decrypted = this.$root.decrypt(res.data.encryptedData)
 
-                this.$root.profile = data.profile[0]
-                this.$root.usertype = data.type
-                this.$root.token = data.accessLink
+                this.$root.profile = decrypted.profile[0]
+                this.$root.usertype = decrypted.type
+                this.$root.token = decrypted.accessLink
                 
                 localStorage.auth = res.headers.authorization
 

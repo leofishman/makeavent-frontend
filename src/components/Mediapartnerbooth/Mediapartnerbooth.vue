@@ -133,7 +133,9 @@
 				return new Promise((resolve, reject) => {
 					Axios.get(`${host}/interviews?id=${this.mediaCompany._id}`)
 					.then(res => {
-						this.interview = res.data
+						const decrypted = this.$root.decrypt(res.data.encryptedData)
+
+						this.interview = decrypted
 						resolve(true)
 					})
 					.catch(e => {})

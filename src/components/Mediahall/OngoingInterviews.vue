@@ -45,8 +45,9 @@ export default {
 	methods: {
 		getOngoinInterviews () {
 			Axios.get(`${host}/interviews/getByType?type=interview&status=ongoing`).then(res => {
-				if (res.data.length) {
-					this.interviews = res.data
+				const decrypted = this.$root.decrypt(res.data.encryptedData)
+				if (decrypted.length) {
+					this.interviews = decrypted
 					this.ready = true
 				}
             })

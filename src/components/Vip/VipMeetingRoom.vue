@@ -68,7 +68,8 @@ export default {
                     }
                 })
                 .then(res => {
-                    this.vipMembers = res.data
+                    const decrypted = this.$root.decrypt(res.data.encryptedData)
+                    this.vipMembers = decrypted
                     this.vipMembers.sort(function(a, b){
                         if(a.name < b.name) { return -1; }
                         if(a.name > b.name) { return 1; }

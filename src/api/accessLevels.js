@@ -8,5 +8,6 @@ export default {
     privatecall: "vip|investor|media|startup",
     startupdemoday: "investor|media|startup",
     startupdemodaypitchingbooth: "investor|media|startup",
-    startupprofile: "investor"
+    startupprofile: "investor",
+    investfundprofile: "investor|media|startup"
 }

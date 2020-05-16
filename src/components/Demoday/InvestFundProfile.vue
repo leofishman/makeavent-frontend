@@ -86,12 +86,12 @@ export default {
         this.logo = ""
 		this.watchButtonClass = ""
 		
-		this.$root.checkComponentAccess('startupdemoday')
+		this.$root.checkComponentAccess('investfundprofile')
         .then(res => {
             if (res) {
 				this.$root.check('InvestFunds').then(() => {
 					this.ifp = this.$root.InvestFunds.filter(el => compare(el.name, this.name))[0]
-					
+
 					if (this.ifp) {
 						this.description = this.ifp.description
 						this.website = this.ifp.website

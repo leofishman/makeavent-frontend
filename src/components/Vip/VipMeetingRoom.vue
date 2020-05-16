@@ -133,6 +133,16 @@ export default {
                             }
                         })
                     break;
+
+                case 'investfund' :
+                    if (this.$root.cloo(toUp(this.$root.usertype), toUp('investor|startup|media'))) {
+                        this.$router.push({
+                            name: "InvestFundProfile",
+                            query: {
+                                name: link
+                            }
+                        })
+                    }
             }
         }
     },

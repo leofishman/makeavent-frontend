@@ -5,7 +5,7 @@
 			<div :id="`${type}-${name}-messages-box`" class="chat-bubble">
 				<div
 					@click="isUpgradable()"
-					v-if="$root.usertype == 'basic'"
+					v-if="$root.compare($root.usertype, 'basic')"
 					class="click"
 					style="
 						top: 50%;
@@ -66,6 +66,7 @@
 <script>
 	import Message from '../Chats/Message'
 	import {socket} from '@/env'
+	import env from '@/env'
 	import io from 'socket.io-client'
 	import AccessLevels from '@/api/accessLevels'
 
@@ -96,7 +97,7 @@
 					this.$root.tokenCheck().then(() => {
 						this.getElseContent()
 	
-						if (this.type == "globalchat" || this.type == "vipchat") {
+						if (compare(this.type, "globalchat") || compare(this.type, "vipchat")) {
 							this.chat = io(socket, {
 								query: {
 									token: this.$root.token,
@@ -126,7 +127,7 @@
 		
 							this.chat.on('new_message_3rdparty', (data) => {
 								
-								let reply = this.chatHistory.filter(el => this.$root.profile.email == el.from.email && data.quoteId == el.id)
+								let reply = this.chatHistory.filter(el => compare(this.$root.profile.email, el.from.email) && compare(data.quoteId, el.id))
 								
 								if (reply.length) {
 									this.fireNotification(name, data)   
@@ -241,7 +242,7 @@
 			},
 
 			focusToReply (id) {
-				let message = this.chatHistory.filter(el => el.id == id)
+				let message = this.chatHistory.filter(el => compare(el.id, id))
 
 				if (message.length) {
 					this.doReply(message[0])

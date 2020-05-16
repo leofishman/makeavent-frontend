@@ -81,7 +81,7 @@
 
 <script>
 import axios from 'axios'
-import env from '@/env'
+import {host} from '@/env'
 import Storycreate from '@/components/Stories/StoryCreate.vue';
 import socialLogos from '@/assets/img/socials'
 import Pagetitle from '@/components/Pagetitle.vue';
@@ -120,7 +120,7 @@ export default {
         // wait until token and sponsors ready
         this.$root.check('token Sponsors').then(() => {
             const name = this.name.toUpperCase()
-            this.sponsor = this.$root.Sponsors.filter(el => el.name.toUpperCase() == name.toUpperCase())[0]
+            this.sponsor = this.$root.Sponsors.filter(el => compare(el.name, name))[0]
 
             this.description = this.sponsor.description
             this.demo = this.sponsor.demo
@@ -128,7 +128,7 @@ export default {
             this.socials = this.sponsor.socials
             this.contacts = this.sponsor.contacts
             this.bg = this.sponsor.backgroundImage
-            this.logo = env.host + this.sponsor.logo
+            this.logo = host + this.sponsor.logo
 
             this.ready = true
         }).catch(e => console.log(`${e} inaccessible`))
@@ -159,7 +159,7 @@ export default {
             socialLogos: socialLogos,
             contacts: this.contacts,
 
-            host: env.host,
+            host: host,
             bg: this.bg,
 
             chat: "",

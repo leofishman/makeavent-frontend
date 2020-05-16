@@ -66,7 +66,7 @@
             this.quotedMessage = ''
             this.quotedName = ''
 
-            if (from.email != this.$root.profile.email) {
+            if (!compare(from.email, this.$root.profile.email)) {
                 if (this.showMessageModal === index)
                     this.showMessageModal = false
                 

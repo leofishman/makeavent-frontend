@@ -5,7 +5,7 @@
 		<img v-on:click="$root.privateCall(data)" src="@/assets/icon/icon-call.svg" class="member-action click right">
 
 		<figure>
-			<img v-if="!data.photo" src="@/assets/user.svg" alt="">
+			<img v-if="!data.photo" :src="`${host}/static/img/avatar-default.png`">
 			<img v-else :src="host + data.photo">
 		</figure>
 

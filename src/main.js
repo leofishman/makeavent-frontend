@@ -66,10 +66,39 @@ Vue.component('Pagetitle', Pagetitle)
 const EventBus = new Vue();
 window.EventBus = EventBus
 
+window.toUp = (a) => {
+  if (a)
+    return a.toUpperCase()
+  else
+    return 'UNDEFINED'
+}
+
+window.toLo = (a) => {
+  if (a)
+    return a.toLowerCase()
+  else
+    return 'UNDEFINED'
+}
+
+window.compare = (a, b) => {
+  if (window.toUp(a) == window.toUp(b))
+    return true
+  else 
+    return false
+}
+
 new Vue({
   router,
   render: h => h(App),
   data() {
+    this.shouldCheckResources = this.$router.currentRoute.name != "Noaccess" &&
+    this.$router.currentRoute.name != "Password" &&
+    this.$router.currentRoute.name != "LoginThenBusinessCard" && 
+    this.$router.currentRoute.name != "LoginWithTempEmail" &&
+    this.$router.currentRoute.name != "Login" &&
+    this.$router.currentRoute.name != "RegistrationHall" &&
+    this.$router.currentRoute.name != "Register";
+    
     this.upgradeCost_business = 0
     this.upgradeCost_vip = 0
     this.pendingCards = []
@@ -88,33 +117,18 @@ new Vue({
     if (!this.selectedLanguage || this.selectedLanguage === undefined)
       this.selectedLanguage = "EN"
     
-    let self = this
+    let self = this    
 
-    // this code will fetch profile and resources if not loaded for some reason
+    // update resousrce every 5 seconds
     setInterval(() => {
-      if (
-        self.$router.currentRoute.name != "Noaccess" &&
-        self.$router.currentRoute.name != "Password" &&
-        self.$router.currentRoute.name != "LoginThenBusinessCard" && 
-        self.$router.currentRoute.name != "LoginWithTempEmail" &&
-        self.$router.currentRoute.name != "Login" &&
-        self.$router.currentRoute.name != "RegistrationHall" &&
-        self.$router.currentRoute.name != "Register"
-      ) {
+      if (this.shouldCheckResources) 
+        this.getResourses()
+    }, 5000)
+
+    setInterval(() => {
+      if (this.shouldCheckResources)
         if (self.profile === undefined || self.usertype === undefined || self.token === undefined)
           this.getUser()
-  
-        if (
-            self.Investors === undefined &&
-            self.MediaPartners === undefined &&
-            self.Speakers === undefined &&
-            self.Sponsors === undefined &&
-            self.Startups === undefined &&
-            self.Workshop === undefined
-          ) {
-            this.getResourses()
-          }
-      }
     }, 1000)
 
     if (this.checkNavShouldBeWithToken()) {
@@ -136,7 +150,7 @@ new Vue({
     
         window.io.on('logout', () => {
           localStorage.auth = ""
-          window.open('/login')
+          this.$router.push('/login')
         })
     
         setInterval(() => {
@@ -194,7 +208,9 @@ new Vue({
 
       Speakingagenda: this.Speakingagenda,
       DemoDayAgenda: this.DemoDayAgenda,
-      WorkshopAgenda: this.WorkshopAgenda
+      WorkshopAgenda: this.WorkshopAgenda,
+
+      compare: window.compare
     }
   },
   methods: {
@@ -213,7 +229,7 @@ new Vue({
     },
 
     isAdmin (contacts) {
-      let x = contacts.filter(el => el.email == this.profile.email)
+      let x = contacts.filter(el => compare(el.email, this.profile.email))
       return x.length ? true : false;
     },
 
@@ -266,22 +282,27 @@ new Vue({
           })
           break;
           
-        default :
-        this.$router.push({
-          path: `/${this.token}/company`,
-          query: {
-            name: name.toLowerCase()
-          }
-        })
+        default : {
+          let sponsor = this.Sponsors.filter(el => compare(el.name, name))[0]
+          if (sponsor)
+            this.$router.push({
+              path: `/${this.token}/company`,
+              query: {
+                name: name.toLowerCase()
+              }
+            })
+          else
+				    this.$buefy.dialog.alert(this.content.ErrorMessages[7], 'oops')
+        }
       }
     },
 
     openStartupProfile (id) {
 			
-			let focus_startup = this.Startups.filter(el => el._id == id)[0]
+			let focus_startup = this.Startups.filter(el => compare(el._id, id))[0]
 			
 			const name = focus_startup.name.toLowerCase()
-			if (this.cloo(this.usertype, 'investor')) {
+			if (this.cloo(toUp(this.usertype), toUp('investor'))) {
 				this.$router.push({
 					path: `/${this.token}/sip/${name}`
 				}).catch(e => {
@@ -345,7 +366,7 @@ new Vue({
     },
 
     getSponsorByName (name) {
-      let x = this.Sponsors.filter(el => el.name == name.toUpperCase())
+      let x = this.Sponsors.filter(el => compare(el.name, name.toUpperCase()))
       if (x.length)
         return x[0]
       else
@@ -382,7 +403,7 @@ new Vue({
 
     checkIfAlreadyAFriend (card) {    
       if (this.activeBusinessCards) {
-        if (this.activeBusinessCards.filter(el => el._id == card._id ).length)
+        if (this.activeBusinessCards.filter(el => compare(el._id, card._id) ).length)
           return true
         else
           return false
@@ -390,7 +411,7 @@ new Vue({
       else {
         this.getPengingCards().then(this.getActiveBusinessCards)
         .then(() => {
-          if (this.activeBusinessCards.filter(el => el._id == card._id ).length)
+          if (this.activeBusinessCards.filter(el => compare(el._id, card._id) ).length)
             return true
           else
             return false
@@ -483,7 +504,7 @@ new Vue({
 
     joinWebinar (data) {
       if (new Date().getTime() > data.time) {
-        if (data.platform == "jitsi") {
+        if (compare(data.platform, "jitsi")) {
           this.$buefy.modal.open({
             props: {
               data: data
@@ -496,7 +517,7 @@ new Vue({
             trapFocus: true
           })
         }
-        else if (data.platform == "zoom") {
+        else if (compare(data.platform, "zoom")) {
           this.$buefy.modal.open({
             props: {
               data: data
@@ -528,7 +549,7 @@ new Vue({
           resolve(res.data)
         })
         .catch(e => {
-          if (e.response.data.error == "MEETUP TIME") {
+          if (compare(e.response.data.error, "MEETUP TIME")) {
             this.createError(this.content.ErrorMessages[0], 'explorer')
           }
           else {
@@ -624,11 +645,11 @@ new Vue({
 
     tryGetProfilePhoto (email) {
       let image;
-      
+     
       let haveContacts = this.Sponsors.filter(el => el.contacts !== undefined)
       haveContacts.map(el => {
         el.contacts.map((contact, index) => {
-          if (contact.email == email) {
+          if (compare(contact.email, email)) {
             image = contact.photo
           }
         })
@@ -636,14 +657,14 @@ new Vue({
 
       if (!image)
         this.Speakers.map(speaker => {
-          if (speaker.email == email) {
+          if (compare(speaker.email, email)) {
             image = speaker.photo
           }
         })
 
       if (!image)
         this.Workshop.map(workshoper => {
-          if (workshoper.email == email) {
+          if (compare(workshoper.email, email)) {
             image = workshoper.photo
           }
         })
@@ -723,7 +744,7 @@ new Vue({
     },
 
     isThatMe (email) {
-      if (this.profile.email == email)
+      if (compare(this.profile.email, email))
         return true
       else
         return false
@@ -944,7 +965,7 @@ new Vue({
       return new Promise ((resolve, reject) => {
         this.check('usertype').then(_ => {
           if (this.usertype) {
-            if (this.cloo(this.usertype, AccessLevels[type]))
+            if (this.cloo(toUp(this.usertype), toUp(AccessLevels[type])))
               resolve(true)
             else
               resolve(false)

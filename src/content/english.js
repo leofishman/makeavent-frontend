@@ -185,8 +185,10 @@ export default {
 
     toprow: {
         infDesk: "Information Desk",
-        stage: "STAGE",
+        stage1: "BEGINERS STAGE",
+        stage2: "ADVANCED STAGE",
         vipMeetingRoom: `VIP e-MEETING ROOM`,
+        sponsored: "Sponsored by"
     },
 
     common: {
@@ -254,7 +256,10 @@ export default {
         1: 'We updating webinar host, sorry for the inconvinience',
         2: 'We appologies, but there is a error adding reminder for you.<br>Please contact <b>support@blockconf.digital</b>',
         3: 'We appologies, but <b>Startups Demo Day</b> available only for <b>Investors, Startups and Media Partners</b>',
-        4: 'Please provide at least 1 social network or photo. This is necessary so that your business contacts can identify you'
+        4: 'Please provide at least 1 social network or photo. This is necessary so that your business contacts can identify you',
+        5: 'We appologies, but <b>Startups Demo Day Pitching e-Booth</b> is available only for <b>Investors</b>',
+        6: 'We appologies, but we preparing Fund profile',
+        7: 'We appologies, but this company is not a part of <b>BLOCKCONF.DIGITAL</b>. <br><br>We suggest requesting business card and asking for a company website.'
     },
 
     VipMeetingRoom: {

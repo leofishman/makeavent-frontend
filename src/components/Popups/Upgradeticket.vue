@@ -18,7 +18,7 @@
 					<div class="price" v-if="price">
 						${{price}}
 					</div>
-					<div v-if="selected == 'business'" class="content column nopadding">
+					<div v-if="$root.compare(selected, 'business')" class="content column nopadding">
 						<ol type='1'>
 							<li>All in Basic +</li>
 							<li>Participation and networking at e-booths</li>
@@ -28,7 +28,7 @@
 							<li>E-Workshops</li>
 						</ol>
 					</div>
-					<div v-if="selected == 'vip'" class="content column nopadding">
+					<div v-if="$root.compare(selected, 'vip')" class="content column nopadding">
 						<ol type='1'>
 							<li>All in Business +</li>
 							<li>Asking questions to guest speakers</li>

@@ -21,7 +21,7 @@ export default {
 	},
 	data () {
 		window.EventBus.$on('close-overlay-by-id', (id) => {
-			if (this.data._id == id)
+			if (compare(this.data._id, id))
 				this.isLoading = false
 		})
 

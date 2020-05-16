@@ -276,7 +276,7 @@ router.beforeEach((to, from, next) => {
          window.location.pathname = '/noaccess'
      }
      else {
-        if (to.path == "/noaccess") {
+        if (to.path == "/noaccess" || to.path == "/reghall") {
             next()
         }
         else if (to.path == "/" && localStorage.auth) {
@@ -328,7 +328,7 @@ router.beforeEach((to, from, next) => {
             to.query = {}
             window.location.pathname = `/${window.location.pathname.split("/")[1]}/${window.location.pathname.split("/")[2]}`
         }
-        else if (!to.fullPath.includes('auth=true') && window.location.pathname.split("/")[1] != "login") {
+        else if (!to.fullPath.includes('auth=true')) {
             axios.get(host + `/login/checkToken?access=${window.location.pathname.split("/")[1]}`, {
                 headers: {
                     authorization: localStorage.auth
@@ -351,6 +351,7 @@ router.beforeEach((to, from, next) => {
                     window.location.pathname.split("/")[2] != "ddpb" &&
                     window.location.pathname.split("/")[2] != "investors"
                 ) {
+                    window.location.search = ""
                     window.location.pathname = `/${window.location.pathname.split("/")[1]}/home`
                 }
                 else  {

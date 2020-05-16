@@ -19,12 +19,17 @@ export default {
 	},
 	methods: {
 		openInvestorBooth () {
-			this.$router.push({
-                name: "InvestFundProfile",
-                query: {
-                    name: this.fundName.toLowerCase()
-                }
-            })
+			let fund = this.$root.InvestFunds.filter(el => compare(el.name, this.fundName))[0]
+			if (!fund) 
+				this.$buefy.dialog.alert(this.$root.content.ErrorMessages[6], 'oops')
+			
+			else 
+				this.$router.push({
+					name: "InvestFundProfile",
+					query: {
+						name: this.fundName.toLowerCase()
+					}
+				})
 		},
 
 		getFundLogo () {

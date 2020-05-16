@@ -90,15 +90,20 @@ export default {
         .then(res => {
             if (res) {
 				this.$root.check('InvestFunds').then(() => {
-					this.ifp = this.$root.InvestFunds.filter(el => el.name.toUpperCase() == this.name.toUpperCase())[0]
+					this.ifp = this.$root.InvestFunds.filter(el => compare(el.name, this.name))[0]
 					
-					this.description = this.ifp.description
-					this.website = this.ifp.website
-					this.socials = this.ifp.socials
-					this.contacts = this.ifp.contacts
-					this.logo = host + this.ifp.logo
-
-					this.ready = true
+					if (this.ifp) {
+						this.description = this.ifp.description
+						this.website = this.ifp.website
+						this.socials = this.ifp.socials
+						this.contacts = this.ifp.contacts
+						this.logo = host + this.ifp.logo
+	
+						this.ready = true
+					}
+					else
+						this.$router.go(-1)
+						
 				}).catch(e => console.log(`${e} inaccessible`))
 			}
             else

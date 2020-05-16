@@ -7,5 +7,6 @@ export default {
     bcrequest : "business|vip|media|startup|investor",
     privatecall: "vip|investor|media|startup",
     startupdemoday: "investor|media|startup",
+    startupdemodaypitchingbooth: "investor|media|startup",
     startupprofile: "investor"
 }

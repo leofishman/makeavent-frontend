@@ -53,7 +53,7 @@ export default {
     },
     methods: {
         verifyVip () {
-            if (this.$root.cloo(this.$root.usertype, 'vip|media|startup|investor')) {
+            if (this.$root.cloo(toUp(this.$root.usertype), toUp('vip|media|startup|investor'))) {
                 return true
             }
             else 
@@ -118,7 +118,7 @@ export default {
                     break;
 
                 case 'startup' : 
-                    if (this.$root.cloo(this.$root.usertype, 'investor'))
+                    if (this.$root.cloo(toUp(this.$root.usertype), toUp('investor')))
                         this.$router.push({
                             name: "StartupProfile",
                             params: {

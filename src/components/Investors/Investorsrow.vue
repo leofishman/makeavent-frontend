@@ -2,7 +2,8 @@
 	<div class="box">
 		<div class="columns">
 			<div class="column investors-pic">
-				<img :src="data.photo">
+				<img v-if="data.photo" :src="host + data.photo">
+                <img v-else :src="host + '/static/img/avatar-default.png'" alt="">
 			</div>
 			<div class="column investors-name">
 				<h3 @click="$root.tryBusinessCard(data)" class="has-text-centered click">{{data.name}} <strong>{{data.role}}</strong></h3>
@@ -22,27 +23,41 @@
 </template>
 
 <script>
-	export default {
-		name: "Investorsrow",
-		props: {
-			data: Object
-		},
-		data () {
-			return {
-				content: this.$root.content.Investors
+import {host} from '@/env'
+
+export default {
+	name: "Investorsrow",
+	props: {
+		data: Object
+	},
+	data () {
+		return {
+			content: this.$root.content.Investors,
+			host: host
+		}
+	},
+	methods: {
+		openInvestorBooth (name) {
+			let fund = this.$root.InvestFunds.filter(el => compare(el.name, name))[0]
+
+			if (!fund) {
+				fund = this.$root.Sponsors.filter(el => compare(el.name, name))[0]
+				if (fund)
+					this.$root.navToPage(name)
+
+				else
+					this.$buefy.dialog.alert(this.$root.content.ErrorMessages[7], 'oops')
 			}
-		},
-		methods: {
-			openInvestorBooth (name) {
+			else 
 				this.$router.push({
 					name: "InvestFundProfile",
 					query: {
 						name: name.toLowerCase()
 					}
 				})
-			},
-		}
+		},
 	}
+}
 </script>
 
 <style scoped>

@@ -82,8 +82,9 @@ export default {
     data() {
         this.$root.checkComponentAccess('startupprofile')
         .then(res => {
-            if (!res)
-                this.ready = false
+            if (!res) {
+                this.$root.navToPage(this.$router.currentRoute.params.name)
+            }
             else {
                 this.chatHeight;
                 this.chatHistory      = [];
@@ -105,7 +106,7 @@ export default {
                     this.token = this.$root.token
 
                     this.name = this.$router.currentRoute.params.name
-                    this.startup = this.$root.Startups.filter(el => el.name.toUpperCase() == this.name.toUpperCase())[0]
+                    this.startup = this.$root.Startups.filter(el => compare(el.name, this.name))[0]
                     this.logo = host + this.startup.logo
 
                     this.description = this.startup.description

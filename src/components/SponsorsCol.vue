@@ -79,7 +79,7 @@ export default {
     },
     methods: {
         getSponsor (name) {
-            let res = this.sponsors.filter(el => el.name.toUpperCase() == name.toUpperCase())
+            let res = this.sponsors.filter(el => compare(el.name, name))
             if (!res.length)
                 res = [{}]
             return res[0]

@@ -55,37 +55,23 @@ export default {
         this.email = ''
         this.password = ''
 
-        this.tg = ""
-        this.fb = ""
-        this.ln = ""
-
-        this.tgswitch = false
-        this.fbswitch = false
-        this.lnswitch = false
-
         this.inputsReady = false
 
         return {
             email: this.email,
             password: this.password,
-            inputsReady: this.inputsReady,
-
-            tg: this.tg,
-            fb: this.fb,
-            ln: this.ln,
-
-            tgswitch: this.tgswitch,
-            fbswitch: this.fbswitch,
-            lnswitch: this.lnswitch,
+            inputsReady: this.inputsReady
         }
     },
     mounted () {
         let input = document.getElementById("login-password-input")
         let self = this
         input.addEventListener('keyup', function (event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                self.login()
+            if (self.inputsReady) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    self.login()
+                }
             }
         })
     },
@@ -113,8 +99,17 @@ export default {
                     this.$root.token = data.accessLink
                     this.$root.profile = data.profile
                     localStorage.auth = res.headers.authorization
-                    
-                    this.$router.push(`/`)
+
+                    if (
+                        !this.$root.profile.Linkedin &&
+                        !this.$root.profile.Facebook &&
+                        !this.$root.profile.Telegram &&
+                        !this.$root.profile.photo
+                    ) {
+                        this.$router.push('/reghall')
+                    }
+                    else                    
+                        this.$router.push(`/`)
                 }
             })
             .catch(e => {
@@ -140,43 +135,8 @@ export default {
         },
 
         checkInputs () {
-            if (this.email && this.password) {
-                if (!this.tgswitch && !this.fbswitch && !this.lnswitch)
-                    return true
-                    
-                else {
-                    let tg = "noneed"
-                    let fb = "noneed"
-                    let ln = "noneed"
-    
-                    if (this.tgswitch)
-                        if (this.tg)
-                            tg = true
-                        else 
-                            tg = false
-    
-                    if (this.lnswitch)
-                        if (this.ln)
-                            ln = true
-                        else 
-                            ln = false
-    
-                    if (this.fbswitch)
-                        if (this.fb)
-                            fb = true
-                        else
-                            fb = false
-    
-                    if (
-                        (tg === true || tg == "noneed") &&
-                        (fb === true || fb == "noneed") &&
-                        (ln === true || ln == "noneed")
-                    )
-                        return true
-                    else 
-                        return false
-                }
-            }
+            if (this.email && this.password)
+                return true
             else
                 return false
         },
@@ -194,64 +154,7 @@ export default {
                 this.inputsReady = true
             else
                 this.inputsReady = false
-        },
-        tg: function () {
-            if (this.checkInputs())
-                this.inputsReady = true
-            else
-                this.inputsReady = false
-        },
-        tgswitch: function () {
-            if (!this.tgswitch) {
-                this.tg = ""
-                if (this.checkInputs())
-                    this.inputsReady = true
-                else
-                    this.inputsReady = false
-            }
-            else if (this.checkInputs())
-                this.inputsReady = true
-            else
-                this.inputsReady = false
-        },
-        ln: function () {
-            if (this.checkInputs())
-                this.inputsReady = true
-            else
-                this.inputsReady = false
-        },
-        lnswitch: function () {
-            if (!this.lnswitch) {
-                this.ln = ""
-                if (this.checkInputs())
-                    this.inputsReady = true
-                else
-                    this.inputsReady = false
-            }
-            else if (this.checkInputs())
-                this.inputsReady = true
-            else
-                this.inputsReady = false
-        },
-        fb: function () {
-            if (this.checkInputs())
-                this.inputsReady = true
-            else
-                this.inputsReady = false
-        },
-        fbswitch: function () {
-            if (!this.fbswitch) {
-                this.fb = ""
-                if (this.checkInputs())
-                    this.inputsReady = true
-                else
-                    this.inputsReady = false
-            }
-            else if (this.checkInputs())
-                this.inputsReady = true
-            else
-                this.inputsReady = false
-        },
+        }
     },
 }
 </script>

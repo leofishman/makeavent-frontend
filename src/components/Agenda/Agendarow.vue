@@ -2,7 +2,8 @@
 	<div class="box">
 		<div class="columns">
 			<div class="column agenda-pic">
-				<img :src="host + data.contact.photo">
+				<img v-if="data.contact.photo" :src="host + data.contact.photo">
+                <img v-else :src="host + '/static/img/avatar-default.png'" alt="">
 			</div>
 			<div class="column agenda-name">
 				<div class="has-text-centered">
@@ -50,7 +51,7 @@ export default {
         },
 
         requestOfflineCopy (name, id) {
-            if (this.$root.cloo(this.$root.usertype, 'vip|startup|investor|media'))
+            if (this.$root.cloo(toUp(this.$root.usertype), toUp('vip|startup|investor|media')))
                 this.$root.showMessageToUpgradeStrict('access to offline materials', 'VIP')
             else {
                 Axios.post(`${host}/offlinecopy`, {

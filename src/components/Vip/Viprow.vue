@@ -2,7 +2,8 @@
 	<div class="box">
 		<div class="columns">
 			<div class="column vip-pic">
-				<img :src="data.photo">
+				<img v-if="data.photo" :src="data.photo">
+                <img v-else :src="host + '/static/img/avatar-default.png'" alt="">
 			</div>
 			<div class="column vip-name">
 				<div class="has-text-centered">
@@ -31,20 +32,22 @@
 </template>
 
 <script>
-	export default {
-		name: "Viprow",
-		props: {
-			data: Object
-        },
-        data () {
-            return {
-                content: this.$root.content.VipMeetingRoom
-            }
-        },
-        methods: {
-
+import {host} from '@/env'
+export default {
+    name: "Viprow",
+    props: {
+        data: Object
+    },
+    data () {
+        return {
+            host: host,
+            content: this.$root.content.VipMeetingRoom
         }
-	}
+    },
+    methods: {
+
+    }
+}
 </script>
 
 <style scoped lang="scss">

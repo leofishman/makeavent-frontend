@@ -9,7 +9,7 @@
         <div class="container">
             <Pagetitle :data="name"/>
             <section class="section section-profile-company">
-                <div class="columns is-variable is-8">
+                <div class="columns">
                     <!-- Profile main -->
                     <div class="column is-one-third profile-main">
                         <!-- Profile top-->
@@ -48,7 +48,7 @@
                     <!-- Profile bio -->
                     <div class="column is-two-third profile-bio">
                         <div class="columns is-multiline">
-                            <div class="column is-one-third padding-top-20" v-for="(el, index) in contacts" :key="index">
+                            <div class="column is-one-third" v-for="(el, index) in contacts" :key="index">
                                 <Member :data="el"/>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
 
 <script>
 import axios from 'axios'
-import env from '@/env'
+import {host} from '@/env'
 import socialLogos from '@/assets/img/socials'
 import Pagetitle from '@/components/Pagetitle.vue';
 import Member from '@/components/CompanyProfile/Member.vue';
@@ -103,14 +103,14 @@ export default {
         // wait until token and sponsors ready
         this.$root.check('token Sponsors').then(() => {
             const name = this.name.toUpperCase()
-            this.sponsor = this.$root.Sponsors.filter(el => el.name.toUpperCase() == name.toUpperCase())[0]
+            this.sponsor = this.$root.Sponsors.filter(el => compare(el.name, name))[0]
 
             this.description = this.sponsor.description
             this.demo = this.sponsor.demo
             this.website = this.sponsor.website
             this.socials = this.sponsor.socials
             this.contacts = this.sponsor.contacts
-            this.logo = env.host + this.sponsor.logo
+            this.logo = host + this.sponsor.logo
 
             this.ready = true
         }).catch(e => console.log(`${e} inaccessible`))

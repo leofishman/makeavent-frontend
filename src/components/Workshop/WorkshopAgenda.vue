@@ -29,7 +29,7 @@
                         <div class="pitch-time-start">{{new Date(el.time).toLocaleString()}}</div>
                         <div style="margin-top:20px; text-align:center;">
                             <b-button
-                                v-if="eventType(el) == 'finished'"
+                                v-if="$root.compare(eventType(el), 'finished')"
                                 variant="outline-primary"
                                 v-on:click="requestOfflineCopy(el.contact.name)"
                             >

@@ -13,7 +13,7 @@
                             <p>{{content.intro}}</p>
                             <section>
                                 <b-field :label="content.email">
-                                    <b-input v-model="email" type="email" :validation-message="content.emailValidation"></b-input>
+                                    <b-input id="reghall-email" v-model="email" type="email" :validation-message="content.emailValidation"></b-input>
                                 </b-field>
                                 <b-field :label="content.linkedin">
                                     <b-input v-model="linkedin" type="url" :validation-message="content.urlValidation"></b-input>
@@ -43,11 +43,11 @@
                                         {{content.submit}}
                                     </b-button>
                                 </div>
-                                <div class="column has-text-centered">
+                                <!-- <div class="column has-text-centered">
                                     <b-button class="is-child" @click="skip()" :disabled="!inputsReady" type="is-secondary" size="is-medium">
                                         {{content.skip}}
                                     </b-button>
-                                </div>
+                                </div> -->
                             </div>
 
                         </div>
@@ -90,6 +90,18 @@ export default {
 
             content: this.$root.content.RegistrationHall,
         }
+    },
+    mounted () {
+        let input = document.getElementById("reghall-email")
+        let self = this
+        input.addEventListener('keyup', function (event) {
+            if (self.inputsReady) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    self.save()
+                }
+            }
+        })
     },
     methods: {
         handleFileUpload () {

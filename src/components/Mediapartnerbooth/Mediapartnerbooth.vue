@@ -98,7 +98,7 @@
 			this.watchButtonClass = ""
 
 			this.$root.check('MediaPartners MediaPartners.length').then(async () => {
-				this.mediaCompany = this.$root.MediaPartners.filter(el => el.name.toUpperCase() == this.name.toUpperCase())[0]
+				this.mediaCompany = this.$root.MediaPartners.filter(el => compare(el.name, this.name))[0]
 				
 				this.description = this.mediaCompany.description
 				this.website = this.mediaCompany.website
@@ -141,7 +141,7 @@
 			},
 
 			loadWatchButtonClass () {
-				if (new Date().getTime() > this.interview.time && this.interview.status == 'ongoing') 
+				if (new Date().getTime() > this.interview.time && compare(this.interview.status, 'ongoing')) 
 					this.watchButtonClass = 'watch-interview-button active watch-interview'
 				else
 					this.watchButtonClass = 'watch-interview-button'

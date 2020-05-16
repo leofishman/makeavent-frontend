@@ -3,15 +3,15 @@
 		<div class="columns">
 			<div class="column agenda-pic">
 				<img v-if="data.contact.photo" :src="host + data.contact.photo">
-                <img v-else :src="host + '/static/img/avatar-default.png'" alt="">
+                <img v-else :src="host + '/static/img/avatar-default.png'">
 			</div>
 			<div class="column agenda-name">
 				<div class="has-text-centered">
-					<h3 v-on:click="$root.tryBusinessCard(data.contact)" class="click">{{data.contact.name}} <strong>{{data.contact.role}}</strong></h3>
-					<h4 v-on:click="$root.navToPage(data.contact.company)" class="has-text-grey-light is-uppercase click">{{data.contact.company}}</h4>
+					<h3 v-on:click="$root.tryBusinessCard(data.contact)" class="click">{{data.contact.name}} <br><strong>{{data.contact.role}}</strong></h3>
+					<h4 v-on:click="$root.navToPage(data.contact.company)" class="is-uppercase click">{{data.contact.company}}</h4>
 				</div>
 			</div>
-			<div class="column investors-fundname is-uppercase">
+			<div class="column investors-fundname">
 				<h3 class="has-text-centered">{{data.theme}}</h3>
 			</div>
 			<div class="column agenda-time">

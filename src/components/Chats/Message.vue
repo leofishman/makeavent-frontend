@@ -1,7 +1,7 @@
 <template>
     <article :class="messageClass()">
         <div>
-            <h3 v-on:click="$root.tryBusinessCard(data.from, index)">{{data.from.name.split(" ")[0]}}</h3>
+            <h3 class="click" v-on:click="$root.tryBusinessCard(data.from, index)">{{data.from.name.split(" ")[0]}}</h3>
             <b-tooltip
                 :label="$root.content.common.replyHint"
                 :active="showMessageModal === index"

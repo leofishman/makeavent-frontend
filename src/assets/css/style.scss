@@ -190,11 +190,6 @@ main {
 	}
 }
 
-.webinar-modal {
-	width:960px !important;
-	height:600px !important;
-}
-
 .sevfive-left {
 	left: 75% !important;
 	position: fixed !important;
@@ -2754,7 +2749,25 @@ main {
 	}
 }
 
-.speaking-theme {
+// WEBINAR //
+//////////////////////////////////////////
+.webinar-modal {
+	width:960px !important;
+	height:600px !important;
+}
+.speaking-media {
+	.media-content {
+		strong {
+			font-size: 1.3em;
+			margin-right: 20px;
+		}
+		p+p {
+			margin-top: 0.5em;
+		}
+	}
+}
+
+/* deprecated .speaking-theme {
     max-height: 35px;
     overflow: auto;
-}
+}*/

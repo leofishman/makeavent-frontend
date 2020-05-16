@@ -669,7 +669,10 @@ new Vue({
           }
         })
 
-      return host + image
+      if (!image)
+        image = '/static/img/avatar-default.png'
+
+      return image
     },
 
     combineContent (names) {

@@ -7,18 +7,18 @@
 			</div>
 			<div class="column vip-name">
 				<div class="has-text-centered">
-					<h3>{{data.name}} <strong>{{data.role}}</strong></h3>
+					<h3><strong>{{data.name}}</strong><br> {{data.role}}</h3>
 				</div>
 			</div>
 			<div class="column vip-fundname is-uppercase">
 				<h3 class="has-text-centered has-text-grey-light">{{data.company}}</h3>
 			</div>
 			
-            <div class="column vip-touch is-uppercase" v-if="$root.isThatMe(data.email)">
+            <div class="column vip-touch" v-if="$root.isThatMe(data.email)">
                 <ul></ul>
                 {{content.itsyou}}
             </div>
-			<div v-else class="column vip-touch is-uppercase">
+			<div v-else class="column vip-touch">
 				<ul>
 					<li v-on:click="$root.tryBusinessCard(data)" v-if="!$root.checkIfAlreadyAFriend(data)">{{content.rbc}}</li>
                     <li class="connected" v-else>{{$root.content.common.alreadyConnected}}</li>

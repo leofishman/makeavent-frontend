@@ -1780,12 +1780,21 @@ main {
 					top: -50%;
 					margin-top: 10px;
 					left: 0;
-					background-color: $secondary;
+					background-color: #fff;
 					position: absolute;
 					box-shadow: $shadow-1;
 					img {
 						margin: auto;
 						max-height: 80px;
+					}
+					&:before {
+						content: "";
+						width: 50%;
+						height: 10px;
+						position: absolute;
+						left: 0;
+						bottom: 0;
+						background-color: $secondary;
 					}
 				}
 			}

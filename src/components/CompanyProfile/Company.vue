@@ -1,9 +1,9 @@
 <template>
     <!-- [YD] The class of this div may vary, depends if the BG is dark or light mode -->
-    <div v-if="ready" id="profile-company" class="bg-light-mode">
+    <div v-if="ready" id="profile-company" :class="sponsorClass">
 
         <!-- NOT RELEASED -->
-        {{bg}}
+        <!--{{bg}}-->
         <div v-if="bg" class="bg-img"><img :src="host + bg"></div>
 
         <navbar></navbar>
@@ -12,7 +12,7 @@
         <Storycreate v-if="$root.isAdmin(contacts)"/>
 
         <div class="container">
-            <Pagetitle :data="name"/>
+            <!--<Pagetitle :data="name"/>-->
             <section class="section section-profile-company">
                 <div class="columns is-variable is-8">
                     <!-- Profile main -->
@@ -53,17 +53,10 @@
                                 <Member :data="el"/>
                             </div>
                         </div>
-                        <div class="tile is-ancestor">
-                            <div class="tile is-vertical">
-
-                                <!-- Bio text -->
-                                <div class="tile is-parent">
-                                    <article>
-                                        <p v-html="description"></p>
-                                    </article>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Bio text -->
+                        <article class="bio-description box">
+                            <p v-html="description"></p>
+                        </article>
                     </div>
                 </div>
             </section>
@@ -74,48 +67,49 @@
             <div class="chat-top">
                 <h3 @click="$root.joinStage('sponsorbooth'+name)" class="is-uppercase">{{content.joinNowTitle}}</h3>
             </div>
-		    <Chat :checkAccess="'companychat'" type="company" :parent="self" :name="name" />
+            <Chat :checkAccess="'companychat'" type="company" :parent="self" :name="name" />
         </div>
-	</div>
+    </div>
 </template>
 
 <script>
-import axios from 'axios'
-import {host} from '@/env'
-import Storycreate from '@/components/Stories/StoryCreate.vue';
-import socialLogos from '@/assets/img/socials'
-import Pagetitle from '@/components/Pagetitle.vue';
-import Member from './Member.vue';
-import Chat from './Chat.vue';
+    import axios from 'axios'
+    import {host} from '@/env'
+    import Storycreate from '@/components/Stories/StoryCreate.vue';
+    import socialLogos from '@/assets/img/socials'
+    import Pagetitle from '@/components/Pagetitle.vue';
+    import Member from './Member.vue';
+    import Chat from './Chat.vue';
 
-export default {
-    props: {
-        name: {
-            type: String,
-            default: ""
-        }
-    },
-    components: {
-        Storycreate,
-        Pagetitle,
-        Member,
-        Chat
-    },
-    data () {
-        this.chatHeight;
-        this.chatHistory = [];
-        this.userTextMessage = ""
-        this.token = this.$root.token
-        this.showMessageModal = false
-        this.chatAvailable = false
-        this.sponsor = ''
-        this.description = ""
-        this.demo = ""
-        this.website = ""
-        this.socials = ""
-        this.contacts = ""
-        this.logo = ""
-        this.bg = ""
+    export default {
+        props: {
+            name: {
+                type: String,
+                default: ""
+            }
+        },
+        components: {
+            Storycreate,
+            Pagetitle,
+            Member,
+            Chat
+        },
+        data () {
+            this.chatHeight;
+            this.chatHistory = [];
+            this.userTextMessage = ""
+            this.token = this.$root.token
+            this.showMessageModal = false
+            this.chatAvailable = false
+            this.sponsor = ''
+            this.description = ""
+            this.demo = ""
+            this.website = ""
+            this.socials = ""
+            this.contacts = ""
+            this.logo = ""
+            this.bg = ""
+            this.sponsorClass = ""
 
         // wait until token and sponsors ready
         this.$root.check('token Sponsors').then(() => {
@@ -128,6 +122,7 @@ export default {
             this.socials = this.sponsor.socials
             this.contacts = this.sponsor.contacts
             this.bg = this.sponsor.backgroundImage
+            this.sponsorClass = this.sponsor.sponsorClass
             this.logo = host + this.sponsor.logo
 
             this.ready = true
@@ -161,6 +156,7 @@ export default {
 
             host: host,
             bg: this.bg,
+            sponsorClass: this.sponsorClass,
 
             chat: "",
 

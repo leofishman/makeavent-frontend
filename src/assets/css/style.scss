@@ -142,7 +142,7 @@ main {
 }
 
 .padding-top-20 {
-	padding: 20px;
+	padding-top: 20px;
 }
 
 .price {
@@ -269,7 +269,7 @@ main {
 			width: 100%;
 		}
 		+.column {
-			border-left: solid 1px $light;
+			border-left: solid 1px #dedede;
 		}
 	}
 
@@ -1175,7 +1175,7 @@ main {
 			display: flex;
 			align-items: center;
 			+.column {
-				border-left: solid 1px $grey-light;
+				border-left: solid 1px #dedede;
 			}
 			min-height: 115px;
 			.has-text-centered {
@@ -1333,7 +1333,7 @@ main {
 				display: flex;
 				align-items: center;
 				+.column {
-					border-left: solid 1px $grey-light;
+					border-left: solid 1px #dedede;
 				}
 			}
 			h2 {
@@ -1399,8 +1399,8 @@ main {
 	position: relative;
 	box-shadow: $shadow-2;
 	display: flex;
-    align-items: center;
-    justify-content: space-between;
+	align-items: center;
+	justify-content: space-between;
 
 	img {
 		margin-left: 10px;
@@ -1449,7 +1449,7 @@ main {
 				display: flex;
 				align-items: center;
 				+.column {
-					border-left: solid 1px $light;
+					border-left: solid 1px #dedede;
 				}
 				.has-text-centered {
 					width: 100%;
@@ -1538,7 +1538,7 @@ main {
 				display: flex;
 				align-items: center;
 				+.column {
-					border-left: solid 1px $light;
+					border-left: solid 1px #dedede;
 				}
 				.has-text-centered {
 					width: 100%;
@@ -1646,7 +1646,7 @@ main {
 				display: flex;
 				align-items: center;
 				+.column {
-					border-left: solid 1px $light;
+					border-left: solid 1px #dedede;
 				}
 				.has-text-centered {
 					width: 100%;
@@ -1746,7 +1746,7 @@ main {
 		padding-top: 0;
 		.column {
 			+.column {
-				border-left: solid 1px $grey-light;
+				border-left: solid 1px #dedede;
 			}
 		}
 		.profile-main {
@@ -1955,10 +1955,10 @@ main {
 //////////////////////////////////////////
 #profile-company {
 	.section-profile-company {
-		padding-top: 0;
+		padding-top: 4.5rem;
 		.column {
 			+.column {
-				border-left: solid 1px $grey-light;
+				border-left: solid 1px #dedede;
 			}
 		}
 		.profile-top {
@@ -1983,6 +1983,39 @@ main {
 			iframe	{
 				width: 100%;
 				min-height: 300px;
+			}
+		}
+		.profile-bio .column {
+			padding-left: 0.75rem;
+			padding-right: 0.75rem;
+		}
+		.bio-description {
+			margin-top: 20px;
+			padding: 30px;
+			box-shadow: $shadow-2;
+			text-align: justify;
+			position: relative;
+			&:before {
+				content: "";
+				top: 10px;
+				left: -10px;
+				width: 20px;
+				height: 20px;
+				position: absolute;
+				border: 5px solid $primary;
+				transform: rotate(0);
+				transition: .3s ease-out;
+			}
+			&:after {
+				content: "";
+				top: 38px;
+				left: -10px;
+				width: 20px;
+				height: 20px;
+				position: absolute;
+				border: 5px solid $secondary;
+				transform: rotate(0);
+				transition: .3s ease-out;
 			}
 		}
 		@media screen and (min-width: $fullhd) {
@@ -2041,7 +2074,7 @@ main {
 	h2 {
 		margin-top: 15px;
 	}
-	h3 {
+	.memeber-email {
 		margin-top: 15px;
 		cursor: pointer;
 		color: $secondary;
@@ -2075,7 +2108,7 @@ main {
 		padding-top: 0;
 		.column{
 			+.column {
-				border-left: solid 1px $grey-light;
+				border-left: solid 1px #dedede;
 			}
 		}
 		.profile-top {
@@ -2111,7 +2144,7 @@ main {
 					display: flex;
 					align-items: center;
 					+.column {
-						border-left: solid 1px $grey-light !important;
+						border-left: solid 1px #dedede !important;
 					}
 					&:first-child + .column {
 						border-left: 0 !important;
@@ -2319,7 +2352,7 @@ main {
 					width: 100%;
 				}
 				+.column {
-					border-left: solid 1px $light;
+					border-left: solid 1px #dedede;
 				}
 			}
 
@@ -2775,8 +2808,59 @@ main {
 		}
 	}
 }
-
-/* deprecated .speaking-theme {
-    max-height: 35px;
-    overflow: auto;
-}*/
+// SPONSOR DESIGN //
+//////////////////////////////////////////
+/* RSK */
+.rsk {
+	$rsk: #00B520;
+	@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap');
+	.section-profile-company {
+		a {
+			color: $rsk;
+		}
+		* {
+			font-family: 'Quicksand', sans-serif;
+		}
+		.list-network li span {
+			background-color: $rsk;
+			img {
+				opacity: 1;
+				filter: invert(1);
+			}
+		}
+		.member-action {
+			background-color: $rsk;
+		}
+		figure {
+			img {
+				border-color: $rsk;
+				background-color: $rsk;
+			}
+		}
+	}
+}
+/* STO MANAGERS */
+.sto-managers {
+	$sto-managers: #f89e37;
+	.section-profile-company {
+		a {
+			color: $sto-managers;
+		}
+		.list-network li span {
+			background-color: $sto-managers;
+			img {
+				opacity: 1;
+				filter: invert(1);
+			}
+		}
+		.member-action {
+			background-color: $sto-managers;
+		}
+		figure {
+			img {
+				border-color: $sto-managers;
+				background-color: $sto-managers;
+			}
+		}
+	}
+}

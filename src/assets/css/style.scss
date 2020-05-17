@@ -1956,11 +1956,6 @@ main {
 #profile-company {
 	.section-profile-company {
 		padding-top: 4.5rem;
-		.column {
-			+.column {
-				border-left: solid 1px #dedede;
-			}
-		}
 		.profile-top {
 			margin-bottom: 60px;
 			display: flex;
@@ -2108,7 +2103,7 @@ main {
 		padding-top: 0;
 		.column{
 			+.column {
-				border-left: solid 1px #dedede;
+				//border-left: solid 1px #dedede;
 			}
 		}
 		.profile-top {
@@ -2810,6 +2805,36 @@ main {
 }
 // SPONSOR DESIGN //
 //////////////////////////////////////////
+
+/* MAIN */
+/* KASPERSKY*/
+.kaspersky {
+	$kaspersky: #006d5c;
+	.section-profile-company {
+		a {
+			color: $kaspersky;
+		}
+		.list-network li span {
+			background-color: $kaspersky;
+			img {
+				opacity: 1;
+				filter: invert(1);
+			}
+		}
+		.member-action {
+			background-color: $kaspersky;
+		}
+		figure {
+			img {
+				border-color: $kaspersky;
+				background-color: $kaspersky;
+			}
+		}
+	}
+}
+/* PLATINUM */
+
+/* GOLD */
 /* RSK */
 .rsk {
 	$rsk: #00B520;
@@ -2839,6 +2864,8 @@ main {
 		}
 	}
 }
+
+/* SILVER */
 /* STO MANAGERS */
 .sto-managers {
 	$sto-managers: #f89e37;
@@ -2864,3 +2891,74 @@ main {
 		}
 	}
 }
+/* FAS */
+.fas {
+	$fas: #66ccc5;
+	@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
+	.section-profile-company {
+		a {
+			color: $fas;
+		}
+		* {
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 700;
+		}
+		.list-network li span {
+			background-color: $fas;
+			img {
+				opacity: 1;
+				filter: invert(1);
+			}
+		}
+		.member-action {
+			background-color: $fas;
+		}
+		figure {
+			img {
+				border-color: $fas;
+				background-color: $fas;
+			}
+		}
+	}
+}
+/* CRYPTTP */
+/*.crypttp {
+	$crypttp: #181935;
+	$crypttp-secondary: #008DE4;
+	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+	min-height: calc( 100vh - 80px);
+	background-color: $crypttp;
+
+	.section-profile-company {
+		a {
+			color: $crypttp-secondary;
+		}
+		* {
+			font-family: 'Roboto', sans-serif;
+			font-weight: 500;
+		}
+		.list-network li {
+			span {
+				background-color: $crypttp-secondary;
+			}
+			a {
+				color: $white;
+			}
+			img {
+				opacity: 1;
+				filter: invert(1);
+			}
+		}
+		.member-action {
+			background-color: $crypttp;
+		}
+		figure {
+			img {
+				border-color: $crypttp-secondary;
+				background-color: $crypttp-secondary;
+			}
+		}
+	}
+}
+*/

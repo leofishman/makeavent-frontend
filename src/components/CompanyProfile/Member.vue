@@ -3,12 +3,10 @@
 		<img v-on:click="$root.tryBusinessCard(data)" src="@/assets/icon/icon-user.svg" class="member-action click left" title="Request business card">
 		<!-- NOT RELEASED -->
 		<img v-on:click="$root.privateCall(data)" src="@/assets/icon/icon-call.svg" class="member-action click right" title="Schedule e-meeting">
-
 		<figure>
 			<img v-if="!data.photo" :src="`${host}/static/img/avatar-default.png`">
 			<img v-else :src="host + data.photo">
 		</figure>
-
 		<h1 class="click" @click="$root.tryBusinessCard(data)">{{data.name}}</h1>
 		<h2>{{data.role}}</h2>
 		<a class="memeber-email">{{data.email}}</a>

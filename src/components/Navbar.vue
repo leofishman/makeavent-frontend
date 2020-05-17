@@ -33,7 +33,7 @@
 								{{$root.content.openChat}}
 							</a>
 
-							<div class="navbar-item has-dropdown is-hoverable">
+							<!-- <div class="navbar-item has-dropdown is-hoverable">
 								<a class="navbar-link button is-primary">
 									Language
 								</a>
@@ -42,7 +42,7 @@
 									<a v-on:click="setLanguage('EN')" class="navbar-item">
 										EN
 									</a>
-									<!-- <a v-on:click="setLanguage('ES')" class="navbar-item">
+									<a v-on:click="setLanguage('ES')" class="navbar-item">
 										ES
 									</a>
                                     <a v-on:click="setLanguage('ZH')" class="navbar-item">
@@ -50,9 +50,9 @@
                                     </a>
                                     <a v-on:click="setLanguage('KO')" class="navbar-item">
                                         KO
-                                    </a> -->
+                                    </a>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>

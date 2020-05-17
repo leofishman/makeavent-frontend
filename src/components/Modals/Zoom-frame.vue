@@ -5,7 +5,7 @@
             :speaker="speaker"
             :speakingData="speakingData"
         />
-        <iframe id="zoom-iframe" class="zoom-frame" frameborder="0">
+        <iframe id="zoom-iframe" class="webinar-modal-target" frameborder="0">
         </iframe>
     </div>
 </template>
@@ -59,10 +59,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss">
-    .zoom-frame {
-        height: 80%;
-        width: 100%;
-    }
-</style>

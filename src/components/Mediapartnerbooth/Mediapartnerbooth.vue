@@ -2,7 +2,7 @@
 	<div id="media-partner-booth" v-if="ready">
 		<navbar></navbar>
 		<div class="container">
-			<Pagetitle data="Crypto Notias"/>
+			<Pagetitle :data="$router.currentRoute.params.name"/>
 
 			<section class="section section-media-partner-booth">
 				<div class="columns is-variable is-8">
@@ -50,18 +50,19 @@
 					<div class="column profile-data">
 						
 						<!-- Bio Members -->
-						<div>
+						<!-- @Bogdan Sizov: we won't show media contacts -->
+						<!-- <div>
 							<Mediapartnerrow
 								v-for="(el, index) in contacts"
 								:key="index"
 								:data="el"
 							/>
-						</div>
+						</div> -->
 
 						<!-- Bio text -->
-						<article>
-							<p v-html="description"></p>
-						</article>
+                        <article class="bio-description box">
+                            <p v-html="description"></p>
+                        </article>
 					</div>
 				</div>
 			</section>

@@ -6,9 +6,7 @@
             :speaker="speaker"
             :speakingData="speakingData"
         />
-        <div id="jitsi-modal-target" class="card-image">
-            
-        </div>
+        <div id="jitsi-modal-target"></div>
     </div>
 </template>
 <script>

@@ -38,11 +38,16 @@ export default {
                 await this.getVipMembers()
                 this.adInfoToSpeakers()
 
+                /**
+                 * loop updating vips
+                 */
+                setInterval(async () => {
+                    await this.getVipMembers()
+                    this.adInfoToSpeakers()
+                }, 5000)
+
                 this.displayContent = true
             }
-            // else {
-            //     this.$router.push('/')
-            // }
         }).catch(e => console.log(`${e} inaccessible`))
 
         return {
@@ -91,61 +96,6 @@ export default {
                     el.photo = host + el.photo
             })
         },
-
-        openPage (type, link) {
-            switch (type) {
-                case 'sponsor' :
-                    this.$router.push({
-                        name:"Company",
-                        query: {
-                            name: link
-                        }
-                    })
-                    break;
-
-                case 'speaker' :
-                    this.$router.push({ name: "Agenda" })
-                    break;
-
-                case 'workshop' :
-    
-                case 'mediapartner' :
-                    this.$router.push({
-                        name: "MediaPartnerProfile",
-                        params: {
-                            name: link
-                        }
-                    })
-                    break;
-
-                case 'startup' : 
-                    if (this.$root.cloo(toUp(this.$root.usertype), toUp('investor')))
-                        this.$router.push({
-                            name: "StartupProfile",
-                            params: {
-                                name: link
-                            }
-                        })
-                    else
-                        this.$router.push({
-                            name:"Company",
-                            query: {
-                                name: link
-                            }
-                        })
-                    break;
-
-                case 'investfund' :
-                    if (this.$root.cloo(toUp(this.$root.usertype), toUp('investor|startup|media'))) {
-                        this.$router.push({
-                            name: "InvestFundProfile",
-                            query: {
-                                name: link
-                            }
-                        })
-                    }
-            }
-        }
     },
 }
 </script>

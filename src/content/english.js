@@ -185,7 +185,7 @@ export default {
 
     toprow: {
         infDesk: "Information Desk",
-        stage1: "BEGINERS STAGE",
+        stage1: "BEGINNERS STAGE",
         stage2: "ADVANCED STAGE",
         vipMeetingRoom: `VIP e-MEETING ROOM`,
         sponsored: "Sponsored by"

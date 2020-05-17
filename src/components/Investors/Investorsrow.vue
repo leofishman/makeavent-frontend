@@ -6,10 +6,15 @@
                 <img v-else :src="host + '/static/img/avatar-default.png'" alt="">
 			</div>
 			<div class="column investors-name">
-				<h3 @click="$root.tryBusinessCard(data)" class="has-text-centered click">{{data.name}} <strong>{{data.role}}</strong></h3>
+				<div class="has-text-centered">
+					<h3
+						@click="$root.tryBusinessCard(data)"
+						class="has-text-centered click"
+					><strong>{{data.name}}</strong><br> {{data.role}}</h3>
+				</div>
 			</div>
-			<div class="column investors-fundname is-uppercase">
-				<h3 @click="openInvestorBooth(data.company)" class="has-text-centered has-text-grey-light click">{{data.company}}</h3>
+			<div class="column is-uppercase">
+				<h3 @click="openInvestorBooth()" class="has-text-centered has-text-grey-light click">{{data.company}}</h3>
 			</div>
 			<div @click="$root.tryBusinessCard(data)" class="click column investors-flag is-uppercase">
 				<!-- <img class="has-text-centered" src="@/assets/icon-target.svg"> -->
@@ -31,31 +36,26 @@ export default {
 		data: Object
 	},
 	data () {
+		this.type = ""
+		this.haveBooth = ""
+
+		this.$root.defineBoothType(toUp(this.data.company))
+        .then(type => {
+            if (type) {
+                this.haveBooth = true
+                this.type = type
+            }
+        })
+
 		return {
 			content: this.$root.content.Investors,
 			host: host
 		}
 	},
 	methods: {
-		openInvestorBooth (name) {
-			let fund = this.$root.InvestFunds.filter(el => compare(el.name, name))[0]
-
-			if (!fund) {
-				fund = this.$root.Sponsors.filter(el => compare(el.name, name))[0]
-				if (fund)
-					this.$root.navToPage(name)
-
-				else
-					this.$buefy.dialog.alert(this.$root.content.ErrorMessages[7], 'oops')
-			}
-			else 
-				this.$router.push({
-					name: "InvestFundProfile",
-					query: {
-						name: name.toLowerCase()
-					}
-				})
-		},
+		openInvestorBooth () {
+			this.$root.openPage(this.type, toUp(this.data.company))
+		}
 	}
 }
 </script>

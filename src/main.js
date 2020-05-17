@@ -7,6 +7,7 @@ import App from './App.vue'
 import Buefy from 'buefy'
 import '@/assets/css/style.scss'
 
+import './domchange.js'
 import env from './env'
 const host = env.host
 const socket = env.socket
@@ -114,9 +115,9 @@ new Vue({
     this.DemoDayAgenda = undefined
     this.WorkshopAgenda = undefined
 
-    this.selectedLanguage = localStorage.selectedLanguage
-    if (!this.selectedLanguage || this.selectedLanguage === undefined)
-      this.selectedLanguage = "EN"
+    // this.selectedLanguage = localStorage.selectedLanguage
+    // if (!this.selectedLanguage || this.selectedLanguage === undefined)
+    this.selectedLanguage = "EN"
     
     let self = this    
 
@@ -321,6 +322,112 @@ new Vue({
 				    this.$buefy.dialog.alert(this.content.ErrorMessages[7], 'oops')
         }
       }
+    },
+
+    openPage (type, link) {
+      switch (type) {
+        case 'sponsor' :
+          this.$router.push({
+            name:"Company",
+            query: {
+              name: link
+            }
+          })
+          break;
+
+        case 'speaker' :
+          this.$router.push({ name: "Agenda" })
+          break;
+
+        case 'workshop' :
+          break;
+
+        case 'mediapartner' :
+          this.$router.push({
+            name: "MediaPartnerProfile",
+            params: {
+              name: link
+            }
+          })
+        break;
+
+        case 'startup' : 
+          if (this.$root.cloo(toUp(this.$root.usertype), toUp('investor')))
+            this.$router.push({
+              name: "StartupProfile",
+              params: {
+                name: link
+              }
+            })
+          else
+            this.$router.push({
+              name:"Company",
+              query: {
+                name: link
+              }
+            })
+        break;  
+
+        case 'investfund' :
+          if (this.$root.cloo(toUp(this.$root.usertype), toUp('investor|startup|media'))) {
+            this.$router.push({
+              name: "InvestFundProfile",
+              query: {
+                name: link
+              }
+            })
+          }
+      }
+    },
+
+    defineBoothType (name) {
+      return new Promise(async (resolve, reject) => {
+        let type = ''
+        this.check('Sponsors InvestFunds MediaPartners Startups Speakers')
+        .then(async () => {
+          let sponsor = this.Sponsors.filter(el => compare(el.name, name))[0]
+          if (sponsor) {
+            type = 'sponsor'
+          }
+  
+          if (!this.haveBooth) {
+            let media = this.MediaPartners.filter(el => compare(el.name, name))[0]
+            if (media) {
+              type = 'mediapartner'
+            }
+          }
+  
+          if (!this.haveBooth) {
+            let speker = this.Speakers.filter(el => compare(el.name, name))[0]
+            if (speker) {
+              type = 'speaker'
+            }
+          }
+  
+          if (!this.haveBooth) {
+            let access = await Promise.all([
+              this.checkComponentAccess('investfundprofile'),
+              this.checkComponentAccess('startupprofile')
+            ])
+  
+            if (access[0]) {
+              let investfund = this.InvestFunds.filter(el => compare(el.name, name))[0]
+              if (investfund) {
+                type = 'investfund'
+              }
+            }
+  
+            else if (!this.haveBooth && access[1]) {
+              let startup = this.Startups.filter(el => compare(el.name, name))[0]
+              if (startup) {
+                type = 'startup'
+              }
+            }
+          }
+
+          resolve(type)
+        })
+      })
     },
 
     openStartupProfile (id) {
@@ -541,8 +648,8 @@ new Vue({
             component: JitsiWebinar,
             hasModalCard: true,
             canCancel: false,
-            customClass: 'custom-class custom-class-2',
-            trapFocus: true
+            trapFocus: true,
+            // fullScreen: true
           })
         }
         else if (compare(data.platform, "zoom")) {
@@ -553,7 +660,6 @@ new Vue({
             parent: this,
             component: ZoomWebinar,
             hasModalCard: true,
-            customClass: 'custom-class custom-class-2',
             trapFocus: true
           })
         }

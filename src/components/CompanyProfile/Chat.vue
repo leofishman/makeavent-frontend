@@ -47,7 +47,7 @@
 					:placeholder="content.chatPlaceholder">
 				</textarea>
 			</div>
-			<div class="chat-helper has-text-grey-light">
+			<div class="chat-helper has-text-grey">
 				<p>Shift + Enter for line break, Enter to send message</p>
 			</div>
 		</div>
@@ -82,6 +82,9 @@
 			checkAccess: String
 		},
 		data () {
+			let self = this
+			this.chatLength = 0
+
 			this.showMessageModal = ''
 			this.showQuote = false
 			this.quotedMessage = ''

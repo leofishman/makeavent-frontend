@@ -21,7 +21,13 @@
                             </div>
 
                             <div class="join-button-parent">
-                                <b-button @click="$root.joinStage('meetup'+name)" type="is-danger" outlined class="is-uppercase">{{content.joinNowTitle}}</b-button>
+                                <b-button
+                                    @click="$root.joinStage('meetup'+name)"
+                                    type="is-danger"
+                                    outlined
+                                    class="is-uppercase"
+                                    style="font-size:32px;"
+                                >{{content.joinNowTitle}}</b-button>
                             </div>
 
                             <!-- Company contacts -->
@@ -48,21 +54,15 @@
                     <!-- Profile bio -->
                     <div class="column is-two-third profile-bio">
                         <div class="columns is-multiline">
-                            <div class="column is-one-third" v-for="(el, index) in contacts" :key="index">
+                            <div class="column " v-for="(el, index) in contacts" :key="index">
                                 <Member :data="el"/>
                             </div>
                         </div>
-                        <div class="tile is-ancestor">
-                            <div class="tile is-horizontal">
 
-                                <!-- Bio text -->
-                                <div class="tile is-parent">
-                                    <article>
-                                        <p v-html="description"></p>
-                                    </article>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Bio text -->
+                        <article class="bio-description box">
+                            <p v-html="description"></p>
+                        </article>
                     </div>
                 </div>
             </section>
@@ -71,34 +71,34 @@
 </template>
 
 <script>
-import axios from 'axios'
-import {host} from '@/env'
-import socialLogos from '@/assets/img/socials'
-import Pagetitle from '@/components/Pagetitle.vue';
-import Member from '@/components/CompanyProfile/Member.vue';
+    import axios from 'axios'
+    import {host} from '@/env'
+    import socialLogos from '@/assets/img/socials'
+    import Pagetitle from '@/components/Pagetitle.vue';
+    import Member from '@/components/CompanyProfile/Member.vue';
 
-export default {
-    name: "Booth",
-    props: {
-        name: String,
-    },
-    components: {
-        Member,
-    },
-    data () {
-        this.chatHeight;
-        this.chatHistory = [];
-        this.userTextMessage = ""
-        this.token = this.$root.token
-        this.showMessageModal = false
-        this.chatAvailable = false
-        this.sponsor = ''
-        this.description = ""
-        this.demo = ""
-        this.website = ""
-        this.socials = ""
-        this.contacts = ""
-        this.logo = ""
+    export default {
+        name: "Booth",
+        props: {
+            name: String,
+        },
+        components: {
+            Member,
+        },
+        data () {
+            this.chatHeight;
+            this.chatHistory = [];
+            this.userTextMessage = ""
+            this.token = this.$root.token
+            this.showMessageModal = false
+            this.chatAvailable = false
+            this.sponsor = ''
+            this.description = ""
+            this.demo = ""
+            this.website = ""
+            this.socials = ""
+            this.contacts = ""
+            this.logo = ""
 
         // wait until token and sponsors ready
         this.$root.check('token Sponsors').then(() => {

@@ -10,7 +10,7 @@
 					<h3><strong>{{data.name}}</strong><br> {{data.role}}</h3>
 				</div>
 			</div>
-			<div class="column vip-fundname is-uppercase">
+			<div class="column is-uppercase">
 				<h3 class="has-text-centered has-text-grey-light">{{data.company}}</h3>
 			</div>
 			
@@ -40,55 +40,15 @@ export default {
     },
     data () {
         this.haveBooth = false
+        this.type = ''
 
-        this.$root.check('Sponsors InvestFunds MediaPartners Startups Speakers')
-        .then(async res => {
-            let sponsor = this.$root.Sponsors.filter(el => compare(el.name, this.data.company))[0]
-            if (sponsor) {
-                this.type = 'sponsor'
+        this.$root.defineBoothType(toUp(this.data.company))
+        .then(type => {
+            if (type) {
                 this.haveBooth = true
-            }
-
-            if (!this.haveBooth) {
-                let media = this.$root.MediaPartners.filter(el => compare(el.name, this.data.company))[0]
-                if (media) {
-                    this.type = 'mediapartner'
-                    this.haveBooth = true
-                }
-            }
-
-            if (!this.haveBooth) {
-                let speker = this.$root.Speakers.filter(el => compare(el.name, this.data.company))[0]
-                if (speker) {
-                    this.type = 'speaker'
-                    this.haveBooth = true
-                }
-            }
-    
-            if (!this.haveBooth) {
-                let access = await Promise.all([
-                    this.$root.checkComponentAccess('investfundprofile'),
-                    this.$root.checkComponentAccess('startupprofile')
-                ])
-
-                if (access[0]) {
-                    let investfund = this.$root.InvestFunds.filter(el => compare(el.name, this.data.company))[0]
-                    if (investfund) {
-                        this.type = 'investfund'
-                        this.haveBooth = true
-                    }
-                }
-
-                else if (!this.haveBooth && access[1]) {
-                    let startup = this.$root.Startups.filter(el => compare(el.name, this.data.company))[0]
-                    if (startup) {
-                        this.type = 'startup'
-                        this.haveBooth = true
-                    }
-                }
+                this.type = type
             }
         })
-
 
         return {
             host: host,
@@ -98,7 +58,7 @@ export default {
     },
     methods: {
         openDefinedPage () {
-            this.$parent.openPage(this.type, toUp(this.data.company))
+            this.$root.openPage(this.type, toUp(this.data.company))
         }
     }
 }

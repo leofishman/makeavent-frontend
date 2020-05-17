@@ -47,9 +47,9 @@
                     </div>
 
                     <!-- Profile bio -->
-                    <div class="column is-two-fifths profile-bio">
+                    <div class="column profile-bio">
                         <div class="columns is-multiline">
-                            <div class="column is-half padding-top-20" v-for="(el, index) in contacts" :key="index">
+                            <div class="column padding-top-20" v-for="(el, index) in contacts" :key="index">
                                 <Member :data="el"/>
                             </div>
                         </div>

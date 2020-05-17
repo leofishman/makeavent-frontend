@@ -385,29 +385,29 @@ main {
 #upcomming-interviews {
 	.interviewrow {
 		@extend %agendarow;
-		&:after {
-			content: "";
-			cursor: pointer;
-			color: #fff;
-			text-align: center; 
-			font-size: 2em;
-			padding: 20px 0;
-			width: 50px;
-			height: 50px;
-			background-color: $secondary;
+		// &:after {
+		// 	content: "";
+		// 	cursor: pointer;
+		// 	color: #fff;
+		// 	text-align: center; 
+		// 	font-size: 2em;
+		// 	padding: 20px 0;
+		// 	width: 50px;
+		// 	height: 50px;
+		// 	background-color: $secondary;
 
-			background-image: url("../../assets/icon/diag-arrow.svg");
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: 50%;
+		// 	background-image: url("../../assets/icon/diag-arrow.svg");
+		// 	background-position: center;
+		// 	background-repeat: no-repeat;
+		// 	background-size: 50%;
 			
-			position: absolute;
-			right: 0;
-			margin-right: -25px;
-			top: 50%;
-			margin-top: -25px;
-			box-shadow: 0 3px 7px rgba(0,0,0,0.2);
-		}
+		// 	position: absolute;
+		// 	right: 0;
+		// 	margin-right: -25px;
+		// 	top: 50%;
+		// 	margin-top: -25px;
+		// 	box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+		// }
 	}
 }
 
@@ -1311,21 +1311,21 @@ main {
 					}
 				}
 				&:nth-child(even) {
-					.agenda-touch {
-						&:after{
-							background-color: $primary;
-						}
-					}
+					// .agenda-touch {
+					// 	&:after{
+					// 		background-color: $primary;
+					// 	}
+					// }
 				}
 				&:nth-child(odd), &:nth-child(even) {
-					.agenda-touch {
-						&:after{
-							background-image: url("../../assets/icon/right-arrow.svg");
-							background-position: center;
-							background-repeat: no-repeat;
-							background-size: 50%;
-						}
-					}
+					// .agenda-touch {
+					// 	&:after{
+					// 		background-image: url("../../assets/icon/right-arrow.svg");
+					// 		background-position: center;
+					// 		background-repeat: no-repeat;
+					// 		background-size: 50%;
+					// 	}
+					// }
 				}
 			}
 
@@ -1491,29 +1491,29 @@ main {
 			.investors-touch {
 				position: relative;
 
-				&:after {
-					content: "";
-					cursor: pointer;
-					color: #fff;
-					text-align: center; 
-					font-size: 2em;
-					padding: 20px 0;
-					width: 70px;
-					height: 90px;
-					position: absolute;
-					background-color: $primary;
+				// &:after {
+				// 	content: "";
+				// 	cursor: pointer;
+				// 	color: #fff;
+				// 	text-align: center; 
+				// 	font-size: 2em;
+				// 	padding: 20px 0;
+				// 	width: 70px;
+				// 	height: 90px;
+				// 	position: absolute;
+				// 	background-color: $primary;
 
-					background-image: url("../../assets/icon/right-arrow.svg");
-					background-position: center;
-					background-repeat: no-repeat;
-					background-size: 50%;
+				// 	background-image: url("../../assets/icon/right-arrow.svg");
+				// 	background-position: center;
+				// 	background-repeat: no-repeat;
+				// 	background-size: 50%;
 
-					right: 0;
-					margin-right: -35px;
-					top: 45%;
-					margin-top: -40px;
-					box-shadow: 0 3px 7px rgba(0,0,0,0.2);
-				}
+				// 	right: 0;
+				// 	margin-right: -35px;
+				// 	top: 45%;
+				// 	margin-top: -40px;
+				// 	box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+				// }
 			}
 			&:nth-child(even) {
 				.investors-touch {
@@ -1564,7 +1564,6 @@ main {
 			.column.agenda-name {
 				border-left: 0;
 				h3 {
-					margin-bottom: 20px;
 					font-size: 100%;
 					font-weight: 400;
 					strong {
@@ -1600,36 +1599,36 @@ main {
 				}
 			}
 			position: relative;
-			&:before, &:after {
-				content: "";
-				cursor: pointer;
-				color: #fff;
-				text-align: center; 
-				font-size: 2em;
-				padding: 20px 0;
-				width: 50px;
-				height: 50px;
-				position: absolute;
-				background-color: $primary;
+			// &:before, &:after {
+			// 	content: "";
+			// 	cursor: pointer;
+			// 	color: #fff;
+			// 	text-align: center; 
+			// 	font-size: 2em;
+			// 	padding: 20px 0;
+			// 	width: 50px;
+			// 	height: 50px;
+			// 	position: absolute;
+			// 	background-color: $primary;
 
-				background-image: url("../../assets/icon/diag-arrow.svg");
-				background-position: center;
-				background-repeat: no-repeat;
-				background-size: 50%;
+			// 	background-image: url("../../assets/icon/diag-arrow.svg");
+			// 	background-position: center;
+			// 	background-repeat: no-repeat;
+			// 	background-size: 50%;
 
-				right: 0;
-				margin-right: -25px;
-				top: 40%;
-				margin-top: -40px;
-				box-shadow: 0 3px 7px rgba(0,0,0,0.2);
-			}
-			&:after {
-				background-color: $secondary;
-				background-image: url("../../assets/icon/right-arrow.svg");
-				margin-right: -25px;
-				top: 80%;
-				margin-top: -40px;
-			}
+			// 	right: 0;
+			// 	margin-right: -25px;
+			// 	top: 40%;
+			// 	margin-top: -40px;
+			// 	box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+			// }
+			// &:after {
+			// 	background-color: $secondary;
+			// 	background-image: url("../../assets/icon/right-arrow.svg");
+			// 	margin-right: -25px;
+			// 	top: 80%;
+			// 	margin-top: -40px;
+			// }
 		}
 	}
 }
@@ -1980,44 +1979,71 @@ main {
 				min-height: 300px;
 			}
 		}
-		.profile-bio .column {
-			padding-left: 0.75rem;
-			padding-right: 0.75rem;
-		}
-		.bio-description {
-			margin-top: 20px;
-			padding: 30px;
-			box-shadow: $shadow-2;
-			text-align: justify;
-			position: relative;
-			&:before {
-				content: "";
-				top: 10px;
-				left: -10px;
-				width: 20px;
-				height: 20px;
-				position: absolute;
-				border: 5px solid $primary;
-				transform: rotate(0);
-				transition: .3s ease-out;
-			}
-			&:after {
-				content: "";
-				top: 38px;
-				left: -10px;
-				width: 20px;
-				height: 20px;
-				position: absolute;
-				border: 5px solid $secondary;
-				transform: rotate(0);
-				transition: .3s ease-out;
-			}
-		}
-		@media screen and (min-width: $fullhd) {
-			.profile-bio {
-				width: 50%;
-			}
-		}
+	}
+}
+
+.profile-bio {
+	width: calc(100vw - 65%);
+	flex: none;
+}
+@media screen and (min-width: 1200px) {
+	.profile-bio {
+		width: calc(100vw - 60%);
+	}
+}
+@media screen and (min-width: 1400px) {
+	.profile-bio {
+		width: calc(100vw - 70%);
+	}
+}
+@media screen and (min-width: 1600px) {
+	.profile-bio {
+		width: calc(100vw - 66%);
+	}
+}
+@media screen and (min-width: 1700px) {
+	.profile-bio {
+		width: calc(100vw - 66%);
+	}
+}
+.profile-bio .column {
+	padding-left: 0.75rem !important;
+	padding-right: 0.75rem !important;
+	max-width: 50% !important;
+	flex-basis: auto;
+}
+@media screen and (min-width: $fullhd) {
+	.profile-bio .column {
+		max-width: 33% !important;
+	}
+}
+.bio-description {
+	margin-top: 20px;
+	padding: 30px;
+	box-shadow: $shadow-2;
+	text-align: justify;
+	position: relative;
+	&:before {
+		content: "";
+		top: 10px;
+		left: -10px;
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		border: 5px solid $primary;
+		transform: rotate(0);
+		transition: .3s ease-out;
+	}
+	&:after {
+		content: "";
+		top: 38px;
+		left: -10px;
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		border: 5px solid $secondary;
+		transform: rotate(0);
+		transition: .3s ease-out;
 	}
 }
 .bg-img {
@@ -2045,6 +2071,7 @@ main {
 //////////////////////////////////////////
 .member {
 	padding: 20px;
+	height: 100%;
 	text-align: center;
 	box-shadow: $shadow-2;
 	position: relative;
@@ -2668,7 +2695,7 @@ main {
 // CHAT //
 //////////////////////////////////////////
 #chat {
-	width: 350px;
+	width: 300px;
 	height: calc(100vh - 80px);
 	position: fixed;
 	top: 79px;
@@ -2698,6 +2725,14 @@ main {
 			&:last-child {
 				padding: 5px 25px;
 				border: solid 3px $secondary;
+				font-size: 32px;
+				color: #ff3860;
+				font-weight: 300;
+				margin:auto;
+				&:hover {
+					background-color: #ff3860;
+					color: white;
+				}
 			}
 		}
 	}
@@ -2789,8 +2824,9 @@ main {
 // WEBINAR //
 //////////////////////////////////////////
 .webinar-modal {
-	width:960px !important;
-	height:600px !important;
+	width: 100% !important;
+    height: 100% !important;
+    max-width: 100%;
 }
 .speaking-media {
 	.media-content {

@@ -13,8 +13,8 @@ $white-ter: #F3F3F3;
 $light: #ebeaea;
 $light-invert: #333;
 $grey-lighter: #f9f9f9;
-//$grey-light: #e5e5e5;
-$grey-light: #a2a2a2;
+$grey-light: #e5e5e5;
+// $grey-light: #a2a2a2;
 $primary: #9D6DBE;
 $primary-invert: $white;
 $secondary: #FE9677;
@@ -2845,7 +2845,7 @@ main {
 /* MAIN */
 /* KASPERSKY*/
 .kaspersky {
-	$kaspersky: #006d5c;
+	$kaspersky: #009881;
 	.section-profile-company {
 		a {
 			color: $kaspersky;

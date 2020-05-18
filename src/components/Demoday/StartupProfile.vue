@@ -144,7 +144,10 @@ export default {
         }
     },
     methods: {
-        
+        openAndTrack (link) {
+            this.$root.track(name, link)
+            this.$root.openExternalInBlank(link)
+        }
     },
 }
 </script>

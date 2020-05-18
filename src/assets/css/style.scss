@@ -2829,6 +2829,32 @@ main {
 	height: 100% !important;
 	max-width: 100%;
 }
+.webinar-sponsors {
+	text-align: center;
+	.logo {
+		margin-bottom: 40px;
+		img {
+			margin: auto;
+			max-width: 80%;
+		}
+	}
+	.ls-platinum {
+		margin-top: 20px;
+		img {
+			height: 100px;
+		}
+	}
+	.ls-gold {
+		img {
+			height: 70px;
+		}
+	}
+	.ls-silver {
+		img {
+			height: 30px;
+		}
+	}
+}
 .speaking-media {
 	.media-content {
 		strong {

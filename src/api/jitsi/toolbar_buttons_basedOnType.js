@@ -135,6 +135,37 @@ const privatecall = {
 
 }
 
+const networkingbooth = {
+    speaker: [
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
+    ],
+    admin: [
+        'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
+        'fodeviceselection', 'hangup', 'profile', 'info', 'chat', 'recording',
+        'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
+        'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
+        'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone'
+    ],
+    basic: [
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
+    ],
+    business: [
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
+    ],
+    vip: [
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
+    ],
+    media: [
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
+    ],
+    investor: [
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
+    ],
+    startup: [
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
+    ]
+}
+
 export default {
     stage1: stages,
     stage2: stages,

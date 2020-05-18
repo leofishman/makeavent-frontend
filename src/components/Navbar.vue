@@ -15,7 +15,7 @@
 
 			<div id="navbarBasicExample" class="navbar-menu">
 				<div class="navbar-start">
-					<a class="navbar-item" v-on:click="openPage('meetup')">{{$root.content.eMeetup}}</a>
+					<!-- <a class="navbar-item" v-on:click="$root.joinStage('networkingbooth')">{{$root.content.networkingBooth}}</a> -->
 					<a class="navbar-item" v-on:click="openPage('home')">{{$root.content.home}}</a>
 					<a class="navbar-item" v-on:click="openPage('agenda')">{{$root.content.agenda}}</a>
 					<a class="navbar-item" v-on:click="openPage('mediahall')">{{$root.content.mediahall}}</a>
@@ -32,6 +32,7 @@
 							<a v-on:click="$root.switchOpen()" class="button is-outlined is-primary">
 								{{$root.content.openChat}}
 							</a>
+							<a v-on:click="logout()" class="button is-outlined is-primary">{{$root.content.logout}}</a>
 
 							<!-- <div class="navbar-item has-dropdown is-hoverable">
 								<a class="navbar-link button is-primary">
@@ -79,7 +80,12 @@ export default {
             this.$router.push(`/${this.$root.$router.currentRoute.params.id}/${name}`).catch(() => {
                 window.location.reload()
             })
-        }
+		},
+		
+		logout () {
+			localStorage.auth = ""
+			this.$router.push('/login')
+		}
     },
     data() {
         

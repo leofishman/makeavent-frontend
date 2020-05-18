@@ -10,7 +10,9 @@
 						
 						<div class="box">
                             <p style="margin:10px 0px;">For the better experience our team recommends to use Google Chrome</p>
-							<p style="margin-bottom:20px;">{{$root.content.loginWithTicket}}</p>
+							<p style="margin-bottom:20px;">
+                                <ResetPwd />
+                            </p>
 							<section>
 								<b-field :label="$root.content.email" >
 									<b-input v-model="email" type="email" validation-message="This email is invalid" :placeholder="$root.content.emailPlaceholder"></b-input>
@@ -42,10 +44,12 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from 'axios'
 import { host } from '@/env'
 import Main from '@/components/Sponsors/Main.vue';
 import SponsorsCol from '@/components/SponsorsCol'
+import Content from '@/content/english.js'
 
 export default {
     components: {

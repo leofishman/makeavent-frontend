@@ -79,6 +79,23 @@ export default {
         },
     },
 
+    ResetPwd: {
+        text: "Login with your email and the password that was sent to your email. If you can not find the email with your password",
+        textFinish: "to resend. Make sure to check your SPAM folder!",
+        clickHere: "Click Here"
+    },
+
+    ResetPwdPopup: {
+        text: "Please provide email used for registration",
+        reset: "Reset",
+        emailSent: "Please check your inbox, we sent a link to reset password"
+    },
+
+    passwordNotSame: "Passwords are not same!",
+    minLength: "Minimum password length is 6 symbols.",
+
+    logout: "Logout",
+
     noAccessTitle: (to) => { return `We are apologizing but You don't have access to ${to}`},
 
     acceptLaterNote: (profile) => {
@@ -92,12 +109,15 @@ export default {
     buyTicket: (type) => {
         return `Buy ${type} ticket`
     },
+
+    googleHint: "For the better experience our team recommends to use Google Chrome",
     home: "Home",
     comebackSoon: "Page will be available when conference starts",
     pageWillBeLater: "Please come back later",
     agenda: "Agenda",
     mediahall: "Media Hall",
     eMeetup: "E-Meetup",
+    networkingBooth: "Networking Booth",
     
     team: "team",
     chatWith: "Chat with ",
@@ -115,8 +135,7 @@ export default {
     print: "Print",
     save: "Save",
     actionsWithBusCard: 'Click save to send card to your email or print to see it now',
-    reply: "Reply",
-    loginWithTicket: "Login with your ticket and password provided in email",
+    reply: "Reply",    
     email: "Email",
     emailPlaceholder: "Please enter your email",
     passwordPlaceholderFromEmail: "Please enter password from email",
@@ -141,6 +160,7 @@ export default {
     sheduleAprivateCall: "Sсhedule a private call with me",
     titleForLoginWithTempEmail: "Welcome!<br>Please, reset password provided in email for the greater security",
     password: "Password",
+    passwordConfirmation: "Confirm Password",
     old: "Old ",
     new: "New ",
     systemGenerated: "System generated ",
@@ -259,7 +279,8 @@ export default {
         4: 'Please provide at least 1 social network or photo. This is necessary so that your business contacts can identify you',
         5: 'We appologies, but <b>Startups Demo Day Pitching e-Booth</b> is available only for <b>Investors</b>',
         6: 'We appologies, but we preparing Fund profile',
-        7: 'We appologies, but this company is not a part of <b>BLOCKCONF.DIGITAL</b>. <br><br>We suggest requesting business card and asking for a company website.'
+        7: 'We appologies, but this company is not a part of <b>BLOCKCONF.DIGITAL</b>. <br><br>We suggest requesting business card and asking for a company website.',
+        8: 'No user with such email'
     },
 
     VipMeetingRoom: {

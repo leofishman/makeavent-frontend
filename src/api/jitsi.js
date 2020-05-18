@@ -33,6 +33,9 @@ export default class JitsiModal {
     else if (this.name.includes('meetup'))
       this.webinarType = "meetup"
 
+    else if (this.name == 'networkingbooth')
+      this.webinarType = 'networkingbooth'
+
     vueapp.$root.getUser()
     .then(this.connect())
   }

@@ -110,15 +110,24 @@ export default {
     },
     data() {
         this.buttonready = false
+        this.password = ""
+        this.email = ""
+        this.newemail = ""
+        this.newpassword = ""
+        this.type = ""
+        this.companyName = ""
+        this.role = ""
+        this.name = ""
+        this.disable_companyName = false
+        this.disable_role = false
+        this.disable_name = false
 
         if (!this.$root.profile) {
             this.$router.push('/login')
         }
         else {
-            this.password = ""
             this.email = this.$root.profile.email
             this.newemail = this.email ? this.email : ""
-            this.newpassword = ""
             this.type = this.$root.profile.type
             this.companyName = this.$root.profile.company
             this.role = this.$root.profile.role
@@ -130,7 +139,6 @@ export default {
     
             this.fetchPasswordFromDb()
         }
-
         
         return {
             buttonready: this.buttonready,
@@ -277,7 +285,7 @@ export default {
 }
 </script>
 <style lang="scss">
-    #login {
+    #logintempemail {
         .bottom {
             margin-top:30px;
             font-size:14px;

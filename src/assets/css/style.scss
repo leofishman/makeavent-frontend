@@ -607,7 +607,7 @@ main {
 
 // REGISTRATION HALL //
 //////////////////////////////////////////
-#registrationhall,#logintempemail,#register {
+#registrationhall,#logintempemail,#register,#loginwithnewpwd {
 	margin-top: -80px;
 	
 	.data-login {
@@ -2839,6 +2839,18 @@ main {
 		}
 	}
 }
+
+#reset-pwd-popup {
+	.modal-card-head {
+		p {
+			color: white;
+			font-size: 1.3rem;
+			font-weight: 400;
+		}
+	}
+}
+
+
 // SPONSOR DESIGN //
 //////////////////////////////////////////
 

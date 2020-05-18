@@ -94,7 +94,8 @@
 			if (this.$router.currentRoute.path != '/login' &&
 				this.$router.currentRoute.path != '/loginrtp' &&
 				this.$router.currentRoute.path != '/reghall' &&
-				this.$router.currentRoute.path != '/noaccess'
+				this.$router.currentRoute.path != '/noaccess' &&
+				this.$router.currentRoute.path != '/resetpwd'
 			) {
 				this.$root.checkComponentAccess(this.checkAccess).then((res) => {
 					this.$root.tokenCheck().then(() => {

@@ -33,6 +33,7 @@ import Content from './content'
 import Navbar from './components/Navbar.vue'
 import Desktop from './views/desktop/Index.vue'
 import Pagetitle from './components/Pagetitle.vue'
+import ResetPwd from './components/ResetPwd.vue'
 
 /**
  * @modals
@@ -63,6 +64,7 @@ Vue.config.productionTip = false
 Vue.component('navbar', Navbar)
 Vue.component('desktop', Desktop)
 Vue.component('Pagetitle', Pagetitle)
+Vue.component('ResetPwd', ResetPwd)
 // Vue.component('mobile', Mobile)
 
 const EventBus = new Vue();
@@ -99,6 +101,7 @@ new Vue({
     this.$router.currentRoute.name != "LoginWithTempEmail" &&
     this.$router.currentRoute.name != "Login" &&
     this.$router.currentRoute.name != "RegistrationHall" &&
+    this.$router.currentRoute.name != "LoginWithNewPassword" &&
     this.$router.currentRoute.name != "Register";
     
     this.upgradeCost_business = 0
@@ -835,7 +838,8 @@ new Vue({
         this.$router.currentRoute.path != '/loginrtp' &&
         this.$router.currentRoute.path != '/reghall' &&
         this.$router.currentRoute.path != '/noaccess' &&
-        this.$router.currentRoute.path != '/register'
+        this.$router.currentRoute.path != '/register' &&
+        this.$router.currentRoute.path != '/resetpwd'
       )
         return true
       else

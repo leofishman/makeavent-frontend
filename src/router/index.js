@@ -32,12 +32,12 @@ import VipMeetingRoom from '@/components/Vip/VipMeetingRoom.vue'
 /**
  * @MEETUP
  */
-import Meetup from '@/components/Meetup/Meetup.vue'
+// import Meetup from '@/components/Meetup/Meetup.vue'
 
 /**
  * @Booth
  */
-import Booth from '@/components/Meetup/Booth.vue'
+// import Booth from '@/components/Meetup/Booth.vue'
 
 /**
  * @Workshop
@@ -48,6 +48,7 @@ import Login from '@/components/Login.vue'
 import LoginWithTempEmail from '@/components/LoginWithTempEmail.vue'
 import RegistrationHall from '@/components/RegistrationHall'
 import Register from '@/components/Register'
+import LoginWithNewPassword from '@/components/LoginWithNewPassword'
 
 import NoAccess from '@/components/NoAccess.vue'
 import Company from '@/components/CompanyProfile/Company.vue'
@@ -157,29 +158,38 @@ const router = new Router({
                 platformLaunch: true
             }
         },
-        {
-            path: '/:id/meetup',
-            name: "Meetup",
-            component: Meetup,
-            meta: {
-                requiresAuth: true,
-                platformLaunch: true
-            }
-        },
-        {
-            path: '/:id/booth',
-            name: "Booth",
-            component: Booth,
-            meta: {
-                requiresAuth: true,
-                platformLaunch: true
-            },
-            props: (route) => ({ name: route.query.name })
-        },
+        // {
+        //     path: '/:id/meetup',
+        //     name: "Meetup",
+        //     component: Meetup,
+        //     meta: {
+        //         requiresAuth: true,
+        //         platformLaunch: true
+        //     }
+        // },
+        // {
+        //     path: '/:id/booth',
+        //     name: "Booth",
+        //     component: Booth,
+        //     meta: {
+        //         requiresAuth: true,
+        //         platformLaunch: true
+        //     },
+        //     props: (route) => ({ name: route.query.name })
+        // },
         {
             path: '/loginrtp',
             name: "LoginWithTempEmail",
             component: LoginWithTempEmail,
+            meta: {
+                requiresAuth: false,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/resetpwd',
+            name: "LoginWithNewPassword",
+            component: LoginWithNewPassword,
             meta: {
                 requiresAuth: false,
                 platformLaunch: true
@@ -286,7 +296,7 @@ router.beforeEach((to, from, next) => {
                 }
             })
             .then(res => {
-                window.location.pathname = res.data + '/meetup'
+                window.location.pathname = res.data + '/home'
             })
             .catch(e => {
                 console.log(e)
@@ -304,12 +314,17 @@ router.beforeEach((to, from, next) => {
             localStorage.auth = ''
             next()
         }
+        else if (to.path == "/resetpwd" && to.query.token) {
+            localStorage.auth = ''
+            next()
+        }
         else if (!localStorage.auth) {
             if (
                 window.location.pathname.split("/")[1] != "login" &&
                 window.location.pathname.split("/")[1] != "noaccess" &&
                 window.location.pathname.split("/")[1] != "loginrtp" &&
-                window.location.pathname.split("/")[1] != "register"
+                window.location.pathname.split("/")[1] != "register" &&
+                window.location.pathname.split("/")[1] != "resetpwd"
             ) {
                 window.location.pathname = "/login"
             }
@@ -341,8 +356,8 @@ router.beforeEach((to, from, next) => {
                     window.location.pathname.split("/")[1] != "register" &&
                     window.location.pathname.split("/")[2] != "company" && 
                     window.location.pathname.split("/")[2] != "vip" &&
-                    window.location.pathname.split("/")[2] != "meetup" &&
-                    window.location.pathname.split("/")[2] != "booth" &&
+                    // window.location.pathname.split("/")[2] != "meetup" &&
+                    // window.location.pathname.split("/")[2] != "booth" &&
                     window.location.pathname.split("/")[2] != "home" &&
                     window.location.pathname.split("/")[2] != "mediahall" &&
                     window.location.pathname.split("/")[2] != "agenda" &&

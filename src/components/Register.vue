@@ -16,6 +16,26 @@
                                     <b-input id="register-email" type="email" v-model="email" ></b-input>
                                 </b-field>
 
+                                <div class="columns only-bot-margin">
+                                    <div class="column" style="padding-left:0px;">
+                                        <b-field :label="$root.content.password">
+                                            <b-input id="new-pwd-setter" type="password" v-model="password"></b-input>
+                                        </b-field>
+                                    </div>
+                                    <div class="column" style="padding-left:0px;">
+                                        <b-field :label="$root.content.passwordConfirmation">
+                                            <b-input id="new-pwd-setter" type="password" v-model="passwordConfirmation"></b-input>
+                                        </b-field>
+                                    </div>
+                                </div>
+
+                                <div class="danger-text" v-if="(password && passwordConfirmation) && (password != passwordConfirmation)">
+                                    {{$root.content.passwordNotSame}}
+                                </div>
+                                <div class="danger-text" v-if="(password && passwordConfirmation) && (password == passwordConfirmation) && password.length < 6">
+                                    {{$root.content.minLength}}
+                                </div>
+
                                 <b-field :label="$root.content.name"> 
                                     <b-input v-model="name" ></b-input>
                                 </b-field>
@@ -147,6 +167,8 @@ export default {
         this.linkedin = ""
         this.facebook = ""
         this.telegram = ""
+        this.password = ""
+        this.passwordConfirmation = ""
 
         this.price = ''
         
@@ -165,7 +187,9 @@ export default {
             telegram: this.telegram,
             price: this.price,
 
-            content: this.$root.content.Register
+            content: this.$root.content.Register,
+            password: this.password,
+            passwordConfirmation: this.passwordConfirmation,
         }
     },
     mounted () {
@@ -201,6 +225,7 @@ export default {
                         role: this.role,
                         name: this.name,
                         // shouldPay: await this.GetTicketPrice(),
+                        password: this.password,
                         shouldPay: 0,
                         tickets: 1,
                         shouldResetPwd: false,
@@ -218,7 +243,10 @@ export default {
                         this.$router.push('/')
                     })
                     .catch(e => {
-                        this.$root.createError(e.toString(), 'oops')
+                        if (compare(e.response.data.error, 'Already exists'))
+                            this.$root.createError('User with such email already exists, please login.', 'oops')
+                        else
+                            this.$root.createError(e.toString(), 'oops')
                     })
                 }
             }            
@@ -235,6 +263,8 @@ export default {
             this.companyName &&
             this.role &&
             this.type &&
+            (this.password && this.passwordConfirmation) && (this.password == this.passwordConfirmation) &&
+            this.password.length >= 6 &&
             this.name) {
                 return true
             }
@@ -295,6 +325,18 @@ export default {
             else
                 this.buttonready = false
         },
+        passwordConfirmation: function () {
+            if (this.checkInputReadyness())
+                this.buttonready = true
+            else
+                this.buttonready = false
+        },
+        password: function () {
+            if (this.checkInputReadyness())
+                this.buttonready = true
+            else
+                this.buttonready = false
+        }
         // type: function () {
         //     this.GetTicketPrice().then(res => {
         //         this.price = res
@@ -314,6 +356,10 @@ export default {
             font-size:14px;
             text-align: center;
             color: grey;
+        }
+        .danger-text {
+            color: #ff3860;
+            font-weight: 400;
         }
     }
     .only-bot-margin {

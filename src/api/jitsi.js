@@ -43,7 +43,7 @@ export default class JitsiModal {
         displayName: this.username
       },
       width: "100%",
-      height: 500,
+      height: window.innerHeight -135,
       parentNode: this.parentNode,
       interfaceConfigOverwrite: {
         DEFAULT_BACKGROUND: '#474747',

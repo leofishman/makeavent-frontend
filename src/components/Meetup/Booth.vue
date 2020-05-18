@@ -25,8 +25,9 @@
                                     @click="$root.joinStage('meetup'+name)"
                                     type="is-danger"
                                     outlined
+                                    expanded
                                     class="is-uppercase"
-                                    style="font-size:32px;"
+                                    size="is-large"
                                 >{{content.joinNowTitle}}</b-button>
                             </div>
 

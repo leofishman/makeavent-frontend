@@ -2829,15 +2829,7 @@ main {
 	width: 100% !important;
 	height: 100% !important;
 	max-width: 100%;
-
-	.logo {
-		height: 100%;
-		display: flex;
-		align-items: center;
-		img {
-			max-width: 80%;
-		}
-	}
+	background-color: $white-ter;
 	.speaker-brand {
 		margin-right: 20px;
 		padding-right: 20px;
@@ -2850,35 +2842,31 @@ main {
 		}
 	}
 }
-.webinar-sponsors {
-	padding-right: 2em;
-	text-align: center;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	img {
-		object-fit: contain;
-	}
 
-	.ls-platinum {
-		margin-top: 20px;
-		img {
-			height: 100px;
-		}
-	}
-	.ls-gold {
-		img {
-			height: 70px;
-		}
-	}
-	.ls-silver {
-		img {
-			height: 30px;
-		}
-	}
-}
 .speaking-media {
-	align-items: inherit;
+	width: fit-content;
+	margin: auto;
+	.media-left {
+		.image {
+			position: relative;
+			border: solid 1px #ccc;
+			&:before, &:after {
+				content: "";
+				top: -10px;
+				left: -10px;
+				width: 20px;
+				height: 20px;
+				position: absolute;
+				border: solid 4px $primary;
+				transform: rotate(0);
+				transition: 0.3s ease-out;
+			}
+			&:after {
+				top: 18px;
+				border-color: $secondary
+			}
+		}
+	}
 	.media-content {
 		strong {
 			font-size: 1.3em;
@@ -2887,6 +2875,42 @@ main {
 		p+p {
 			margin-top: 0.5em;
 		}
+	}
+}
+.webinar-sponsors {
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	.sponsor-padding {
+		padding-left: 20px;
+		padding-right: 20px;
+		position: relative;
+	}
+	.logo {
+		margin-bottom: 100px;
+		img {
+			max-width: 60%;
+		}
+	}
+	.box {
+		padding: 15px;
+		box-shadow: $shadow-2;
+		min-height: 450px;
+		align-items: center;
+		display: flex;
+	}
+	.powered {
+		margin-top: 100px;
+		left: 0;
+		right: 0;
+		bottom: 30px;
+		position: absolute;
+		img {
+			max-width: 60%;
+		}
+	}
+	img {
+		object-fit: contain;
 	}
 }
 // SPONSOR DESIGN //

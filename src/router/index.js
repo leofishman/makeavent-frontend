@@ -49,6 +49,7 @@ import LoginWithTempEmail from '@/components/LoginWithTempEmail.vue'
 import RegistrationHall from '@/components/RegistrationHall'
 import Register from '@/components/Register'
 import LoginWithNewPassword from '@/components/LoginWithNewPassword'
+import InfoDesk from '@/components/InfoDesk'
 
 import NoAccess from '@/components/NoAccess.vue'
 import Company from '@/components/CompanyProfile/Company.vue'
@@ -66,6 +67,15 @@ const router = new Router({
     routes: [
         {
             path: '/',
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/:id/info',
+            name: 'InfoDesk',
+            component: InfoDesk,
             meta: {
                 requiresAuth: true,
                 platformLaunch: true

@@ -119,6 +119,7 @@ export default {
             ready: false,
             getInTouch: [],
             name: this.name,
+            commonContent: this.$root.content.common,
 
             userTextMessage: this.userTextMessage,
             chatHeight: this.chatHeight,

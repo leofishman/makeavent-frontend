@@ -43,7 +43,10 @@
                         </div>
 
                         <!-- Profile bottom-->
-                        <div class="profile-bottom" v-html="demo"></div>
+						<div class="profile-bottom">
+                            <PitchDeck v-for="(el, index) in pitchDeck" :key="index" :data="el"/>
+                            <div v-html="demo"></div>
+                        </div>
                     </div>
 
                     <!-- Profile bio -->
@@ -80,6 +83,7 @@
     import Pagetitle from '@/components/Pagetitle.vue';
     import Member from './Member.vue';
     import Chat from './Chat.vue';
+    import PitchDeck from '@/components/Demoday/Pitchdeck'
 
     export default {
         props: {
@@ -92,7 +96,8 @@
             Storycreate,
             Pagetitle,
             Member,
-            Chat
+            Chat,
+            PitchDeck
         },
         data () {
             this.chatHeight;

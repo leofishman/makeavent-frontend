@@ -7,7 +7,7 @@
             <img :src="`${host}/static/img/sponsors/KASPERSKY/KASPERSKY.png`">
         </figure>
         <div class="powered">
-            <h3>Powered by</h3>
+            <h3>{{content.powered}}</h3>
             <img :src="`${host}/static/img/sponsors/MAKEAVENT/MAKEAVENT.png`">
         </div>
     </div>
@@ -23,7 +23,8 @@
         },
         data () {
             return {
-                host: host
+                host: host,
+                content: this.$root.content.WebinarSponsors
             }
         }
     }

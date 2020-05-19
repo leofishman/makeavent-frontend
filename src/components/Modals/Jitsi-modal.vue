@@ -6,46 +6,44 @@
         :speaker="speaker"
         :speakingData="speakingData"
         />
-        <div class="columns is-gapless">
+        <div class="columns">
             <div class="column is-four-fifths">
                 <div id="jitsi-modal-target" class="card-image">
                 </div>
             </div>
             <div class="column is-one-fifth webinar-sponsors">
-                <figure class="image logo">
-                    <img src="@/assets/logo_dark.svg">
-                </figure>
+                
                 <div class="tile is-vertical">
                     <div class="tile is-parent ls-main">
                         <!-- Main -->
                         <div class="tile is-child">
-                            <img style="object-fit:contain;" :src="host + getSponsor('kaspersky').logo">
+                            <img :src="host + getSponsor('kaspersky').logo">
                         </div>
                     </div>
                     <div class="tile ls-platinum">
                         <!-- Platinum A -->
                         <div class="tile is-parent">
                             <div class="tile is-child">
-                                <img style="object-fit:contain;" :src="host + getSponsor('rsk').logo">
+                                <img :src="host + getSponsor('rsk').logo">
                             </div>
                         </div>
                     </div>
                     <div class="tile ls-gold">
                         <div class="click tile is-parent">
                             <div class="tile is-child">
-                                <img style="object-fit:contain;" :src="host + getSponsor('crypttp').logo">
+                                <img :src="host + getSponsor('crypttp').logo">
                             </div>
                         </div>
                         <!-- Gold A -->
                         <div class="tile is-parent">
                             <div class="tile is-child">
-                                <img style="object-fit:contain;" :src="host + getSponsor('fas').logo">
+                                <img :src="host + getSponsor('fas').logo">
                             </div>
                         </div>
                         <!-- Gold B -->
                         <div class="tile is-parent">
                             <div class="tile is-child">
-                                <img style="object-fit:contain;" :src="host + getSponsor('sto managers').logo">
+                                <img :src="host + getSponsor('sto managers').logo">
                             </div>
                         </div>
                     </div>
@@ -53,15 +51,13 @@
                         <!-- Silver -->
                         <div class="click tile is-parent">
                             <div class="tile is-child">
-                                <img style="object-fit:contain;" :src="host + getSponsor('sto managers').logo">
-                                <!--<img style="object-fit:contain;" :src="host + getSponsor('dash').logo">-->
+                                <img :src="host + getSponsor('dash').logo">
                             </div>
                         </div>
                         <!-- Gold C -->
                         <div class="tile is-parent">
                             <div class="tile is-child">
-                                <img style="object-fit:contain;" :src="host + getSponsor('sto managers').logo">
-                                <!--<img style="object-fit:contain;" :src="host + getSponsor('decred').logo">-->
+                                <img :src="host + getSponsor('decred').logo">
                             </div>
                         </div>
                         <!-- Gold D -->

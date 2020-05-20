@@ -64,7 +64,6 @@
 							<h2>{{content.mbc}}</h2>
 							<b-tabs v-model="activeTab">
 								<b-tab-item :label="$root.content.common.connected">
-									Business card will be available 25 of May, when the conference starts
 									<Businesscardconected
 										v-for="(el, index) in $root.activeBusinessCards"
 										:key="index"
@@ -81,7 +80,6 @@
 											</b-tag> 
 										</span>
 									</template>
-									Business card will be available 25 of May, when the conference starts
 									<Businesscardpending
 										v-for="(el, index) in $root.pendingCards"
 										:key="index"
@@ -96,7 +94,6 @@
 							<h2>{{content.mi}}</h2>
 							<b-tabs v-model="activeTabInterview">
 								<b-tab-item label="Upcoming" class="interview-upcoming">
-									Interviews will be available 25 of May, when the conference starts
 									<!-- <div class="interview-today">
 										<h2 class="date-turn">{{$root.content.common.today}}</h2>
 										<Interviewsupcoming />
@@ -109,7 +106,6 @@
 								</b-tab-item>
 
 								<b-tab-item label="Past" class="interview-past">
-									Interviews will be available 25 of May, when the conference starts
 									<!-- <div class="interview-today">
 										<h2 class="date-turn">13.03.19</h2>
 										<Interviewspast />
@@ -121,7 +117,6 @@
 								</b-tab-item>
 
 								<b-tab-item label="Failed" class="interview-failed">
-									Interviews will be available 25 of May, when the conference starts
 									<!-- <div class="interview-today">
 										<h2 class="date-turn">13.03.19</h2>
 										<Interviewsfailed />

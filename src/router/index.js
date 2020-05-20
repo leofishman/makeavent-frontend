@@ -291,106 +291,100 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-
-     if (to.meta.platformLaunch && new Date().getTime() < meetupDate) {
-         window.location.pathname = '/noaccess'
-     }
-     else {
-        if (to.path == "/noaccess" || to.path == "/reghall") {
-            next()
-        }
-        else if (to.path == "/" && localStorage.auth) {
-            axios.get(host + `/login/redirectToHallByjwt`, {
-                headers: {
-                    authorization: localStorage.auth
-                }
-            })
-            .then(res => {
-                window.location.pathname = res.data + '/home'
-            })
-            .catch(e => {
-                console.log(e)
-                localStorage.auth = ""
-                window.location = '/login'
-            })
-        }
-        else if (to.path == "/" && !localStorage.auth) {
+    if (to.path == "/noaccess" || to.path == "/reghall") {
+        next()
+    }
+    else if (to.path == "/" && localStorage.auth) {
+        axios.get(host + `/login/redirectToHallByjwt`, {
+            headers: {
+                authorization: localStorage.auth
+            }
+        })
+        .then(res => {
+            window.location.pathname = res.data + '/home'
+        })
+        .catch(e => {
+            console.log(e)
+            localStorage.auth = ""
+            window.location = '/login'
+        })
+    }
+    else if (to.path == "/" && !localStorage.auth) {
+        window.location.pathname = "/login"
+    }
+    else if (to.path == "/register" && !localStorage.auth) {
+        next()
+    }
+    else if (to.path == "/loginrtp" && to.query.access) {
+        localStorage.auth = ''
+        next()
+    }
+    else if (to.path == "/resetpwd" && to.query.token) {
+        localStorage.auth = ''
+        next()
+    }
+    else if (!localStorage.auth) {
+        if (
+            window.location.pathname.split("/")[1] != "login" &&
+            window.location.pathname.split("/")[1] != "noaccess" &&
+            window.location.pathname.split("/")[1] != "loginrtp" &&
+            window.location.pathname.split("/")[1] != "register" &&
+            window.location.pathname.split("/")[1] != "resetpwd"
+        ) {
             window.location.pathname = "/login"
         }
-        else if (to.path == "/register" && !localStorage.auth) {
+        
+        else
             next()
-        }
-        else if (to.path == "/loginrtp" && to.query.access) {
-            localStorage.auth = ''
-            next()
-        }
-        else if (to.path == "/resetpwd" && to.query.token) {
-            localStorage.auth = ''
-            next()
-        }
-        else if (!localStorage.auth) {
+    }
+    else if (
+        (
+            window.location.pathname.split("/")[2] == "home" ||
+            window.location.pathname.split("/")[2] == "meetup"
+        )
+            && to.query.auth == "true"
+    ) {
+        window.location.search = ""
+        to.query = {}
+        window.location.pathname = `/${window.location.pathname.split("/")[1]}/${window.location.pathname.split("/")[2]}`
+    }
+    else if (!to.fullPath.includes('auth=true')) {
+        axios.get(host + `/login/checkToken?access=${window.location.pathname.split("/")[1]}`, {
+            headers: {
+                authorization: localStorage.auth
+            }
+        })
+        .then(res => {
             if (
                 window.location.pathname.split("/")[1] != "login" &&
                 window.location.pathname.split("/")[1] != "noaccess" &&
-                window.location.pathname.split("/")[1] != "loginrtp" &&
                 window.location.pathname.split("/")[1] != "register" &&
-                window.location.pathname.split("/")[1] != "resetpwd"
+                window.location.pathname.split("/")[2] != "company" && 
+                window.location.pathname.split("/")[2] != "vip" &&
+                // window.location.pathname.split("/")[2] != "meetup" &&
+                // window.location.pathname.split("/")[2] != "booth" &&
+                window.location.pathname.split("/")[2] != "home" &&
+                window.location.pathname.split("/")[2] != "mediahall" &&
+                window.location.pathname.split("/")[2] != "agenda" &&
+                window.location.pathname.split("/")[2] != "profile" && 
+                window.location.pathname.split("/")[2] != "sip" &&
+                window.location.pathname.split("/")[2] != "ddpb" &&
+                window.location.pathname.split("/")[2] != "investors"
             ) {
-                window.location.pathname = "/login"
+                window.location.search = ""
+                window.location.pathname = `/${window.location.pathname.split("/")[1]}/home`
             }
-            
-            else
+            else  {
                 next()
-        }
-        else if (
-            (
-                window.location.pathname.split("/")[2] == "home" ||
-                window.location.pathname.split("/")[2] == "meetup"
-            )
-                && to.query.auth == "true"
-        ) {
-            window.location.search = ""
-            to.query = {}
-            window.location.pathname = `/${window.location.pathname.split("/")[1]}/${window.location.pathname.split("/")[2]}`
-        }
-        else if (!to.fullPath.includes('auth=true')) {
-            axios.get(host + `/login/checkToken?access=${window.location.pathname.split("/")[1]}`, {
-                headers: {
-                    authorization: localStorage.auth
-                }
-            })
-            .then(res => {
-                if (
-                    window.location.pathname.split("/")[1] != "login" &&
-                    window.location.pathname.split("/")[1] != "noaccess" &&
-                    window.location.pathname.split("/")[1] != "register" &&
-                    window.location.pathname.split("/")[2] != "company" && 
-                    window.location.pathname.split("/")[2] != "vip" &&
-                    // window.location.pathname.split("/")[2] != "meetup" &&
-                    // window.location.pathname.split("/")[2] != "booth" &&
-                    window.location.pathname.split("/")[2] != "home" &&
-                    window.location.pathname.split("/")[2] != "mediahall" &&
-                    window.location.pathname.split("/")[2] != "agenda" &&
-                    window.location.pathname.split("/")[2] != "profile" && 
-                    window.location.pathname.split("/")[2] != "sip" &&
-                    window.location.pathname.split("/")[2] != "ddpb" &&
-                    window.location.pathname.split("/")[2] != "investors"
-                ) {
-                    window.location.search = ""
-                    window.location.pathname = `/${window.location.pathname.split("/")[1]}/home`
-                }
-                else  {
-                    next()
-                }
-            })
-            .catch(e => {
-                localStorage.auth = ""
-                window.location = '/login'
-            })
-        }
-        else 
-            next()
+            }
+        })
+        .catch(e => {
+            localStorage.auth = ""
+            window.location = '/login'
+        })
     }
+    else 
+        next()
 })
 
 export default router

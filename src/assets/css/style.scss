@@ -2151,7 +2151,7 @@ main {
 //////////////////////////////////////////
 #media-partner-booth {
 	.section-media-partner-booth {
-		padding-top: 0;
+		padding-top: 4.5rem;
 		.column{
 			+.column {
 				//border-left: solid 1px #dedede;
@@ -2176,8 +2176,51 @@ main {
 			}
 		}
 		.profile-bottom {
-			img {
+			.watch-interview-banner {
+				padding: 30px;
 				cursor: pointer;
+				background-image: url("../../assets/myinterview.jpg");
+				background-repeat: no-repeat;
+				background-size: cover;
+				box-shadow: $shadow-2;
+				
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				position: relative;
+				&:before {
+					content: "";
+					width: 100%;
+					height: 100%;
+					background-color: rgba(0, 0, 0, 0.3);
+					position: absolute;
+					top: 0;
+					left: 0;
+				}
+				h3 {
+					font-size: 50px;
+					line-height: 1.2;
+					color: #fff;
+					z-index: 99;
+				}
+				&:after {
+					content: "▶";
+					color: #fff;
+					font-size: 50px;
+					z-index: 99;
+				}
+			}
+			.watch-interview-banner-inactive {
+				cursor: inherit;
+				&:before {
+					background-color: rgba(255, 255, 255, 0.6);
+				}
+				h3 {
+					color: #eee;
+				}
+				&:after {
+					color: #eee;
+				}
 			}
 		}
 		.profile-data {
@@ -2271,7 +2314,7 @@ main {
 	.section-media-hall {
 		padding-top: 0;
 		.tile.is-parent {
-    		padding: .3rem;
+			padding: .3rem;
 		}
 		.mediahall-logo {
 			min-height: 100px;
@@ -2321,7 +2364,6 @@ main {
 				position: absolute;
 				top: 0;
 				left: 0;
-				opacity: 0.4;
 				border-radius: 100%;
 
 				background-image: url("../../assets/myinterview.jpg");
@@ -2346,6 +2388,12 @@ main {
 				display: flex;
 				align-items: center;
 				justify-content: center;
+			}
+		}
+		.watch-interview-inactive {
+			cursor: inherit;
+			&:before {
+				opacity: 0.4;
 			}
 		}
 		.upcoming-interview {

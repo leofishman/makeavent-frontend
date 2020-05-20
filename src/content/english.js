@@ -217,6 +217,7 @@ export default {
         join: "Join",
         investor: 'Investor',
         alreadyConnected: "Connected",
+        viewBc: "Open Business Card",
         notify: "Notify",
         reqbizcard: "Request Business Card",
         at: "at",
@@ -291,7 +292,7 @@ export default {
     VipMeetingRoom: {
         itsyou: "It is you",
         rbc: "Request my bussiness card",
-        spc: "Schedule a private call whith me",
+        spc: "Schedule a private call with me",
         findInEbooth: "Find me in e-booth",
     },
 
@@ -313,7 +314,12 @@ export default {
         facebook: "Facebook (optional)",
         telegram: "Telegram (optional)",
         photo: "Photo (optional)",
-        free: "Free",
-        
+        free: "Free"   
+    },
+
+    Snackbars: {
+        bcAccepted: (data) => {
+            return `${data.name} ${data.role ? data.role + " at " + data.company : ''} accepted your business card request`
+        }
     }
 }

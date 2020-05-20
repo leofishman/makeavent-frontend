@@ -462,39 +462,37 @@ new Vue({
     },
 
     addReminderCompany (data, theme) {
-      this.createError(this.content.ErrorMessages[0], 'explorer')
-      // Axios.post(host + `/reminders/new`, {
-      //   time: data.time,
-      //   reason: `${data.name} ${theme}`
-      // }, {
-      //   headers: {
-      //     authorization: localStorage.auth
-      //   }
-      // })
-      // .then((res) => {
-      //   this.$buefy.dialog.alert(this.content.common.success)
-      // })
-      // .catch(err => {
-      //   this.createError(this.content.ErrorMessages[2], 'oops')
-      // })
+      Axios.post(host + `/reminders/new`, {
+        time: data.time,
+        reason: `${data.name} ${theme}`
+      }, {
+        headers: {
+          authorization: localStorage.auth
+        }
+      })
+      .then((res) => {
+        this.$buefy.dialog.alert(this.content.common.success)
+      })
+      .catch(err => {
+        this.createError(this.content.ErrorMessages[2], 'oops')
+      })
     },
 
     addReminder (data, theme) {
-      this.createError(this.content.ErrorMessages[0], 'explorer')
-      // Axios.post(host + `/reminders/new`, {
-      //   time: data.time,
-      //   reason: `${data.contact.name} ${data.contact.role} ${data.contact.company} ${theme}`
-      // }, {
-      //   headers: {
-      //     authorization: localStorage.auth
-      //   }
-      // })
-      // .then((res) => {
-      //   this.$buefy.dialog.alert(this.content.common.success)
-      // })
-      // .catch(err => {
-      //   this.createError(this.content.ErrorMessages[2], 'oops')
-      // })
+      Axios.post(host + `/reminders/new`, {
+        time: data.time,
+        reason: `${data.contact.name} ${data.contact.role} ${data.contact.company} ${theme}`
+      }, {
+        headers: {
+          authorization: localStorage.auth
+        }
+      })
+      .then((res) => {
+        this.$buefy.dialog.alert(this.content.common.success)
+      })
+      .catch(err => {
+        this.createError(this.content.ErrorMessages[2], 'oops')
+      })
     },
 
     getSponsorSlot (id) {
@@ -510,31 +508,32 @@ new Vue({
     },
 
     tryBusinessCard (el) {
-      this.createError(this.content.ErrorMessages[0], 'explorer')
-
-      // this.checkComponentAccess('bcrequest')
-      // .then(haveAccessToBc => {
-      //   if (haveAccessToBc) {
-      //     if (this.checkIfAlreadyAFriend(el)) {
-      //       this.$buefy.modal.open({
-      //         parent: this,
-      //         props: {
-      //           data: el
-      //         },
-      //         component: Bcardpreview,
-      //         hasModalCard: true,
-      //         customClass: 'bcardpreview',
-      //         trapFocus: true
-      //       })
-      //     }
-      //     else {
-      //       this.showBCrequesttoast(el)
-      //     }
-      //   }
-      //   else {
-      //     this.showMessageToUpgradeBusOrVip('Business Cards')
-      //   }
-      // })
+      if (new Date().toLocaleString() > env.startDate)
+        this.checkComponentAccess('bcrequest')
+        .then(haveAccessToBc => {
+          if (haveAccessToBc) {
+            if (this.checkIfAlreadyAFriend(el)) {
+              this.$buefy.modal.open({
+                parent: this,
+                props: {
+                  data: el
+                },
+                component: Bcardpreview,
+                hasModalCard: true,
+                customClass: 'bcardpreview',
+                trapFocus: true
+              })
+            }
+            else {
+              this.showBCrequesttoast(el)
+            }
+          }
+          else {
+            this.showMessageToUpgradeBusOrVip('Business Cards')
+          }
+        })
+      else
+        this.createError(this.content.ErrorMessages[0], 'explorer')
     },
 
     checkIfAlreadyAFriend (card) {    
@@ -754,6 +753,8 @@ new Vue({
         }
       })
       .then(el => {
+        this.pendingCards = this.pendingCards.filter(el => el._id !== card._id)
+        this.activeBusinessCards.push(card)
         setTimeout(() => {
           window.EventBus.$emit('close-overlay-by-id', card._id)
 
@@ -768,6 +769,7 @@ new Vue({
         }
       })
       .then(el => {
+        this.pendingCards = this.pendingCards.filter(el => el._id !== card._id)
         window.EventBus.$emit('close-overlay-by-id', card._id)
       })
     },
@@ -941,6 +943,12 @@ new Vue({
     },
 
     friendRequestAccepted (data) {
+      this.$buefy.snackbar.open({
+        duration: 5000,
+        message: this.content.Snackbars.bcAccepted(data),
+        position: 'is-bottom-right',
+        queue: false,
+      })
       this.getPengingCards()
     },
 

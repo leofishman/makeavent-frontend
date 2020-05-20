@@ -5,7 +5,7 @@
             <div class="column is-three-fifths">
                 <div class="media speaking-media">
                     <figure class="media-left speaker-brand">
-                        <img class="click" :src="`${host}/static/img/sponsors/CRYPTTP/CRYPTTP.png`" title="View Company">
+                        <img  v-if="speaker" class="click" :src="$root.tryGetCompanyLogo(speaker.company)" title="View Company">
                     </figure>
                     <figure class="media-left">
                         <p class="image is-96x96">

@@ -1,7 +1,7 @@
 <template>
 	<div class="businesscardconected">
-		<h3>{{data.name}}</h3>
-		<h3 class="has-text-grey-light">{{data.role}} {{content.at}} {{data.company}}</h3>
+		<h3 class="click" v-on:click="$root.tryBusinessCard(data)">{{data.name}}</h3>
+		<h3 class="click has-text-grey" v-on:click="openCompany()">{{data.role}} {{content.at}} {{data.company}}</h3>
 		<ul>
 			<li><img src="@/assets/icon/icon-call.svg"></li>
 			<li><img src="@/assets/icon/icon-mail.svg"></li>
@@ -22,7 +22,12 @@ export default {
 			content: this.$root.content.common,
         }
     },
-    methods: {},
+    methods: {
+		openCompany () {
+			this.$root.defineBoothType(this.data.company)
+			.then(type => { this.$root.openPage(type, this.data.company) })
+		}
+	},
 }
 </script>
 

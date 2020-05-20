@@ -7,7 +7,7 @@
 			</div>
 			<div class="column vip-name">
 				<div class="has-text-centered">
-					<h3><strong>{{data.name}}</strong><br> {{data.role}}</h3>
+					<h3><strong class="click" v-on:click="$root.tryBusinessCard(data)">{{data.name}}</strong><br> {{data.role}}</h3>
 				</div>
 			</div>
 			<div class="column is-uppercase">
@@ -21,7 +21,7 @@
 			<div v-else class="column vip-touch">
 				<ul>
 					<li v-on:click="$root.tryBusinessCard(data)" v-if="!$root.checkIfAlreadyAFriend(data)">{{content.rbc}}</li>
-                    <li class="connected" v-else>{{$root.content.common.alreadyConnected}}</li>
+                    <li v-on:click="$root.tryBusinessCard(data)" v-else>{{$root.content.common.viewBc}}</li>
 					<!-- NOT RELEASED -->
                     <li v-on:click="$root.privateCall(data)">{{content.spc}}</li>
 					<li v-if="haveBooth" v-on:click="openDefinedPage()">{{content.findInEbooth}}</li>

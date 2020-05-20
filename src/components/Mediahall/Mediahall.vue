@@ -42,9 +42,8 @@
 					<div class="column is-one-fifths">
 						<div class="tile is-child">
 							<h2 class="">{{content.wli}}</h2>
-							<div @click="ongoingInterviews = true" class="watch-interview" >
-							</div>
-							
+							<!-- [YD] If inactive add watch-interview-inactive class-->
+							<div @click="ongoingInterviews = true" class="watch-interview"></div>
 
 							<div class="upcoming-interview" @click="upcommingInterviews = true">
 								<h3>{{content.ui}}</h3>

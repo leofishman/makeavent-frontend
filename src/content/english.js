@@ -252,6 +252,10 @@ export default {
         rbc: "Request my business card"
     },
 
+    WebinarSponsors: {
+        powered: "Powered by"
+    },
+
     MediaPartnerProfile: {
         watchLiveInterview: "Watch live interview"
     },

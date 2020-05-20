@@ -1,22 +1,38 @@
 <template>
-    <div class="container card webinar-modal">
+    <div class="card webinar-modal">
         <img class="click webinar-close-icon" src="@/assets/icon/icon-close-black.svg" v-on:click="$parent.close()" />
         <SpeakingTitle
-            :webinarName="data.name"
-            :speaker="speaker"
-            :speakingData="speakingData"
+        :webinarName="data.name"
+        :speaker="speaker"
+        :speakingData="speakingData"
         />
-        <div id="jitsi-modal-target"></div>
+        <div class="columns is-gapless">
+            <div class="column is-one-fifth webinar-sponsors">
+                <WebinarSponsors />
+            </div>
+            <div class="column is-three-fifths">
+                <div id="jitsi-modal-target" class="card-image">
+                </div>
+            </div>
+            <div class="column is-one-fifth webinar-sponsors">
+                <WebinarSponsors />
+            </div>
+        </div>
     </div>
 </template>
 <script>
-import jitsi from '@/api/jitsi'
-import SpeakingTitle from '@/components/Modals/SpeakingTitle'
+    //import {host} from '@/env'
+    //import Axios from 'axios'
+    import jitsi from '@/api/jitsi'
+    import SpeakingTitle from '@/components/Modals/SpeakingTitle'
+    import WebinarSponsors from '@/components/Modals/WebinarSponsors'
+
 
 export default {
     name: "Jitsimodal",
     components: {
-        SpeakingTitle
+        SpeakingTitle,
+        WebinarSponsors
     },
     props: {
         data: Object
@@ -61,10 +77,10 @@ export default {
 }
 </script>
 <style lang="scss">
-    .webinar-close-icon {
-        position: absolute;
-        right: 20px;
-        width: 20px;
-        top: 20px;
-    }
+.webinar-close-icon {
+    position: absolute;
+    right: 20px;
+    width: 20px;
+    top: 20px;
+}
 </style>

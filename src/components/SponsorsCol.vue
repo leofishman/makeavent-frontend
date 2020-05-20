@@ -58,33 +58,33 @@
     </div>
 </template>
 <script>
-import Axios from 'axios'
-import {host} from '@/env'
+    import Axios from 'axios'
+    import {host} from '@/env'
 
-export default {
-    name: "SponsorsCol",
-    data () {
-        this.sponsors = []
+    export default {
+        name: "SponsorsCol",
+        data () {
+            this.sponsors = []
 
-        Axios.get(host + `/resources?names=sponsors`)
-        .then(res => {
-            const decrypted = this.$root.decrypt(res.data.encryptedData)
-            this.ready = true
-            this.sponsors = decrypted.sponsors
-        })
+            Axios.get(host + `/resources?names=sponsors`)
+            .then(res => {
+                const decrypted = this.$root.decrypt(res.data.encryptedData)
+                this.ready = true
+                this.sponsors = decrypted.sponsors
+            })
 
-        return {
-            ready: false,
-            host: host
-        }
-    },
-    methods: {
-        getSponsor (name) {
-            let res = this.sponsors.filter(el => compare(el.name, name))
-            if (!res.length)
-                res = [{}]
-            return res[0]
+            return {
+                ready: false,
+                host: host
+            }
+        },
+        methods: {
+            getSponsor (name) {
+                let res = this.sponsors.filter(el => compare(el.name, name))
+                if (!res.length)
+                    res = [{}]
+                return res[0]
+            }
         }
     }
-}
 </script>

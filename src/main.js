@@ -652,7 +652,7 @@ new Vue({
             hasModalCard: true,
             canCancel: false,
             trapFocus: true,
-            // fullScreen: true
+            fullScreen: true
           })
         }
         else if (compare(data.platform, "zoom")) {

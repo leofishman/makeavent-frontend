@@ -2,7 +2,7 @@
 	<div id="media-partner-booth" v-if="ready">
 		<navbar></navbar>
 		<div class="container">
-			<Pagetitle :data="$router.currentRoute.params.name"/>
+			<!--<Pagetitle :data="$router.currentRoute.params.name"/>-->
 
 			<section class="section section-media-partner-booth">
 				<div class="columns is-variable is-8">
@@ -39,11 +39,10 @@
 						</div>
 
 						<!-- Profile bottom-->
-						<div
-							@click="$root.joinStage('interview'+name)"
-							class="profile-bottom"
-						>
-							<img src="@/assets/watch-interview.jpg">
+						<div @click="$root.joinStage('interview'+name)" class="profile-bottom">
+							<div class="watch-interview-banner"> <!-- [YD] add watch-interview-banner-inactive class -->
+								<h3>Watch<br> Live<br> Interview</h3>
+							</div>
 						</div>
 					</div>
 

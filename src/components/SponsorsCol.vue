@@ -46,13 +46,25 @@
                         <img style="object-fit:contain;" :src="host + getSponsor('dash').logo">
                     </div>
                 </div>
-                <!-- Gold C -->
+                
                 <div @click="$root.openExternalInBlank(getSponsor('decred').website)" class="click tile is-parent">
                     <div class="tile is-child box">
                         <img style="object-fit:contain;" :src="host + getSponsor('decred').logo">
                     </div>
                 </div>
-                <!-- Gold D -->
+
+                <div @click="$root.openExternalInBlank(getSponsor('quantia capital').website)" class="click tile is-parent">
+                    <div class="tile is-child box">
+                        <img style="object-fit:contain;" :src="host + getSponsor('quantia capital').logo">
+                    </div>
+                </div>
+
+                <div @click="$root.openExternalInBlank(getSponsor('money on chain').website)" class="click tile is-parent">
+                    <div class="tile is-child box">
+                        <img style="object-fit:contain;" :src="host + getSponsor('money on chain').logo">
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

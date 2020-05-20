@@ -1,10 +1,10 @@
 <template>
     <!-- [YD] The class of this div may vary, depends if the BG is dark or light mode -->
-    <div v-if="ready" id="profile-company" :class="sponsorClass">
+    
+    <div v-if="ready" id="profile-company" :class="sponsorClass" :style="{ backgroundImage: `url('${host + bg}')` }">
 
         <!-- NOT RELEASED -->
-        <!--{{bg}}-->
-        <div v-if="bg" class="bg-img"><img :src="host + bg"></div>
+        
 
         <navbar></navbar>
         
@@ -55,6 +55,7 @@
                         </div>
                         <!-- Bio text -->
                         <article class="bio-description box">
+                            <img src="@/assets/img/helper/powered_by_iov.png" class="only-iovlabs">
                             <p v-html="description"></p>
                         </article>
                     </div>

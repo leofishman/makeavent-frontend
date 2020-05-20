@@ -3047,6 +3047,38 @@ main {
 		}
 	}
 }
+/* DECRED */
+.decred {
+	$decred: #2972ff;
+	$decred-secondary: #2ed7a2;
+
+	min-height: calc( 100vh - 80px);
+	background-color: $decred;
+
+	.section-profile-company {
+		a {
+			color: $decred;
+		}
+		.list-network li {
+			span {
+				background-color: $white;
+			}
+			a {
+				color: $white;
+			}
+		}
+		.member-action {
+			background-color: $decred;
+		}
+		figure {
+			img {
+				border-color: $decred-secondary;
+				background-color: $decred-secondary;
+			}
+		}
+	}
+}
+
 /* CRYPTTP */
 /*.crypttp {
 	$crypttp: #181935;

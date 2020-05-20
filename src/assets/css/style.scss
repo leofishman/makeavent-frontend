@@ -2047,12 +2047,11 @@ main {
 		transition: .3s ease-out;
 	}
 }
-.bg-img {
-	img {
-		width: 100vw;
-		height: 100vh;
-		position: fixed;
-	}
+#profile-company {
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: calc(100vh - 80px);
 }
 .bg-light-mode {
 	min-height: 100vh;
@@ -2248,7 +2247,7 @@ main {
 	.section-media-hall {
 		padding-top: 0;
 		.mediahall-logo {
-			min-height: 160px;
+			min-height: 100px;
 			position: relative;
 			cursor: pointer;
 			display: flex;
@@ -2264,7 +2263,7 @@ main {
 				width: 50%;
 				left: 0;
 				bottom: 0;
-				border-bottom: solid 10px $secondary;
+				border-bottom: solid 5px $secondary;
 				position: absolute;
 				transition: 0.25s ease-out;
 			}
@@ -2946,21 +2945,26 @@ main {
 
 /* GOLD */
 /* RSK */
-.rsk {
-	$rsk: #00B520;
+.rsk, .iovlabs {
 	@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap');
+
+	$rsk: #00d27d;
+	min-height: calc( 100vh - 80px);
+	background-color: $rsk;
+	
 	.section-profile-company {
 		a {
-			color: $rsk;
+			color: $white;
 		}
 		* {
 			font-family: 'Quicksand', sans-serif;
 		}
 		.list-network li span {
-			background-color: $rsk;
-			img {
-				opacity: 1;
-				filter: invert(1);
+			background-color: $white;
+		}
+		.member {
+			a {
+				color: $rsk;
 			}
 		}
 		.member-action {
@@ -2968,10 +2972,21 @@ main {
 		}
 		figure {
 			img {
-				border-color: $rsk;
-				background-color: $rsk;
+				border-color: $grey;
+				background-color: $grey;
 			}
 		}
+	}
+}
+.only-iovlabs {
+	display: none;
+}
+.rsk {
+	.only-iovlabs {
+		margin: auto;
+		margin-bottom: 30px;
+		width: 70%;
+		display: block;
 	}
 }
 

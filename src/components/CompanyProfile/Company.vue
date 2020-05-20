@@ -3,8 +3,9 @@
     
     <div v-if="ready" id="profile-company" :class="sponsorClass" :style="{ backgroundImage: `url('${host + bg}')` }">
 
-        <!-- NOT RELEASED -->
-        
+        <video v-if="video" class="bg-video" autoplay muted loop>
+            <source :src="host + video" type="video/mp4">
+        </video>       
 
         <navbar></navbar>
         
@@ -51,14 +52,28 @@
 
                     <!-- Profile bio -->
                     <div class="column profile-bio">
-                        <div class="columns is-multiline">
+
+                        <div  class="columns is-multiline member-clasic">
                             <div class="column padding-top-20" v-for="(el, index) in contacts" :key="index">
                                 <Member :data="el"/>
                             </div>
                         </div>
+
                         <!-- Bio text -->
                         <article class="bio-description box">
                             <img src="@/assets/img/helper/powered_by_iov.png" class="only-iovlabs">
+                            
+                            <!-- Custom bio for Decred -->
+                            <div class="member-custom">
+                                <div class="columns is-multiline">
+                                    <div class="column is-one-third" v-for="(el, index) in contacts" :key="index">
+                                        <MemberCustom :data="el"/>
+                                    </div>
+                                    
+                                </div>
+                                <p>{{content.requestBC}}</p>
+                            </div><!-- END Custom bio for Decred -->
+
                             <p v-html="description"></p>
                         </article>
                     </div>
@@ -69,7 +84,7 @@
         <!-- Profile Chat -->
         <div id="chat">
             <div class="chat-top">
-                <h3 @click="$root.joinStage('sponsorbooth'+name)" class="is-uppercase">{{content.joinNowTitle}}</h3>
+                <h3 @click="$root.joinStage('sponsorbooth'+name)" class="enterebooth is-uppercase">{{content.joinNowTitle}}</h3>
             </div>
             <Chat :checkAccess="'companychat'" type="company" :parent="self" :name="name" />
         </div>
@@ -83,6 +98,7 @@
     import socialLogos from '@/assets/img/socials'
     import Pagetitle from '@/components/Pagetitle.vue';
     import Member from './Member.vue';
+    import MemberCustom from './MemberCustom.vue';
     import Chat from './Chat.vue';
     import PitchDeck from '@/components/Demoday/Pitchdeck'
 
@@ -97,8 +113,8 @@
             Storycreate,
             Pagetitle,
             Member,
-            Chat,
-            PitchDeck
+            MemberCustom,
+            Chat
         },
         data () {
             this.chatHeight;
@@ -115,67 +131,69 @@
             this.contacts = ""
             this.logo = ""
             this.bg = ""
+            this.video = ""
             this.sponsorClass = ""
             this.materials = ""
 
-        // wait until token and sponsors ready
-        this.$root.check('token Sponsors').then(() => {
-            const name = this.name.toUpperCase()
-            this.sponsor = this.$root.Sponsors.filter(el => compare(el.name, name))[0]
+            /* wait until token and sponsors ready*/
+            this.$root.check('token Sponsors').then(() => {
+                const name = this.name.toUpperCase()
+                this.sponsor = this.$root.Sponsors.filter(el => compare(el.name, name))[0]
 
-            this.description = this.sponsor.description
-            this.demo = this.sponsor.demo
-            this.website = this.sponsor.website
-            this.socials = this.sponsor.socials
-            this.contacts = this.sponsor.contacts
-            this.bg = this.sponsor.backgroundImage
-            this.sponsorClass = this.sponsor.sponsorClass
-            this.logo = host + this.sponsor.logo
-            this.materials = this.sponsor.materials
+                this.description = this.sponsor.description
+                this.demo = this.sponsor.demo
+                this.website = this.sponsor.website
+                this.socials = this.sponsor.socials
+                this.contacts = this.sponsor.contacts
+                this.bg = this.sponsor.backgroundImage
+                this.video = this.sponsor.backgroundVideo
+                this.sponsorClass = this.sponsor.sponsorClass
+                this.logo = host + this.sponsor.logo
 
-            this.ready = true
-        }).catch(e => console.log(`${e} inaccessible`))
+                this.ready = true
+            }).catch(e => console.log(`${e} inaccessible`))
 
-        return {
-            self: this,
-            content: this.$root.content.Company,
-            commonContent: this.$root.content.common,
+            return {
+                self: this,
+                content: this.$root.content.Company,
+                commonContent: this.$root.content.common,
 
-            ready: false,
-            getInTouch: ["Facebook", "Linkedin", "Telegram"],
+                ready: false,
+                getInTouch: ["Facebook", "Linkedin", "Telegram"],
 
-            userTextMessage: this.userTextMessage,
-            chatHeight: this.chatHeight,
-            chatHistory: this.chatHistory,
-            showMessageModal: this.showMessageModal,
+                userTextMessage: this.userTextMessage,
+                chatHeight: this.chatHeight,
+                chatHistory: this.chatHistory,
+                showMessageModal: this.showMessageModal,
 
-            showQuote: false,
-            quotedMessage: '',
-            quotedName: '',
-            quoteId: '',
+                showQuote: false,
+                quotedMessage: '',
+                quotedName: '',
+                quoteId: '',
 
-            logo: this.logo,
-            description: this.description,
-            demo: this.demo,
-            website: this.website,
-            socials: this.socials,
-            socialLogos: socialLogos,
-            contacts: this.contacts,
+                logo: this.logo,
+                description: this.description,
+                demo: this.demo,
+                website: this.website,
+                socials: this.socials,
+                socialLogos: socialLogos,
+                contacts: this.contacts,
 
-            host: host,
-            bg: this.bg,
-            sponsorClass: this.sponsorClass,
+                host: host,
+                bg: this.bg,
+                video: this.video,
+                sponsorClass: this.sponsorClass,
 
-            chat: "",
+                chat: "",
 
-            chatAvailable: this.chatAvailable
-        }
-    },
-    methods: {
-        openAndTrack (link) {
-            this.$root.track(name, link)
-            this.$root.openExternalInBlank(link)
-        }
-    },
-}
+                chatAvailable: this.chatAvailable
+            }
+        },
+        methods: {
+            openAndTrack (link) {
+                this.$root.track(name, link)
+                this.$root.openExternalInBlank(link)
+            }
+        },
+    }
 </script>

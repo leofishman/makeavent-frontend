@@ -2051,7 +2051,7 @@ main {
 	background-attachment: fixed;
 	background-repeat: no-repeat;
 	background-size: cover;
-	height: calc(100vh - 80px);
+	min-height: calc(100vh - 80px);
 }
 .bg-light-mode {
 	min-height: 100vh;

@@ -648,7 +648,7 @@ new Vue({
     },
 
     joinWebinar (data) {
-      if (new Date().getTime() > data.time) {
+      if (data.status == "ongoing") {
         if (compare(data.platform, "jitsi")) {
           this.$buefy.modal.open({
             props: {

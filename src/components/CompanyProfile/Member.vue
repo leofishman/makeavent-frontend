@@ -2,7 +2,7 @@
 	<div class="box member">
 		<img v-on:click="$root.tryBusinessCard(data)" src="@/assets/icon/icon-user.svg" class="member-action click left" title="Request business card">
 		<!-- NOT RELEASED -->
-		<img v-on:click="$root.privateCall(data)" src="@/assets/icon/icon-call.svg" class="member-action click right" title="Schedule e-meeting">
+		<img v-if="canCall" v-on:click="$root.privateCall(data)" src="@/assets/icon/icon-call.svg" class="member-action click right" title="Schedule e-meeting">
 		<figure>
 			<img v-if="!data.photo" :src="`${host}/static/img/avatar-default.png`">
 			<img v-else :src="host + data.photo">
@@ -33,8 +33,14 @@ export default {
 		data: Object
 	},
 	data () {
+		this.$root.canCall(this.data)
+		.then(res => {
+			this.canCall = res
+		})
+
 		return {
-			host: host
+			host: host,
+			canCall: this.canCall
 		}
 	}
 }

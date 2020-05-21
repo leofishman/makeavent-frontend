@@ -20,7 +20,7 @@
 				<!-- <img class="has-text-centered" src="@/assets/icon-target.svg"> -->
 				<h3 class="has-text-centered">{{content.rbc}}</h3>
 			</div>
-			<div @click="$root.privateCall(data)" class="click column investors-touch is-uppercase">
+			<div v-if="canCall" @click="$root.privateCall(data)" class="click column investors-touch is-uppercase">
 				<h3 class="has-text-centered">{{content.rem}}</h3>
 			</div>
 		</div>
@@ -45,11 +45,17 @@ export default {
                 this.haveBooth = true
                 this.type = type
             }
-        })
+		})
+		
+		this.$root.canCall(this.data)
+		.then(res => {
+			this.canCall = res
+		})
 
 		return {
 			content: this.$root.content.Investors,
-			host: host
+			host: host,
+			canCall: this.canCall
 		}
 	},
 	methods: {

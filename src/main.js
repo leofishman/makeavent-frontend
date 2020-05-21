@@ -264,7 +264,15 @@ new Vue({
     },
 
     privateCall (contact) {
-      this.createError(this.content.ErrorMessages[0], 'explorer')
+      // this.createError(this.content.ErrorMessages[0], 'explorer')
+      if (!this.isThatMe(contact.email)) {
+        if (contact.calendly) {
+          this.openExternalInBlank(contact.calendly)
+        }
+      }
+      else {
+        this.$buefy.dialog.alert(this.content.common.itsYou)
+      }
       // if (!this.isThatMe(contact.email)) {
       //   this.checkComponentAccess('privatecall')
       //   .then(haveAccessToPc => {
@@ -662,7 +670,9 @@ new Vue({
             parent: this,
             component: ZoomWebinar,
             hasModalCard: true,
-            trapFocus: true
+            canCancel: false,
+            trapFocus: true,
+            fullScreen: true
           })
         }
       }
@@ -707,6 +717,25 @@ new Vue({
         hasModalCard: true,
         customClass: 'custom-class custom-class-2',
         trapFocus: true
+      })
+    },
+
+    canCall (data) {
+      return new Promise(async (resolve, reject) => {
+        if (!this.isThatMe(data.email)) {
+          this.checkComponentAccess('privatecall')
+          .then(res => {
+            if (res) {
+              if (data.calendly) {
+                resolve(true)
+              }
+            }
+            else
+              resolve(res)
+          })
+        }
+        else
+          resolve(false)
       })
     },
 

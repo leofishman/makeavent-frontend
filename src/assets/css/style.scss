@@ -1292,23 +1292,23 @@ main {
 				.agenda-touch {
 					text-transform: uppercase;
 					position: relative;
-					&:after {
-						content: "";
-						cursor: pointer;
-						color: #fff;
-						text-align: center; 
-						font-size: 2em;
-						padding: 20px 0;
-						width: 70px;
-						height: 90px;
-						background-color: $secondary;
-						position: absolute;
-						right: 0;
-						margin-right: -65px;
-						top: 45%;
-						margin-top: -40px;
-						box-shadow: 0 3px 7px rgba(0,0,0,0.2);
-					}
+					// &:after {
+					// 	content: "";
+					// 	cursor: pointer;
+					// 	color: #fff;
+					// 	text-align: center; 
+					// 	font-size: 2em;
+					// 	padding: 20px 0;
+					// 	width: 70px;
+					// 	height: 90px;
+					// 	background-color: $secondary;
+					// 	position: absolute;
+					// 	right: 0;
+					// 	margin-right: -65px;
+					// 	top: 45%;
+					// 	margin-top: -40px;
+					// 	box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+					// }
 				}
 				&:nth-child(even) {
 					// .agenda-touch {
@@ -1689,12 +1689,13 @@ main {
 					+li {
 						margin-top: 10px;
 					}
-					&:before {
+					img {
 						left: 0;
 						content: "";
 						cursor: pointer;
 						text-align: center; 
 						font-size: 2em;
+						padding: 2px;
 						width: 25px;
 						height: 25px;
 						position: absolute;
@@ -1704,22 +1705,36 @@ main {
 						background-size: 70%;
 						box-shadow: 0 3px 7px rgba(0,0,0,0.2);
 					}
-					&:nth-child(1n) {
-						&:before {
-							background-image: url("../../assets/icon/icon-user.svg");
-						}
-					}
-					// NOT RELEASED
-					&:nth-child(2n) {
-						&:before {
-							background-image: url("../../assets/icon/icon-call.svg");
-						}
-					}
-					&:nth-child(3n) {
-						&:before {
-							background-image: url("../../assets/icon/icon-search.svg");
-						}
-					}
+					// &:before {
+					// 	left: 0;
+					// 	content: "";
+					// 	cursor: pointer;
+					// 	text-align: center; 
+					// 	font-size: 2em;
+					// 	width: 25px;
+					// 	height: 25px;
+					// 	position: absolute;
+					// 	background-color: $primary;
+					// 	background-position: center;
+					// 	background-repeat: no-repeat;
+					// 	background-size: 70%;
+					// 	box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+					// }
+					// &:nth-child(1n) {
+					// 	&:before {
+					// 		background-image: url("../../assets/icon/icon-user.svg");
+					// 	}
+					// }
+					// &:nth-child(2n) {
+					// 	&:before {
+					// 		background-image: url("../../assets/icon/icon-call.svg");
+					// 	}
+					// }
+					// &:nth-child(3n) {
+					// 	&:before {
+					// 		background-image: url("../../assets/icon/icon-search.svg");
+					// 	}
+					// }
 				}
 			}
 			&:nth-child(even) {
@@ -1729,7 +1744,7 @@ main {
 					}
 				}
 				li {
-					&:before {
+					img {
 						background-color: $secondary;
 					}
 				}

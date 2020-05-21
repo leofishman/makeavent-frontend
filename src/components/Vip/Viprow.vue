@@ -20,11 +20,23 @@
             </div>
 			<div v-else class="column vip-touch">
 				<ul>
-					<li v-on:click="$root.tryBusinessCard(data)" v-if="!$root.checkIfAlreadyAFriend(data)">{{content.rbc}}</li>
-                    <li v-on:click="$root.tryBusinessCard(data)" v-else>{{$root.content.common.viewBc}}</li>
+					<li v-on:click="$root.tryBusinessCard(data)" v-if="!$root.checkIfAlreadyAFriend(data)">
+                        <img src="@/assets/icon/icon-user.svg" alt="">
+                        {{content.rbc}}
+                    </li>
+                    <li v-on:click="$root.tryBusinessCard(data)" v-else>
+                        <img src="@/assets/icon/icon-user.svg" alt="">
+                        {{$root.content.common.viewBc}}
+                    </li>
 					<!-- NOT RELEASED -->
-                    <li v-on:click="$root.privateCall(data)">{{content.spc}}</li>
-					<li v-if="haveBooth" v-on:click="openDefinedPage()">{{content.findInEbooth}}</li>
+                    <li v-if="canCall" v-on:click="$root.privateCall(data)">
+                        <img src="@/assets/icon/icon-call.svg" alt="">
+                        {{content.spc}}
+                    </li>
+					<li v-if="haveBooth" v-on:click="openDefinedPage()">
+                        <img src="@/assets/icon/icon-search.svg" alt="">
+                        {{content.findInEbooth}}
+                    </li>
 				</ul>
 			</div>
 		</div>
@@ -50,10 +62,16 @@ export default {
             }
         })
 
+        this.$root.canCall(this.data)
+		.then(res => {
+			this.canCall = res
+		})
+
         return {
             host: host,
             content: this.$root.content.VipMeetingRoom,
-            haveBooth: this.haveBooth
+            haveBooth: this.haveBooth,
+            canCall: this.canCall
         }
     },
     methods: {

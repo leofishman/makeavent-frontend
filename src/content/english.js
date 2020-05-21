@@ -203,6 +203,7 @@ export default {
     past: "Past",
     failed: "Failed",
     accept: "Accept",
+    backstage: `Backstage will be available ${new Date(startDate).toString().split("2020")}`,
 
     toprow: {
         infDesk: "Information Desk",

@@ -12,10 +12,6 @@ export default class JitsiModal {
     const host = vueapp.$root.Sponsors.filter(el => compare(el.name, data.host))[0]
     this.type = host.contacts.filter(el => compare(el._id, vueapp.$root.profile._id)).length ? "speaker" : vueapp.$root.usertype
 
-    if (compare(vueapp.$root.usertype, "basic")) {
-      vueapp.$root.showMessageToUpgradeBusOrVip(`During the main conference <b>${new Date(startDate).toLocaleString()}</b> you won't have access to microphone, video or raise hand in webinars. If you want to keep that feature please <b style="color:#9D6DBE">Upgrade</b> your ticket to Business or Vip`)
-    }
-
     this.webinarType = ""
 
     if (this.name.includes('stage'))

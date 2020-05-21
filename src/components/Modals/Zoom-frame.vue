@@ -1,21 +1,42 @@
 <template>
-    <div class="card container webinar-modal">
+    <div class="card webinar-modal">
+        <img class="click webinar-close-icon" src="@/assets/icon/icon-close-black.svg" v-on:click="$parent.close()" />
+        <SpeakingTitle
+        :webinarName="data.name"
+        :speaker="speaker"
+        :speakingData="speakingData"
+        />
+        <div class="columns is-gapless">
+            <div class="column is-one-fifth webinar-sponsors">
+                <WebinarSponsors />
+            </div>
+            <div class="column is-three-fifths">
+                <iframe id="zoom-iframe" class="webinar-modal-target" width="100%" :style="{ height:`${frameHeight}px` }" frameborder="0">
+                </iframe>
+            </div>
+            <div class="column is-one-fifth webinar-sponsors">
+                <WebinarSponsors />
+            </div>
+        </div>
+    </div>
+    <!-- <div class="card container webinar-modal">
         <SpeakingTitle
             :webinarName="data.name"
             :speaker="speaker"
             :speakingData="speakingData"
         />
-        <iframe id="zoom-iframe" class="webinar-modal-target" frameborder="0">
-        </iframe>
-    </div>
+        
+    </div> -->
 </template>
 <script>
 import Axios from 'axios'
 import {host} from '@/env'
+import WebinarSponsors from '@/components/Modals/WebinarSponsors'
 import SpeakingTitle from '@/components/Modals/SpeakingTitle'
 
 export default {
     components: {
+        WebinarSponsors,
         SpeakingTitle
     },
     props: {
@@ -31,7 +52,8 @@ export default {
                 this.speakingData = this.speakers[0]
                 const params = {
                     leaveUrl: this.data.leaveUrl,
-                    meetingNumber: this.data.webinarId
+                    meetingNumber: this.data.webinarId,
+                    password: this.data.password
                 }
 
                 Axios.get(`${host}/webinars/connectionjs`, {
@@ -51,7 +73,8 @@ export default {
         return {
             speakingData: this.speakingData,
             speaker: this.speaker,
-            html: this.html
+            html: this.html,
+            frameHeight: window.innerHeight - 144
         }
     },
     methods: {

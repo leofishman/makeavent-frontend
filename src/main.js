@@ -38,9 +38,10 @@ import ResetPwd from './components/ResetPwd.vue'
 /**
  * @modals
  */
-import ErrorMessage from './components/Modals/Error-message.vue'
-import JitsiWebinar from './components/Modals/Jitsi-modal.vue'
-import ZoomWebinar from './components/Modals/Zoom-frame.vue'
+import ErrorMessage from '@/components/Modals/Error-message.vue'
+import JitsiWebinar from '@/components/Modals/Jitsi-modal.vue'
+import ZoomWebinar from '@/components/Modals/Zoom-frame.vue'
+import ZoomCompanySpeaker from '@/components/Modals/ZoomFrameCompanySpeaker.vue'
 
 /**
  * @popups
@@ -97,6 +98,7 @@ new Vue({
   data() {
     this.shouldCheckResources = this.$router.currentRoute.name != "Noaccess" &&
     this.$router.currentRoute.name != "Password" &&
+    this.$router.currentRoute.name != "Backstage" &&
     this.$router.currentRoute.name != "LoginThenBusinessCard" && 
     this.$router.currentRoute.name != "LoginWithTempEmail" &&
     this.$router.currentRoute.name != "Login" &&
@@ -264,7 +266,6 @@ new Vue({
     },
 
     privateCall (contact) {
-      // this.createError(this.content.ErrorMessages[0], 'explorer')
       if (!this.isThatMe(contact.email)) {
         if (contact.calendly) {
           this.openExternalInBlank(contact.calendly)
@@ -273,28 +274,6 @@ new Vue({
       else {
         this.$buefy.dialog.alert(this.content.common.itsYou)
       }
-      // if (!this.isThatMe(contact.email)) {
-      //   this.checkComponentAccess('privatecall')
-      //   .then(haveAccessToPc => {
-      //     if (haveAccessToPc) {
-      //       this.$buefy.modal.open({
-      //         parent: this,
-      //         props: {
-      //           contact: contact
-      //         },
-      //         component: Privatecall,
-      //         hasModalCard: true,
-      //         customClass: 'privatecall',
-      //         trapFocus: true
-      //       })
-      //     }
-      //     else {
-      //       this.showMessageToUpgradeStrict('Private call', 'vip')
-      //     }
-      //   })
-      // }
-      // else 
-      //   this.$buefy.dialog.alert(this.content.common.itsYou)
     },
 
     navToPage (name) {
@@ -649,7 +628,20 @@ new Vue({
 
     joinWebinar (data) {
       if (new Date().getTime() > data.time) {
-        if (compare(data.platform, "jitsi")) {
+        if (compare(data.name, "demoday") || data.name.includes('sponsorbooth')) {
+          this.$buefy.modal.open({
+            props: {
+              data: data
+            },
+            parent: this,
+            component: ZoomCompanySpeaker,
+            hasModalCard: true,
+            canCancel: false,
+            trapFocus: true,
+            fullScreen: true
+          })
+        }
+        else if (compare(data.platform, "jitsi")) {
           this.$buefy.modal.open({
             props: {
               data: data
@@ -869,6 +861,7 @@ new Vue({
         this.$router.currentRoute.path != '/loginrtp' &&
         this.$router.currentRoute.path != '/reghall' &&
         this.$router.currentRoute.path != '/noaccess' &&
+        this.$router.currentRoute.path != '/backstage' &&
         this.$router.currentRoute.path != '/register' &&
         this.$router.currentRoute.path != '/resetpwd'
       )

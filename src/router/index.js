@@ -24,39 +24,21 @@ import InvestFundProfile from '@/components/Demoday/InvestFundProfile.vue'
 import Mediahall from '@/components/Mediahall/Mediahall.vue'
 import Mediapartnerbooth from '@/components/Mediapartnerbooth/Mediapartnerbooth.vue'
 
-/**
- * @VIP
- */
 import VipMeetingRoom from '@/components/Vip/VipMeetingRoom.vue'
-
-/**
- * @MEETUP
- */
-// import Meetup from '@/components/Meetup/Meetup.vue'
-
-/**
- * @Booth
- */
-// import Booth from '@/components/Meetup/Booth.vue'
-
-/**
- * @Workshop
- */
 import WorkshopAgenda from '@/components/Workshop/WorkshopAgenda.vue'
-
 import Login from '@/components/Login.vue'
 import LoginWithTempEmail from '@/components/LoginWithTempEmail.vue'
 import RegistrationHall from '@/components/RegistrationHall'
 import Register from '@/components/Register'
 import LoginWithNewPassword from '@/components/LoginWithNewPassword'
 import InfoDesk from '@/components/InfoDesk'
-
 import NoAccess from '@/components/NoAccess.vue'
 import Company from '@/components/CompanyProfile/Company.vue'
-
 import Profile from '@/components/Profile/Profile.vue'
 import MyInterviews from '@/components/Profile/MyInterviews.vue'
 import MyBusinessCards from '@/components/Profile/MyBusinessCards.vue'
+
+import Backstage from '@/components/Backstage'
 
 Vue.use(Router)
 
@@ -121,6 +103,11 @@ const router = new Router({
             path: '/noaccess',
             name: "Noaccess",
             component: NoAccess,
+        },
+        {
+            path: '/backstage',
+            name: "Backstage",
+            component: Backstage,
         },
         {
             path: '/:id/company',
@@ -291,7 +278,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.path == "/noaccess" || to.path == "/reghall") {
+    if (to.path == "/noaccess" || to.path == "/reghall" || to.paht == "/backstage") {
         next()
     }
     else if (to.path == "/" && localStorage.auth) {
@@ -328,6 +315,7 @@ router.beforeEach((to, from, next) => {
             window.location.pathname.split("/")[1] != "login" &&
             window.location.pathname.split("/")[1] != "noaccess" &&
             window.location.pathname.split("/")[1] != "loginrtp" &&
+            window.location.pathname.split("/")[1] != "backstage" &&
             window.location.pathname.split("/")[1] != "register" &&
             window.location.pathname.split("/")[1] != "resetpwd"
         ) {
@@ -358,6 +346,7 @@ router.beforeEach((to, from, next) => {
             if (
                 window.location.pathname.split("/")[1] != "login" &&
                 window.location.pathname.split("/")[1] != "noaccess" &&
+                window.location.pathname.split("/")[1] != "backstage" &&
                 window.location.pathname.split("/")[1] != "register" &&
                 window.location.pathname.split("/")[2] != "company" && 
                 window.location.pathname.split("/")[2] != "vip" &&

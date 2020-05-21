@@ -21,12 +21,11 @@
     </div>
 </template>
 <script>
-    //import {host} from '@/env'
-    //import Axios from 'axios'
-    import jitsi from '@/api/jitsi'
-    import SpeakingTitle from '@/components/Modals/SpeakingTitle'
-    import WebinarSponsors from '@/components/Modals/WebinarSponsors'
-
+//import {host} from '@/env'
+//import Axios from 'axios'
+import jitsi from '@/api/jitsi'
+import SpeakingTitle from '@/components/Modals/SpeakingTitle'
+import WebinarSponsors from '@/components/Modals/WebinarSponsors'
 
 export default {
     name: "Jitsimodal",

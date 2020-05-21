@@ -5,7 +5,7 @@
             <div class="column is-three-fifths">
                 <div class="media speaking-media">
                     <figure class="media-left speaker-brand">
-                        <img  v-if="speaker" class="click" :src="$root.tryGetCompanyLogo(speaker.company)" title="View Company">
+                        <img  v-if="speaker" class="click" :src="host + companyLogo" title="View Company">
                     </figure>
                     <figure class="media-left">
                         <p class="image is-96x96">
@@ -43,9 +43,13 @@
             this.type = ""
             this.haveBooth = ""
             let self = this
+            this.companyLogo = ""
 
             let timer = setInterval(() => {
                 if (self.speaker) {
+                    self.$root.tryGetCompanyLogo(self.speaker.company).then(el => {
+                        self.companyLogo = el
+                    })
                     clearInterval(timer)
                     self.$root.defineBoothType(toUp(self.speaker.company))
                     .then(type => {
@@ -58,6 +62,7 @@
             })
 
             return {
+                companyLogo: this.companyLogo,
                 host: host
             }
         },

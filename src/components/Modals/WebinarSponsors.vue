@@ -3,7 +3,7 @@
         <figure class="logo">
             <img src="@/assets/logo_dark.svg">
         </figure>
-        <figure class="box">
+        <figure v-if="showSponsor" class="box">
             <img :src="`${host}/static/img/sponsors/KASPERSKY/KASPERSKY.png`">
         </figure>
         <div class="powered">
@@ -19,7 +19,11 @@
         name: "WebinarSponsors",
         
         props: {
-            data: Object
+            data: Object,
+            showSponsor: {
+                type: Boolean,
+                default: true
+            }
         },
         data () {
             return {

@@ -9,26 +9,26 @@
 					<div class="column">
 						
 						<div class="columns is-multiline">
-							<Mediahalllogo data="16"/><!-- Cointelegraph CT -->
-							<Mediahalllogo data="14"/><!-- Coin gecko -->
-							<Mediahalllogo data="23"/><!-- Cointelegraph español -->
-							<Mediahalllogo data="2"/><!-- Cripto noticias -->
-							<Mediahalllogo data="4"/><!-- Coincodex -->
-							<Mediahalllogo data="1"/><!-- AMB -->
-							<Mediahalllogo data="3"/><!-- Cointeligence -->
-							<Mediahalllogo data="10"/><!-- Cointeligence -->
-							<Mediahalllogo data="25"/><!-- Cointelegraph italy -->
-							<Mediahalllogo data="13"/><!-- Super crypto news -->
-							<Mediahalllogo data="11"/><!-- Crypto potato -->
-							<Mediahalllogo data="19"/><!-- News BTC -->
-							<Mediahalllogo data="12"/><!-- techie scoops -->
-							<Mediahalllogo data="7"/><!-- Bitcoin mexico -->
-							<Mediahalllogo data="15"/><!-- Coinmonks -->
-							<Mediahalllogo data="24"/><!-- Coindoo -->
-							<Mediahalllogo data="17"/><!-- Bitcoin Garden -->
-							<Mediahalllogo data="20"/><!-- Hegion -->
-							<Mediahalllogo data="18"/><!-- Satoshienvzla -->
-							<Mediahalllogo data="5"/><!-- Blockchain .news -->
+							<Mediahalllogo data="15"/><!-- Cointelegraph CT -->
+							<Mediahalllogo data="13"/><!-- Coin gecko -->
+							<Mediahalllogo data="22"/><!-- Cointelegraph español -->
+							<Mediahalllogo data="1"/><!-- Cripto noticias -->
+							<Mediahalllogo data="3"/><!-- Coincodex -->
+							<Mediahalllogo data="0"/><!-- AMB -->
+							<Mediahalllogo data="2"/><!-- Cointeligence -->
+							<Mediahalllogo data="9"/><!-- Cointeligence -->
+							<Mediahalllogo data="24"/><!-- Cointelegraph italy -->
+							<Mediahalllogo data="12"/><!-- Super crypto news -->
+							<Mediahalllogo data="10"/><!-- Crypto potato -->
+							<Mediahalllogo data="18"/><!-- News BTC -->
+							<Mediahalllogo data="11"/><!-- techie scoops -->
+							<Mediahalllogo data="6"/><!-- Bitcoin mexico -->
+							<Mediahalllogo data="14"/><!-- Coinmonks -->
+							<Mediahalllogo data="23"/><!-- Coindoo -->
+							<Mediahalllogo data="16"/><!-- Bitcoin Garden -->
+							<Mediahalllogo data="19"/><!-- Hegion -->
+							<Mediahalllogo data="17"/><!-- Satoshienvzla -->
+							<Mediahalllogo data="4"/><!-- Blockchain .news -->
 						</div>
 						
 					</div>

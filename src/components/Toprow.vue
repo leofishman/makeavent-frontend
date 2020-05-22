@@ -17,10 +17,10 @@
 		<div v-on:click="$root.joinStage('stage1')" class="tile is-parent">
 			<div class="tile is-child box shadow-1 stage click">
 				<div class="has-text-centered">
-					<h1 style="font-size:30px;">
+					<h1>
 						{{content.stage1}}
 					</h1>
-					<h3 style="margin:20px 0px;">
+					<h3>
 						{{content.sponsored}}
 					</h3>
 					<img width="70%" v-if="$root.getSponsorSlot('2').logo" :src="host + $root.getSponsorSlot('2').logo" alt="">
@@ -41,10 +41,10 @@
 		<div v-on:click="$root.joinStage('stage2')" class="tile is-parent">
 			<div class="tile is-child box shadow-1 stage click">
 				<div class="has-text-centered">
-					<h1 style="font-size:30px;">
+					<h1>
 						{{content.stage2}}
 					</h1>
-					<h3 style="margin:20px 0px;">
+					<h3>
 						{{content.sponsored}}
 					</h3>
 					<img width="70%" v-if="$root.getSponsorSlot('3').logo" :src="host + $root.getSponsorSlot('2').logo" alt="">

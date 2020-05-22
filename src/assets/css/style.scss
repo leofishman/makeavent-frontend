@@ -913,6 +913,11 @@ main {
 					transform: rotate(180deg);
 				}
 			}
+			h1 {
+				margin-bottom: 30px;
+				font-size: 27px;
+				line-height: 1;
+			}
 			.has-text-centered {
 				width: 100%;
 			}
@@ -987,14 +992,14 @@ main {
 		margin-left: auto;
 		margin-right: auto;
 		width: 290px;
-		height: 370px;
+		height: 290px;
 		flex: none;
 		border: solid 30px $secondary;
 		position: relative;
 		margin-bottom: 100px !important;
 		display: flex;
 		align-items: center;
-		background-color: transparent;
+		background-color: #fff;
 		.has-text-centered {
 			width: 100%;
 		}
@@ -1046,11 +1051,11 @@ main {
 	}
 	.main {
 		margin: auto;
-		width: 380px;
-		height: 380px;
+		width: 500px;
+		height: 500px;
 		position: relative;
 		img {
-			max-width: 85%;
+			max-width: 90%;
 		}
 		:before {
 			content: "";
@@ -1083,12 +1088,24 @@ main {
 	}
 
 	/* Gold sponsor */
+	.section-gold {
+		.gold {
+			margin: auto !important;
+			max-width: 450px;
+			padding: 30px;
+			img {
+				max-height: 150px;
+				max-width: 90%;
+			}
+		}
+	}
 	.gold {
+		padding: 20px;
+		position: relative;
 		img {
-			max-height: 90px;
+			max-height: 70px;
 			max-width: 85%;
 		}
-		position: relative;
 		&:after {
 			content: "";
 			width: 40%;
@@ -1112,22 +1129,26 @@ main {
 			margin: auto;
 			margin-bottom: 30px;
 			height: 170px;
-			width: 170px;
+			max-width: 170px;
 			background-color: $grey-lighter;
 			img {
-				max-height: 70px;
-				max-width: 85%;
+				max-width: 90%;
 			}
 		}
 	}
 
 	/*  Basic sponsor */
+	.section-basic-bottom {
+		.columns {
+			display: flex;
+			justify-content: center;
+		}
+	}
 	@media screen and (min-width: $tablet) {
 		.basic {
 			margin: auto;
 			height: 100px;
 			img {
-				max-height: 50px;
 				max-width: 90%;
 			}
 		}

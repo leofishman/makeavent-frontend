@@ -1,15 +1,12 @@
 <template>
-	<div
-		v-if="ready"
-		v-on:click="openMediaPartnerBooth(data)"
-		class="tile is-child mediahall-logo box"
-	>
+	<div v-if="ready" v-on:click="openMediaPartnerBooth(data)" class="column is-one-quarter mediahall-logo">
+		<div class="box">
 		<img
 			v-if="getMediaPartnerSlot(data)"
 			:src="host + getMediaPartnerSlot(data).logo" 
-			:alt="`${getMediaPartnerSlot(data).name} - Media partner of blockconf.digital`"
-		>
+			:alt="`${getMediaPartnerSlot(data).name} - Media partner of blockconf.digital`">
 		<div v-else>{{content.mp}}</div>
+		</div>
 	</div>
 </template>
 

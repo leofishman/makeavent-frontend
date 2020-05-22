@@ -7,81 +7,64 @@
 			<section class="section section-media-hall">
 				<div class="columns">
 					<div class="column">
-						<div class="tile">
-							<div class="tile is-parent is-vertical">
-								<Mediahalllogo data="1"/>
-								<Mediahalllogo data="2"/>
-								<Mediahalllogo data="3"/>
-								<Mediahalllogo data="4"/>
-								<Mediahalllogo data="5"/>
-							</div>
-							<div class="tile is-parent is-vertical">
-								<Mediahalllogo data="6"/>
-								<Mediahalllogo data="7"/>
-								<Mediahalllogo data="8"/>
-								<Mediahalllogo data="9"/>
-								<Mediahalllogo data="10"/>
-							</div>
-							<div class="tile is-parent is-vertical">
-								<Mediahalllogo data="11"/>
-								<Mediahalllogo data="12"/>
-								<Mediahalllogo data="13"/>
-								<Mediahalllogo data="14"/>
-								<Mediahalllogo data="15"/>
-							</div>
-							<div class="tile is-parent is-vertical">
-								<Mediahalllogo data="16"/>
-								<Mediahalllogo data="17"/>
-								<Mediahalllogo data="18"/>
-								<Mediahalllogo data="19"/>
-								<Mediahalllogo data="20"/>
-							</div>
+						
+						<div class="columns is-multiline">
+							<Mediahalllogo data="16"/><!-- Cointelegraph CT -->
+							<Mediahalllogo data="14"/><!-- Coin gecko -->
+							<Mediahalllogo data="23"/><!-- Cointelegraph español -->
+							<Mediahalllogo data="2"/><!-- Cripto noticias -->
+							<Mediahalllogo data="4"/><!-- Coincodex -->
+							<Mediahalllogo data="1"/><!-- AMB -->
+							<Mediahalllogo data="3"/><!-- Cointeligence -->
+							<Mediahalllogo data="10"/><!-- Cointeligence -->
+							<Mediahalllogo data="25"/><!-- Cointelegraph italy -->
+							<Mediahalllogo data="13"/><!-- Super crypto news -->
+							<Mediahalllogo data="11"/><!-- Crypto potato -->
+							<Mediahalllogo data="19"/><!-- News BTC -->
+							<Mediahalllogo data="12"/><!-- techie scoops -->
+							<Mediahalllogo data="7"/><!-- Bitcoin mexico -->
+							<Mediahalllogo data="15"/><!-- Coinmonks -->
+							<Mediahalllogo data="24"/><!-- Coindoo -->
+							<Mediahalllogo data="17"/><!-- Bitcoin Garden -->
+							<Mediahalllogo data="20"/><!-- Hegion -->
+							<Mediahalllogo data="18"/><!-- Satoshienvzla -->
+							<Mediahalllogo data="5"/><!-- Blockchain .news -->
 						</div>
+						
 					</div>
 
 					<div class="column is-one-fifths">
-						<div class="tile is-child">
-							<h2 class="">{{content.wli}}</h2>
-							<!-- [YD] If inactive add watch-interview-inactive class-->
-							<div @click="ongoingInterviews = true" class="watch-interview"></div>
+						<h2 class="">{{content.wli}}</h2>
+						<!-- [YD] If inactive add watch-interview-inactive class-->
+						<div @click="ongoingInterviews = true" class="watch-interview"></div>
 
-							<div class="upcoming-interview" @click="upcommingInterviews = true">
-								<h3>{{content.ui}}</h3>
-							</div>
-
+						<div class="upcoming-interview" @click="upcommingInterviews = true">
+							<h3>{{content.ui}}</h3>
 						</div>
 					</div>
 					
 					<div class="column">
-						<div class="tile">
-							<div class="tile is-parent is-vertical">
-								<Mediahalllogo data="21"/>
-								<Mediahalllogo data="22"/>
-								<Mediahalllogo data="23"/>
-								<Mediahalllogo data="24"/>
-								<Mediahalllogo data="25"/>
-							</div>
-							<div class="tile is-parent is-vertical">
-								<Mediahalllogo data="26"/>
-								<Mediahalllogo data="27"/>
-								<Mediahalllogo data="28"/>
-								<Mediahalllogo data="29"/>
-								<Mediahalllogo data="30"/>
-							</div>
-							<div class="tile is-parent is-vertical">
-								<Mediahalllogo data="31"/>
-								<Mediahalllogo data="32"/>
-								<Mediahalllogo data="33"/>
-								<Mediahalllogo data="34"/>
-								<Mediahalllogo data="35"/>
-							</div>
-							<div class="tile is-parent is-vertical">
-								<Mediahalllogo data="36"/>
-								<Mediahalllogo data="37"/>
-								<Mediahalllogo data="38"/>
-								<Mediahalllogo data="39"/>
-								<Mediahalllogo data="40"/>
-							</div>
+						<div class="columns is-multiline">
+							<Mediahalllogo data="9"/><!-- Event chain -->
+							<Mediahalllogo data="6"/><!-- Blockchain caffe -->
+							<Mediahalllogo data="8"/><!-- Koin post -->
+							<Mediahalllogo data="21"/><!-- Listing.help -->
+							<Mediahalllogo data="22"/><!-- Theta -->
+							<Mediahalllogo data="26"/><!-- NAME -->
+							<Mediahalllogo data="27"/><!-- NAME -->
+							<Mediahalllogo data="28"/><!-- NAME -->
+							<Mediahalllogo data="29"/><!-- NAME -->
+							<Mediahalllogo data="30"/><!-- NAME -->
+							<Mediahalllogo data="31"/><!-- NAME -->
+							<Mediahalllogo data="32"/><!-- NAME -->
+							<Mediahalllogo data="33"/><!-- NAME -->
+							<Mediahalllogo data="34"/><!-- NAME -->
+							<Mediahalllogo data="35"/><!-- NAME -->
+							<Mediahalllogo data="36"/><!-- NAME -->
+							<Mediahalllogo data="37"/><!-- NAME -->
+							<Mediahalllogo data="38"/><!-- NAME -->
+							<Mediahalllogo data="39"/><!-- NAME -->
+							<Mediahalllogo data="40"/><!-- NAME -->
 						</div>
 					</div>
 				</div>

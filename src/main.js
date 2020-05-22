@@ -628,7 +628,20 @@ new Vue({
 
     joinWebinar (data) {
       if (data.status == "ongoing") {
-        if (compare(data.platform, "jitsi")) {
+        if (compare(data.name, "demoday") || data.name.includes('sponsorbooth')) {
+          this.$buefy.modal.open({
+            props: {
+              data: data
+            },
+            parent: this,
+            component: ZoomCompanySpeaker,
+            hasModalCard: true,
+            canCancel: false,
+            trapFocus: true,
+            fullScreen: true
+          })
+        }
+        else if (compare(data.platform, "jitsi")) {
           this.$buefy.modal.open({
             props: {
               data: data

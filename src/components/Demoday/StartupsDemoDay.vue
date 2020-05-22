@@ -60,13 +60,13 @@
 
                             <div class="tile is-parent is-vertical">
                                 <Startuplogo id="3"/>
-                                <Startuplogo id="4"/>
-                                <Startuplogo id="5"/>
+                                <Startuplogo id="6"/>
+                                <Startuplogo id="7"/>
                             </div>
 
                             <div class="tile is-parent is-vertical">
-                                <Startuplogo id="6"/>
-                                <Startuplogo id="7"/>
+                                <Startuplogo id="4"/>
+                                <Startuplogo id="5"/>
                                 <Startuplogo id="8"/>
                             </div>
 

@@ -10,28 +10,28 @@
                 <div class="startup-brand">
                     <div class="columns is-multiline">
                         <div class="column">
-                            <Fundbrand fundName="COINSILLIUM" />
-                        </div>
-                        <div class="column">
-                            <Fundbrand fundName="ANGEL VEST" />
-                        </div>
-                        <div class="column">
-                            <Fundbrand fundName="CVVC" />
+                            <Fundbrand fundName="UVECON"/>
                         </div>
                         <div class="column">
                             <Fundbrand fundName="MASTER VENTURES" />
                         </div>
                         <div class="column">
-                            <Fundbrand fundName="BLOCKCHAIN VALLEY VENTURES"/>
+                            <Fundbrand fundName="IBC MEDIA"/>
                         </div>
                         <div class="column">
-                            <Fundbrand fundName="IBC MEDIA"/>
+                            <Fundbrand fundName="BLOCKCHAIN VALLEY VENTURES"/>
                         </div>
                         <div class="column">
                             <Fundbrand fundName="DRAPER CYGNUS" />
                         </div>
                         <div class="column">
-                            <Fundbrand fundName="UVECON"/>
+                            <Fundbrand fundName="COINSILLIUM" />
+                        </div>                        
+                        <div class="column">
+                            <Fundbrand fundName="CVVC" />
+                        </div>
+                        <div class="column">
+                            <Fundbrand fundName="ANGEL VEST" />
                         </div>
                         <div class="column">
                             <Fundbrand fundName="SANCTUM"/>

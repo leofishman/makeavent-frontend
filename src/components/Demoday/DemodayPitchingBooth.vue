@@ -18,7 +18,7 @@
 
 		<div id="chat">
             <div class="chat-top">
-                <h3 @click="$root.joinStage('demoday')" class="is-uppercase">{{content.joinPitching}}</h3>
+                <h3 @click="$root.joinStage('demoday')" class="enterebooth is-uppercase">{{content.joinPitching}}</h3>
             </div>
 		    <Chat :checkAccess="'startupchat'" :parent="self" type="startup" name="demodaychat" />
         </div>

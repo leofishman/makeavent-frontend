@@ -2331,29 +2331,32 @@ main {
 			padding: .3rem;
 		}
 		.mediahall-logo {
-			min-height: 100px;
-			position: relative;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			box-shadow: $shadow-2;
-			img {
-				max-height: 70px;
-				max-width: 95%; 
-			}
-			&:before {
-				content: "";
-				width: 50%;
-				left: 0;
-				bottom: 0;
-				border-bottom: solid 5px $secondary;
-				position: absolute;
-				transition: 0.25s ease-out;
-			}
-			&:hover {
+			padding: .3rem;
+			.box {
+				min-height: 100px;
+				position: relative;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				box-shadow: $shadow-2;
+				img {
+					max-height: 70px;
+					max-width: 95%; 
+				}
 				&:before {
-					width: 100%;
+					content: "";
+					width: 50%;
+					left: 0;
+					bottom: 0;
+					border-bottom: solid 5px $secondary;
+					position: absolute;
+					transition: 0.25s ease-out;
+				}
+				&:hover {
+					&:before {
+						width: 100%;
+					}
 				}
 			}
 		}

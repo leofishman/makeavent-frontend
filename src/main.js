@@ -130,14 +130,12 @@ new Vue({
     setInterval(() => {
       if (this.shouldCheckResources) {
         this.getResourses()
-        this.getUser()
       }
-  }, 5000)
+    }, 5000)
 
     setInterval(() => {
       if (this.shouldCheckResources)
-        if (self.profile === undefined || self.usertype === undefined || self.token === undefined)
-          this.getUser()
+        this.getUser()
     }, 1000)
 
     if (this.checkNavShouldBeWithToken()) {

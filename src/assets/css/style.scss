@@ -1986,17 +1986,17 @@ main {
 			}
 		}
 		.edit-profile-button {
-			width: 18px;
-			height: 18px;
-			margin-left: 15px;
+			width: 18px !important;
+			height: 18px !important;
+			margin-left: 15px !important;
 		}
 		.column {
 			position: relative;
 		}
 		.bg {
-			background-color: $primary;
-			padding: 2px;
-			border-radius: 2px;
+			background-color: $primary !important;
+			padding: 2px !important;
+			border-radius: 2px !important;
 		}
 		.center {
 			margin-left: 0px;
@@ -2006,9 +2006,9 @@ main {
 			transform: translate(-50%, -50%);
 		}
 		.bg-sec {
-			background-color: $secondary;
-			padding: 2px;
-			border-radius: 2px;
+			background-color: $secondary !important;
+			padding: 2px !important;
+			border-radius: 2px !important;
 		}
 		.edit-socials {
 			max-width: 150px;
@@ -2016,6 +2016,22 @@ main {
 		}
 		.field {
 			margin: 0px;
+		}
+		.edit-photo {
+			margin-top: 15px;
+			position: relative;
+			padding: 5px;
+			width: 30px;
+			height: 30px;
+			background-color: $white;
+			box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+			img {
+				opacity: 0.5 !important;
+				width: auto !important;
+				position: relative !important;
+				height: auto !important;
+				vertical-align: sub !important;
+			}
 		}
 	}
 }

@@ -13,6 +13,31 @@
 						<div class="profile-top">
 							<div class="profile-avatar">
 								<img :src="host + profile.photo">
+								<div v-if="!showEditPhoto" v-on:click="showAcceptPhoto = true; showEditPhoto = true" class="click">
+									<span class="edit-photo">
+										<img src="@/assets/img/photo.svg" alt="">
+									</span>
+									<span>
+										Edit photo
+									</span>
+								</div>
+								<div v-if="showEditPhoto">
+									<div>
+										<img v-on:click="updatePhoto('showAcceptPhoto')" v-if="showAcceptPhoto && newPhoto" class="bg click edit-profile-button" src="@/assets/icon/icon-check.svg" alt="">
+										<img v-on:click="showAcceptPhoto = false; showEditPhoto = false" v-if="showAcceptPhoto" class="bg-sec click edit-profile-button" src="@/assets/icon/icon-close-black.svg" alt="">
+									</div>
+									<div>
+										<input
+											style="max-width:150px;"
+											enctype="multipart/form-data"
+											type="file"
+											id="file"
+											ref="file"
+											name="userProfilePhoto"
+											v-on:change="saveFile()"
+										>
+									</div>
+								</div>
 							</div>
 							<ul class="list-network">
 								<li>
@@ -29,7 +54,7 @@
 									</p>
 									<img v-if="!showAcceptFacebook" v-on:click="showAcceptFacebook = true; showEditFacebook = true" class="click edit-profile-button" src="@/assets/img/pencil.svg" alt="">
 									<b-field v-if="showEditFacebook">
-										<b-input class="edit-socials" v-model="newFacebook"></b-input>
+										<b-input type="url" class="edit-socials" v-model="newFacebook"></b-input>
 									</b-field>
 									<img v-on:click="update('newFacebook', 'showAcceptFacebook')" v-if="showAcceptFacebook && newFacebook" class="bg click edit-profile-button" src="@/assets/icon/icon-check.svg" alt="">
 									<img v-on:click="showAcceptFacebook = false; showEditFacebook = false" v-if="showAcceptFacebook" class="bg-sec click edit-profile-button" src="@/assets/icon/icon-close-black.svg" alt="">
@@ -43,7 +68,7 @@
 									</p>
 									<img v-if="!showAcceptFacebook" v-on:click="showAcceptFacebook = true; showEditFacebook = true" class="click edit-profile-button" src="@/assets/img/pencil.svg" alt="">
 									<b-field v-if="showEditFacebook">
-										<b-input class="edit-socials" v-model="newFacebook"></b-input>
+										<b-input type="url" class="edit-socials" v-model="newFacebook"></b-input>
 									</b-field>
 									<img v-on:click="update('newFacebook', 'showAcceptFacebook')" v-if="showAcceptFacebook && newFacebook" class="bg click edit-profile-button" src="@/assets/icon/icon-check.svg" alt="">
 									<img v-on:click="showAcceptFacebook = false; showEditFacebook = false" v-if="showAcceptFacebook" class="bg-sec click edit-profile-button" src="@/assets/icon/icon-close-black.svg" alt="">
@@ -57,7 +82,7 @@
 									</p>
 									<img v-if="!showAcceptLinkedin" v-on:click="showAcceptLinkedin = true; showEditLinkedin = true" class="click edit-profile-button" src="@/assets/img/pencil.svg" alt="">
 									<b-field v-if="showEditLinkedin">
-										<b-input class="edit-socials" v-model="newLinkedin"></b-input>
+										<b-input type="url" class="edit-socials" v-model="newLinkedin"></b-input>
 									</b-field>
 									<img v-on:click="update('newLinkedin', 'showAcceptLinkedin')" v-if="showAcceptLinkedin && newLinkedin" class="bg click edit-profile-button" src="@/assets/icon/icon-check.svg" alt="">
 									<img v-on:click="showAcceptLinkedin = false; showEditLinkedin = false" v-if="showAcceptLinkedin" class="bg-sec click edit-profile-button" src="@/assets/icon/icon-close-black.svg" alt="">
@@ -71,7 +96,7 @@
 									</p>
 									<img v-if="!showAcceptLinkedin" v-on:click="showAcceptLinkedin = true; showEditLinkedin = true" class="click edit-profile-button" src="@/assets/img/pencil.svg" alt="">
 									<b-field v-if="showEditLinkedin">
-										<b-input class="edit-socials" v-model="newLinkedin"></b-input>
+										<b-input type="url" class="edit-socials" v-model="newLinkedin"></b-input>
 									</b-field>
 									<img v-on:click="update('newLinkedin', 'showAcceptLinkedin')" v-if="showAcceptLinkedin && newLinkedin" class="bg click edit-profile-button" src="@/assets/icon/icon-check.svg" alt="">
 									<img v-on:click="showAcceptLinkedin = false; showEditLinkedin = false" v-if="showAcceptLinkedin" class="bg-sec click edit-profile-button" src="@/assets/icon/icon-close-black.svg" alt="">
@@ -85,7 +110,7 @@
 									</p>
 									<img v-if="!showAcceptTelegram" v-on:click="showAcceptTelegram = true; showEditTelegram = true" class="click edit-profile-button" src="@/assets/img/pencil.svg" alt="">
 									<b-field v-if="showEditTelegram">
-										<b-input class="edit-socials" v-model="newTelegram"></b-input>
+										<b-input type="url" class="edit-socials" v-model="newTelegram"></b-input>
 									</b-field>
 									<img v-on:click="update('newTelegram', 'showAcceptTelegram')" v-if="showAcceptTelegram && newTelegram" class="bg click edit-profile-button" src="@/assets/icon/icon-check.svg" alt="">
 									<img v-on:click="showAcceptTelegram = false; showEditTelegram = false" v-if="showAcceptTelegram" class="bg-sec click edit-profile-button" src="@/assets/icon/icon-close-black.svg" alt="">
@@ -99,7 +124,7 @@
 									</p>
 									<img v-if="!showAcceptTelegram" v-on:click="showAcceptTelegram = true; showEditTelegram = true" class="click edit-profile-button" src="@/assets/img/pencil.svg" alt="">
 									<b-field v-if="showEditTelegram">
-										<b-input class="edit-socials" v-model="newTelegram"></b-input>
+										<b-input type="url" class="edit-socials" v-model="newTelegram"></b-input>
 									</b-field>
 									<img v-on:click="update('newTelegram', 'showAcceptTelegram')" v-if="showAcceptTelegram && newTelegram" class="bg click edit-profile-button" src="@/assets/icon/icon-check.svg" alt="">
 									<img v-on:click="showAcceptTelegram = false; showEditTelegram = false" v-if="showAcceptTelegram" class="bg-sec click edit-profile-button" src="@/assets/icon/icon-close-black.svg" alt="">
@@ -113,7 +138,7 @@
 									</p>
 									<img v-if="!showAcceptcalendly" v-on:click="showAcceptcalendly = true; showEditcalendly = true" class="click edit-profile-button" src="@/assets/img/pencil.svg" alt="">
 									<b-field v-if="showEditcalendly">
-										<b-input class="edit-socials" v-model="newcalendly"></b-input>
+										<b-input type="url" class="edit-socials" v-model="newcalendly"></b-input>
 									</b-field>
 									<img v-on:click="update('newcalendly', 'showAcceptcalendly')" v-if="showAcceptcalendly && newcalendly" class="bg click edit-profile-button" src="@/assets/icon/icon-check.svg" alt="">
 									<img v-on:click="showAcceptcalendly = false; showEditcalendly = false" v-if="showAcceptcalendly" class="bg-sec click edit-profile-button" src="@/assets/icon/icon-close-black.svg" alt="">
@@ -127,7 +152,7 @@
 									</p>
 									<img v-if="!showAcceptcalendly" v-on:click="showAcceptcalendly = true; showEditcalendly = true" class="click edit-profile-button" src="@/assets/img/pencil.svg" alt="">
 									<b-field v-if="showEditcalendly">
-										<b-input class="edit-socials" v-model="newcalendly"></b-input>
+										<b-input type="url" class="edit-socials" v-model="newcalendly"></b-input>
 									</b-field>
 									<img v-on:click="update('newcalendly', 'showAcceptcalendly')" v-if="showAcceptcalendly && newcalendly" class="bg click edit-profile-button" src="@/assets/icon/icon-check.svg" alt="">
 									<img v-on:click="showAcceptcalendly = false; showEditcalendly = false" v-if="showAcceptcalendly" class="bg-sec click edit-profile-button" src="@/assets/icon/icon-close-black.svg" alt="">
@@ -279,8 +304,6 @@
 				activeTab: 0,
 				activeTabInterview: 0,
 				
-				file: "",
-
 				showEditRole: false,
 				showEditLinkedin: false,
 				showEditFacebook: false,
@@ -299,7 +322,8 @@
 				newLinkedin: "",
 				newFacebook: "",
 				newTelegram: "",
-				newcalendly: ""
+				newcalendly: "",
+				newPhoto: ""
 			}
 		},
 		methods: {
@@ -328,7 +352,7 @@
 			},
 
 			saveFile () {
-				this.file = this.$refs.file.files[0];
+				this.newPhoto = this.$refs.file.files[0];
 			},
 
 			update (el, param) {
@@ -346,6 +370,27 @@
 				.catch(e => {
 					this.$root.createError(e, 'oops')
 				})
+			},
+
+			updatePhoto (param) {
+				if (this.newPhoto) {
+					let formData = new FormData();
+					formData.append('userProfilePhoto', this.newPhoto);
+
+					axios.post(`${host}/login/profilephoto`, formData, {
+						headers: { authorization: localStorage.auth }
+					})
+					.then(res => {
+						this[param] = false
+						this[param.replace('Accept', 'Edit')] = false
+					})
+					.catch(e => {
+						this.$root.createError(e, 'oops')
+					})
+				}
+				else {
+					return true
+				}
 			}
 		},
 	}

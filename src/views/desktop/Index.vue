@@ -27,8 +27,7 @@
       <!-- SILVER Sponsors but with gold syle -->
       <section class="section section-silver">
         <div class="columns">
-
-          <div class="column is-3">
+          <div class="column is-one-fifth is-offset-one-fifth">
             <div class="tile is-vertical">
               <div class="tile is-parent">
                 <Gold data="10"/><!-- STO -->
@@ -39,11 +38,11 @@
             </div>
           </div>
 
-          <div v-on:click="$root.joinStage('eworkshop')" class="column">
+          <div v-on:click="$root.joinStage('eworkshop')" class="column is-one-fifth">
             <Eworkshop />
           </div>
 
-          <div class="column is-3">
+          <div class="column is-one-fifth">
             <div class="tile is-vertical">
               <div class="tile is-parent">
                 <Gold data="16"/><!-- fas -->
@@ -110,11 +109,8 @@
               <div class="column is-one-third">
                 <Basic data="43"/><!-- block sdk -->
               </div>
-              <!--<div class="column is-one-third">
-                <Basic data="31"/><-- makeAvent --
-              </div>-->
               <div class="column is-one-third">
-                <Basic data="32"/><!-- name -->
+                <Basic data="30"/><!-- ebakus -->
               </div>
             </div>
           </div>
@@ -130,19 +126,16 @@
           <div class="column basic-c is-one-third">
             <div class="columns is-multiline">
               <div class="column is-one-third">
-                <Basic data="34"/><!-- name -->
+                <Basic data="45"/><!-- copyrage -->
               </div>
               <div class="column is-one-third">
-                <Basic data="36"/><!-- name -->
+                <Basic data="46"/><!-- fuse -->
               </div>
               <div class="column is-one-third">
-                <Basic data="37"/>
+                <Basic data="60"/><!-- algotrader -->
               </div>
               <div class="column is-one-third">
-                <Basic data="38"/>
-              </div>
-              <div class="column is-one-third">
-                <Basic data="39"/>
+                <Basic data="31"/><!-- makeAvent -->
               </div>
             </div>
           </div>
@@ -157,10 +150,10 @@
             <Basic data="35"/><!-- lotech lab -->
           </div>
           <div class="column is-1">
-            <Basic data="40"/><!-- LairEast -->
+            <Basic data="50"/><!-- LairEast -->
           </div>
           <div class="column is-1">
-            <Basic data="40"/><!-- Homebloc -->
+            <Basic data="65"/><!-- Homebloc -->
           </div>
         </div>
       </section>

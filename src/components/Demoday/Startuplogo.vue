@@ -1,6 +1,6 @@
 <template>
-	<div v-on:click="$root.openStartupProfile(getStartupProfile(id)._id)" class="tile is-child startup-logo box">
-		<div class="has-text-centered">
+	<div v-on:click="$root.openStartupProfile(getStartupProfile(id)._id)" class="column is-one-third startup-logo">
+		<div class="box has-text-centered">
 			<img v-if="getStartupProfile(id)" :src="host + getStartupProfile(id).logo" alt="">
 			<h3 v-else>{{content.startup}}</h3>
 		</div>

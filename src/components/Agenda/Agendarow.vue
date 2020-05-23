@@ -20,7 +20,7 @@
 			<div class="column agenda-touch is-uppercase">
 				<div class="has-text-centered">
 					<h3 @click="$root.addReminder(data, reminder)" class="click">{{content.remind}}</h3>
-					<h3 :class="data.time > new Date().getTime() ? 'disabled' : ''" @click="$root.joinStage(data.stage)" class="click">{{content.joinSpeach}}</h3>
+					<h3 :class="data.time > new Date().getTime() ? 'disabled' : ''" @click="data.time < new Date().getTime() ? $root.joinStage(data.stage) : ''" class="click">{{content.joinSpeach}}</h3>
 				</div>
 			</div>
 		</div>

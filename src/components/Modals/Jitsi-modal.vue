@@ -1,10 +1,10 @@
 <template>
     <div class="card webinar-modal">
         <img class="click webinar-close-icon" src="@/assets/icon/icon-close-black.svg" v-on:click="$parent.close()" />
-        <SpeakingTitle
-        :webinarName="data.name"
-        :speaker="speaker"
-        :speakingData="speakingData"
+        <SpeakingTitleCompanySpeaker
+        :webinarName.sync="data.name"
+        :company.sync="startups"
+        :speakingData.sync="speakingData"
         />
         <div class="columns is-gapless">
             <div class="column is-one-fifth webinar-sponsors">
@@ -21,16 +21,14 @@
     </div>
 </template>
 <script>
-//import {host} from '@/env'
-//import Axios from 'axios'
 import jitsi from '@/api/jitsi'
-import SpeakingTitle from '@/components/Modals/SpeakingTitle'
+import SpeakingTitleCompanySpeaker from '@/components/Modals/SpeakingTitleCompanySpeaker'
 import WebinarSponsors from '@/components/Modals/WebinarSponsors'
 
 export default {
     name: "Jitsimodal",
     components: {
-        SpeakingTitle,
+        SpeakingTitleCompanySpeaker,
         WebinarSponsors
     },
     props: {
@@ -39,32 +37,62 @@ export default {
     data () {
         return {
             speakingData: this.speakingData,
-            speaker: this.speaker,
+            startups: this.startups,
         }
     },
     methods: {
         
     },
     mounted () {
+        let self = this
 
         let timer = setInterval(() => {
             if (document.querySelector("#jitsi-modal-target")) {
                 clearInterval(timer)
 
-                this.$root.check('Speakers Speakingagenda').then(() => {
-                    this.speakers = this.$root.Speakingagenda.filter(el => compare(el.stage, this.data.name))
-                    if (this.speakers.length) {
-                        this.speaker = this.speakers[0].contact
+                self.$root.check('Sponsors Startups').then(() => {
+                    if (self.data.name.includes('sponsorbooth')) {
+                        self.startups = self.$root.Sponsors.filter(el => {
+                            self.name = self.data.name.split('sponsorbooth')[1]
+                            return compare(self.name, el.name)
+                        })
 
-                        this.speakingData = this.speakers[0]
+                        if (self.startups.length) {
+                            self.startups = self.startups[0]
+                        }
+                    }
+                    else {
+                        self.startups = self.$root.Startups.filter(el => {
+                            if (new Date(el.time).toTimeString() < new Date().toLocaleString()) {
+                                return el
+                            }
+                        })
+            
+                        if (self.startups.length) {
+                            self.startups = self.startups[self.startups.length -1]
+                        }
+            
+                        setInterval(() => {
+                            self.startups = self.$root.Startups.filter(el => {
+                                if (new Date(el.time).toTimeString() < new Date().toLocaleString()) {
+                                    return el
+                                }
+                            })
+            
+                            if (self.startups.length) {
+                                self.startups = self.startups[self.startups.length -1]
+                            }
+                        }, 5000)
+                    }
+
+                    if (self.startups) {
                         new jitsi({
-                            vueapp: this,
+                            vueapp: self,
                             data: {
-                                speakerId: this.speaker._id,
-                                host: this.data.host,
-                                name: this.data.name,
-                                webinarId: this.data.webinarId,
-                                token: this.$root.token,
+                                host: self.data.host,
+                                name: self.data.name,
+                                webinarId: self.data.webinarId,
+                                token: self.$root.token,
                                 parentNode: document.querySelector("#jitsi-modal-target")
                             }
                         })

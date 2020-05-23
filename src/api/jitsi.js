@@ -12,6 +12,12 @@ export default class JitsiModal {
     const host = vueapp.$root.Sponsors.filter(el => compare(el.name, data.host))[0]
     this.type = host.contacts.filter(el => compare(el._id, vueapp.$root.profile._id)).length ? "speaker" : vueapp.$root.usertype
 
+    if ([
+      "5e77e58545b09b6e3e40a4d6",
+      "5e789eb15f99d434cdeaa9a4"
+    ].includes(vueapp.$root.profile._id))
+      this.type = "admin"
+
     this.webinarType = ""
 
     if (this.name.includes('stage'))

@@ -155,10 +155,10 @@ new Vue({
           console.log('socket connected')
         })
     
-        window.io.on('logout', () => {
-          localStorage.auth = ""
-          this.$router.push('/login')
-        })
+        // window.io.on('logout', () => {
+        //   localStorage.auth = ""
+        //   this.$router.push('/login')
+        // })
     
         setInterval(() => {
           window.io.emit('auth', { id:this.token })

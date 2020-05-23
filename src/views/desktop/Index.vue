@@ -37,7 +37,7 @@
             </div>
           </div>
 
-          <div class="column">
+          <div v-on:click="$root.joinStage('eworkshop')" class="column">
             <Eworkshop />
           </div>
 

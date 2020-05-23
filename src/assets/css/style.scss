@@ -1985,6 +1985,38 @@ main {
 				}
 			}
 		}
+		.edit-profile-button {
+			width: 18px;
+			height: 18px;
+			margin-left: 15px;
+		}
+		.column {
+			position: relative;
+		}
+		.bg {
+			background-color: $primary;
+			padding: 2px;
+			border-radius: 2px;
+		}
+		.center {
+			margin-left: 0px;
+			top: 50%;
+			left: 50%;
+			position: absolute;
+			transform: translate(-50%, -50%);
+		}
+		.bg-sec {
+			background-color: $secondary;
+			padding: 2px;
+			border-radius: 2px;
+		}
+		.edit-socials {
+			max-width: 150px;
+    		height: 30px;
+		}
+		.field {
+			margin: 0px;
+		}
 	}
 }
 // PROFILE COMPANY //

@@ -71,6 +71,23 @@
                 this.$root.openPage(this.type, toUp(this.speaker.company))
             }
         },
+        watch: {
+            speaker: function () {
+                if (this.speaker) {
+                    this.$root.tryGetCompanyLogo(this.speaker.company).then(el => {
+                        this.companyLogo = el
+                    })
+
+                    this.$root.defineBoothType(toUp(this.speaker.company))
+                    .then(type => {
+                        if (type) {
+                            this.haveBooth = true
+                            this.type = type
+                        }
+                    })
+                }
+            }
+        },
     }
 </script>
 <style lang="scss">

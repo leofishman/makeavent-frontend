@@ -3,7 +3,7 @@
         <img class="click webinar-close-icon" src="@/assets/icon/icon-close-black.svg" v-on:click="$parent.close()" />
         <SpeakingTitleCompanySpeaker
         :webinarName.sync="data.name"
-        :company.sync="speaker"
+        :company.sync="startups"
         :speakingData.sync="speakingData"
         />
         <div class="columns is-gapless">
@@ -36,19 +36,44 @@ export default {
     },
     data() {
         this.html = ""
+        let self = this
 
-        this.$root.check('Sponsors').then(() => {
-            this.sponsors = this.$root.Sponsors.filter(el => {
-                if (el.name.includes('sponsorbooth')) {
-                    this.name = el.name.split('sponsorbooth')[1]
-                    return compare(el.name, this.data.host)
+        this.$root.check('Sponsors Startups').then(() => {
+            if (this.data.name.includes('sponsorbooth')) {
+                this.startups = this.$root.Sponsors.filter(el => {
+                    this.name = this.data.name.split('sponsorbooth')[1]
+                    return compare(this.name, el.name)
+                })
+
+                if (this.startups.length) {
+                    this.startups = this.startups[0]
                 }
-                else
-                    return compare(el.name, this.data.host)
-            })
+            }
+            else {
+                this.startups = this.$root.Startups.filter(el => {
+                    if (new Date(el.time).toTimeString() < new Date().toLocaleString()) {
+                        return el
+                    }
+                })
+    
+                if (this.startups.length) {
+                    this.startups = this.startups[this.startups.length -1]
+                }
+    
+                setInterval(() => {
+                    self.startups = self.$root.Startups.filter(el => {
+                        if (new Date(el.time).toTimeString() < new Date().toLocaleString()) {
+                            return el
+                        }
+                    })
+    
+                    if (self.startups.length) {
+                        self.startups = self.startups[self.startups.length -1]
+                    }
+                }, 5000)
+            }
 
-            if (this.sponsors.length) {
-                this.speaker = this.sponsors[0]
+            if (this.startups) {
 
                 const params = {
                     leaveUrl: this.data.leaveUrl,
@@ -68,11 +93,12 @@ export default {
                     document.getElementById('zoom-iframe').contentWindow.document.write(this.html)
                 })
             }
-        }).catch(e => console.log(`${e} inaccessible`))
+        })
+        // .catch(e => console.log(`${e} inaccessible`))
 
         return {
             speakingData: this.speakingData,
-            speaker: this.speaker,
+            startups: this.startups,
             html: this.html,
             frameHeight: window.innerHeight - 144
         }

@@ -4,11 +4,9 @@ const stages = {
         'microphone', 'camera', 'desktop'
     ],
     admin: [
-        'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
-        'fodeviceselection', 'hangup', 'profile', 'info', 'chat', 'recording',
-        'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
-        'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
-        'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone'
+        'mute-everyone', 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
+        'fodeviceselection', 'hangup', 'profile', 'chat', 'settings',
+        'raisehand', 'videoquality', 'invite', 'stats', 'e2ee', 'security'
     ],
     basic: [
         'fullscreen'
@@ -36,11 +34,9 @@ const sponsorbooth = {
         'microphone', 'camera', 'desktop'
     ],
     admin: [
-        'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
-        'fodeviceselection', 'hangup', 'profile', 'info', 'chat', 'recording',
-        'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
-        'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
-        'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone'
+        'mute-everyone', 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
+        'fodeviceselection', 'hangup', 'profile', 'chat', 'settings',
+        'raisehand', 'videoquality', 'invite', 'stats', 'e2ee', 'security'
     ],
     basic: [
         'fullscreen'
@@ -68,11 +64,9 @@ const meetup = {
         'microphone', 'camera', 'desktop'
     ],
     admin: [
-        'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
-        'fodeviceselection', 'hangup', 'profile', 'info', 'chat', 'recording',
-        'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
-        'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
-        'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone'
+        'mute-everyone', 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
+        'fodeviceselection', 'hangup', 'profile', 'chat', 'settings',
+        'raisehand', 'videoquality', 'invite', 'stats', 'e2ee', 'security'
     ],
     basic: [
         'fullscreen', 'raisehand', 'chat',
@@ -100,11 +94,9 @@ const demoday = {
         'microphone', 'camera', 'desktop'
     ],
     admin: [
-        'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
-        'fodeviceselection', 'hangup', 'profile', 'info', 'chat', 'recording',
-        'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
-        'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
-        'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone'
+        'mute-everyone', 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
+        'fodeviceselection', 'hangup', 'profile', 'chat', 'settings',
+        'raisehand', 'videoquality', 'invite', 'stats', 'e2ee', 'security'
     ],
     basic: [
         'kick'
@@ -140,11 +132,9 @@ const networkingbooth = {
         'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
     ],
     admin: [
-        'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
-        'fodeviceselection', 'hangup', 'profile', 'info', 'chat', 'recording',
-        'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
-        'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
-        'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone'
+        'mute-everyone', 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
+        'fodeviceselection', 'hangup', 'profile', 'chat', 'settings',
+        'raisehand', 'videoquality', 'invite', 'stats', 'e2ee', 'security'
     ],
     basic: [
         'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'

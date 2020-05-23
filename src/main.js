@@ -627,21 +627,17 @@ new Vue({
     },
 
     joinWebinar (data) {
-      if (new Date().getTime() > data.time) {
-        if (compare(data.name, "demoday") || data.name.includes('sponsorbooth')) {
-          this.$buefy.modal.open({
-            props: {
-              data: data
-            },
-            parent: this,
-            component: ZoomCompanySpeaker,
-            hasModalCard: true,
-            canCancel: false,
-            trapFocus: true,
-            fullScreen: true
-          })
-        }
-        else if (compare(data.platform, "jitsi")) {
+      if (new Date().getTime() < new Date(data.time).getTime()) {
+        this.$buefy.dialog.alert({
+          title: this.content.common.webinarNotStarted,
+          message: `Please return at ${new Date(Number(data.time)).toLocaleString()}`,
+        })
+      }
+      else if (data.status != 'ongoing') {
+        this.createError(this.content.ErrorMessages[1], 'webinarNotSet')
+      }
+      else {
+        if (compare(data.name, 'demoday') || data.name.includes('sponsorbooth') || compare(data.name, "networkingbooth")) {
           this.$buefy.modal.open({
             props: {
               data: data
@@ -654,7 +650,7 @@ new Vue({
             fullScreen: true
           })
         }
-        else if (compare(data.platform, "zoom")) {
+        else if (data.name.includes('stage')) {
           this.$buefy.modal.open({
             props: {
               data: data
@@ -667,13 +663,14 @@ new Vue({
             fullScreen: true
           })
         }
+        else {
+          this.$buefy.dialog.alert({
+            title: this.content.common.webinarNotStarted,
+            message: `Please return at ${new Date(Number(data.time)).toLocaleString()}`,
+          })
+        }
       }
-      else {
-        this.$buefy.dialog.alert({
-          title: this.content.common.webinarNotStarted,
-          message: `Please return at ${new Date(Number(data.time)).toLocaleString()}`,
-        })
-      }
+
     },
 
     getWebinar (name) {

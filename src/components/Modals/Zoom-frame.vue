@@ -44,13 +44,20 @@ export default {
     },
     data() {
         this.html = ""
-
+        let self = this
         this.$root.check('Speakers Speakingagenda').then(() => {
             setInterval(() => {
-                this.speakers = this.$root.Speakingagenda.filter(el => compare(el.stage, this.data.name))
-                if (this.speakers.length) {
-                    this.speaker = this.speakers[0].contact
-                    this.speakingData = this.speakers[0]
+                self.speakers = self.$root.Speakingagenda.filter(el => {
+                    if (compare(el.stage, self.data.name)) {
+                        if (new Date(el.time).toLocaleString() < new Date().toLocaleString()) {
+                            return el
+                        }
+                    }
+                })
+
+                if (self.speakers.length) {
+                    self.speaker = self.speakers[self.speakers.length -1].contact
+                    self.speakingData = self.speakers[self.speakers.length -1]
                 }
             }, 5000)
             this.speakers = this.$root.Speakingagenda.filter(el => compare(el.stage, this.data.name))
@@ -73,6 +80,7 @@ export default {
                 .then(res => {
                     const decrypted = this.$root.decrypt(res.data.encryptedData)
                     this.html = decrypted
+                    console.log(this.html)
                     document.getElementById('zoom-iframe').contentWindow.document.write(this.html)
                 })
             }

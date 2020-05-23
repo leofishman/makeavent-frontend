@@ -53,15 +53,19 @@
                         <div v-if="$root.Startups" class="tile">
 
                             <div class="columns is-multiline"> 
+                                <Startuplogo id="9"/><!-- decrypto -->
                                 <Startuplogo id="0"/><!-- money on change -->
-                                <Startuplogo id="6"/><!-- decrypto -->
+                                <Startuplogo id="10"/><!-- crypttp-->
                                 <Startuplogo id="1"/><!-- sensitrust -->
                                 <Startuplogo id="2"/><!-- altvesto -->
                                 <Startuplogo id="3"/><!-- block sdk -->
-                                <Startuplogo id="7"/><!-- crypttp-->
                                 <Startuplogo id="4"/><!-- fuse -->
-                                <Startuplogo id="8"/><!-- BLANK-->
-                                <Startuplogo id="5"/><!-- makeAvent -->
+                                <Startuplogo id="5"/><!-- ebakus -->
+                                <Startuplogo id="6"/><!-- copyrage -->
+                                <Startuplogo id="7"/><!-- algo trader -->
+                                <Startuplogo id="8"/><!-- makeavent -->
+                                
+                                
                             </div>
 
                         </div>

@@ -960,17 +960,12 @@ main {
 	.eworkshop {
 		margin-left: auto;
 		margin-right: auto;
-		width: 280px;
 		height: 280px;
 		flex: none;
 		position: relative;
 		display: flex;
 		align-items: center;
 		background-color: $grey-lighter;
-		@media screen and (min-width: $fullhd) {
-			width: 380px;
-			height: 380px;
-		}
 		.has-text-centered {
 			width: 100%;
 		}
@@ -1100,7 +1095,7 @@ main {
 		}
 	}
 	.gold {
-		padding: 20px;
+		padding: 30px 10px;
 		position: relative;
 		img {
 			max-height: 70px;
@@ -1168,6 +1163,9 @@ main {
 	.section-basic {
 		.basic-a, .basic-c {
 			padding: 0;
+			.columns {
+				justify-content: center;
+			}
 			@media screen and (min-width: $widescreen) {
 				.column {
 					padding: 20px;
@@ -2064,6 +2062,9 @@ main {
 	ul {
 		margin: 10px 0 10px 20px;
 		list-style: inherit;
+	}
+	iframe {
+		height: 320px;
 	}
 	&:before {
 		content: "";

@@ -3030,6 +3030,19 @@ main {
 		object-fit: contain;
 	}
 }
+
+#under-nav-hint {
+	width: 100%;
+	background-color: $white;
+	padding: 20px;
+	text-align: center;
+	line-height: 36px;
+
+	button {
+		margin-left: 10px;
+	}
+}
+
 // SPONSOR DESIGN //
 //////////////////////////////////////////
 /* Style the video: 100% width and height to cover the entire window */

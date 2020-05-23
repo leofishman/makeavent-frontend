@@ -90,11 +90,11 @@
 						</div>
 
 						<!-- NOT RELEASED -->
-						<div class="my-interviews">
+						<!-- <div class="my-interviews">
 							<h2>{{content.mi}}</h2>
 							<b-tabs v-model="activeTabInterview">
 								<b-tab-item label="Upcoming" class="interview-upcoming">
-									<!-- <div class="interview-today">
+									<div class="interview-today">
 										<h2 class="date-turn">{{$root.content.common.today}}</h2>
 										<Interviewsupcoming />
 									</div>
@@ -102,28 +102,28 @@
 									<div class="interview-tomorrow">
 										<h2 class="date-turn">23.04.19</h2>
 										<Interviewsupcoming />
-									</div> -->
+									</div>
 								</b-tab-item>
 
 								<b-tab-item label="Past" class="interview-past">
-									<!-- <div class="interview-today">
+									<div class="interview-today">
 										<h2 class="date-turn">13.03.19</h2>
 										<Interviewspast />
 									</div>
 									<div class="interview-tomorrow">
 										<h2 class="date-turn">23.01.19</h2>
 										<Interviewspast />
-									</div> -->
+									</div>
 								</b-tab-item>
 
 								<b-tab-item label="Failed" class="interview-failed">
-									<!-- <div class="interview-today">
+									<div class="interview-today">
 										<h2 class="date-turn">13.03.19</h2>
 										<Interviewsfailed />
-									</div> -->
+									</div>
 								</b-tab-item>
 							</b-tabs>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</section>

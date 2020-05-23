@@ -128,9 +128,11 @@ new Vue({
 
     // update resousrce every 5 seconds
     setInterval(() => {
-      if (this.shouldCheckResources) 
+      if (this.shouldCheckResources) {
         this.getResourses()
-    }, 5000)
+        this.getUser()
+      }
+  }, 5000)
 
     setInterval(() => {
       if (this.shouldCheckResources)

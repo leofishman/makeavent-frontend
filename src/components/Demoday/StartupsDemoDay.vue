@@ -54,14 +54,14 @@
 
                             <div class="columns is-multiline"> 
                                 <Startuplogo id="0"/><!-- money on change -->
-                                <Startuplogo id="5"/><!-- decrypto -->
-                                <Startuplogo id="6"/><!-- crypttp -->
+                                <Startuplogo id="6"/><!-- decrypto -->
                                 <Startuplogo id="1"/><!-- sensitrust -->
                                 <Startuplogo id="2"/><!-- altvesto -->
                                 <Startuplogo id="3"/><!-- block sdk -->
-                                <Startuplogo id="7"/><!-- name-->
-                                <Startuplogo id="8"/><!-- name-->
-                                <Startuplogo id="4"/><!-- makeAvent -->                                
+                                <Startuplogo id="7"/><!-- crypttp-->
+                                <Startuplogo id="4"/><!-- fuse -->
+                                <Startuplogo id="8"/><!-- BLANK-->
+                                <Startuplogo id="5"/><!-- makeAvent -->
                             </div>
 
                         </div>

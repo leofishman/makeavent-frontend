@@ -8,6 +8,7 @@
     <Stories v-if="false" />
     
     <div class="container" v-if="!joinMeeting && ready">
+      
       <!-- Top row -->
       <section class="section section-top">
         <Toprow />
@@ -15,14 +16,15 @@
 
       <!-- Main Sponsor -->
       <section class="section section-main">
-        <!-- Main Sponsor -->
         <Main data="6"/><!-- Kaspersky -->
       </section>
 
+      <!-- GOLD Sponsor -->
       <section class="section section-gold">
         <Gold data="11"/><!-- IOVLabs -->
       </section>
 
+      <!-- SILVER Sponsors but with gold syle -->
       <section class="section section-silver">
         <div class="columns">
 
@@ -47,14 +49,14 @@
                 <Gold data="16"/><!-- fas -->
               </div>
               <div class="tile is-parent">
-                <Gold data="14"/><!-- name -->
+                <Gold data="14"/><!-- Mohr & Wolfe -->
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Bronze Sponsors -->
+      <!-- BRONZE Sponsors -->
       <section class="section section-bronze">
         <div class="column">
           <div class="columns">
@@ -90,11 +92,10 @@
 
       </section>
 
-      <!-- Basic Sponsor -->
+      <!-- STARTUPS -->
       <section class="section section-basic">
         <div class="columns has-text-centered">
 
-          <!-- Basic-a -->
           <div class="column basic-a is-one-third">
             <div class="columns is-multiline">
               <div class="column is-one-third">
@@ -118,7 +119,6 @@
             </div>
           </div>
 
-          <!-- Basic-b -->
           <div class="column basic-b">
             <div v-on:click="$root.navToPage('sip')" class="tile box flex-middle startups click">
               <div class="has-text-centered fix-width">
@@ -127,7 +127,6 @@
             </div>
           </div>
 
-          <!-- Basic-c -->
           <div class="column basic-c is-one-third">
             <div class="columns is-multiline">
               <div class="column is-one-third">
@@ -151,17 +150,17 @@
         </div>
       </section>
 
-      <!-- Basic Sponsor -->
+      <!-- STANDARS -->
       <section class="section section-basic-bottom">
         <div class="columns">
           <div class="column is-1">
             <Basic data="35"/><!-- lotech lab -->
           </div>
           <div class="column is-1">
-            <Basic data="28"/><!-- decrypto -->
+            <Basic data="40"/><!-- LairEast -->
           </div>
           <div class="column is-1">
-            <Basic data="28"/><!-- decrypto -->
+            <Basic data="40"/><!-- Homebloc -->
           </div>
         </div>
       </section>

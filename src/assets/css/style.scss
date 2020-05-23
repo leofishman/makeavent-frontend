@@ -1051,11 +1051,11 @@ main {
 	}
 	.main {
 		margin: auto;
-		width: 500px;
-		height: 500px;
+		width: 700px;
+		height: 400px;
 		position: relative;
 		img {
-			max-width: 90%;
+			max-width: 80%;
 		}
 		:before {
 			content: "";
@@ -2061,6 +2061,10 @@ main {
 	box-shadow: $shadow-2;
 	text-align: justify;
 	position: relative;
+	ul {
+		margin: 10px 0 10px 20px;
+		list-style: inherit;
+	}
 	&:before {
 		content: "";
 		top: 10px;
@@ -2126,19 +2130,23 @@ main {
 	}
 	h1 {
 		margin-top: 15px;
-		font-weight: normal;
+		font-weight: 500;
 		strong {
 			text-transform: uppercase;
 		}
 	}
 	h2 {
-		margin-top: 15px;
+		margin-top: 5px;
+		margin-bottom: 10px;
+		font-size: 0.9em;
+		font-weight: normal;
+		font-style: italic;
 	}
 	.memeber-email {
-		margin-top: 15px;
 		cursor: pointer;
 		color: $secondary;
 		font-weight: normal;
+		font-size: 0.9em;
 		overflow: hidden;
 		word-break: break-all;
 	}
@@ -3149,14 +3157,9 @@ main {
 /* FAS */
 .fas {
 	$fas: #66ccc5;
-	@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
 	.section-profile-company {
 		a {
 			color: $fas;
-		}
-		* {
-			font-family: 'Open Sans', sans-serif;
-			font-weight: 700;
 		}
 		.list-network li span {
 			background-color: $fas;
@@ -3172,6 +3175,34 @@ main {
 			img {
 				border-color: $fas;
 				background-color: $fas;
+			}
+		}
+	}
+}
+/* MOHR WOLFE */
+.mohr-wolfe {
+	$mohr-wolfe: #1a3e7c;
+	$mohr-wolfe-secondary: #fd7350;
+	background-color: $mohr-wolfe;
+	.section-profile-company {
+		a {
+			color: $mohr-wolfe;
+		}
+		.list-network li {
+			span {
+				background-color: $mohr-wolfe-secondary;
+			}
+			a {
+				color: $white;
+			}
+		}
+		.member-action {
+			background-color: $mohr-wolfe;
+		}
+		figure {
+			img {
+				border-color: $mohr-wolfe-secondary;
+				background-color: $mohr-wolfe-secondary;
 			}
 		}
 	}
@@ -3214,44 +3245,117 @@ main {
 	}
 }
 
-/* CRYPTTP */
-/*.crypttp {
-	$crypttp: #181935;
-	$crypttp-secondary: #008DE4;
-	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
-
-	min-height: calc( 100vh - 80px);
-	background-color: $crypttp;
-
+/* MONEY ON CHAIN */
+.money-on-chain {
+	$money-on-chain: #0c3c50;
+	$money-on-chain-secondary: #2cafa6;
+	background-color: $money-on-chain;
 	.section-profile-company {
 		a {
-			color: $crypttp-secondary;
-		}
-		* {
-			font-family: 'Roboto', sans-serif;
-			font-weight: 500;
+			color: $money-on-chain-secondary;
 		}
 		.list-network li {
 			span {
-				background-color: $crypttp-secondary;
+				background-color: $money-on-chain-secondary;
+				img {
+					opacity: 1;
+					filter: invert(1);
+				}
 			}
 			a {
 				color: $white;
 			}
-			img {
-				opacity: 1;
-				filter: invert(1);
-			}
 		}
 		.member-action {
-			background-color: $crypttp;
+			background-color: $money-on-chain;
 		}
 		figure {
 			img {
-				border-color: $crypttp-secondary;
-				background-color: $crypttp-secondary;
+				border-color: $money-on-chain-secondary;
+				background-color: $money-on-chain-secondary;
 			}
 		}
 	}
 }
-*/
+/* LIBONOMY */
+.libonomy {
+	$libonomy: #14586b;
+	$libonomy-secondary: #23d1ea;
+	background-color: $libonomy;
+	.section-profile-company {
+		a {
+			color: $libonomy;
+		}
+		.list-network li {
+			span {
+				background-color: $libonomy-secondary;
+			}
+			a {
+				color: $white;
+			}
+		}
+		.member-action {
+			background-color: $libonomy;
+		}
+		figure {
+			img {
+				border-color: $libonomy-secondary;
+				background-color: $libonomy-secondary;
+			}
+		}
+	}
+}
+/* DASH */
+.dash {
+	$dash: #008de4;
+	.section-profile-company {
+		a {
+			color: $dash;
+		}
+		.list-network li {
+			span {
+				background-color: $dash;
+				img {
+					opacity: 1;
+					filter: invert(1);
+				}
+			}
+		}
+		.member-action {
+			background-color: $dash;
+		}
+		figure {
+			img {
+				border-color: $dash;
+				background-color: $dash;
+			}
+		}
+	}
+}
+/* LIBONOMY */
+.quantia-capital {
+	$quantia-capital: #00006a;
+	$quantia-capital-secondary: #52d1d5;
+	background-color: $quantia-capital;
+	.section-profile-company {
+		a {
+			color: $quantia-capital;
+		}
+		.list-network li {
+			span {
+			}
+			a {
+				color: $white;
+			}
+		}
+		.member-action {
+			background-color: $quantia-capital;
+		}
+		figure {
+			img {
+				border-color: $quantia-capital-secondary;
+				background-color: $quantia-capital-secondary;
+			}
+		}
+	}
+}

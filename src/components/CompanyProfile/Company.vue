@@ -10,7 +10,7 @@
         <navbar></navbar>
         
         <!-- NOT RELEASED -->
-        <Storycreate v-if="$root.isAdmin(contacts)"/>
+        <!-- <Storycreate v-if="$root.isAdmin(contacts)"/> -->
 
         <div class="container">
             <!--<Pagetitle :data="name"/>-->

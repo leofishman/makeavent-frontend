@@ -39,9 +39,10 @@
 						</div>
 
 						<!-- Profile bottom-->
-						<div @click="$root.joinStage('interview'+name)" class="profile-bottom">
+						<div @click="haveInterview ? $root.joinStage('interviewbooth'+name.toLowerCase()) : ''" class="profile-bottom">
 							<!-- [YD] add watch-interview-banner-inactive class -->
-							<div class="watch-interview-banner">
+							<div :class="haveInterview ? 'watch-interview-banner' : 'watch-interview-banner--inactive'">
+							<!-- <div class="watch-interview-banner--inactive"> -->
 								<h3>Watch<br> Live<br> Interview</h3>
 							</div>
 						</div>
@@ -97,6 +98,7 @@
 			this.contacts = ""
 			this.logo = ""
 			this.watchButtonClass = ""
+			this.haveInterview = false
 
 			this.$root.check('MediaPartners MediaPartners.length').then(async () => {
 				this.mediaCompany = this.$root.MediaPartners.filter(el => compare(el.name, this.name))[0]
@@ -110,7 +112,12 @@
 				this.ready = true
 
 				await this.getInterviewByMedia()
-				this.loadWatchButtonClass()
+
+				let self = this
+				setInterval(() => {
+					self.getInterviewByMedia()
+				}, 2000)
+
 			}).catch(e => console.log(`${e} inaccessible`))
 			return {
 				ready: this.ready,
@@ -126,28 +133,26 @@
 				// socialLogos: socialLogos,
 
 				interview: this.interview,
-				watchButtonClass: this.watchButtonClass
+				watchButtonClass: this.watchButtonClass,
+				haveInterview: this.haveInterview
 			}
 		},
 		methods: {
 			getInterviewByMedia () {
 				return new Promise((resolve, reject) => {
-					Axios.get(`${host}/interviews?id=${this.mediaCompany._id}`)
+					Axios.get(`${host}/webinars?name=interviewbooth${this.name.toLowerCase()}`)
 					.then(res => {
 						const decrypted = this.$root.decrypt(res.data.encryptedData)
-
 						this.interview = decrypted
+
+						if (this.interview.status == 'ongoing') {
+							this.haveInterview = true
+						}
+
 						resolve(true)
 					})
 					.catch(e => {})
 				})
-			},
-
-			loadWatchButtonClass () {
-				if (new Date().getTime() > this.interview.time && compare(this.interview.status, 'ongoing')) 
-					this.watchButtonClass = 'watch-interview-button active watch-interview'
-				else
-					this.watchButtonClass = 'watch-interview-button'
 			},
 
 			openAndTrack (link) {

@@ -8,14 +8,14 @@
         />
         <div class="columns is-gapless">
             <div class="column is-one-fifth webinar-sponsors">
-                <WebinarSponsors />
+                <WebinarSponsors :showSponsor="false"/>
             </div>
             <div class="column is-three-fifths">
                 <div id="jitsi-modal-target" class="card-image">
                 </div>
             </div>
             <div class="column is-one-fifth webinar-sponsors">
-                <WebinarSponsors />
+                <WebinarSponsors :showSponsor="false"/>
             </div>
         </div>
     </div>
@@ -61,6 +61,16 @@ export default {
                             self.startups = self.startups[0]
                         }
                     }
+                    else if (self.data.name.includes('interview')) {
+                        self.startups = self.$root.MediaPartners.filter(el => {
+                            self.name = self.data.name.split('interviewbooth')[1]
+                            return compare(self.name, el.name)
+                        })
+
+                        if (self.startups.length) {
+                            self.startups = self.startups[0]
+                        }
+                    }
                     else {
                         self.startups = self.$root.Startups.filter(el => {
                             if (new Date(el.time).toTimeString() < new Date().toLocaleString()) {
@@ -92,6 +102,7 @@ export default {
                                 host: self.data.host,
                                 name: self.data.name,
                                 webinarId: self.data.webinarId,
+                                guest: self.data.guest,
                                 token: self.$root.token,
                                 parentNode: document.querySelector("#jitsi-modal-target")
                             }

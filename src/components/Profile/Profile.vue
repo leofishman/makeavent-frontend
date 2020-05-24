@@ -290,6 +290,7 @@
 				self.profile = self.$root.profile
 				self.ready = true
 			}, 2000)
+
 			this.$root.check('profile').then(() => {
 				this.profile = this.$root.profile
 				this.ready = true

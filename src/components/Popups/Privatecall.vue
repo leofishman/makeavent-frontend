@@ -29,15 +29,6 @@ export default {
     data () {
         this.profile = this.$root.profile
 
-        // Axios.get(host + "/interviews/user/" + this.contact._id, {
-        //     headers: {
-        //         authorization: localStorage.auth
-        //     }
-        // })
-        // .then(res => {
-        //     console.log(res)
-        // })
-
         return {
             content: this.$root.content.Privatecall
         }

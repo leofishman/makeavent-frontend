@@ -37,6 +37,7 @@ import Company from '@/components/CompanyProfile/Company.vue'
 import Profile from '@/components/Profile/Profile.vue'
 import MyInterviews from '@/components/Profile/MyInterviews.vue'
 import MyBusinessCards from '@/components/Profile/MyBusinessCards.vue'
+import AcceptInterview from '@/components/AcceptInterview'
 
 import Backstage from '@/components/Backstage'
 
@@ -180,6 +181,15 @@ const router = new Router({
             component: LoginWithTempEmail,
             meta: {
                 requiresAuth: false,
+                platformLaunch: true
+            }
+        },
+        {
+            path: "/acceptinterview",
+            name: "AcceptInterview",
+            component: AcceptInterview,
+            meta: {
+                requiresAuth: true,
                 platformLaunch: true
             }
         },

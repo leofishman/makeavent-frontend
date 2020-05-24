@@ -34,13 +34,13 @@
 					</div>
 
 					<div class="column is-one-fifths">
-						<h2 class="">{{content.wli}}</h2>
+						<!-- <h2 class="">{{content.wli}}</h2> -->
 						<!-- [YD] If inactive add watch-interview-inactive class-->
-						<div @click="ongoingInterviews = true" class="watch-interview"></div>
+						<!-- <div @click="ongoingInterviews = true" class="watch-interview"></div>
 
 						<div class="upcoming-interview" @click="upcommingInterviews = true">
 							<h3>{{content.ui}}</h3>
-						</div>
+						</div> -->
 					</div>
 					
 					<div class="column">
@@ -71,15 +71,13 @@
 			</section>
 		</div>
 
-		<!-- Modal -->
-		<b-modal :active.sync="upcommingInterviews" scroll="keep">
+		<!-- <b-modal :active.sync="upcommingInterviews" scroll="keep">
 			<UpcommingInterviews />
 		</b-modal>
 
-		<!-- Modal -->
 		<b-modal :active.sync="ongoingInterviews" scroll="keep">
 			<OngoingInterviews />
-		</b-modal>
+		</b-modal> -->
 	</div>
 </template>
 <script>

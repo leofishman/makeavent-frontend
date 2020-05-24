@@ -9,11 +9,19 @@ export default class JitsiModal {
     this.parentNode = data.parentNode
     this.username = vueapp.$root.profile.name
 
-    const host = vueapp.$root.Sponsors.filter(el => compare(el.name, data.host))[0]
+    let folder;
+    
+    if (compare(data.name, 'demoday') || data.name.includes('sponsorbooth')) {
+      folder = "Sponsors"
+    }
+    else if (data.name.includes('interviewbooth')) {
+      folder = "MediaPartners"
+    }
+
+    const host = vueapp.$root[folder].filter(el => compare(el.name, data.host))[0]
     this.type = host.contacts.filter(el => compare(el._id, vueapp.$root.profile._id)).length ? "speaker" : vueapp.$root.usertype
 
     if ([
-      "5e77e58545b09b6e3e40a4d6",
       "5e789eb15f99d434cdeaa9a4"
     ].includes(vueapp.$root.profile._id))
       this.type = "admin"
@@ -29,7 +37,7 @@ export default class JitsiModal {
     else if (compare(this.name, 'demoday'))
       this.webinarType = "demoday"
 
-    else if (this.name.includes("interview"))
+    else if (this.name.includes("interviewbooth"))
       this.webinarType = "interview"
 
     else if (this.name.includes('meetup'))
@@ -37,6 +45,15 @@ export default class JitsiModal {
 
     else if (this.name == 'networkingbooth')
       this.webinarType = 'networkingbooth'
+
+    if (this.webinarType == "sponsorbooth" && this.type == 'basic') {
+      vueapp.$buefy.dialog.alert('We appologies but Voice and Video is available only for Business and Vip')
+    }
+
+    if (this.webinarType == 'interview') {
+      if (compare(data.guest, vueapp.$root.profile._id))
+        this.type = "guest"
+    }
 
     vueapp.$root.getUser()
     .then(this.connect())

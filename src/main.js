@@ -49,6 +49,8 @@ import ZoomCompanySpeaker from '@/components/Modals/ZoomFrameCompanySpeaker.vue'
 import Bcardpreview from '@/components/Popups/Bcardpreview'
 import Upgradeticket from '@/components/Popups/Upgradeticket'
 import Privatecall from '@/components/Popups/Privatecall'
+import ActionsWithUserModal from '@/components/Popups/ActionsWithUsers'
+import AcceptedInterview from '@/components/Popups/AcceptedInterview'
 
 import AccessLevels from '@/api/accessLevels'
 
@@ -124,7 +126,7 @@ new Vue({
     // if (!this.selectedLanguage || this.selectedLanguage === undefined)
     this.selectedLanguage = "EN"
     
-    let self = this    
+    let self = this
 
     // update resousrce every 5 seconds
     setInterval(() => {
@@ -134,14 +136,41 @@ new Vue({
     }, 5000)
 
     setInterval(() => {
-      if (this.shouldCheckResources)
+      if (this.shouldCheckResources) {
         this.getUser()
+        this.getPengingCards()
+        this.getActiveBusinessCards()
+      }
     }, 1000)
 
     if (this.checkNavShouldBeWithToken()) {
       this.getUser()
       .then(this.getResourses())
       .then(_ => {
+        if (this.$router.currentRoute.query.mediaName && this.$router.currentRoute.query.type == "acceptinterview") {
+          Axios.post(host + "/webinars/acceptinterviewinvitation", {
+            mediaName: this.$router.currentRoute.query.mediaName,
+          }, {
+            headers: {
+              authorization: localStorage.auth
+            }
+          })
+          .then(res => {
+            const mediaName = this.$router.currentRoute.query.mediaName
+            this.$buefy.modal.open({
+              title: "Success",
+              parent: this,
+              component: AcceptedInterview,
+              props: {
+                mediaName: mediaName
+              }
+            })
+          })
+          .catch(e => {
+            this.createError(e, 'oops')
+          })
+        }
+
         this.getPengingCards()
         this.getActiveBusinessCards()
 
@@ -246,6 +275,15 @@ new Vue({
       return JSON.parse(decrypted.toString())
     },
 
+    canRequestInterview () {
+      if (this.checkComponentAccess('interview')) {
+        return true
+      }
+      else {
+        return false
+      }
+    },
+
     switchOpen () {
       if (this.openGlobalChat)
         this.openGlobalChat = false
@@ -267,9 +305,13 @@ new Vue({
 
     privateCall (contact) {
       if (!this.isThatMe(contact.email)) {
-        if (contact.calendly) {
-          this.openExternalInBlank(contact.calendly)
+        if (this.checkIfAlreadyAFriend(contact)) {
+          if (contact.calendly) {
+            this.openExternalInBlank(contact.calendly)
+          }
         }
+        else
+          this.createError("Only connected user can access private call. Request a business card first.", 'oops')
       }
       else {
         this.$buefy.dialog.alert(this.content.common.itsYou)
@@ -495,7 +537,7 @@ new Vue({
     },
 
     tryBusinessCard (el) {
-      if (new Date().toLocaleString() > env.startDate)
+      // if (new Date().toLocaleString() > env.startDate)
         this.checkComponentAccess('bcrequest')
         .then(haveAccessToBc => {
           if (haveAccessToBc) {
@@ -519,8 +561,8 @@ new Vue({
             this.showMessageToUpgradeBusOrVip('Business Cards')
           }
         })
-      else
-        this.createError(this.content.ErrorMessages[0], 'explorer')
+      // else
+      //   this.createError(this.content.ErrorMessages[0], 'explorer')
     },
 
     checkIfAlreadyAFriend (card) {    
@@ -637,7 +679,12 @@ new Vue({
         this.createError(this.content.ErrorMessages[1], 'webinarNotSet')
       }
       else {
-        if (compare(data.name, 'demoday') || data.name.includes('sponsorbooth') || compare(data.name, "networkingbooth")) {
+        if (
+          compare(data.name, 'demoday') ||
+          data.name.includes('sponsorbooth') ||
+          compare(data.name, "networkingbooth") ||
+          data.name.includes('interviewbooth')
+        ) {
           this.$buefy.modal.open({
             props: {
               data: data
@@ -729,38 +776,48 @@ new Vue({
     },
 
     getPengingCards () {
-      Axios.get(`${host}/users/bcpending`, {
-        headers: {
-          authorization: localStorage.auth
-        }
-      })
-      .then(res => {
-        const decrypted = this.decrypt(res.data.encryptedData)
-        this.pendingCards = decrypted
-        this.pendingCards.map(el => {
-          el.photo = this.tryGetProfilePhoto(el.email)
+      return new Promise(async (resolve, reject) => {
+        Axios.get(`${host}/users/bcpending`, {
+          headers: {
+            authorization: localStorage.auth
+          }
         })
-      })
-      .catch(err => {
-        console.log(err)
+        .then(res => {
+          const decrypted = this.decrypt(res.data.encryptedData)
+          this.pendingCards = decrypted
+          this.pendingCards.map(el => {
+            if (!el.photo)
+              el.photo = this.tryGetProfilePhoto(el.email)
+          })
+
+          resolve(true)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       })
     },
 
     getActiveBusinessCards () {
-      Axios.get(`${host}/users/bcconnected`, {
-        headers: {
-          authorization: localStorage.auth
-        }
-      })
-      .then(res => {
-        const decrypted = this.decrypt(res.data.encryptedData)
-        this.activeBusinessCards = decrypted
-        this.activeBusinessCards.map(el => {
-          el.photo = this.tryGetProfilePhoto(el.email)
+      return new Promise(async (resolve, reject) => {
+        Axios.get(`${host}/users/bcconnected`, {
+          headers: {
+            authorization: localStorage.auth
+          }
         })
-      })
-      .catch(err => {
-        console.log(err)
+        .then(res => {
+          const decrypted = this.decrypt(res.data.encryptedData)
+          this.activeBusinessCards = decrypted
+          this.activeBusinessCards.map(el => {
+            if (el.photo)
+              el.photo = this.tryGetProfilePhoto(el.email)
+          })
+
+          resolve(true)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       })
     },
 
@@ -917,47 +974,52 @@ new Vue({
 
     async showBCrequesttoast (el, index) {
       if (!this.isThatMe(el.email)) {
-        this.$buefy.dialog.confirm({
-          message: this.content.BusinessCard.reqBusCardConfirm,
-          cancelText: this.content.no,
-          confirmText: this.content.yes,
-          type: 'is-primary',
-
-          onConfirm: () => {
-            Axios.post(`${host}/users/savebusinesscard`, {
-              id: el._id,
-              data: this.profile
-            }, {
-              headers: {
-                authorization: localStorage.auth
-              }
-            }).then(res => {
-              window.io.emit('request_contact_information', {
-                from: this.profile,
-                to: el
-              })
-            })
-          }
+        this.$buefy.modal.open({
+          parent: this,
+          props: {
+            targetContact: el
+          },
+          component: ActionsWithUserModal,
+          hasModalCard: true,
+          trapFocus: true
         })
       }
       else 
         this.$buefy.dialog.alert(this.content.common.itsYou)
     },
 
-    openIncomingContactRequest (data) {
-      let note = this.content.BusinessCard.newContactReqNote(data.name.split(" ")[0], data.company, data.role)
+    openIncomingContactRequest (info) {
+      let note = this.content.BusinessCard.newContactReqNote(info.from.name.split(" ")[0], info.from.company, info.from.role)
       let note2 = this.content.acceptLaterNote(`${selfhost}/${this.token}/profile`)
 
       this.$buefy.snackbar.open({
-        duration: 5000,
+        duration: 100000,
         message: `
-        ${note}<br>
-        ${note2}  
+          <div>
+            <div style="">
+              ${note}<br>
+              ${note2}
+            </div>
+            <div style="color: #696969;
+              background: #f3f3f3;
+              font-size: 1.3rem;
+              padding: 10px;
+              border-radius: 5px;
+              font-weight: 500;
+              border: 1px solid #d1d1d1;"
+            >
+              ${info.note}
+            </div>
+          </div>
         `,
         position: 'is-bottom-right',
         type: 'is-primary',
         actionText: this.content.accept,
+        component: `<template>huy</template>`,
         queue: false,
+        onAction: () => {
+          this.acceptBusinessCard(info.from)
+        }
       })
     },
 

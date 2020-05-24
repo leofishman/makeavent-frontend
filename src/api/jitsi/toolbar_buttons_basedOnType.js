@@ -120,7 +120,36 @@ const demoday = {
 }
 
 const interview = {
-
+    speaker: [
+        'mute-everyone', 'fullscreen', 'chat',
+        'microphone', 'camera', 'desktop'
+    ],
+    guest: [
+        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera',
+    ],
+    admin: [
+        'mute-everyone', 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
+        'fodeviceselection', 'hangup', 'profile', 'chat', 'settings',
+        'raisehand', 'videoquality', 'invite', 'stats', 'e2ee', 'security'
+    ],
+    basic: [
+        'fullscreen'
+    ],
+    business: [
+        'fullscreen'
+    ],
+    vip: [
+        'fullscreen'
+    ],
+    media: [
+        'fullscreen'
+    ],
+    investor: [
+        'fullscreen'
+    ],
+    startup: [
+        'fullscreen'
+    ]
 }
 
 const privatecall = {

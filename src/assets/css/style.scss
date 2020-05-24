@@ -1191,18 +1191,21 @@ main {
 	.section-starttop {
 		padding-top: 0;
 		.column {
+			padding: 10px 30px;
 			display: flex;
 			align-items: center;
+			justify-content: center;
 			+.column {
 				border-left: solid 1px #dedede;
 			}
-			min-height: 115px;
-			.has-text-centered {
-				width: 100%;
-				img {
-					max-height: 80px;
-				}
+			img {
+				max-height: 80px;
 			}
+		}
+	}
+	.startup-brand {
+		.columns+.columns {
+			margin-top: 20px;
 		}
 	}
 	.section-startbottom {
@@ -3370,6 +3373,8 @@ main {
 /* DASH */
 .dash {
 	$dash: #008de4;
+	$dash-dark: #092356;
+	background-color: $dash-dark;
 	.section-profile-company {
 		a {
 			color: $dash;

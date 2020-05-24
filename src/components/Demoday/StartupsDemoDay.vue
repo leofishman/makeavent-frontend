@@ -8,40 +8,22 @@
 
             <section class="section section-starttop">
                 <div class="startup-brand">
-                    <div class="columns is-multiline">
-                        <div class="column">
-                            <Fundbrand fundName="COINSILLIUM" />
-                        </div>
-                        <div class="column">
-                            <Fundbrand fundName="BLOCKCHAIN VALLEY VENTURES"/>
-                        </div>
-                        <div class="column">
-                            <Fundbrand fundName="CVVC" />
-                        </div>
-                        <div class="column">
-                            <Fundbrand fundName="ANGEL VEST" />
-                        </div>
-                        <div class="column">
-                            <Fundbrand fundName="IBC MEDIA"/>
-                        </div>
-                        <div class="column">
-                            <Fundbrand fundName="VU VENTURE PARTNERS"/>
-                        </div>
-                        <div class="column">
-                            <Fundbrand fundName="DRAPER CYGNUS" />
-                        </div>
-                        <div class="column">
-                            <Fundbrand fundName="MASTER VENTURES" />
-                        </div>
-                        <div class="column">
-                            <Fundbrand fundName="SANCTUM"/>
-                        </div>
-                        <div class="column">
-                            <Fundbrand fundName="FAS"/>
-                        </div>
-                        <div class="column">
-                            <Fundbrand fundName="UVECON"/>
-                        </div>
+                    <div class="columns">
+                        <Fundbrand fundName="COINSILLIUM" />
+                        <Fundbrand fundName="BLOCKCHAIN VALLEY VENTURES"/>
+                        <Fundbrand fundName="CVVC" />
+                        <Fundbrand fundName="ANGEL VEST" />
+                        <Fundbrand fundName="IBC MEDIA"/>
+                        <Fundbrand fundName="VU VENTURE PARTNERS"/>
+                    </div>
+
+                    <div class="columns">
+                        <Fundbrand fundName="DRAPER CYGNUS" />
+                        <Fundbrand fundName="MASTER VENTURES" />
+                        <Fundbrand fundName="SANCTUM"/>
+                        <Fundbrand fundName="M31"/>
+                        <Fundbrand fundName="WOODSTOCK"/>
+                        <Fundbrand fundName="FAS"/>
                     </div>
 
                 </div>

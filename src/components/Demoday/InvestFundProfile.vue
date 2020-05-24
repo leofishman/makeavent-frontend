@@ -2,8 +2,7 @@
     <div v-if="ready" id="profile-company">
 		<navbar></navbar>
 		<div class="container">
-			<Pagetitle :data="name"/>
-
+			<!--<Pagetitle :data="name"/>-->
 			<section class="section section-profile-company">
 				<div class="columns is-variable is-8">
 					<!-- Profile main -->
@@ -24,11 +23,7 @@
 									</span>
 									<a>{{commonContent.Website}}</a>
 								</li>
-								<li 
-									v-for="(el, key, index) in socials"
-									:key="index"
-									v-on:click="openAndTrack(el)"
-								>
+								<li v-for="(el, key, index) in socials" :key="index" v-on:click="openAndTrack(el)">
 									<span v-if="el">
 										<img :src="require(`../../assets/icon/icon-${key.toLowerCase()}.svg`)">
 									</span> 
@@ -39,12 +34,14 @@
 					</div>
 
 					<!-- Profile bio -->
-					<div class="column is-two-third profile-bio">
-						<div class="columns is-multiline">
+					<div class="column profile-bio">
+
+						<div class="columns is-multiline member-clasic">
                             <div class="column padding-top-20" v-for="(el, index) in contacts" :key="index">
                                 <Member :data="el"/>
                             </div>
                         </div>
+
 						<!-- Bio text -->
                         <article class="bio-description box">
                             <p v-html="description"></p>

@@ -2051,6 +2051,7 @@ main {
 	}
 	@media screen and (min-width: $fullhd) {
 		.profile-bio .column {
+			width: 33% !important;
 			max-width: 33% !important;
 		}
 	}

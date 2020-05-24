@@ -1,11 +1,8 @@
-<template>
-    <!-- [YD] The class of this div may vary, depends if the BG is dark or light mode -->
-    
+<template>   
     <div v-if="ready" id="profile-company" :class="sponsorClass" :style="{ backgroundImage: `url('${host + bg}')` }">
-
         <video v-if="video" class="bg-video" autoplay muted loop>
             <source :src="host + video" type="video/mp4">
-        </video>       
+        </video>
 
         <navbar></navbar>
         
@@ -42,7 +39,6 @@
                                 </li>
                             </ul>
                         </div>
-
                         <!-- Profile bottom-->
 						<div class="profile-bottom">
                             <PitchDeck v-for="(el, index) in materials" :key="index" :data="el"/>
@@ -53,7 +49,7 @@
                     <!-- Profile bio -->
                     <div class="column profile-bio">
 
-                        <div  class="columns is-multiline member-clasic">
+                        <div class="columns is-multiline member-clasic">
                             <div class="column padding-top-20" v-for="(el, index) in contacts" :key="index">
                                 <Member :data="el"/>
                             </div>

@@ -3312,6 +3312,8 @@ main {
 /* DASH */
 .dash {
 	$dash: #008de4;
+	$dash-dark: #092356;
+	background-color: $dash-dark;
 	.section-profile-company {
 		a {
 			color: $dash;

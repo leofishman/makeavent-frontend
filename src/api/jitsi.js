@@ -163,9 +163,9 @@ export default class JitsiModal {
         desktopSharingChromeExtId: null,
         desktopSharingChromeSources: [ 'screen', 'window', 'tab' ],
         desktopSharingChromeMinExtVersion: '0.1',
-    
+
         // Recording
-  
+
         // Whether to enable file recording or not.
         // fileRecordingsEnabled: false,
         // Enable the dropbox integration.
@@ -186,73 +186,73 @@ export default class JitsiModal {
         // (e.g. meeting participants), based on the actual implementation
         // on the backend.
         // fileRecordingsServiceSharingEnabled: false,
-  
+
         // Whether to enable live streaming or not.
         // liveStreamingEnabled: false,
-  
+
         // Transcription (in interface_config,
         // subtitles and buttons can be configured)
         // transcribingEnabled: false,
-  
+
         // Enables automatic turning on captions when recording is started
         // autoCaptionOnRecord: false,
-  
+
         // Misc
-  
+
         // Default value for the channel "last N" attribute. -1 for unlimited.
         channelLastN: -1,
         requireDisplayName: false,
         enableWelcomePage: true,
-  
+
         // Enabling the close page will ignore the welcome page redirection when
         // a call is hangup.
         // enableClosePage: false,
-  
+
         // Disable hiding of remote thumbnails when in a 1-on-1 conference call.
         // disable1On1Mode: false,
-  
+
         defaultLanguage: this.language,
-  
+
         // If true all users without a token will be considered guests and all users
         // with token will be considered non-guests. Only guests will be allowed to
         // edit their profile.
         enableUserRolesBasedOnToken: false,
-  
+
         // Whether or not some features are checked based on token.
         // enableFeaturesBasedOnToken: false,
-  
+
         // Enable lock room for all moderators, even when userRolesBasedOnToken is enabled and participants are guests.
         // lockRoomGuestEnabled: false,
-  
+
         // When enabled the password used for locking a room is restricted to up to the number of digits specified
         // roomPasswordNumberOfDigits: 10,
         // default: roomPasswordNumberOfDigits: false,
-  
+
         // Message to show the users. Example: 'The service will be down for
         // maintenance at 01:00 AM GMT,
         // noticeMessage: '',
-  
+
         // Enables calendar integration, depends on googleApiApplicationClientID
         // and microsoftApiApplicationClientID
         // enableCalendarIntegration: false,
-  
+
         // Stats
         //
-  
+
         // Whether to enable stats collection or not in the TraceablePeerConnection.
         // This can be useful for debugging purposes (post-processing/analysis of
         // the webrtc stats) as it is done in the jitsi-meet-torture bandwidth
         // estimation tests.
         // gatherStats: false,
-  
+
         // The interval at which PeerConnection.getStats() is called. Defaults to 10000
         // pcStatsInterval: 10000,
-  
+
         // To enable sending statistics to callstats.io you must provide the
         // Application ID and Secret.
         // callStatsID: '',
         // callStatsSecret: '',
-  
+
         // enables sending participants display name to callstats
         // enableDisplayNameInStats: false,
   
@@ -397,7 +397,25 @@ export default class JitsiModal {
         //    // to the specified URL for an app download page.
         //    downloadAppsUrl: 'https://docs.example.com/our-apps.html'
         // },
-  
+_peerConnStatusOutOfLastNTimeout: false,
+_peerConnStatusRtcMuteTimeout: false,
+abTesting: false,
+avgRtpStatsN: false,
+callStatsConfIDNamespace: false,
+callStatsCustomScriptUrl: false,
+desktopSharingSources: false,
+disableAEC: false,
+disableAGC: false,
+disableAP: false,
+disableHPF: false,
+disableNS: false,
+enableLipSync: false,
+enableTalkWhileMuted: false,
+forceJVB121Ratio: false,
+hiddenDomain: false,
+ignoreStartMuted: false,
+nick: false,
+startBitrate: false,  
   
         makeJsonParserHappy: 'even if last key had a trailing comma',
     }

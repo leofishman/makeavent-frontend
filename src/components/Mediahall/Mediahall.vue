@@ -46,7 +46,7 @@
 					<div class="column">
 						<div class="columns is-multiline">
 							<Mediahalllogo data="9"/><!-- Event chain -->
-							<Mediahalllogo data="6"/><!-- Blockchain caffe -->
+							<Mediahalllogo data="6"/><!-- Blockchain caffe  -->
 							<Mediahalllogo data="8"/><!-- Koin post -->
 							<Mediahalllogo data="21"/><!-- Listing.help -->
 							<Mediahalllogo data="22"/><!-- Theta -->

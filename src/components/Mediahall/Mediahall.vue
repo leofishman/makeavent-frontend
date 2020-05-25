@@ -48,7 +48,7 @@
 							<Mediahalllogo data="9"/><!-- Event chain -->
 							<Mediahalllogo data="6"/><!-- Blockchain caffe  -->
 							<Mediahalllogo data="8"/><!-- Koin post -->
-							<Mediahalllogo data="21"/><!-- Listing.help -->
+							<Mediahalllogo data="21"/><!-- Listing.help  -->
 							<Mediahalllogo data="22"/><!-- Theta -->
 							<Mediahalllogo data="26"/><!-- NAME -->
 							<Mediahalllogo data="27"/><!-- NAME -->

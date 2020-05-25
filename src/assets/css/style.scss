@@ -1664,6 +1664,9 @@ main {
 		.box {
 			padding-top: 22px;
 			padding-bottom: 22px;
+			.has-text-grey-light {
+				color: #868686 !important;
+			}
 			.column {
 				display: flex;
 				align-items: center;

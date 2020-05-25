@@ -45,13 +45,13 @@
 					
 					<div class="column">
 						<div class="columns is-multiline">
-							<Mediahalllogo data="9"/><!-- Event chain -->
-							<Mediahalllogo data="6"/><!-- Blockchain caffe -->
-							<Mediahalllogo data="8"/><!-- Koin post -->
-							<Mediahalllogo data="21"/><!-- Listing.help -->
-							<Mediahalllogo data="22"/><!-- Theta -->
+							<Mediahalllogo data="8"/><!-- Event chain -->
+							<Mediahalllogo data="5"/><!-- Blockchain caffe -->
+							<Mediahalllogo data="7"/><!-- Koin post -->
+							<Mediahalllogo data="20"/><!-- Listing.help -->
+							<Mediahalllogo data="21"/><!-- Theta -->
 							<Mediahalllogo data="26"/><!-- NAME -->
-							<Mediahalllogo data="27"/><!-- NAME -->
+							<Mediahalllogo data="25"/><!-- NAME -->
 							<Mediahalllogo data="28"/><!-- NAME -->
 							<Mediahalllogo data="29"/><!-- NAME -->
 							<Mediahalllogo data="30"/><!-- NAME -->

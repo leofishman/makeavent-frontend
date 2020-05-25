@@ -44,7 +44,7 @@ export default {
                 setInterval(async () => {
                     await this.getVipMembers()
                     this.adInfoToSpeakers()
-                }, 5000)
+                }, 60000)
 
                 this.displayContent = true
             }

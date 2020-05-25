@@ -288,7 +288,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.path == "/noaccess" || to.path == "/reghall" || to.paht == "/backstage") {
+    if (to.path == "/noaccess" || to.path == "/reghall" || to.path == "/backstage") {
         next()
     }
     else if (to.path == "/" && localStorage.auth) {

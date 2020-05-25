@@ -289,7 +289,7 @@
 			setInterval(() => {
 				self.profile = self.$root.profile
 				self.ready = true
-			}, 2000)
+			}, 5000)
 
 			this.$root.check('profile').then(() => {
 				this.profile = this.$root.profile

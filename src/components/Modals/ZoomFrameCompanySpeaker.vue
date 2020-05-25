@@ -51,7 +51,7 @@ export default {
             }
             else {
                 this.startups = this.$root.Startups.filter(el => {
-                    if (new Date(el.time).toTimeString() < new Date().toLocaleString()) {
+                    if (el.time < new Date().getTime()) {
                         return el
                     }
                 })

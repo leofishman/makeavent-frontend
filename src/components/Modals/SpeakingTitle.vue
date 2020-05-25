@@ -59,7 +59,7 @@
                         }
                     })
                 }
-            })
+            }, 100)
 
             return {
                 companyLogo: this.companyLogo,

@@ -116,7 +116,7 @@
 				let self = this
 				setInterval(() => {
 					self.getInterviewByMedia()
-				}, 2000)
+				}, 5000)
 
 			}).catch(e => console.log(`${e} inaccessible`))
 			return {

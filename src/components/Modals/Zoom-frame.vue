@@ -49,7 +49,7 @@ export default {
             setInterval(() => {
                 self.speakers = self.$root.Speakingagenda.filter(el => {
                     if (compare(el.stage, self.data.name)) {
-                        if (new Date(el.time).toLocaleString() < new Date().toLocaleString()) {
+                        if (el.time < new Date().getTime()) {
                             return el
                         }
                     }

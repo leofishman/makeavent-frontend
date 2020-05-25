@@ -40,7 +40,7 @@
                             </ul>
                         </div>
                         <!-- Profile bottom-->
-						<div class="profile-bottom">
+			<div class="profile-bottom">
                             <PitchDeck v-for="(el, index) in materials" :key="index" :data="el"/>
                             <div v-html="demo"></div>
                         </div>
@@ -110,7 +110,8 @@
             Pagetitle,
             Member,
             MemberCustom,
-            Chat
+            Chat,
+	    PitchDeck
         },
         data () {
             this.chatHeight;
@@ -145,6 +146,7 @@
                 this.video = this.sponsor.backgroundVideo
                 this.sponsorClass = this.sponsor.sponsorClass
                 this.logo = host + this.sponsor.logo
+		this.materials = this.sponsor.materials
 
                 this.ready = true
             }).catch(e => console.log(`${e} inaccessible`))
@@ -182,7 +184,8 @@
 
                 chat: "",
 
-                chatAvailable: this.chatAvailable
+                chatAvailable: this.chatAvailable,
+		materials: this.materials
             }
         },
         methods: {

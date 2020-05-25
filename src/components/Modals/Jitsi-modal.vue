@@ -73,7 +73,7 @@ export default {
                     }
                     else {
                         self.startups = self.$root.Startups.filter(el => {
-                            if (new Date(el.time).toTimeString() < new Date().toLocaleString()) {
+                            if (el.time < new Date().getTime()) {
                                 return el
                             }
                         })

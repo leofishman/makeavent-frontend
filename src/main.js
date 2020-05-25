@@ -133,7 +133,7 @@ new Vue({
       if (this.shouldCheckResources) {
         this.getResourses()
       }
-    }, 5000)
+    }, 60000)
 
     setInterval(() => {
       if (this.shouldCheckResources) {
@@ -141,7 +141,7 @@ new Vue({
         this.getPengingCards()
         this.getActiveBusinessCards()
       }
-    }, 1000)
+    }, 5000)
 
     if (this.checkNavShouldBeWithToken()) {
       this.getUser()

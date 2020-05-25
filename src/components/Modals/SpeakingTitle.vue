@@ -5,7 +5,7 @@
             <div class="column is-three-fifths">
                 <div class="media speaking-media">
                     <figure class="media-left speaker-brand">
-                        <img  v-if="speaker && !companyLogo.includes("default")" class="click" :src="host + companyLogo" title="View Company">
+                        <img  v-if="speaker && !companyLogo.includes('default')" class="click" :src="host + companyLogo" title="View Company">
                     </figure>
                     <figure class="media-left">
                         <p class="image is-96x96">

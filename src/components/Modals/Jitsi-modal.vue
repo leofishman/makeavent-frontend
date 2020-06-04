@@ -92,7 +92,7 @@ export default {
                             if (self.startups.length) {
                                 self.startups = self.startups[self.startups.length -1]
                             }
-                        }, 5000)
+                        }, 15000)
                     }
 
                     if (self.startups) {

@@ -59,7 +59,7 @@ export default {
                     self.speaker = self.speakers[self.speakers.length -1].contact
                     self.speakingData = self.speakers[self.speakers.length -1]
                 }
-            }, 5000)
+            }, 15000)
             this.speakers = this.$root.Speakingagenda.filter(el => compare(el.stage, this.data.name))
             if (this.speakers.length) {
                 this.speaker = this.speakers[0].contact
@@ -78,7 +78,7 @@ export default {
                     },
                 })
                 .then(res => {
-                    const decrypted = this.$root.decrypt(res.data.encryptedData)
+                    const decrypted = res.data
                     this.html = decrypted
                     document.getElementById('zoom-iframe').contentWindow.document.write(this.html)
                 })

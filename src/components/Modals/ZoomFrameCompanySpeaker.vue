@@ -70,7 +70,7 @@ export default {
                     if (self.startups.length) {
                         self.startups = self.startups[self.startups.length -1]
                     }
-                }, 5000)
+                }, 15000)
             }
 
             if (this.startups) {
@@ -88,7 +88,7 @@ export default {
                     },
                 })
                 .then(res => {
-                    const decrypted = this.$root.decrypt(res.data.encryptedData)
+                    const decrypted = res.data
                     this.html = decrypted
                     document.getElementById('zoom-iframe').contentWindow.document.write(this.html)
                 })

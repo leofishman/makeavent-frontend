@@ -648,8 +648,17 @@ new Vue({
           else
             this.WorkshopAgenda = this.Workshop
   
-          if (this.Speakers.length > 1) 
+          if (this.Speakers.length > 1) {
+            let flags = {}
             this.Speakingagenda = this.Speakers.sort(this.DateComparator)
+            this.Speakingagenda = this.Speakingagenda.filter(el => {
+              if (flags[el.contact.name]) {
+                return false;
+              }
+              flags[el.contact.name] = true;
+              return true;
+            })
+          }
           else
             this.Speakingagenda = this.Speakers
   

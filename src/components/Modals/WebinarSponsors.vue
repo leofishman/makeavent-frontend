@@ -1,15 +1,15 @@
 <template>
     <div class="sponsor-padding">
         <figure class="logo">
-            <img src="@/assets/logo_dark.svg">
+            <img :src="`${host}/static/img/sponsors/MAKEAVENT/MAKEAVENT.png`">
         </figure>
-        <figure v-if="showSponsor" class="box">
+        <!-- <figure v-if="showSponsor" class="box">
             <img :src="`${host}/static/img/sponsors/KASPERSKY/KASPERSKY.png`">
-        </figure>
-        <div class="powered">
+        </figure> -->
+        <!-- <div class="powered">
             <h3>{{content.powered}}</h3>
             <img :src="`${host}/static/img/sponsors/MAKEAVENT/MAKEAVENT.png`">
-        </div>
+        </div> -->
     </div>
 </template>
 

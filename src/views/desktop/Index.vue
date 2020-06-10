@@ -16,12 +16,12 @@
 
       <!-- Main Sponsor -->
       <section class="section section-main">
-        <Main data="6"/><!-- Kaspersky -->
+        <Main data="0"/><!-- Kaspersky -->
       </section>
 
       <!-- GOLD Sponsor -->
       <section class="section section-gold">
-        <Gold data="11"/><!-- IOVLabs -->
+        <Gold data="2"/><!-- IOVLabs -->
       </section>
 
       <!-- SILVER Sponsors but with gold syle -->
@@ -30,10 +30,10 @@
           <div class="column is-one-fifth is-offset-one-fifth">
             <div class="tile is-vertical">
               <div class="tile is-parent">
-                <Gold data="10"/><!-- STO -->
+                <Gold data="1"/><!-- STO -->
               </div>
               <div class="tile is-parent">
-                <Gold data="15"/><!-- Crypttp -->
+                <Gold data="4"/><!-- Crypttp -->
               </div>
             </div>
           </div>
@@ -45,10 +45,10 @@
           <div class="column is-one-fifth">
             <div class="tile is-vertical">
               <div class="tile is-parent">
-                <Gold data="16"/><!-- fas -->
+                <Gold data="5"/><!-- fas -->
               </div>
               <div class="tile is-parent">
-                <Gold data="14"/><!-- Mohr & Wolfe -->
+                <Gold data="3"/><!-- Mohr & Wolfe -->
               </div>
             </div>
           </div>
@@ -60,23 +60,23 @@
         <div class="column">
           <div class="columns">
             <div class="column">
-              <Bronze data="18"/><!-- Decred -->
+              <Bronze data="6"/><!-- Decred -->
             </div>
 
             <div class="column">
-              <Bronze data="19"/><!-- Quantia -->
+              <Bronze data="7"/><!-- Quantia -->
             </div>
 
             <div class="column">
-              <Bronze data="20"/><!-- Money on change -->
+              <Bronze data="8"/><!-- Money on change -->
             </div>
 
             <div class="column">
-              <Bronze data="21"/><!-- name -->
+              <Bronze data="9"/><!-- name -->
             </div>
 
             <div class="column">
-              <Bronze data="22"/><!-- Dash -->
+              <Bronze data="10"/><!-- Dash -->
             </div>
           </div>
         </div>
@@ -98,19 +98,19 @@
           <div class="column basic-a is-one-third">
             <div class="columns is-multiline">
               <div class="column is-one-third">
-                <Basic data="28"/><!-- decrypto -->
+                <Basic data="11"/><!-- decrypto -->
               </div>
               <div class="column is-one-third">
-                <Basic data="44"/><!-- altvesto -->
+                <Basic data="17"/><!-- altvesto -->
               </div>
               <div class="column is-one-third">
-                <Basic data="29"/><!-- sensitrust -->
+                <Basic data="12"/><!-- sensitrust -->
               </div>
               <div class="column is-one-third">
-                <Basic data="43"/><!-- block sdk -->
+                <Basic data="16"/><!-- block sdk -->
               </div>
               <div class="column is-one-third">
-                <Basic data="30"/><!-- ebakus -->
+                <Basic data="13"/><!-- ebakus -->
               </div>
             </div>
           </div>
@@ -126,16 +126,16 @@
           <div class="column basic-c is-one-third">
             <div class="columns is-multiline">
               <div class="column is-one-third">
-                <Basic data="45"/><!-- copyrage -->
+                <Basic data="18"/><!-- copyrage -->
               </div>
               <div class="column is-one-third">
-                <Basic data="46"/><!-- fuse -->
+                <Basic data="19"/><!-- fuse -->
               </div>
               <div class="column is-one-third">
-                <Basic data="60"/><!-- algotrader -->
+                <Basic data="21"/><!-- algotrader -->
               </div>
               <div class="column is-one-third">
-                <Basic data="31"/><!-- makeAvent -->
+                <Basic data="14"/><!-- makeAvent -->
               </div>
             </div>
           </div>
@@ -147,13 +147,13 @@
       <section class="section section-basic-bottom">
         <div class="columns">
           <div class="column is-1">
-            <Basic data="35"/><!-- lotech lab -->
+            <Basic data="15"/><!-- lotech lab -->
           </div>
           <div class="column is-1">
-            <Basic data="50"/><!-- LairEast -->
+            <Basic data="20"/><!-- LairEast -->
           </div>
           <div class="column is-1">
-            <Basic data="65"/><!-- Homebloc -->
+            <Basic data="22"/><!-- Homebloc -->
           </div>
         </div>
       </section>

@@ -23,7 +23,7 @@
 					<h3>
 						{{content.sponsored}}
 					</h3>
-					<img width="70%" v-if="$root.getSponsorSlot('2').logo" :src="host + $root.getSponsorSlot('2').logo" alt="">
+					<img width="70%" v-if="$root.getSponsorSlot('0').logo" :src="host + $root.getSponsorSlot('0').logo" alt="">
 				</div>
 			</div>
 		</div>
@@ -47,7 +47,7 @@
 					<h3>
 						{{content.sponsored}}
 					</h3>
-					<img width="70%" v-if="$root.getSponsorSlot('3').logo" :src="host + $root.getSponsorSlot('2').logo" alt="">
+					<img width="70%" v-if="$root.getSponsorSlot('0').logo" :src="host + $root.getSponsorSlot('0').logo" alt="">
 				</div>
 			</div>
 		</div>
@@ -57,8 +57,7 @@
 				<div class="has-text-centered">
 					<figure class="image is-100x100">
 						<!-- <img src="@/assets/viproom-icon.svg"> -->
-						<img v-if="$root.getSponsorSlot('4').logo" :src="host + $root.getSponsorSlot('4').logo" alt="">
-            			<img v-else src="@/assets/viproom-icon.png" alt="">
+            			<img src="@/assets/viproom-icon.png" alt="">
 					</figure>
 					<h3>
 						{{content.vipMeetingRoom}}

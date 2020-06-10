@@ -1,5 +1,5 @@
 const domain = 'meet.jit.si';
-import toolbar_buttons_basedOnType from './jitsi/toolbar_buttons_basedOnType'
+import toolbar_buttons_basedOnType from './toolbar_buttons_basedOnType'
 import {startDate} from '@/env'
 
 export default class JitsiModal {

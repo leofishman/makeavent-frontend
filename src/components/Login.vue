@@ -128,11 +128,9 @@ export default {
                     ariaModal: true,
                     canCancel: true,
                     onCancel: () => {
-                        this.email = ""
                         this.password = ""    
                     },
                     onConfirm: () => {
-                        this.email = ""
                         this.password = ""    
                     }
                 })

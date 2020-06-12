@@ -36,7 +36,7 @@
 								</a>
 								<a v-on:click="logout()" class="button is-outlined is-primary">{{$root.content.logout}}</a>
 
-								<!-- <div class="navbar-item has-dropdown is-hoverable">
+								<div class="navbar-item has-dropdown is-hoverable">
 									<a class="navbar-link button is-primary">
 										Language
 									</a>
@@ -55,7 +55,7 @@
 											KO
 										</a>
 									</div>
-								</div> -->
+								</div>
 							</div>
 						</div>
 					</div>

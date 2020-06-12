@@ -122,13 +122,13 @@ new Vue({
     this.DemoDayAgenda = undefined
     this.WorkshopAgenda = undefined
 
-    // this.selectedLanguage = localStorage.selectedLanguage
-    // if (!this.selectedLanguage || this.selectedLanguage === undefined)
-    this.selectedLanguage = "EN"
+    this.selectedLanguage = localStorage.selectedLanguage
+    if (!this.selectedLanguage || this.selectedLanguage === undefined)
+      this.selectedLanguage = "EN"
     
     let self = this
 
-    // update resousrce every 5 seconds
+    // update resousrce every 60 seconds
     setInterval(() => {
       if (this.shouldCheckResources) {
         this.getResourses()
@@ -794,6 +794,7 @@ new Vue({
         .then(res => {
           const decrypted = res.data
           this.pendingCards = decrypted
+          this.pendingCards = this.pendingCards.sort((x,y) => x.name > y.name)
           this.pendingCards.map(el => {
             if (!el.photo)
               el.photo = this.tryGetProfilePhoto(el.email)
@@ -817,8 +818,9 @@ new Vue({
         .then(res => {
           const decrypted = res.data
           this.activeBusinessCards = decrypted
+          this.activeBusinessCards = this.activeBusinessCards.sort((x,y) => x.name > y.name)
           this.activeBusinessCards.map(el => {
-            if (el.photo)
+            if (!el.photo)
               el.photo = this.tryGetProfilePhoto(el.email)
           })
 

@@ -21,7 +21,7 @@
     </div>
 </template>
 <script>
-import jitsi from '@/api/jitsi'
+import jitsi from '@/api/jitsi/index'
 import SpeakingTitleCompanySpeaker from '@/components/Modals/SpeakingTitleCompanySpeaker'
 import WebinarSponsors from '@/components/Modals/WebinarSponsors'
 

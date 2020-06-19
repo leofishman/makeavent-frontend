@@ -169,18 +169,15 @@
 								<img v-else class="level-left" :src="`${host}/static/img/sponsors/${profile.company.toUpperCase()}/${profile.company.toUpperCase()}.png`">
 							</div>
 							<div class="profile-rol">
-								<h3>
-									{{profile.role}}
-								</h3>
-								<img v-if="!showAcceptRole" v-on:click="showAcceptRole = true; showEditRole = true" class="click edit-profile-button" src="@/assets/img/pencil.svg">				
-							</div>
-							<div>
-								<img v-on:click="update('newrole', 'showAcceptRole')" v-if="showAcceptRole && newrole" class="bg click edit-profile-button" src="@/assets/icon/icon-check.svg">
-								<img v-on:click="showAcceptRole = false; showEditRole = false" v-if="showAcceptRole" class="bg-sec click edit-profile-button" src="@/assets/icon/icon-close-black.svg">
+								<h3>{{profile.role}}</h3>
+								<img v-if="!showAcceptRole" v-on:click="showAcceptRole = true; showEditRole = true" class="click icon-action" src="@/assets/img/pencil.svg">				
 							</div>
 							<b-field v-if="showEditRole">
 								<b-input v-model="newrole"></b-input>
+								<img v-on:click="update('newrole', 'showAcceptRole')" v-if="showAcceptRole && newrole" class="click icon-action icon-ok" src="@/assets/icon/icon-check.svg">
+								<img v-on:click="showAcceptRole = false; showEditRole = false" v-if="showAcceptRole" class="click icon-action icon-close" src="@/assets/icon/icon-close.svg">
 							</b-field>
+
 						</div>
 					</div>
 					<div class="column profile-data">

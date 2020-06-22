@@ -2,8 +2,8 @@
     <div id="login">
 		<div class="container">
 			<section class="section section-login">
-				<div class="columns is-variable is-8">
-					<div class="column data-login">
+				<div class="columns">
+					<div class="column is-half is-offset-one-quarter data-login">
 						<figure class="image">
 							<img src="@/assets/logo_dark.svg">
 						</figure>
@@ -34,9 +34,6 @@
 							</section>
 						</div>
 					</div>
-                    <div class="column sponsors-login">
-                        <SponsorsCol />
-                    </div>
 				</div>
 			</section>
 		</div>

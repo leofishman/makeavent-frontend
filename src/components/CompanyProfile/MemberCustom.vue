@@ -6,7 +6,7 @@
 </template>
 
 <script>
-	import {host} from '@/env'
+	import {api} from '@/env'
 
 	export default {
 		name: "MemberCustom",
@@ -15,7 +15,7 @@
 		},
 		data () {
 			return {
-				host: host
+				api: api
 			}
 		}
 	}

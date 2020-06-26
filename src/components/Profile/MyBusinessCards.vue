@@ -19,7 +19,7 @@
                                 >
                                     <b-row>
                                         <b-col md="2">
-                                            <img :src="host + el.photo" class="small-centred-image contact-photo">
+                                            <img :src="api + el.photo" class="small-centred-image contact-photo">
                                         </b-col>
                                         <b-col md="10">
                                             <h4 class="mb-1">{{el.name + " " + el.role + " " + el.company}}</h4>
@@ -47,7 +47,7 @@
                                 <b-overlay :show="showOverlay(el._id)" rounded="sm">
                                     <b-row>
                                         <b-col md="2">
-                                            <img :src="host + el.photo" class="small-centred-image contact-photo">
+                                            <img :src="api + el.photo" class="small-centred-image contact-photo">
                                         </b-col>
                                         <b-col md="9">
                                             <h4 class="mb-1">{{el.name + " " + el.role + " " + el.company}}</h4>
@@ -72,7 +72,7 @@
 </template>
 <script>
 import Axios from 'axios'
-import {host} from '@/env'
+import {api} from '@/env'
 export default {
     data() {
         window.EventBus.$on('close-overlay-by-id', (id) => {
@@ -81,7 +81,7 @@ export default {
 
         return {
             overlays: [],
-            host: host
+            api: api
         }
     },
     methods: {

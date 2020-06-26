@@ -22,7 +22,7 @@
 </template>
 <script>
 import axios from 'axios'
-import {host, self} from '@/env'
+import {api, self} from '@/env'
 import Viprow from './Viprow'
 
 export default {
@@ -33,7 +33,7 @@ export default {
         this.vipMembers = []
         this.activiness = []
 
-        this.$root.check('usertype token Sponsors activeBusinessCards').then(async _ => {
+        this.$root.check('usertype Sponsors activeBusinessCards').then(async _ => {
             if ( this.verifyVip() ) {
                 await this.getVipMembers()
                 this.adInfoToSpeakers()
@@ -67,7 +67,7 @@ export default {
 
         getVipMembers () {
             return new Promise((resolve, reject) => {
-                axios.get(`${host}/users/vip`, {
+                axios.get(`${api}/users/vip`, {
                     headers: {
                         authorization: localStorage.auth
                     }
@@ -91,9 +91,9 @@ export default {
         adInfoToSpeakers () {
             this.vipMembers.map(el => {
                 if (!el.photo)
-                    el.photo = host + this.$root.tryGetProfilePhoto(el.email)
+                    el.photo = api + this.$root.tryGetProfilePhoto(el.email)
                 else
-                    el.photo = host + el.photo
+                    el.photo = api + el.photo
             })
         },
     },

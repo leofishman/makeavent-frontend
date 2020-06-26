@@ -62,7 +62,7 @@
 </template>
 <script>
 import axios from 'axios'
-import {host} from '@/env'
+import {api} from '@/env'
 import io from 'socket.io-client'
 import PitchDeck from '@/components/Demoday/Pitchdeck'
 import Member from '@/components/CompanyProfile/Member'
@@ -94,13 +94,12 @@ export default {
                 this.name             = ""
                 this.pitchDeck        = []
 
-                // wait until token and startups ready
-                this.$root.check('token Startups').then(() => {
-                    this.token = this.$root.token
+                // wait until startups ready
+                this.$root.check('Startups').then(() => {
 
                     this.name = this.$router.currentRoute.params.name
                     this.startup = this.$root.Startups.filter(el => compare(el.name, this.name))[0]
-                    this.logo = host + this.startup.logo
+                    this.logo = api + this.startup.logo
 
                     this.description = this.startup.description
                     this.demo = this.startup.demo

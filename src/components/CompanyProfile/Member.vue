@@ -4,8 +4,8 @@
 		<!-- NOT RELEASED -->
 		<img v-if="canCall" v-on:click="$root.privateCall(data)" src="@/assets/icon/icon-call.svg" class="member-action click right" title="Schedule e-meeting">
 		<figure>
-			<img v-if="!data.photo" :src="`${host}/static/img/avatar-default.png`">
-			<img v-else :src="host + data.photo">
+			<img v-if="!data.photo" :src="`${api}/static/img/avatar-default.png`">
+			<img v-else :src="api + data.photo">
 		</figure>
 		<h1 class="click" @click="$root.tryBusinessCard(data)">{{data.name}}</h1>
 		<h2>{{data.role}}</h2>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {host} from '@/env'
+import {api} from '@/env'
 
 export default {
 	name: "Member",
@@ -39,7 +39,7 @@ export default {
 		})
 
 		return {
-			host: host,
+			api: api,
 			canCall: this.canCall
 		}
 	}

@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import axios from 'axios'
-import {host, startDate, meetupDate} from '../env'
+import {api, startDate, meetupDate} from '../env'
 
 /**
  * @components
  */
-import Home from '@/components/Home.vue'
+import Home from '@/components/Home'
 import Agenda from '@/components/Agenda/Agenda'
 import Investors from '@/components/Investors/Investors'
 
@@ -50,22 +50,6 @@ const router = new Router({
     routes: [
         {
             path: '/',
-            meta: {
-                requiresAuth: true,
-                platformLaunch: true
-            }
-        },
-        {
-            path: '/:id/info',
-            name: 'InfoDesk',
-            component: InfoDesk,
-            meta: {
-                requiresAuth: true,
-                platformLaunch: true
-            }
-        },
-        {
-            path: '/:id/home',
             name: 'Home',
             component: Home,
             meta: {
@@ -74,7 +58,16 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/profile',
+            path: '/info',
+            name: 'InfoDesk',
+            component: InfoDesk,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/profile',
             name: 'Profile',
             component: Profile,
             meta: {
@@ -83,7 +76,7 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/profile/myinterviews',
+            path: '/profile/myinterviews',
             name: 'MyInterviews',
             component: MyInterviews,
             meta: {
@@ -92,7 +85,7 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/profile/businesscards',
+            path: '/profile/businesscards',
             name: 'MyBusinessCards',
             component: MyBusinessCards,
             meta: {
@@ -111,7 +104,7 @@ const router = new Router({
             component: Backstage,
         },
         {
-            path: '/:id/company',
+            path: '/company',
             name: "Company",
             component: Company,
             meta: {
@@ -148,7 +141,7 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/vip',
+            path: '/vip',
             name: "Vip",
             component: VipMeetingRoom,
             meta: {
@@ -156,25 +149,6 @@ const router = new Router({
                 platformLaunch: true
             }
         },
-        // {
-        //     path: '/:id/meetup',
-        //     name: "Meetup",
-        //     component: Meetup,
-        //     meta: {
-        //         requiresAuth: true,
-        //         platformLaunch: true
-        //     }
-        // },
-        // {
-        //     path: '/:id/booth',
-        //     name: "Booth",
-        //     component: Booth,
-        //     meta: {
-        //         requiresAuth: true,
-        //         platformLaunch: true
-        //     },
-        //     props: (route) => ({ name: route.query.name })
-        // },
         {
             path: '/loginrtp',
             name: "LoginWithTempEmail",
@@ -203,7 +177,7 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/mediahall',
+            path: '/mediahall',
             name: "Mediahall",
             component: Mediahall,
             meta: {
@@ -212,7 +186,7 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/mediahall/:name',
+            path: '/mediahall/:name',
             name: "MediaPartnerProfile",
             component: Mediapartnerbooth,
             meta: {
@@ -221,7 +195,7 @@ const router = new Router({
             }
         },
         {   // startup investment profile
-            path: '/:id/sip',
+            path: '/sip',
             name: "StartupsDemoDay",
             component: StartupsDemoDay,
             meta: {
@@ -230,7 +204,7 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/sip/:name',
+            path: '/sip/:name',
             name: "StartupProfile",
             component: StartupProfile,
             meta: {
@@ -239,7 +213,7 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/ddpb',
+            path: '/ddpb',
             name: "DemoDayPitchingBooth",
             component: DemodayPitchingBooth,
             meta: {
@@ -248,7 +222,7 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/agenda',
+            path: '/agenda',
             name: "Agenda",
             component: Agenda,
             meta: {
@@ -257,7 +231,7 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/investors',
+            path: '/investors',
             name: "Investors",
             component: Investors,
             meta: {
@@ -266,7 +240,7 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/wa',
+            path: '/wa',
             name: "WorkshopAgenda",
             component: WorkshopAgenda,
             meta: {
@@ -275,7 +249,7 @@ const router = new Router({
             }
         },
         {
-            path: '/:id/ifp',
+            path: '/ifp',
             name: "InvestFundProfile",
             component: InvestFundProfile,
             meta: {
@@ -288,101 +262,29 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.path == "/noaccess" || to.path == "/reghall" || to.path == "/backstage") {
-        next()
-    }
-    else if (to.path == "/" && localStorage.auth) {
-        axios.get(host + `/login/redirectToHallByjwt`, {
-            headers: {
-                authorization: localStorage.auth
-            }
-        })
-        .then(res => {
-            window.location.pathname = res.data + '/home'
-        })
-        .catch(e => {
-            console.log(e)
-            localStorage.auth = ""
-            window.location = '/login'
-        })
-    }
-    else if (to.path == "/" && !localStorage.auth) {
-        window.location.pathname = "/login"
-    }
-    else if (to.path == "/register" && !localStorage.auth) {
-        next()
-    }
-    else if (to.path == "/loginrtp" && to.query.access) {
-        localStorage.auth = ''
-        next()
-    }
-    else if (to.path == "/resetpwd" && to.query.token) {
-        localStorage.auth = ''
-        next()
-    }
-    else if (!localStorage.auth) {
-        if (
-            window.location.pathname.split("/")[1] != "login" &&
-            window.location.pathname.split("/")[1] != "noaccess" &&
-            window.location.pathname.split("/")[1] != "loginrtp" &&
-            window.location.pathname.split("/")[1] != "backstage" &&
-            window.location.pathname.split("/")[1] != "register" &&
-            window.location.pathname.split("/")[1] != "resetpwd"
-        ) {
-            window.location.pathname = "/login"
-        }
-        
-        else
-            next()
-    }
-    else if (
-        (
-            window.location.pathname.split("/")[2] == "home" ||
-            window.location.pathname.split("/")[2] == "meetup"
-        )
-            && to.query.auth == "true"
-    ) {
-        window.location.search = ""
-        to.query = {}
-        window.location.pathname = `/${window.location.pathname.split("/")[1]}/${window.location.pathname.split("/")[2]}`
-    }
-    else if (!to.fullPath.includes('auth=true')) {
-        axios.get(host + `/login/checkToken?access=${window.location.pathname.split("/")[1]}`, {
-            headers: {
-                authorization: localStorage.auth
-            }
-        })
-        .then(res => {
-            if (
-                window.location.pathname.split("/")[1] != "login" &&
-                window.location.pathname.split("/")[1] != "noaccess" &&
-                window.location.pathname.split("/")[1] != "backstage" &&
-                window.location.pathname.split("/")[1] != "register" &&
-                window.location.pathname.split("/")[2] != "company" && 
-                window.location.pathname.split("/")[2] != "vip" &&
-                // window.location.pathname.split("/")[2] != "meetup" &&
-                // window.location.pathname.split("/")[2] != "booth" &&
-                window.location.pathname.split("/")[2] != "home" &&
-                window.location.pathname.split("/")[2] != "mediahall" &&
-                window.location.pathname.split("/")[2] != "agenda" &&
-                window.location.pathname.split("/")[2] != "profile" && 
-                window.location.pathname.split("/")[2] != "sip" &&
-                window.location.pathname.split("/")[2] != "ddpb" &&
-                window.location.pathname.split("/")[2] != "investors"
-            ) {
-                window.location.search = ""
-                window.location.pathname = `/${window.location.pathname.split("/")[1]}/home`
-            }
-            else  {
+    if (to.meta.requiresAuth) {
+        if (localStorage.auth) {
+            axios.get(api + `/auth/checkAccess?path=${toUp(to.name)}`, {
+                headers: {
+                    authorization: localStorage.auth
+                }
+            })
+            .then(res => {
                 next()
-            }
-        })
-        .catch(e => {
-            localStorage.auth = ""
-            window.location = '/login'
-        })
+            })
+            .catch(e => {
+                console.log(e.response)
+                if (e.response.data == "NO ACCESS")
+                    next('/login')
+                else {
+                    console.log('router 279')
+                }
+            })
+        }
+        else
+            next('/login')
     }
-    else 
+    else
         next()
 })
 

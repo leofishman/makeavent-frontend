@@ -19,7 +19,7 @@
                 >
                 <b-row>
                     <b-col md="2">
-                        <img :src="host + el.contact.photo" class="contact-photo">
+                        <img :src="api + el.contact.photo" class="contact-photo">
                     </b-col>
                     <b-col md="8">
                         <h4 class="mb-1">{{el.contact.name + " " + el.contact.role + " " + el.contact.company}}</h4>
@@ -56,7 +56,7 @@
 </template>
 <script>
 import Axios from 'axios'
-import {host} from '@/env'
+import {api} from '@/env'
 export default {
     data() {
         this.list = []
@@ -68,7 +68,7 @@ export default {
         }).catch(e => console.log(`${e} inaccessible`))
         
         return {
-            host: host,
+            api: api,
             content: this.$root.content.OngoingWorkshops,
             ready: this.ready,
             list: this.list

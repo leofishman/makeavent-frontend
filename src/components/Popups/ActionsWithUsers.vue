@@ -49,7 +49,7 @@
 </template>
 <script>
 import Axios from 'axios'
-import {host} from '@/env'
+import {api} from '@/env'
 
 export default {
     name: "ActionWithUsers",
@@ -67,7 +67,7 @@ export default {
     },
     methods: {
         onConfirm () {
-            Axios.post(`${host}/users/savebusinesscard`, {
+            Axios.post(`${api}/users/savebusinesscard`, {
                 id: this.targetContact._id,
                 data: this.$root.profile
             }, {
@@ -86,7 +86,7 @@ export default {
         },
 
         requestInterview () {
-            Axios.post(`${host}/webinars/invitetointerview`, {
+            Axios.post(`${api}/webinars/invitetointerview`, {
                 name: toLo(this.$root.profile.company),
                 guest: this.targetContact
             }, {

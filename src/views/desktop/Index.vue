@@ -162,7 +162,7 @@
 </template>
 <script>
   import Axios from 'axios'
-  import {host} from '../../env'
+  import {api} from '../../env'
 
   import Stories from '@/components/Stories.vue'
   import Livefeed from '@/components/Livefeed.vue'
@@ -191,7 +191,7 @@
     },
     methods: {
       metting () {
-        Axios.post(host + "/webinars/create_webinar", {
+        Axios.post(api + "/webinars/create_webinar", {
           name: "Test"
         })
       },
@@ -203,7 +203,7 @@
 
       return {
         joinMeeting: false,
-        host: host,
+        api: api,
 
         ready: false,
       }

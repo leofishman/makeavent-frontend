@@ -2,8 +2,8 @@
 	<div class="box">
 		<div class="columns">
 			<div class="column agenda-pic">
-				<img v-if="data.contact.photo" :src="host + data.contact.photo">
-                <img v-else :src="host + '/static/img/avatar-default.png'">
+				<img v-if="data.contact.photo" :src="api + data.contact.photo">
+                <img v-else :src="api + '/static/img/avatar-default.png'">
 			</div>
 			<div class="column agenda-name">
 				<div class="has-text-centered">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import {host} from '@/env'
+import {api} from '@/env'
 
 export default {
 	name: "Agendarow",
@@ -49,7 +49,7 @@ export default {
 
 		return {
             reminder: this.$root.content.reminders[0],
-			host: host,
+			api: api,
 			content: this.$root.content.Agendarow
 		}
 	},
@@ -69,7 +69,7 @@ export default {
             if (this.$root.cloo(toUp(this.$root.usertype), toUp('vip|startup|investor|media')))
                 this.$root.showMessageToUpgradeStrict('access to offline materials', 'VIP')
             else {
-                Axios.post(`${host}/offlinecopy`, {
+                Axios.post(`${api}/offlinecopy`, {
                     id: id
                 },
                 {

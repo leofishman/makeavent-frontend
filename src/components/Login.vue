@@ -46,8 +46,9 @@
 <script>
 import Vue from 'vue'
 import axios from 'axios'
-import { host } from '@/env'
-import Main from '@/components/Sponsors/Main.vue';
+import {AUTH} from '@/api/endpoints'
+
+import Main from '@/components/Sponsors/Main.vue'
 import SponsorsCol from '@/components/SponsorsCol'
 import Content from '@/content/english.js'
 
@@ -85,7 +86,7 @@ export default {
         },
 
         login () {
-            axios.post(`${host}/login`, {
+            axios.post(AUTH.LOGIN, {
                 email: this.email,
                 password: this.password
             })
@@ -94,13 +95,11 @@ export default {
                 
                 if (data.redirect) {
                     this.$root.usertype = data.type
-                    this.$root.token = data.accessLink
                     this.$root.profile = data.profile
-                    this.$router.push(`/loginrtp?access=${this.$root.token}`)
+                    this.$router.push(`/loginrtp`)
                 }
                 else {
                     this.$root.usertype = data.type
-                    this.$root.token = data.accessLink
                     this.$root.profile = data.profile
                     localStorage.auth = res.headers.authorization
 

@@ -1,7 +1,7 @@
 <template>   
-    <div v-if="ready" id="profile-company" :class="sponsorClass" :style="{ backgroundImage: `url('${host + bg}')` }">
+    <div v-if="ready" id="profile-company" :class="sponsorClass" :style="{ backgroundImage: `url('${api + bg}')` }">
         <video v-if="video" class="bg-video" autoplay muted loop>
-            <source :src="host + video" type="video/mp4">
+            <source :src="api + video" type="video/mp4">
         </video>
 
         <navbar></navbar>
@@ -89,7 +89,7 @@
 
 <script>
     import axios from 'axios'
-    import {host} from '@/env'
+    import {api} from '@/env'
     import Storycreate from '@/components/Stories/StoryCreate.vue';
     import socialLogos from '@/assets/img/socials'
     import Pagetitle from '@/components/Pagetitle.vue';
@@ -111,13 +111,12 @@
             Member,
             MemberCustom,
             Chat,
-	    PitchDeck
+	        PitchDeck
         },
         data () {
             this.chatHeight;
             this.chatHistory = [];
             this.userTextMessage = ""
-            this.token = this.$root.token
             this.showMessageModal = false
             this.chatAvailable = false
             this.sponsor = ''
@@ -132,8 +131,8 @@
             this.sponsorClass = ""
             this.materials = ""
 
-            /* wait until token and sponsors ready*/
-            this.$root.check('token Sponsors').then(() => {
+            /* wait until sponsors ready*/
+            this.$root.check('Sponsors').then(() => {
                 const name = this.name.toUpperCase()
                 this.sponsor = this.$root.Sponsors.filter(el => compare(el.name, name))[0]
 
@@ -145,8 +144,8 @@
                 this.bg = this.sponsor.backgroundImage
                 this.video = this.sponsor.backgroundVideo
                 this.sponsorClass = this.sponsor.sponsorClass
-                this.logo = host + this.sponsor.logo
-		this.materials = this.sponsor.materials
+                this.logo = api + this.sponsor.logo
+		        this.materials = this.sponsor.materials
 
                 this.ready = true
             }).catch(e => console.log(`${e} inaccessible`))
@@ -177,7 +176,7 @@
                 socialLogos: socialLogos,
                 contacts: this.contacts,
 
-                host: host,
+                api: api,
                 bg: this.bg,
                 video: this.video,
                 sponsorClass: this.sponsorClass,

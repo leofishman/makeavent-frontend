@@ -81,46 +81,44 @@
 				this.$router.currentRoute.path != '/resetpwd'
 			) {
 				this.$root.checkComponentAccess(this.checkAccess).then((res) => {
-					this.$root.tokenCheck().then(() => {
-						this.getElseContent()
-						this.chat = io(socket, {
-							query: {
-								token: this.$root.token,
-								[this.type]: this.name
-							}
-						})
-	
-						this.chatAvailable = res
-	
-						this.chat.on('reponse_chat_history', (data) => {
-							// write to variable and render messages from it
-							this.chatHistory = data
-	
-							// check if page opened as reply to message
-							if (window.location.href.split("&reply=")[1]) {
-								this.focusToReply(window.location.href.split("&reply=")[1])
-							}
-	
-							// scroll chat to bottom
-							setTimeout(() => {
-								this.scrollBehaviour()
-							}, 500)
-						})
-	
-						this.chat.emit('fetch_chat_history')
-	
-						this.chat.on('new_message_3rdparty', (data) => {
-							
-							let reply = this.chatHistory.filter(el => compare(this.$root.profile.email, el.from.email) && compare(data.quoteId, el.id))
-							
-							if (reply.length) {
-								this.fireNotification(name, data)   
-							}
-	
-							this.chatHistory.push(data)
-							
+					this.getElseContent()
+					this.chat = io(socket, {
+						query: {
+							token: localStorage.auth,
+							[this.type]: this.name
+						}
+					})
+
+					this.chatAvailable = res
+
+					this.chat.on('reponse_chat_history', (data) => {
+						// write to variable and render messages from it
+						this.chatHistory = data
+
+						// check if page opened as reply to message
+						if (window.location.href.split("&reply=")[1]) {
+							this.focusToReply(window.location.href.split("&reply=")[1])
+						}
+
+						// scroll chat to bottom
+						setTimeout(() => {
 							this.scrollBehaviour()
-						})
+						}, 500)
+					})
+
+					this.chat.emit('fetch_chat_history')
+
+					this.chat.on('new_message_3rdparty', (data) => {
+						
+						let reply = this.chatHistory.filter(el => compare(this.$root.profile.email, el.from.email) && compare(data.quoteId, el.id))
+						
+						if (reply.length) {
+							this.fireNotification(name, data)   
+						}
+
+						this.chatHistory.push(data)
+						
+						this.scrollBehaviour()
 					})
 				})
 				
@@ -218,7 +216,7 @@
 					let self = this
 					notification.onclick = function(event) {
 						event.preventDefault()
-						// window.open(`${env.self}/${self.$root.token}/company?name=${low_chatname}&reply=${data.id}`)
+						// just answer
 					}
 				}
 			},

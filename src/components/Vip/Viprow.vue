@@ -3,7 +3,7 @@
 		<div class="columns">
 			<div class="column vip-pic">
 				<img v-if="data.photo" :src="data.photo">
-                <img v-else :src="host + '/static/img/avatar-default.png'" alt="">
+                <img v-else :src="api + '/static/img/avatar-default.png'" alt="">
 			</div>
 			<div class="column vip-name">
 				<div class="has-text-centered">
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import {host} from '@/env'
+import {api} from '@/env'
 export default {
     name: "Viprow",
     props: {
@@ -68,7 +68,7 @@ export default {
 		})
 
         return {
-            host: host,
+            api: api,
             content: this.$root.content.VipMeetingRoom,
             haveBooth: this.haveBooth,
             canCall: this.canCall

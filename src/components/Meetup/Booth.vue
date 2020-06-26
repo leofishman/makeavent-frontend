@@ -73,7 +73,7 @@
 
 <script>
     import axios from 'axios'
-    import {host} from '@/env'
+    import {api} from '@/env'
     import socialLogos from '@/assets/img/socials'
     import Pagetitle from '@/components/Pagetitle.vue';
     import Member from '@/components/CompanyProfile/Member.vue';
@@ -90,7 +90,6 @@
             this.chatHeight;
             this.chatHistory = [];
             this.userTextMessage = ""
-            this.token = this.$root.token
             this.showMessageModal = false
             this.chatAvailable = false
             this.sponsor = ''
@@ -101,8 +100,8 @@
             this.contacts = ""
             this.logo = ""
 
-        // wait until token and sponsors ready
-        this.$root.check('token Sponsors').then(() => {
+        // wait until sponsors ready
+        this.$root.check('Sponsors').then(() => {
             const name = this.name.toUpperCase()
             this.sponsor = this.$root.Sponsors.filter(el => compare(el.name, name))[0]
 
@@ -111,7 +110,7 @@
             this.website = this.sponsor.website
             this.socials = this.sponsor.socials
             this.contacts = this.sponsor.contacts
-            this.logo = host + this.sponsor.logo
+            this.logo = api + this.sponsor.logo
 
             this.ready = true
         }).catch(e => console.log(`${e} inaccessible`))

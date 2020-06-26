@@ -1,14 +1,14 @@
 <template>
 	<div v-on:click="$root.openStartupProfile(getStartupProfile(id)._id)" class="column is-one-third startup-logo">
 		<div class="box has-text-centered">
-			<img v-if="getStartupProfile(id)" :src="host + getStartupProfile(id).logo" alt="">
+			<img v-if="getStartupProfile(id)" :src="api + getStartupProfile(id).logo" alt="">
 			<h3 v-else>{{content.startup}}</h3>
 		</div>
 	</div>
 </template>
 
 <script>
-	import {host} from '@/env'
+	import {api} from '@/env'
 
 	export default {
 		name: "Startuplogo",
@@ -17,7 +17,7 @@
 		},
 		data () {
 			return {
-				host: host,
+				api: api,
 				content: this.$root.content.StartupsDemoDay
 			}
 		},

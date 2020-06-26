@@ -75,7 +75,7 @@
 	import Pagetitle from '@/components/Pagetitle.vue';
 	import Mediapartnerrow from '@/components/Mediapartnerbooth/Mediapartnerrow.vue'
 
-	import {host} from '@/env'
+	import {api} from '@/env'
 	import Axios from 'axios'
 
 	export default {
@@ -91,7 +91,6 @@
 			this.ready = false
 			this.name = this.$router.currentRoute.params.name
 
-			this.token = this.$root.token
 			this.description = ""
 			this.website = ""
 			this.socials = ""
@@ -107,7 +106,7 @@
 				this.website = this.mediaCompany.website
 				this.socials = this.mediaCompany.socials
 				this.contacts = this.mediaCompany.contacts
-				this.logo = host + this.mediaCompany.logo
+				this.logo = api + this.mediaCompany.logo
 
 				this.ready = true
 
@@ -140,7 +139,7 @@
 		methods: {
 			getInterviewByMedia () {
 				return new Promise((resolve, reject) => {
-					Axios.get(`${host}/webinars?name=interviewbooth${this.name.toLowerCase()}`)
+					Axios.get(`${api}/webinars?name=interviewbooth${this.name.toLowerCase()}`)
 					.then(res => {
 						const decrypted = res.data
 						this.interview = decrypted

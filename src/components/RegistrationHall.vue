@@ -64,7 +64,7 @@
 
 <script>
 import Axios from 'axios'
-import {host} from '@/env'
+import {api} from '@/env'
 import SponsorsCol from '@/components/SponsorsCol'
 
 export default {
@@ -109,7 +109,7 @@ export default {
         },
 
         save () {
-            Axios.post(host + `/login/socials_reg`, {
+            Axios.post(api + `/login/socials_reg`, {
                 businessemail: this.email,
                 Linkedin: this.linkedin,
                 Facebook: this.facebook,
@@ -124,7 +124,7 @@ export default {
                     let formData = new FormData();
                     formData.append('userProfilePhoto', this.photo);
     
-                    return Axios.post(`${host}/login/profilephoto`, formData, {
+                    return Axios.post(`${api}/login/profilephoto`, formData, {
                         headers: { authorization: localStorage.auth }
                     })
                 }

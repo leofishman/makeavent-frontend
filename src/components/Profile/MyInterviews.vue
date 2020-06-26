@@ -26,20 +26,17 @@
 </template>
 <script>
 import Axios from 'axios'
-import {host} from '@/env'
+import {api} from '@/env'
 export default {
     data() {
         this.allInterviews = []
-        this.$root.tokenCheck().then(() => {
-            // this.getInterviews()
-        })
         return {
             allInterviews: this.allInterviews
         }
     },
     methods: {
         getInterviews () {
-            Axios.get(`${host}/interviews/user/${this.$root.token}`, {
+            Axios.get(`${api}/interviews/user`, {
                 headers: {
                     authorization: localStorage.auth
                 }

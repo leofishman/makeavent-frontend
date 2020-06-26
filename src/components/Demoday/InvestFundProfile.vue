@@ -54,7 +54,7 @@
 </template>
 <script>
 import socialLogos from '@/assets/img/socials'
-import {host} from '@/env'
+import {api} from '@/env'
 import Member from '@/components/CompanyProfile/Member'
 
 export default {
@@ -87,7 +87,7 @@ export default {
 						this.website = this.ifp.website
 						this.socials = this.ifp.socials
 						this.contacts = this.ifp.contacts
-						this.logo = host + this.ifp.logo
+						this.logo = api + this.ifp.logo
 	
 						this.ready = true
 					}

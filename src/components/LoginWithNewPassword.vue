@@ -56,7 +56,7 @@
 </template>
 <script>
 import Axios from 'axios'
-import {self, host} from '@/env'
+import {self, api} from '@/env'
 import SponsorsCol from '@/components/SponsorsCol'
 
 export default {
@@ -71,7 +71,7 @@ export default {
         this.email = ""
 
         if (this.$router.currentRoute.query.token) {
-            Axios.post(host + '/login/approve_reset_pwd', {
+            Axios.post(api + '/login/approve_reset_pwd', {
                 token: this.$router.currentRoute.query.token
             })
             .then(res => {
@@ -122,7 +122,7 @@ export default {
     },
     methods: {
         login () {
-            Axios.post(`${host}/login/setNewPassowrd`, {
+            Axios.post(`${api}/login/setNewPassowrd`, {
                 token: this.$router.currentRoute.query.token,
                 email: this.email,
                 password: this.password,
@@ -131,7 +131,6 @@ export default {
                 const decrypted = res.data
                 this.$root.profile = decrypted.profile[0]
                 this.$root.usertype = decrypted.type
-                this.$root.token = decrypted.accessLink
                 
                 window.location.search = ""
                 localStorage.auth = res.headers.authorization

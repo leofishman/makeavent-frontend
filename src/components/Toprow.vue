@@ -23,7 +23,7 @@
 					<h3>
 						{{content.sponsored}}
 					</h3>
-					<img width="70%" v-if="$root.getSponsorSlot('0').logo" :src="host + $root.getSponsorSlot('0').logo" alt="">
+					<img width="70%" v-if="$root.getSponsorSlot('0').logo" :src="api + $root.getSponsorSlot('0').logo" alt="">
 				</div>
 			</div>
 		</div>
@@ -47,7 +47,7 @@
 					<h3>
 						{{content.sponsored}}
 					</h3>
-					<img width="70%" v-if="$root.getSponsorSlot('0').logo" :src="host + $root.getSponsorSlot('0').logo" alt="">
+					<img width="70%" v-if="$root.getSponsorSlot('0').logo" :src="api + $root.getSponsorSlot('0').logo" alt="">
 				</div>
 			</div>
 		</div>
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import {host} from '@/env'
+import {api} from '@/env'
 
 export default {
 	name: "Toprow",
@@ -79,7 +79,7 @@ export default {
 	data () {
 		return {
 			content: this.$root.content.toprow,
-			host: host
+			api: api
 		}
 	},
 	methods: {

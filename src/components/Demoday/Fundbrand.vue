@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	import {host} from '@/env'
+	import {api} from '@/env'
 
 	export default {
 		name: "Fundbrand",
@@ -33,7 +33,7 @@
 			},
 
 			getFundLogo () {
-				return host + '/static/img/InvestmentFunds/' + this.fundName + ".png"
+				return api + '/static/img/InvestmentFunds/' + this.fundName + ".png"
 			}
 		}
 	}

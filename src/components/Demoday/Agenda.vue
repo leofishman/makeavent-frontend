@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import {host} from '@/env'
+import {api} from '@/env'
 import Agendarow from './Agendarow'
 
 export default {
@@ -33,7 +33,7 @@ export default {
         }).catch(e => console.log(`${e} inaccessible`))
 
         return {
-            host: host,
+            api: api,
             ready: this.ready,
             agenda: this.agenda,
             content: this.$root.content.StartupsDemoDay

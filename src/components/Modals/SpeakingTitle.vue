@@ -5,11 +5,11 @@
             <div class="column is-three-fifths">
                 <div class="media speaking-media">
                     <figure class="media-left speaker-brand">
-                        <img  v-if="speaker && !companyLogo.includes('default')" class="click" :src="host + companyLogo" title="View Company">
+                        <img  v-if="speaker && !companyLogo.includes('default')" class="click" :src="api + companyLogo" title="View Company">
                     </figure>
                     <figure class="media-left">
                         <p class="image is-96x96">
-                            <img v-if="speaker" :src="host + speaker.photo">
+                            <img v-if="speaker" :src="api + speaker.photo">
                         </p>
                     </figure>
                     <div class="media-content" v-if="speaker && speakingData">
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import {host} from '@/env'
+    import {api} from '@/env'
 
     export default {
         name: "SpeakingTitle",
@@ -63,7 +63,7 @@
 
             return {
                 companyLogo: this.companyLogo,
-                host: host
+                api: api
             }
         },
         methods: {

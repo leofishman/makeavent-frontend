@@ -103,7 +103,6 @@ export default {
                                 name: self.data.name,
                                 webinarId: self.data.webinarId,
                                 guest: self.data.guest,
-                                token: self.$root.token,
                                 parentNode: document.querySelector("#jitsi-modal-target")
                             }
                         })

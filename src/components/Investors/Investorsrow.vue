@@ -2,8 +2,8 @@
 	<div class="box">
 		<div class="columns">
 			<div class="column investors-pic">
-				<img v-if="data.photo" :src="host + data.photo">
-                <img v-else :src="host + '/static/img/avatar-default.png'" alt="">
+				<img v-if="data.photo" :src="api + data.photo">
+                <img v-else :src="api + '/static/img/avatar-default.png'" alt="">
 			</div>
 			<div class="column investors-name">
 				<div class="has-text-centered">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import {host} from '@/env'
+import {api} from '@/env'
 
 export default {
 	name: "Investorsrow",
@@ -54,7 +54,7 @@ export default {
 
 		return {
 			content: this.$root.content.Investors,
-			host: host,
+			api: api,
 			canCall: this.canCall
 		}
 	},

@@ -5,7 +5,7 @@
             <section class="section has-text-centered">
                 <div>
                     <a target="_blank" href="https://www.kaspersky.com/">
-                        <img class="noaccess-logo" :src="host + '/static/img/sponsors/KASPERSKY/KASPERSKY.png'" alt="">
+                        <img class="noaccess-logo" :src="api + '/static/img/sponsors/KASPERSKY/KASPERSKY.png'" alt="">
                     </a>
 
                     <h2 v-html="$root.content.willBeAtMay"></h2>
@@ -42,12 +42,12 @@
 </template>
 
 <script>
-import {host} from '@/env'
+import {api} from '@/env'
 export default {
     name: "Noaccess",
     data() {
         return {
-            host: host
+            api: api
         }
     },
 }

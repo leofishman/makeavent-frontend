@@ -8,10 +8,8 @@ import Buefy from 'buefy'
 import '@/assets/css/style.scss'
 
 import './domchange.js'
-import env from './env'
-const host = env.host
-const socket = env.socket
-const selfhost = env.self
+import {api, socket, self} from './env'
+const selfhost = self
 import VueSocketIO from 'socket.io-client'
 import Notifications from 'vue-notification'
 import Axios from 'axios'
@@ -143,72 +141,70 @@ new Vue({
       }
     }, 15000)
 
-    if (this.checkNavShouldBeWithToken()) {
-      this.getUser()
-      .then(this.getResourses())
-      .then(_ => {
-        if (this.$router.currentRoute.query.mediaName && this.$router.currentRoute.query.type == "acceptinterview") {
-          Axios.post(host + "/webinars/acceptinterviewinvitation", {
-            mediaName: this.$router.currentRoute.query.mediaName,
-          }, {
-            headers: {
-              authorization: localStorage.auth
-            }
-          })
-          .then(res => {
-            const mediaName = this.$router.currentRoute.query.mediaName
-            this.$buefy.modal.open({
-              title: "Success",
-              parent: this,
-              component: AcceptedInterview,
-              props: {
-                mediaName: mediaName
-              }
-            })
-          })
-          .catch(e => {
-            this.createError(e, 'oops')
-          })
-        }
-
-        this.getPengingCards()
-        this.getActiveBusinessCards()
-
-        window.io = VueSocketIO(socket, {
-          query: {
-            token: this.token
+    this.getUser()
+    .then(this.getResourses())
+    .then(_ => {
+      if (this.$router.currentRoute.query.mediaName && this.$router.currentRoute.query.type == "acceptinterview") {
+        Axios.post(api + "/webinars/acceptinterviewinvitation", {
+          mediaName: this.$router.currentRoute.query.mediaName,
+        }, {
+          headers: {
+            authorization: localStorage.auth
           }
         })
-    
-        window.io.on('connect', () => {
-          console.log('socket connected')
+        .then(res => {
+          const mediaName = this.$router.currentRoute.query.mediaName
+          this.$buefy.modal.open({
+            title: "Success",
+            parent: this,
+            component: AcceptedInterview,
+            props: {
+              mediaName: mediaName
+            }
+          })
         })
-    
-        // window.io.on('logout', () => {
-        //   localStorage.auth = ""
-        //   this.$router.push('/login')
-        // })
-    
-        setInterval(() => {
-          window.io.emit('auth', { id:this.token })
-        }, 30000)
-    
-        Notification.requestPermission().then(function(result) {
-          self.notificationAllowed = true
-        });
-    
-        window.io.on('incomming_contact_request', (data) => {
-          this.openIncomingContactRequest(data)
+        .catch(e => {
+          this.createError(e, 'oops')
         })
-    
-        window.io.on('request_contact_confirmed', (data) => {
-          this.friendRequestAccepted(data)
-        })
+      }
+
+      this.getPengingCards()
+      this.getActiveBusinessCards()
+
+      window.io = VueSocketIO(socket, {
+        query: {
+          token: localStorage.auth
+        }
       })
-      .catch(e => {
-        this.$router.push('/login')
+  
+      window.io.on('connect', () => {
+        console.log('socket connected')
       })
-    }
+  
+      // window.io.on('logout', () => {
+      //   localStorage.auth = ""
+      //   this.$router.push('/login')
+      // })
+  
+      setInterval(() => {
+        window.io.emit('auth', { id:localStorage.auth })
+      }, 30000)
+  
+      Notification.requestPermission().then(function(result) {
+        self.notificationAllowed = true
+      });
+  
+      window.io.on('incomming_contact_request', (data) => {
+        this.openIncomingContactRequest(data)
+      })
+  
+      window.io.on('request_contact_confirmed', (data) => {
+        this.friendRequestAccepted(data)
+      })
+    })
+    .catch(e => {
+      this.$router.push('/login')
+    })
 
     window.EventBus.$on('request_contact_confirmed', (data) => {
       this.friendRequestAccepted(data)
@@ -223,7 +219,6 @@ new Vue({
       notificationAllowed: "",
       profile: this.profile,
       usertype: this.usertype,
-      token: this.token,
       content: Content[this.selectedLanguage],
 
       openGlobalChat: false,
@@ -325,7 +320,7 @@ new Vue({
         case "wa" : 
         case "info" :
           this.$router.push({
-            path: `/${this.token}/${name}`
+            path: `/${name}`
           })
           break;
 
@@ -334,7 +329,7 @@ new Vue({
           .then(res => {
             if (res)
               this.$router.push({
-                path: `/${this.token}/${name}`
+                path: `/${name}`
               })
             else
               this.createError(this.content.ErrorMessages[3], 'oops')
@@ -345,7 +340,7 @@ new Vue({
           let sponsor = this.Sponsors.filter(el => compare(el.name, name))[0]
           if (sponsor)
             this.$router.push({
-              path: `/${this.token}/company`,
+              path: `/company`,
               query: {
                 name: name.toLowerCase()
               }
@@ -469,7 +464,7 @@ new Vue({
 			const name = focus_startup.name.toLowerCase()
 			if (this.cloo(toUp(this.usertype), toUp('investor'))) {
 				this.$router.push({
-					path: `/${this.token}/sip/${name}`
+					path: `/sip/${name}`
 				}).catch(e => {
 					console.log(e)
 				})
@@ -477,7 +472,7 @@ new Vue({
 			// only investor or media can see startup investment profile
 			else {
 				this.$router.push({
-					path: `/${this.token}/company?name=${name}`
+					path: `/company?name=${name}`
 				}).catch(e => {
 					console.log(e)
 				})
@@ -491,7 +486,7 @@ new Vue({
     },
 
     addReminderCompany (data, theme) {
-      Axios.post(host + `/reminders/new`, {
+      Axios.post(api + `/reminders/new`, {
         time: data.time,
         reason: `${data.name} ${theme}`
       }, {
@@ -508,7 +503,7 @@ new Vue({
     },
 
     addReminder (data, theme) {
-      Axios.post(host + `/reminders/new`, {
+      Axios.post(api + `/reminders/new`, {
         time: data.time,
         reason: `${data.contact.name} ${data.contact.role} ${data.contact.company} ${theme}`
       }, {
@@ -585,7 +580,7 @@ new Vue({
 
     getUser () {
       return new Promise((resolve, reject) => {
-        Axios.get(host+`/login/checkToken?access=${window.location.pathname.split('/')[1]}`, {
+        Axios.get(api+`/auth/checkAccess?path=HOME`, {
           headers: {
             authorization: localStorage.auth
           }
@@ -593,21 +588,25 @@ new Vue({
         .then(res => {
           let data = res.data
           this.profile = data.profile
+          this.usertype = data.type
 
           if (!this.profile.Linkedin && !this.profile.Facebook && !this.profile.Telegram && !this.profile.photo) {
             this.$router.push('/reghall')
           }
 
-          this.token = data.accessLink
-          this.usertype = data.type
-
           resolve(true)
+        })
+        .catch(e => {
+          // compare(err.response.data.error, "NO UPCOMMING INTERVIEWS")
+          console.log(e.response)
+          if (compare(e.response.data ,"NO ACCESS"))
+            this.$router.push('/login')
         })
       })
     },
 
     track (name, url) {            
-      Axios.post(`${host}/track`, {
+      Axios.post(`${api}/track`, {
         url: url,
         profile: name
       })
@@ -627,7 +626,7 @@ new Vue({
 
     getResourses () {
       return new Promise((resolve, reject) => {
-        Axios.get(`${host}/resources?names=investors,mediapartners,speakers,sponsors,startups,workshop,investfunds`, {
+        Axios.get(`${api}/resources?names=investors,mediapartners,speakers,sponsors,startups,workshop,investfunds`, {
           headers: {
             authorization: localStorage.auth
           }
@@ -731,7 +730,7 @@ new Vue({
 
     getWebinar (name) {
       return new Promise((resolve, reject) => {
-        Axios.get(`${host}/webinars?name=${name}`, {
+        Axios.get(`${api}/webinars?name=${name}`, {
           headers: {
             authorization: localStorage.auth
           }
@@ -786,15 +785,18 @@ new Vue({
 
     getPengingCards () {
       return new Promise(async (resolve, reject) => {
-        Axios.get(`${host}/users/bcpending`, {
+        Axios.get(`${api}/users/bcpending`, {
           headers: {
             authorization: localStorage.auth
           }
         })
         .then(res => {
           const decrypted = res.data
-          this.pendingCards = decrypted
-          this.pendingCards = this.pendingCards.sort((x,y) => x.name > y.name)
+          this.pendingCards = decrypted.sort((x,y) => {
+            if(x.name < y.name) { return -1; }
+            if(x.name > y.name) { return 1; }
+            return 0;
+          })
           this.pendingCards.map(el => {
             if (!el.photo)
               el.photo = this.tryGetProfilePhoto(el.email)
@@ -810,15 +812,18 @@ new Vue({
 
     getActiveBusinessCards () {
       return new Promise(async (resolve, reject) => {
-        Axios.get(`${host}/users/bcconnected`, {
+        Axios.get(`${api}/users/bcconnected`, {
           headers: {
             authorization: localStorage.auth
           }
         })
         .then(res => {
           const decrypted = res.data
-          this.activeBusinessCards = decrypted
-          this.activeBusinessCards = this.activeBusinessCards.sort((x,y) => x.name > y.name)
+          this.activeBusinessCards = decrypted.sort((x,y) => {
+            if(x.name < y.name) { return -1; }
+            if(x.name > y.name) { return 1; }
+            return 0;
+          })
           this.activeBusinessCards.map(el => {
             if (!el.photo)
               el.photo = this.tryGetProfilePhoto(el.email)
@@ -833,7 +838,7 @@ new Vue({
     },
 
     acceptBusinessCard (card) {
-      Axios.post(`${host}/users/acceptBusinessCard`, card, {
+      Axios.post(`${api}/users/acceptBusinessCard`, card, {
         headers: {
           authorization: localStorage.auth
         }
@@ -849,7 +854,7 @@ new Vue({
     },
 
     denyBusinessCardRequest (card) {
-      Axios.post(`${host}/users/denyBusinessCardRequest`, card, {
+      Axios.post(`${api}/users/denyBusinessCardRequest`, card, {
         headers: {
           authorization: localStorage.auth
         }
@@ -863,7 +868,7 @@ new Vue({
     tryGetCompanyLogo (name) {
       return new Promise(async (resolve, reject) => {
         if (name) {
-          const response = await Axios.get(host + `/data/companylogo/${name.toUpperCase()}`)
+          const response = await Axios.get(api + `/data/companylogo/${name.toUpperCase()}`)
           resolve(response.data)
         }
         else
@@ -916,25 +921,6 @@ new Vue({
       return text.charAt(0).toUpperCase() + text.substring(1);
     },
 
-    checkNavShouldBeWithToken () {
-      if (
-        !this.token &&
-        !this.profile &&
-        !this.usertype &&
-        !this.$router.currentRoute.fullPath.includes('auth=true') &&
-        this.$router.currentRoute.path != '/login' &&
-        this.$router.currentRoute.path != '/loginrtp' &&
-        this.$router.currentRoute.path != '/reghall' &&
-        this.$router.currentRoute.path != '/noaccess' &&
-        this.$router.currentRoute.path != '/backstage' &&
-        this.$router.currentRoute.path != '/register' &&
-        this.$router.currentRoute.path != '/resetpwd'
-      )
-        return true
-      else
-        return false
-    },
-
     check (vars) {
       vars = vars.split(" ")
       let self = this
@@ -964,18 +950,6 @@ new Vue({
       })
     },
 
-    tokenCheck () {
-      let self = this
-      return new Promise(async (resolve, reject) => {
-        let timer = setInterval(() => {
-          if (self.token) {
-            clearInterval(timer)
-            resolve(true)
-          }
-        }, 100)
-      })
-    },
-
     isThatMe (email) {
       if (compare(this.profile.email, email))
         return true
@@ -1001,7 +975,7 @@ new Vue({
 
     openIncomingContactRequest (info) {
       let note = this.content.BusinessCard.newContactReqNote(info.from.name.split(" ")[0], info.from.company, info.from.role)
-      let note2 = this.content.acceptLaterNote(`${selfhost}/${this.token}/profile`)
+      let note2 = this.content.acceptLaterNote(`${selfhost}/profile`)
 
       this.$buefy.snackbar.open({
         duration: 100000,
@@ -1046,7 +1020,7 @@ new Vue({
 
     upgradeTicket(type) {
       if (localStorage.auth) {
-        Axios.post(`${host}/ticket/upgrade`, {
+        Axios.post(`${api}/ticket/upgrade`, {
           type: type
         }, {
           headers: {
@@ -1064,7 +1038,7 @@ new Vue({
         let timerForUserLoged = setInterval(() => {
           if (localStorage.auth) {
             clearInterval(timerForUserLoged)
-            Axios.post(`${host}/ticket/upgrade`, {
+            Axios.post(`${api}/ticket/upgrade`, {
               type: type
             }, {
               headers: {
@@ -1087,13 +1061,13 @@ new Vue({
 
       let message = component
 
-      Axios.get(`${host}/ticket/upgrade?type=business`, {
+      Axios.get(`${api}/ticket/upgrade?type=business`, {
         headers: {
           authorization: localStorage.auth
         }
       }).then(res => {
         this.upgradeCost_business = res.data.amount
-        return Axios.get(`${host}/ticket/upgrade?type=vip`, {
+        return Axios.get(`${api}/ticket/upgrade?type=vip`, {
           headers: {
             authorization: localStorage.auth
           }
@@ -1127,7 +1101,7 @@ new Vue({
     },
 
     async showMessageToUpgradeStrict (component, type) {
-      Axios.get(`${host}/ticket/upgrade?type=${type}`, {
+      Axios.get(`${api}/ticket/upgrade?type=${type}`, {
         headers: {
           authorization: localStorage.auth
         }

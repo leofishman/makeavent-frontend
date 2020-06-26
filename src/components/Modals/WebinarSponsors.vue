@@ -1,20 +1,20 @@
 <template>
     <div class="sponsor-padding">
         <figure class="logo">
-            <img :src="`${host}/static/img/sponsors/MAKEAVENT/MAKEAVENT.png`">
+            <img :src="`${api}/static/img/sponsors/MAKEAVENT/MAKEAVENT.png`">
         </figure>
         <!-- <figure v-if="showSponsor" class="box">
-            <img :src="`${host}/static/img/sponsors/KASPERSKY/KASPERSKY.png`">
+            <img :src="`${api}/static/img/sponsors/KASPERSKY/KASPERSKY.png`">
         </figure> -->
         <!-- <div class="powered">
             <h3>{{content.powered}}</h3>
-            <img :src="`${host}/static/img/sponsors/MAKEAVENT/MAKEAVENT.png`">
+            <img :src="`${api}/static/img/sponsors/MAKEAVENT/MAKEAVENT.png`">
         </div> -->
     </div>
 </template>
 
 <script>
-    import {host} from '@/env'
+    import {api} from '@/env'
     export default {
         name: "WebinarSponsors",
         
@@ -27,7 +27,7 @@
         },
         data () {
             return {
-                host: host,
+                api: api,
                 content: this.$root.content.WebinarSponsors
             }
         }

@@ -18,7 +18,7 @@
     </div>
 </template>
 <script>
-import {host} from '@/env'
+import {api} from '@/env'
 import Axios from 'axios'
 
 export default {

@@ -5,7 +5,7 @@
             <div class="column is-three-fifths">
                 <div class="media speaking-media">
                     <figure style="border-right:none" @click="navToPage()" class="media-left speaker-brand">
-                        <img v-if="company" class="click" :src="host + companyLogo" title="View Company">
+                        <img v-if="company" class="click" :src="api + companyLogo" title="View Company">
                     </figure>
                 </div>
             </div>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    import {host} from '@/env'
+    import {api} from '@/env'
 
     export default {
         name: "SpeakingTitleCompanySpeaker",
@@ -48,7 +48,7 @@
 
             return {
                 companyLogo: this.companyLogo,
-                host: host
+                api: api
             }
         },
         methods: {

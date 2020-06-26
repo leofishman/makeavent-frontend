@@ -26,7 +26,7 @@
 import Investorsrow from '@/components/Investors/Investorsrow.vue'
 
 import axios from 'axios'
-import {host, self} from '@/env'
+import {api, self} from '@/env'
 
 export default {
     name: "Investors",
@@ -42,7 +42,7 @@ export default {
         this.$root.checkComponentAccess('startupdemoday')
         .then(res => {
             if (res) {
-                this.$root.check('usertype token Investors').then(async _ => {
+                this.$root.check('usertype Investors').then(async _ => {
                     if ( this.$root.checkComponentAccess('invstorslist') ) {
                         this.adInfoToInvestor()
                     }  
@@ -61,11 +61,11 @@ export default {
         adInfoToInvestor () {
             this.$root.Investors.map(async el => {
                 if (!el.photo)
-                    el.photo = host + this.$root.tryGetProfilePhoto(el.email)
+                    el.photo = api + this.$root.tryGetProfilePhoto(el.email)
                 else
-                    el.photo = host + el.photo
+                    el.photo = api + el.photo
 
-                el.companyLogo = host + await this.$root.tryGetCompanyLogo(el.company)
+                el.companyLogo = api + await this.$root.tryGetCompanyLogo(el.company)
 
                 this.displayContent = true
             })

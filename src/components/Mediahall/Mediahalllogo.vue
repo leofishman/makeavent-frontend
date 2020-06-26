@@ -3,7 +3,7 @@
 		<div class="box">
 		<img
 			v-if="getMediaPartnerSlot(data)"
-			:src="host + getMediaPartnerSlot(data).logo" 
+			:src="api + getMediaPartnerSlot(data).logo" 
 			:alt="`${getMediaPartnerSlot(data).name} - Media partner of blockconf.digital`">
 		<div v-else>{{content.mp}}</div>
 		</div>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {host} from '@/env'
+import {api} from '@/env'
 
 export default {
 	name: "Mediahalllogo",
@@ -27,7 +27,7 @@ export default {
 		
 		return {
 			ready: this.ready,
-			host: host,
+			api: api,
 			
 			content: this.$root.content.Mediahall
 		}
@@ -36,7 +36,7 @@ export default {
 		openMediaPartnerBooth (id) {
             const name = this.getMediaPartnerSlot(id).name.toLowerCase()
             this.$router.push({
-                path: `/${this.$root.token}/mediahall/${name}`,
+                path: `/mediahall/${name}`,
             })
 		},
 

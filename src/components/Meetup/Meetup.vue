@@ -12,13 +12,13 @@
 						<div class="col">
 							<!-- Main sponsor -->
 							<article class="click box ms-main" v-on:click="openPage('kaspersky')">
-								<img :src="host + $root.getSponsorByName('kaspersky').logo">
+								<img :src="api + $root.getSponsorByName('kaspersky').logo">
 							</article>
 						</div>
 						<div class="col">
 							<!-- Platinum sponsor -->
 							<article class="click box ms-platinum" v-on:click="openPage('rsk')">
-								<img :src="host + $root.getSponsorByName('rsk').logo">
+								<img :src="api + $root.getSponsorByName('rsk').logo">
 							</article>
 						</div>
 					</div>
@@ -26,13 +26,13 @@
 						<div class="col">
 							<!-- Gold sponsor -->
 							<article class="click box ms-gold" v-on:click="openPage('decred')">
-								<img :src="host + $root.getSponsorByName('decred').logo">
+								<img :src="api + $root.getSponsorByName('decred').logo">
 							</article>
 						</div>
 						<div class="col">
 							<!-- Gold sponsor -->
 							<article class="click box ms-gold" v-on:click="openPage('dash')">
-								<img :src="host + $root.getSponsorByName('dash').logo">
+								<img :src="api + $root.getSponsorByName('dash').logo">
 							</article>
 						</div>
 					</div>
@@ -45,7 +45,7 @@
 </template>
 <script>
 import Pagetitle from '@/components/Pagetitle.vue';
-import {host} from '@/env'
+import {api} from '@/env'
 
 export default {
 	name: "Meetup",
@@ -57,7 +57,7 @@ export default {
 	},
 	methods: {
 		openPage (name) {
-			this.$router.push(`/${this.$root.$router.currentRoute.params.id}/booth?name=${name}`).catch(() => {
+			this.$router.push(`/booth?name=${name}`).catch(() => {
 				window.location.reload()
 			})
 		},
@@ -71,7 +71,7 @@ export default {
 		return {
 			ready: this.ready,
 
-			host: host,
+			api: api,
 			content: this.$root.content.Meetup
 		}
 	}

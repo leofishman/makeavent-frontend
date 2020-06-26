@@ -14,7 +14,7 @@
 							<aside class="profile-left">
 								<div class="profile-avatar">
 									<figure class="figure-avatar">
-										<img :src="host + profile.photo">
+										<img :src="api + profile.photo">
 									</figure>
 
 									<figure v-if="!showEditPhoto" v-on:click="showAcceptPhoto = true; showEditPhoto = true" class="edit-photo click">
@@ -165,8 +165,8 @@
 						<!-- Profile bottom-->
 						<div class="profile-bottom box">
 							<div class="profile-brand">
-								<img v-if="!profile.company" class="level-left" :src="`${host}/static/img/brand-default.png`">
-								<img v-else class="level-left" :src="`${host}/static/img/sponsors/${profile.company.toUpperCase()}/${profile.company.toUpperCase()}.png`">
+								<img v-if="!profile.company" class="level-left" :src="`${api}/static/img/brand-default.png`">
+								<img v-else class="level-left" :src="`${api}/static/img/sponsors/${profile.company.toUpperCase()}/${profile.company.toUpperCase()}.png`">
 							</div>
 							<div class="profile-rol">
 								<h3>{{profile.role}}</h3>
@@ -253,7 +253,7 @@
 </template>
 
 <script>
-	import {host} from '@/env'
+	import {api} from '@/env'
 	import axios from 'axios'
 	import Pagetitle from '@/components/Pagetitle.vue';
 	import Businesscardconected from '@/components/Profile/Businesscardconected.vue';
@@ -296,7 +296,7 @@
 			return {
 				profileParamsFocus: this.profileParamsFocus,
 				content: this.$root.content.Profile,
-				host: host,
+				api: api,
 				ready: this.ready,
 				profile: this.profile,
 				activeTab: 0,
@@ -356,7 +356,7 @@
 			},
 
 			update (el, param) {
-				axios.post(host + '/login/socials_reg', {
+				axios.post(api + '/login/socials_reg', {
 					[el.replace('new', '')]: this[el],
 				}, {
 					headers: {
@@ -377,7 +377,7 @@
 					let formData = new FormData();
 					formData.append('userProfilePhoto', this.newPhoto);
 
-					axios.post(`${host}/login/profilephoto`, formData, {
+					axios.post(`${api}/login/profilephoto`, formData, {
 						headers: { authorization: localStorage.auth }
 					})
 					.then(res => {

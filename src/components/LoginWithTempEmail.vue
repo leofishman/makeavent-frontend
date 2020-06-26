@@ -101,7 +101,7 @@
 </template>
 <script>
 import Axios from 'axios'
-import {self, host} from '@/env'
+import {self, api} from '@/env'
 import SponsorsCol from '@/components/SponsorsCol'
 
 export default {
@@ -181,7 +181,7 @@ export default {
     },
     methods: {
         fetchPasswordFromDb () {
-            Axios.post(`${host}/login/passwordForTempAccount`, {
+            Axios.post(`${api}/login/passwordForTempAccount`, {
                 access: this.$router.currentRoute.query.access
             })
             .then(res => {
@@ -196,7 +196,7 @@ export default {
         },
 
         login () {
-            Axios.post(`${host}/login`, {
+            Axios.post(`${api}/login`, {
                 email: this.email,
                 newemail: this.newemail,
                 password: this.password,
@@ -210,7 +210,6 @@ export default {
 
                 this.$root.profile = decrypted.profile[0]
                 this.$root.usertype = decrypted.type
-                this.$root.token = decrypted.accessLink
                 
                 localStorage.auth = res.headers.authorization
 

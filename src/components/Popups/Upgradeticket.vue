@@ -49,7 +49,7 @@
 
 <script>
 import Axios from 'axios'
-import {host} from '@/env'
+import {api} from '@/env'
 
 export default {
 	name: "Upgradeticket",
@@ -73,7 +73,7 @@ export default {
 			selected: this.selected,
 			ppType: this.ppType,
 			price: this.price,
-			host: host,
+			api: api,
 
 			showButtons: this.showButtons,
 		}
@@ -97,7 +97,7 @@ export default {
 
 		GetTicketPrice () {
 			return new Promise(async (resolve, reject) => {
-				Axios.get(host + '/ticket/pricetable').then(res => resolve(res.data[this.selected]))
+				Axios.get(api + '/ticket/pricetable').then(res => resolve(res.data[this.selected]))
 			})
 		},
 	},

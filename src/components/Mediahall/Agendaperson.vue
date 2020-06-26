@@ -3,19 +3,19 @@
 	<div class="column agenda-person">
 		<!-- Hide on hover-->
 		<figure class="data">
-			<img :src="host + data.photo">
+			<img :src="api + data.photo">
 			<figcaption>{{data.name}} <br> {{data.company}} {{data.role}}</figcaption>
 		</figure>
 		<!-- Show on hover-->
 		<figure v-on:click="openBooth(data.company)" class="logo-hover">
-			<img v-if="companyLogo" :src="host + companyLogo">
+			<img v-if="companyLogo" :src="api + companyLogo">
 			<div v-else>{{data.company}}</div>
 		</figure>
 	</div>
 </template>
 
 <script>
-import {host} from '@/env'
+import {api} from '@/env'
 export default {
 	name: "Agendaperson",
 	props: {
@@ -38,7 +38,7 @@ export default {
         })
 
 		return {
-			host: host,
+			api: api,
 			companyLogo: this.companyLogo
 		}
 	},

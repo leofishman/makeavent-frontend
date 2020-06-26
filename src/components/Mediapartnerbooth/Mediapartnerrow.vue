@@ -2,7 +2,7 @@
 	<div class="box">
 		<div class="columns">
 			<div class="column row-pic">
-				<img :src="host + data.photo">
+				<img :src="api + data.photo">
 			</div>
 			<div class="column row-name">
 				<div class="has-text-centered">
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {host} from '@/env' 
+import {api} from '@/env' 
 export default {
 	name: "Mediapartnerrow",
 	props: {
@@ -28,7 +28,7 @@ export default {
 	data () {
 		return {
 			content: this.$root.content.common,
-			host: host
+			api: api
 		}
 	}
 }

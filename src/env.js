@@ -1,7 +1,5 @@
-module.exports = {
-    self: (process.env.NODE_ENV == 'production') ? "https://blockconf.digital" : "http://localhost:8081",
-    host: (process.env.NODE_ENV == 'production') ? "https://api.blockconf.digital" : "http://localhost:8080",
-    socket: (process.env.NODE_ENV == 'production') ? "https://socket.blockconf.digital" : "http://localhost:8082",
-    startDate: 1590368400000,
-    meetupDate: 1589475600000
-}
+export const env = process.env.VUE_APP_NODE_ENV
+export const app = process.env.VUE_APP_APP_NAME
+export const api = process.env.VUE_APP_API_HOST
+export const self = process.env.VUE_APP_SELF_HOST
+export const socket = process.env.VUE_APP_SOCKET_HOST

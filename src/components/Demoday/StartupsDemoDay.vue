@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <div
-                            v-on:click="$router.push(`/${$root.token}/investors`)"
+                            v-on:click="$router.push(`/investors`)"
                             class="tile is-child box click has-background-light investors"
                             >
                             <div class="has-text-centered">
@@ -76,7 +76,7 @@
 </div>
 </template>
 <script>
-    import {host} from '@/env'
+    import {api} from '@/env'
     import Fundbrand from './Fundbrand'
     import Startuplogo from './Startuplogo'
 
@@ -99,7 +99,7 @@
             return {
                 ready: false,
 
-                host: host,
+                api: api,
                 show: true,
                 content: this.content
             }
@@ -109,7 +109,7 @@
                 this.$root.checkComponentAccess('startupdemodaypitchingbooth')
                 .then(res => {
                     if (res)
-                        this.$router.push(`/${this.$root.token}/ddpb`)
+                        this.$router.push(`/ddpb`)
                     else
                         this.$root.createError(this.$root.content.ErrorMessages[5], 'oops')
                 })

@@ -14,11 +14,8 @@
       <div>
         <section id="chats-sidebar" style="padding-top:80px; overflow:hidden; background:white;">
           <b-tabs class="chat" style="width:600px; pointer-events:all" type="is-toggle" expanded >
-            <b-tab-item :label="`Blockconf ` + $root.content.common.coffeeChat">
+            <b-tab-item :label="$root.project.name + ' ' + $root.content.common.coffeeChat">
               <Chat id="globalchat" checkAccess="globalchat" :parent="self" type="globalchat" name="global" />
-            </b-tab-item>
-            <b-tab-item :label="`Blockconf ` + $root.content.common.vipChat">
-              <Chat id="vipchat" checkAccess="vipchat" :parent="self" type="vipchat" name="vip" />
             </b-tab-item>
           </b-tabs>
         </section>
@@ -29,8 +26,7 @@
 
 <script>
 
-import Chat from '@/components/CompanyProfile/Chat'
-
+import Chat from '@/components/Chats/Chat'
 
 export default {
   name: 'App',

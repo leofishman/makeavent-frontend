@@ -8,7 +8,7 @@
 </template>
 
 <script>
-	import Member from '@/components/CompanyProfile/Member.vue';
+	import Member from '@/components/Member/Member.vue';
 	export default {
 		name: "Bcardpreview",
 		components: {

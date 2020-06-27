@@ -32,7 +32,7 @@
 		<div class="tile is-parent logo help-420">
 			<div class="tile is-child">
 				<figure class="image logo">
-					<img src="@/assets/logo_dark.svg">
+					<img v-if="$root.project.logo" :src="$root.api + $root.project.logo">
 				</figure>
 			</div>
 		</div>

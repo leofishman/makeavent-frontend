@@ -5,7 +5,7 @@
 			<Pagetitle :data="content.title"/>
 
 			<section class="section section-meetup">
-				<p class="has-text-centered" v-html="content.intro"></p>
+				<!-- <p class="has-text-centered" v-html="content.intro"></p> -->
 
 				<div class="meetup-sponsors">
 					<div>

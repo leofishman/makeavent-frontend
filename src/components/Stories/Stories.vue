@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import Story from '@/components/Stories/Story.vue'
+  import Story from './Story.vue'
 
   export default {
     name: 'Stories',

@@ -4,10 +4,19 @@ import axios from 'axios'
 import {api, startDate, meetupDate} from '../env'
 
 /**
- * @Components
+ * @components
  */
 import Home from '@/components/Home'
 import Agenda from '@/components/Agenda/Agenda'
+import Investors from '@/components/Investors/Investors'
+
+/**
+ * @DemoDay
+ */
+import DemodayPitchingBooth from '@/components/Demoday/DemodayPitchingBooth'
+import StartupsDemoDay from '@/components/Demoday/StartupsDemoDay.vue'
+import StartupProfile from '@/components/Demoday/StartupProfile.vue'
+import InvestFundProfile from '@/components/Demoday/InvestFundProfile.vue'
 
 /**
  * @Media
@@ -15,15 +24,16 @@ import Agenda from '@/components/Agenda/Agenda'
 import Mediahall from '@/components/Mediahall/Mediahall.vue'
 import Mediapartnerbooth from '@/components/Mediapartnerbooth/Mediapartnerbooth.vue'
 
-/**
- * @Auth
- */
-import Login from '@/components/Auth/Login.vue'
-import LoginWithTempEmail from '@/components/Auth/LoginWithTempEmail.vue'
-import Register from '@/components/Auth/Register'
-import LoginWithNewPassword from '@/components/Auth/LoginWithNewPassword'
-import NoAccess from '@/components/Auth/NoAccess.vue'
-
+import VipMeetingRoom from '@/components/Vip/VipMeetingRoom.vue'
+import WorkshopAgenda from '@/components/Workshop/WorkshopAgenda.vue'
+import Login from '@/components/Login.vue'
+import LoginWithTempEmail from '@/components/LoginWithTempEmail.vue'
+import RegistrationHall from '@/components/RegistrationHall'
+import Register from '@/components/Register'
+import LoginWithNewPassword from '@/components/LoginWithNewPassword'
+import InfoDesk from '@/components/InfoDesk'
+import NoAccess from '@/components/NoAccess.vue'
+import Company from '@/components/CompanyProfile/Company.vue'
 import Profile from '@/components/Profile/Profile.vue'
 import MyInterviews from '@/components/Profile/MyInterviews.vue'
 import MyBusinessCards from '@/components/Profile/MyBusinessCards.vue'
@@ -42,6 +52,15 @@ const router = new Router({
             path: '/',
             name: 'Home',
             component: Home,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/info',
+            name: 'InfoDesk',
+            component: InfoDesk,
             meta: {
                 requiresAuth: true,
                 platformLaunch: true
@@ -85,6 +104,16 @@ const router = new Router({
             component: Backstage,
         },
         {
+            path: '/company',
+            name: "Company",
+            component: Company,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            },
+            props: (route) => ({ name: route.query.name })
+        },
+        {
             path: '/login',
             name: "Password",
             component: Login,
@@ -99,6 +128,24 @@ const router = new Router({
             component: Register,
             meta: {
                 requiresAuth: false,
+                platformLaunch: true
+            }
+        },
+        {
+            path: "/reghall",
+            name: "RegistrationHall",
+            component: RegistrationHall,
+            meta: {
+                requiresAuth: false,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/vip',
+            name: "Vip",
+            component: VipMeetingRoom,
+            meta: {
+                requiresAuth: true,
                 platformLaunch: true
             }
         },
@@ -147,6 +194,33 @@ const router = new Router({
                 platformLaunch: true
             }
         },
+        {   // startup investment profile
+            path: '/sip',
+            name: "StartupsDemoDay",
+            component: StartupsDemoDay,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/sip/:name',
+            name: "StartupProfile",
+            component: StartupProfile,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/ddpb',
+            name: "DemoDayPitchingBooth",
+            component: DemodayPitchingBooth,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
         {
             path: '/agenda',
             name: "Agenda",
@@ -155,6 +229,34 @@ const router = new Router({
                 requiresAuth: true,
                 platformLaunch: true
             }
+        },
+        {
+            path: '/investors',
+            name: "Investors",
+            component: Investors,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/wa',
+            name: "WorkshopAgenda",
+            component: WorkshopAgenda,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            }
+        },
+        {
+            path: '/ifp',
+            name: "InvestFundProfile",
+            component: InvestFundProfile,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            },
+            props: (route) => ({ name: route.query.name })
         }
     ]
 })

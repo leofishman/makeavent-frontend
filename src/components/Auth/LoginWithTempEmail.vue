@@ -5,11 +5,11 @@
                 <div class="columns">
                     <div class="column is-half is-offset-one-quarter data-login">
                         <figure class="image">
-                            <img src="@/assets/logo_dark.svg">
+                            <img v-if="$root.project.logo" :src="$root.api + $root.project.logo">
                         </figure>
 
                         <div class="box">
-                            <p style="margin:10px 0px;">For the better experience our team recommends to use Google Chrome</p>
+                            <p style="margin:10px 0px;">{{$root.content.googleHint}}</p>
                             <p v-html="$root.content.titleForLoginWithTempEmail"></p>
                             <section>
                                 <b-field :label="$root.content.name"> 
@@ -21,7 +21,7 @@
                                 </b-field>
 
                                 <div class="columns only-bot-margin">
-                                    <div v-if="email.includes('@blockconf.digital')" class="column nopadding" style="padding-right:5px !important;">
+                                    <div v-if="email.includes('@makeavent.com')" class="column nopadding" style="padding-right:5px !important;">
                                         <b-field :label="$root.content.systemGenerated + $root.content.email">
                                             <b-input disabled type="password" v-model="email" ></b-input>
                                         </b-field>
@@ -31,7 +31,7 @@
                                             <b-input disabled type="text" v-model="email" ></b-input>
                                         </b-field>
                                     </div>
-                                    <div v-if="email.includes('@blockconf.digital')" class="column nopadding" style="padding-left:5px !important">
+                                    <div v-if="email.includes('@makeavent.com')" class="column nopadding" style="padding-left:5px !important">
                                         <b-field
                                             :label="$root.content.new + $root.content.email"
                                             >
@@ -77,7 +77,7 @@
                                 </b-button>
 
                                 <div class="bottom">
-                                    {{$root.content.contactSupport}} support@blockconf.digital
+                                    {{$root.content.contactSupport}} support@makeavent.com
                                 </div>
 
                             </section>
@@ -92,12 +92,8 @@
 <script>
 import Axios from 'axios'
 import {self, api} from '@/env'
-import SponsorsCol from '@/components/SponsorsCol'
 
     export default {
-        components: {
-            SponsorsCol
-        },
         data() {
             this.buttonready = false
             this.password = ""
@@ -175,10 +171,9 @@ import SponsorsCol from '@/components/SponsorsCol'
                     access: this.$router.currentRoute.query.access
                 })
                 .then(res => {
-                    const decrypted = this.$root.decrypt(res.data.encryptedData)
-                    this.password = decrypted.pwd
-                    this.type = decrypted.type
-                    this.email = decrypted.email
+                    this.password = res.data.pwd
+                    this.type = res.data.type
+                    this.email = res.data.email
                 })
                 .catch(e => {
                     this.$router.push('/login')
@@ -196,11 +191,8 @@ import SponsorsCol from '@/components/SponsorsCol'
                     name: this.name,
                 })
                 .then(res => {
-                    const decrypted = this.$root.decrypt(res.data.encryptedData)
-
-                    this.$root.profile = decrypted.profile[0]
-                    this.$root.usertype = decrypted.type
-                    this.$root.token = decrypted.accessLink
+                    this.$root.profile = res.data.profile[0]
+                    this.$root.usertype = res.data.type
 
                     localStorage.auth = res.headers.authorization
 

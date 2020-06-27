@@ -5,11 +5,11 @@
 				<div class="columns">
 					<div class="column is-half is-offset-one-quarter data-login">
 						<figure class="image">
-							<img src="@/assets/logo_dark.svg">
+							<img v-if="$root.project.logo" :src="$root.api + $root.project.logo">
 						</figure>
 						
 						<div class="box">
-                            <p style="margin:10px 0px;">For the better experience our team recommends to use Google Chrome</p>
+                            <p style="margin:10px 0px;">{{content.hint}}</p>
 							<p style="margin-bottom:20px;">
                                 <ResetPwd />
                             </p>
@@ -60,6 +60,7 @@ export default {
         this.inputsReady = false
 
         return {
+            content: this.$root.content.Login,
             email: this.email,
             password: this.password,
             inputsReady: this.inputsReady
@@ -109,7 +110,7 @@ export default {
                         this.$router.push('/reghall')
                     }
                     else                    
-                        this.$router.push(`/`)
+                    this.$router.push(`/`)
                 }
             })
             .catch(e => {

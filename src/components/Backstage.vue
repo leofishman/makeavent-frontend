@@ -6,8 +6,8 @@
                 <div>
                     <h2 v-if="show" v-html="$root.content.backstage"></h2>
                     <h2 v-if="!show">
-                        If you have popup blocked, try clicking the link below
-                        <a :href="followLink" target="_blank">Open Backstage</a>
+                        {{content.hint}}
+                        <a :href="followLink" target="_blank">{{content.open}}}</a>
                     </h2>
                 </div>
             </section>
@@ -20,19 +20,16 @@ import {api} from '@/env'
 export default {
     name: "Noaccess",
     data() {
-//        if (new Date().toLocaleString > (1590368400000 - 3600000)) {
-            this.$root.getWebinar("backstage").then(res => {
-                this.$root.openExternalInBlank(res.webinarId)
-		        this.followLink = res.webinarId
-            })
-//        }
-//        else 
-//            this.show = true
+        this.$root.getWebinar("backstage").then(res => {
+            this.$root.openExternalInBlank(res.webinarId)
+            this.followLink = res.webinarId
+        })
 
         return {
             api: api,
             show: this.show,
-	        followLink: ""
+            followLink: "",
+            content: $root.content.Backstage
         }
     },
 }

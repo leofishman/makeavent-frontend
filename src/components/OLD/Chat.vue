@@ -32,7 +32,7 @@
 				</textarea>
 			</div>
 			<div class="chat-helper has-text-grey">
-				<p>Shift + Enter for line break, Enter to send message</p>
+				<p>{{content.hint}}</p>
 			</div>
 		</div>
 		<div
@@ -101,9 +101,13 @@
 						}
 
 						// scroll chat to bottom
-						setTimeout(() => {
-							this.scrollBehaviour()
-						}, 500)
+						let self = this
+						let scrollTimer = setInterval(() => {
+							if (self.$root.childsEqualsToData(`${self.type}-${self.name}-messages-box`, self.chatHistory)) {
+								clearInterval(scrollTimer)
+								self.scrollBehaviour()	
+							}
+						}, 50)
 					})
 
 					this.chat.emit('fetch_chat_history')
@@ -202,7 +206,7 @@
 			scrollBehaviour () {
 				let chatlist = document.getElementById(`${this.type}-${this.name}-messages-box`)
 				if (chatlist)
-					chatlist.scrollTo(0, chatlist.scrollHeight)
+					chatlist.scrollTo(0, 123456789)
 			},
 
 			fireNotification (chatname, data) {

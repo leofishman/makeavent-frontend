@@ -1,14 +1,14 @@
 export default {
-    globalchat: "business|vip|media|startup|investor", // basic only for meetup
-    vipchat: "vip|media|startup|investor", // basic and business only for meetup
-    companychat: "business|vip|media|startup|investor",
-    startupchat : "investor|media|startup",
-    investorslist :"investor|startup|media",
-    bcrequest : "business|vip|media|startup|investor",
-    privatecall: "vip|investor|media|startup",
-    startupdemoday: "investor|media|startup",
-    startupdemodaypitchingbooth: "investor|media|startup",
-    startupprofile: "investor",
-    investfundprofile: "investor|media|startup",
-    interview: 'media'
+    globalchat: "basic|business|vip|media|startup|investor",
+    vipchat: "basic|business|vip|media|startup|investor",
+    companychat: "basic|business|vip|media|startup|investor",
+    startupchat : "basic|business|vip|media|startup|investor",
+    investorslist : "basic|business|vip|media|startup|investor",
+    bcrequest : "basic|business|vip|media|startup|investor",
+    privatecall: "basic|business|vip|media|startup|investor",
+    startupdemoday: "basic|business|vip|media|startup|investor",
+    startupdemodaypitchingbooth: "basic|business|vip|media|startup|investor",
+    startupprofile: "basic|business|vip|media|startup|investor",
+    investfundprofile: "basic|business|vip|media|startup|investor",
+    interview: "basic|business|vip|media|startup|investor",
 }

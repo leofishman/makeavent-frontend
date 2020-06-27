@@ -10,6 +10,11 @@ export default {
         joinSpeach: "Join Speach"
     },
 
+    Backstage: {
+        hint: "If you have popup blocked, try clicking the link below",
+        open: "Open Backstage"
+    },
+
     Mediahall: {
         title: "Media Hall",
         mp: "Media Partner",
@@ -22,7 +27,7 @@ export default {
 
     RegistrationHall: {
         title: "Registration Hall",
-        intro: "Please fill in the information that you would like to include in your virtual business card. This business card is the 'request only' and will be available only to people whose requests you confirmed. BlockConf Digital will not use this information for any other purposes.",
+        intro: `Please fill in the information that you would like to include in your virtual business card. This business card is the 'request only' and will be available only to people whose requests you confirmed. ${process.env.VUE_APP_APP_NAME} will not use this information for any other purposes.`,
         email: "Business Email (optional)",
         emailValidation: "This email is invalid",
         linkedin: "Linkedin (optional)",
@@ -36,9 +41,6 @@ export default {
 
     Meetup: {
         title: "e-Meetup",
-        intro: `Welcome to BlockConf Digital Virtual Meetup with Kaspersky, RSK, Decred, and Dash.<br><br>
-        We opened our virtual doors today to let you test BlockConf Digital and our virtual hall. We are constantly working to make our solution better. Our team will appreciate any feedback as in this way we will be able to deliver the best experience for you during the main event on <b>${new Date(startDate).toLocaleString()}</b>.<br><br>
-        BlockConf Digital is powered by make.A.vent, a disruptive solution for the event industry.`,
     },
     Booth: {
         title: "lorem ipsum",
@@ -57,6 +59,7 @@ export default {
 
     Chat: {
         chatPlaceholder: "Please enter your question here",
+        hint: "Shift + Enter for line break, Enter to send message"
     },
 
     Storycreate: {
@@ -90,6 +93,10 @@ export default {
         text: "Please provide email used for registration",
         reset: "Reset",
         emailSent: "Please check your inbox, we sent a link to reset password"
+    },
+
+    Login: {
+        hint: "For the better experience our team recommends to use Google Chrome"
     },
 
     passwordNotSame: "Passwords are not same!",
@@ -281,12 +288,12 @@ export default {
     ErrorMessages: {
         0: 'This will be available <b>25 of May</b>',
         1: 'We updating webinar host, sorry for the inconvinience',
-        2: 'We appologies, but there is a error adding reminder for you.<br>Please contact <b>support@blockconf.digital</b>',
+        2: 'We appologies, but there is a error adding reminder for you.<br>Please contact <b>support@makeavent.com</b>',
         3: 'We appologies, but <b>Startups Demo Day</b> available only for <b>Investors, Startups and Media Partners</b>',
         4: 'Please provide at least 1 social network or photo. This is necessary so that your business contacts can identify you',
         5: 'We appologies, but <b>Startups Demo Day Pitching e-Booth</b> is available only for <b>Investors</b>',
         6: 'We appologies, but we preparing Fund profile',
-        7: 'We appologies, but this company is not a part of <b>BLOCKCONF.DIGITAL</b>. <br><br>We suggest requesting business card and asking for a company website.',
+        7: `We appologies, but this company is not a part of <b>${process.env.VUE_APP_APP_NAME}</b>. <br><br>We suggest requesting business card and asking for a company website.`,
         8: 'No user with such email'
     },
 
@@ -308,14 +315,14 @@ export default {
     },
 
     Register: {
-        title: "Please provide your registration details.<br><br>All the information will be included in your <b>business card</b>.<br>This business card is the <b>'request only'</b> and will be available only to people whose requests you confirmed.<br>BlockConf Digital <b>will not</b> use this information for any other purposes.",
+        title: `Please provide your registration details.<br><br>All the information will be included in your <b>business card</b>.<br>This business card is the <b>'request only'</b> and will be available only to people whose requests you confirmed.<br>${process.env.VUE_APP_APP_NAME}<b>will not</b> use this information for any other purposes.`,
         chooseTicketType: "Choose ticket type",
         reqFree: "Investor or Media?",
         linkedin: "Linkedin (optional)",
         facebook: "Facebook (optional)",
         telegram: "Telegram (optional)",
         photo: "Photo (optional)",
-        free: "Free"   
+        free: "Free",
     },
 
     Snackbars: {

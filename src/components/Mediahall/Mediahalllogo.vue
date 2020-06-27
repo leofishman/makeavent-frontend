@@ -4,7 +4,7 @@
 		<img
 			v-if="getMediaPartnerSlot(data)"
 			:src="api + getMediaPartnerSlot(data).logo" 
-			:alt="`${getMediaPartnerSlot(data).name} - Media partner of blockconf.digital`">
+			:alt="`${getMediaPartnerSlot(data).name} - Media partner of ${$root.project.name}`">
 		<div v-else>{{content.mp}}</div>
 		</div>
 	</div>

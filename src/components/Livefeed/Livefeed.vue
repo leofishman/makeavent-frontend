@@ -5,7 +5,7 @@
         <b-switch v-model="reduce"></b-switch>
       </b-field>
 
-      <h3>#blockconf</h3>
+      <h3></h3>
       <Feed />
       <Feed />
       <Feed />
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import Feed from '@/components/Livefeed/Feed.vue'
+  import Feed from './Feed.vue'
 
   export default {
     name: 'Livefeed',

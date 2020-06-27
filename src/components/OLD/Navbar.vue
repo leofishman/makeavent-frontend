@@ -19,6 +19,8 @@
 						<!-- <a class="navbar-item" v-on:click="$root.joinStage('networkingbooth')">{{$root.content.networkingBooth}}</a> -->
 						<a class="navbar-item" v-on:click="openPage('/')">{{$root.content.home}}</a>
 						<a class="navbar-item" v-on:click="openPage('/agenda')">{{$root.content.agenda}}</a>
+						<a class="navbar-item" v-on:click="openPage('/mediahall')">{{$root.content.mediahall}}</a>
+						<a class="navbar-item" v-on:click="openPage('/vip')">{{$root.content.toprow.vipMeetingRoom}}</a>
 					</div>
 
 					<div class="navbar-end">
@@ -32,12 +34,38 @@
 									{{$root.content.openChat}}
 								</a>
 								<a v-on:click="logout()" class="button is-outlined is-primary">{{$root.content.logout}}</a>
+
+								<!-- <div class="navbar-item has-dropdown is-hoverable">
+									<a class="navbar-link button is-primary">
+										Language
+									</a>
+
+									<div class="navbar-dropdown">
+										<a v-on:click="setLanguage('EN')" class="navbar-item">
+											EN
+										</a>
+										<a v-on:click="setLanguage('ES')" class="navbar-item">
+											ES
+										</a>
+										<a v-on:click="setLanguage('ZH')" class="navbar-item">
+											ZH
+										</a>
+										<a v-on:click="setLanguage('KO')" class="navbar-item">
+											KO
+										</a>
+									</div>
+								</div> -->
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</nav>
+
+		<div v-if="showCalendly()" id="under-nav-hint">
+			Thank you for joining blockconf.digital as VIP. If you would like to schedule private meetings,
+			<b-button v-on:click="setCalendly()" type="is-primary is-inverted">please set your calendly</b-button>
+		</div>
 	</div>
 </template>
 <script>

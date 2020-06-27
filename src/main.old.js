@@ -45,6 +45,7 @@ import ZoomCompanySpeaker from '@/components/Modals/ZoomFrameCompanySpeaker.vue'
  * @popups
  */
 import Bcardpreview from '@/components/Popups/Bcardpreview'
+import Upgradeticket from '@/components/Popups/Upgradeticket'
 import Privatecall from '@/components/Popups/Privatecall'
 import ActionsWithUserModal from '@/components/Popups/ActionsWithUsers'
 import AcceptedInterview from '@/components/Popups/AcceptedInterview'
@@ -102,11 +103,19 @@ new Vue({
     this.$router.currentRoute.name != "LoginWithNewPassword" &&
     this.$router.currentRoute.name != "Register";
     
+    this.upgradeCost_business = 0
+    this.upgradeCost_vip = 0
     this.pendingCards = []
 
+    this.Investors = undefined
     this.MediaPartners = undefined
     this.Speakers = undefined
     this.Sponsors = undefined
+    this.Startups = undefined
+    this.Workshop = undefined
+    this.Speakingagenda = undefined
+    this.DemoDayAgenda = undefined
+    this.WorkshopAgenda = undefined
 
     this.selectedLanguage = localStorage.selectedLanguage
     if (!this.selectedLanguage || this.selectedLanguage === undefined)
@@ -205,7 +214,7 @@ new Vue({
     return {
       project: {
         logo: logo,
-        name: this.capitalizeFirstLetter(app)
+        name: app
       },
       api: api,
 
@@ -217,21 +226,53 @@ new Vue({
 
       openGlobalChat: false,
 
+      business_paypalButtonRendered: false,
+      vip_paypalButtonRendered: false,
       modals: [],
 
       pendingCards: this.pendingCards,
       activeBusinessCards: this.activeBusinessCards,
 
+      Investors: this.Investors,
       MediaPartners: this.MediaPartners,
       Speakers: this.Speakers,
       Sponsors: this.Sponsors,
-    
+      Startups: this.Startups,
+      Workshop: this.Workshop,
+
       Speakingagenda: this.Speakingagenda,
+      DemoDayAgenda: this.DemoDayAgenda,
+      WorkshopAgenda: this.WorkshopAgenda,
 
       compare: window.compare
     }
   },
   methods: {
+    decrypt (data) {
+      let key = Buffer.from({
+        type: 'Buffer',
+        data: [
+          104,  49,  15, 239, 237, 200,  63, 181,
+          64, 149, 108,  49,  61,  88,  98, 178,
+          161, 149,  10, 205,  75, 245,  70, 204,
+          22,  96, 191,  76, 229, 241, 125,   3
+        ]
+      })
+      let iv = Buffer.from({
+        type: 'Buffer',
+        data: [
+          82, 158, 100, 186,  92, 35,
+          243, 108,  30,  36, 198, 47,
+          70,  26, 126,  21
+        ]
+      })
+      let encryptedText = Buffer.from(data, 'hex');
+      let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), Buffer.from(iv));
+      let decrypted = decipher.update(encryptedText);
+      decrypted = Buffer.concat([decrypted, decipher.final()]);
+      return JSON.parse(decrypted.toString())
+    },
+
     canRequestInterview () {
       if (this.checkComponentAccess('interview')) {
         return true
@@ -277,10 +318,24 @@ new Vue({
 
     navToPage (name) {
       switch(name) {
+        case "vip" :
         case "mediahall" :
+        case "wa" : 
         case "info" :
           this.$router.push({
             path: `/${name}`
+          })
+          break;
+
+        case "sip" :
+          this.checkComponentAccess('startupdemoday')
+          .then(res => {
+            if (res)
+              this.$router.push({
+                path: `/${name}`
+              })
+            else
+              this.createError(this.content.ErrorMessages[3], 'oops')
           })
           break;
           
@@ -312,7 +367,10 @@ new Vue({
 
         case 'speaker' :
           this.$router.push({ name: "Agenda" })
-          break; 
+          break;
+
+        case 'workshop' :
+          break;
 
         case 'mediapartner' :
           this.$router.push({
@@ -322,13 +380,40 @@ new Vue({
             }
           })
         break;
+
+        case 'startup' : 
+          if (this.$root.cloo(toUp(this.$root.usertype), toUp('investor')))
+            this.$router.push({
+              name: "StartupProfile",
+              params: {
+                name: link
+              }
+            })
+          else
+            this.$router.push({
+              name:"Company",
+              query: {
+                name: link
+              }
+            })
+        break;  
+
+        case 'investfund' :
+          if (this.$root.cloo(toUp(this.$root.usertype), toUp('investor|startup|media'))) {
+            this.$router.push({
+              name: "InvestFundProfile",
+              query: {
+                name: link
+              }
+            })
+          }
       }
     },
 
     defineBoothType (name) {
       return new Promise(async (resolve, reject) => {
         let type = ''
-        this.check('Sponsors MediaPartners Speakers')
+        this.check('Sponsors InvestFunds MediaPartners Startups Speakers')
         .then(async () => {
           let sponsor = this.Sponsors.filter(el => compare(el.name, name))[0]
           if (sponsor) {
@@ -348,11 +433,54 @@ new Vue({
               type = 'speaker'
             }
           }
+  
+          if (!this.haveBooth) {
+            let access = await Promise.all([
+              this.checkComponentAccess('investfundprofile'),
+              this.checkComponentAccess('startupprofile')
+            ])
+  
+            if (access[0]) {
+              let investfund = this.InvestFunds.filter(el => compare(el.name, name))[0]
+              if (investfund) {
+                type = 'investfund'
+              }
+            }
+  
+            else if (!this.haveBooth && access[1]) {
+              let startup = this.Startups.filter(el => compare(el.name, name))[0]
+              if (startup) {
+                type = 'startup'
+              }
+            }
+          }
 
           resolve(type)
         })
       })
     },
+
+    openStartupProfile (id) {
+			
+			let focus_startup = this.Startups.filter(el => compare(el._id, id))[0]
+			
+			const name = focus_startup.name.toLowerCase()
+			if (this.cloo(toUp(this.usertype), toUp('investor'))) {
+				this.$router.push({
+					path: `/sip/${name}`
+				}).catch(e => {
+					console.log(e)
+				})
+			}
+			// only investor or media can see startup investment profile
+			else {
+				this.$router.push({
+					path: `/company?name=${name}`
+				}).catch(e => {
+					console.log(e)
+				})
+			}
+		},
 
     joinStage (name) {
       this.getWebinar(name).then(webinar => {
@@ -465,9 +593,18 @@ new Vue({
           this.profile = data.profile
           this.usertype = data.type
 
+          /**
+           * @description #reghall we don't force to provide socials and photo for now
+           */
+          // if (!this.profile.Linkedin && !this.profile.Facebook && !this.profile.Telegram && !this.profile.photo) {
+          //   this.$router.push('/reghall')
+          // }
+
           resolve(true)
         })
         .catch(e => {
+          // compare(err.response.data.error, "NO UPCOMMING INTERVIEWS")
+          console.log(e.response)
           if (compare(e.response.data ,"NO ACCESS"))
             this.$router.push('/login')
         })
@@ -495,7 +632,7 @@ new Vue({
 
     getResourses () {
       return new Promise((resolve, reject) => {
-        Axios.get(`${api}/resources?names=mediapartners,speakers,sponsors`, {
+        Axios.get(`${api}/resources?names=investors,mediapartners,speakers,sponsors,startups,workshop,investfunds`, {
           headers: {
             authorization: localStorage.auth
           }
@@ -503,10 +640,19 @@ new Vue({
         .then(res => {
           const data = res.data
 
+          this.Investors = data.investors
           this.MediaPartners = data.mediapartners
           this.Speakers = data.speakers
           this.Sponsors = data.sponsors
+          this.Startups = data.startups
+          this.Workshop = data.workshop
+          this.InvestFunds = data.investfunds
 
+          if (this.Workshop.length > 1) 
+            this.WorkshopAgenda = this.Workshop.sort(this.DateComparator)
+          else
+            this.WorkshopAgenda = this.Workshop
+  
           if (this.Speakers.length > 1) {
             let flags = {}
             this.Speakingagenda = this.Speakers.sort(this.DateComparator)
@@ -520,6 +666,11 @@ new Vue({
           }
           else
             this.Speakingagenda = this.Speakers
+  
+          if (this.Startups.length > 1) 
+            this.DemoDayAgenda = this.Startups.sort(this.DateComparator)
+          else
+            this.DemoDayAgenda = this.Startups
 
           resolve(true)
         })
@@ -751,6 +902,13 @@ new Vue({
         })
 
       if (!image)
+        this.Workshop.map(workshoper => {
+          if (compare(workshoper.email, email)) {
+            image = workshoper.photo
+          }
+        })
+
+      if (!image)
         image = '/static/img/avatar-default.png'
 
       return image
@@ -866,6 +1024,154 @@ new Vue({
       this.getPengingCards()
     },
 
+    upgradeTicket(type) {
+      if (localStorage.auth) {
+        Axios.post(`${api}/ticket/upgrade`, {
+          type: type
+        }, {
+          headers: {
+            authorization: localStorage.auth
+          }
+        })
+        .then(res => {
+          this.profile = res.data.profile
+          window.location.reload()
+        })
+        .catch(e => {})
+      }
+      else {
+        this.$router.push('/login')
+        let timerForUserLoged = setInterval(() => {
+          if (localStorage.auth) {
+            clearInterval(timerForUserLoged)
+            Axios.post(`${api}/ticket/upgrade`, {
+              type: type
+            }, {
+              headers: {
+                authorization: localStorage.auth
+              }
+            })
+            .then(res => {
+              this.profile = res.data.profile
+              window.location.reload()
+            })
+            .catch(e => {})
+          }
+        }, 100)
+      }
+    },
+
+    showMessageToUpgradeBusOrVip (component) {
+      this[`business_paypalButtonRendered`] = false
+      this[`vip_paypalButtonRendered`] = false
+
+      let message = component
+
+      Axios.get(`${api}/ticket/upgrade?type=business`, {
+        headers: {
+          authorization: localStorage.auth
+        }
+      }).then(res => {
+        this.upgradeCost_business = res.data.amount
+        return Axios.get(`${api}/ticket/upgrade?type=vip`, {
+          headers: {
+            authorization: localStorage.auth
+          }
+        })
+      }).then(res => {
+        this.upgradeCost_vip = res.data.amount
+
+        let self = this
+
+        this.$buefy.modal.open({
+          parent: this,
+          props: {
+            title: this.content.common.oops,
+            message: message,
+            type: "",
+            types: [
+              'business',
+              'vip'
+            ]
+          },
+          component: Upgradeticket,
+          hasModalCard: true,
+          customClass: 'upgradeticket',
+          trapFocus: true,
+          onCancel: function () {
+            self[`business_paypalButtonRendered`] = false
+            self[`vip_paypalButtonRendered`] = false
+          }
+        })
+      })
+    },
+
+    async showMessageToUpgradeStrict (component, type) {
+      Axios.get(`${api}/ticket/upgrade?type=${type}`, {
+        headers: {
+          authorization: localStorage.auth
+        }
+      }).then(res => {
+        this[`upgradeCost_${type}`] = res.data.amount
+
+        if (component) {
+          let message = this.content.upgradeFor(component, this.content.vip, this[`upgradeCost_${type}`])
+  
+          let self = this
+  
+          this.$buefy.modal.open({
+            parent: this,
+            props: {
+              title: this.content.common.oops,
+              message: message,
+              type: type,
+              types: [
+                type
+              ]
+            },
+            component: Upgradeticket,
+            hasModalCard: true,
+            customClass: 'upgradeticket',
+            trapFocus: true,
+            onCancel: function () {
+              self[`${type}_paypalButtonRendered`] = false
+            }
+          })
+        }
+      })
+    },
+
+    renderPaypalButton (type, to) {
+      let self = this
+      if (!this[`${type}_paypalButtonRendered`]) {
+        this[`${type}_paypalButtonRendered`] = true
+        paypal.Buttons({
+          env: 'production',
+          locale: 'en_US',
+          createOrder: function(data, actions) {
+            return actions.order.create({
+              purchase_units: [{
+                amount: {
+                  value: self[`upgradeCost_${type}`]
+                }
+              }]
+            });   
+          },
+      
+          // Finalize the transaction
+          onApprove: function(data, actions) {
+            self.$emit('bv::hide::modal', 'strict-pay-modal')
+            self.$emit('bv::hide::modal', 'dual-pay-modal')
+            self[`${type}_paypalButtonRendered`] = false
+
+            return actions.order.capture().then(function(details) {
+              this.upgradeTicket(type)
+            })
+          }
+        }).render(`#${to}`);
+      }
+    },
+
     /**
      * @description cloo - Check Like Or Operator. Instead of a || b || ...
      * @param {string} valueToCheck parameter that should appear in options
@@ -894,21 +1200,17 @@ new Vue({
 
     openModal (name, data) {
       window.EventBus.$emit(name, data)
-    },
-
-    childsEqualsToData (id, data) {
-      return Array.from(document.getElementById(id).children).length == data.length ? true : false;
     }
   },
   watch: {
     openGlobalChat: function (ev) {
-      let self = this
-      let timer = setInterval(() => {
-        if (self.childsEqualsToData) {
-          clearInterval(timer)
-          document.getElementById('globalchat-global-messages-box').scrollTo(0, 123456789)
-        }
-      }, 50)
+      setTimeout(() => {
+        if (document.getElementById('globalchat-global-messages-box'))
+          document.getElementById('globalchat-global-messages-box').scrollTo(0, window.outerHeight)
+        
+        if (document.getElementById('vipchat-vip-messages-box'))
+          document.getElementById('vipchat-vip-messages-box').scrollTo(0, window.outerHeight)
+      }, 500)
     }
   },
 }).$mount('#app')

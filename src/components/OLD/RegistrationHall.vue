@@ -5,7 +5,7 @@
                 <div class="columns is-variable is-8">
                     <div class="column data-login">
                         <figure class="image">
-                            <img src="@/assets/logo_dark.svg">
+                            <img v-if="$root.project.logo" :src="$root.api + $root.project.logo">
                         </figure>
                         
                         <div class="box">

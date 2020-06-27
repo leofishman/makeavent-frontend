@@ -106,9 +106,5 @@
 }
 </script>
 <style lang="scss" scpoed>
-.quoted-answer {
-    padding: 0px !important;
-    font-style: italic;
-    border-bottom: 1px solid #c6c6c6;
-}
+
 </style>

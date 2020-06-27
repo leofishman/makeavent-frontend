@@ -1,5 +1,5 @@
 <template>
-	<div v-if="ready" v-on:click="openMediaPartnerBooth(data)" class="column is-one-quarter mediahall-logo">
+	<div v-if="ready" v-on:click="openMediaPartnerBooth(data)" class="column is-half-mobile is-one-quarter-tablet is-2-desktop mediahall-logo">
 		<div class="box">
 		<img
 			v-if="getMediaPartnerSlot(data)"

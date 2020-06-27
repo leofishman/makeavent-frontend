@@ -3,7 +3,6 @@
 		<navbar></navbar>
 
 		<div class="container" v-if="ready">
-			
 
 			<section class="section section-profile">
 				<div class="columns is-variable is-8">

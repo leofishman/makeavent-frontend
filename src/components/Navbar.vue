@@ -63,8 +63,10 @@
 		</nav>
 
 		<div v-if="showCalendly()" id="under-nav-hint">
-			Thank you for joining blockconf.digital as VIP. If you would like to schedule private meetings,
+			<div class="container">
+				Thank you for joining blockconf.digital as VIP. If you would like to schedule private meetings,
 			<b-button v-on:click="setCalendly()" type="is-primary is-inverted">please set your calendly</b-button>
+			</div>
 		</div>
 	</div>
 </template>

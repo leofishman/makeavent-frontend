@@ -53,7 +53,7 @@ $tabs-border-bottom-width: 0;
 $tag-radius: 100px;
 
 // Modal
-$modal-card-title-color: #fff;
+//$modal-card-title-color: #fff;
 $modal-z: 999999;
 $modal-card-head-radius: 0;
 $modal-card-foot-radius: 0;	
@@ -492,12 +492,19 @@ main {
 	border-top-right-radius: 0;
 }
 .modal-card-head {
-	background-color: $secondary;
+	/*background-color: $secondary;*/
 	font-weight: normal !important;
 }
 .modal-card-foot {
 	background-color: $white;
+    justify-content: flex-end;
 }
+
+.dialog .modal-card .modal-card-foot .button {
+    font-weight: normal;
+}
+
+
 .bcardpreview {
 	.card {
 		width: 400px;

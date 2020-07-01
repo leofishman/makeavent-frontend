@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<nav class="navbar" role="navigation" aria-label="main navigation">
-			<div class="container">
+			<div class="container is-fluid">
 				<div class="navbar-brand">
 					<a class="navbar-item" v-on:click="openPage('home')">
 						<img src="@/assets/logo_dark.svg" width="112" height="28">

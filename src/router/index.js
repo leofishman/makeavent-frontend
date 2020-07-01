@@ -34,6 +34,7 @@ import LoginWithNewPassword from '@/components/LoginWithNewPassword'
 import InfoDesk from '@/components/InfoDesk'
 import NoAccess from '@/components/NoAccess.vue'
 import Company from '@/components/CompanyProfile/CompanyNew.vue'
+import NetworkingRooms from '@/components/CompanyProfile/NetworkingRooms.vue'
 import Profile from '@/components/Profile/Profile.vue'
 import MyInterviews from '@/components/Profile/MyInterviews.vue'
 import MyBusinessCards from '@/components/Profile/MyBusinessCards.vue'
@@ -114,6 +115,16 @@ const router = new Router({
             path: '/:id/company',
             name: "Company",
             component: Company,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            },
+            props: (route) => ({ name: route.query.name })
+        },
+        {
+            path: '/:id/networkingrooms',
+            name: "NetworkingRooms",
+            component: NetworkingRooms,
             meta: {
                 requiresAuth: true,
                 platformLaunch: true

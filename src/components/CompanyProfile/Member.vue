@@ -9,7 +9,7 @@
 		<h3 class="member-rol">{{data.role}}</h3>
 		<div class="member-action buttons">
 			<button v-on:click="$root.tryBusinessCard(data)" class="button is-fullwidth">
-				<img src="@/assets/icon/icon-user.svg" width="15" /> Request business card
+				<img src="@/assets/icon/icon-user.svg" width="15" /> Request BIZCARD
 			</button>
 			<button v-if="canCall" v-on:click="$root.privateCall(data)" class="button is-fullwidth">
 				<img src="@/assets/icon/icon-call.svg" width="15" />

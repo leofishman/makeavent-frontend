@@ -31,9 +31,9 @@
                                     </li>
                                 </ul>
                                 <div class="company-demo">
-                                <button v-if="demo" class="play-demo button is-primary" @click="isComponentModalActive = true">▶ View Demo</button>
-                                
-                                <b-modal :active.sync="isComponentModalActive"
+                                    <button v-if="demo" class="play-demo button is-primary" @click="isComponentModalActive = true">▶ View Demo</button>
+
+                                    <b-modal :active.sync="isComponentModalActive"
                                     has-modal-card
                                     trap-focus
                                     :destroy-on-hide="false"
@@ -48,11 +48,12 @@
                                         </section>
                                     </div>
                                 </b-modal>
-                                </div>
+                            </div>
                         </div>
 
                         <div class="profile-bottom">
-                            <p v-html="description" class="profile-bio"></p>
+                            <div v-html="description" class="profile-bio"></div>
+
                             <PitchDeck v-for="(el, index) in materials" :key="index" :data="el"/>
                         </div>
                     </aside>
@@ -75,7 +76,12 @@
         <!-- Profile Chat -->
         <div id="chat">
             <div class="chat-top">
-                <h3 @click="$root.joinStage('sponsorbooth'+name)" class="enterebooth is-uppercase">{{content.joinNowTitle}}</h3>
+                <article>
+                    <h3>{{content.networkingRoom}}</h3>
+                    <img src="@/assets/img/join-chat.png" />
+                    <button class="button is-primary is-medium" v-on:click="openPage('NetworkingRooms')">{{content.join}}</button>
+                    <p class="has-text-success">{{content.currentlyOnline}}: ##</p>
+                </article>
             </div>
             <Chat :checkAccess="'companychat'" type="company" :parent="self" :name="name" />
         </div>
@@ -188,7 +194,12 @@
             openAndTrack (link) {
                 this.$root.track(name, link)
                 this.$root.openExternalInBlank(link)
-            }
+            },
+            openPage (name) {
+                this.$router.push(`/${this.$root.$router.currentRoute.params.id}/${name}`).catch(() => {
+                    window.location.reload()
+                })
+            },
         },
     }
 </script>

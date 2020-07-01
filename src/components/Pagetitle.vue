@@ -1,7 +1,5 @@
 <template>
-	<section class="section title-page">
-		<h1 class="title has-text-centered" v-html="data"></h1>
-	</section>
+	<h1 class="title-page title" v-html="data"></h1>
 </template>
 
 <script>

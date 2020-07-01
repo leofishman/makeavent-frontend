@@ -52,7 +52,10 @@ export default {
 
     Company: {
         joinNowTitle: "Enter e-booth",
-        requestBC: "You can request our bussiness cards from the VIP e-meeting room"
+        requestBC: "You can request our bussiness cards from the VIP e-meeting room",
+        networkingRoom: "Networking Room",
+        join: "Join",
+        currentlyOnline: "Currently online"
     },
 
     Chat: {

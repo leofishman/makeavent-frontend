@@ -2,7 +2,7 @@
     <div id="vip">
         <navbar></navbar>
 
-        <div class="container">
+        <div class="container is-fluid">
 
             <Pagetitle data="VIP e-meeting room"/>
 

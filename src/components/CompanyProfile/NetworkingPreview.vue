@@ -1,7 +1,7 @@
 <template>
 	<div class="room-preview column is-narrow">
 		<iframe src="" class="box"></iframe>
-		<div class="has-text-success">2 people online</div>
+		<div class="has-text-success"># {{content.peopleOnline}}</div>
 	</div>
 </template>
 
@@ -14,6 +14,7 @@
 		data () {
 			return {
 				host: host,
+				content: this.$root.content.NetworkingRooms,
 			}
 		},
 	}

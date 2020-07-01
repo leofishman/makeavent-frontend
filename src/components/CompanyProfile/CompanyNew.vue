@@ -31,7 +31,7 @@
                                     </li>
                                 </ul>
                                 <div class="company-demo">
-                                    <button v-if="demo" class="play-demo button is-primary" @click="isComponentModalActive = true">▶ View Demo</button>
+                                    <button v-if="demo" class="play-demo button is-primary" @click="isComponentModalActive = true">{{content.viewDemo}}</button>
 
                                     <b-modal :active.sync="isComponentModalActive"
                                     has-modal-card
@@ -41,7 +41,7 @@
                                     aria-modal>
                                     <div class="modal-card">
                                         <header class="modal-card-head">
-                                            <p class="modal-card-title">View Demo</p>
+                                            <p class="modal-card-title"><span class="is-capitalized">{{name}}</span> {{content.demos}}</p>
                                         </header>
                                         <section class="modal-card-body">
                                             <div v-html="demo" class="demo-iframe"></div>

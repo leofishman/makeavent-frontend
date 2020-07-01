@@ -7,8 +7,9 @@
 				<div class="columns">
 					<div class="column">
 						<Pagetitle data="Networking Rooms"/>
-						<p>You can create a new chat by clicking on a “Start Chat” button next to the person you want to talk to in the Attendees Section ( at the right side of the screen) or get in the mix by joining existing networking room.</p>
+						<p>{{content.intro}}</p>
 						
+						<button class="new-room is-rounded button is-primary is-medium">{{content.newRoom}}</button>
 						<div class="room-previews columns is-mobile is-multiline is-centered">
 							<NetworkingPreview />
 							<NetworkingPreview />
@@ -20,8 +21,11 @@
 					<div id="networking-attendees" class="column is-half-tablet is-one-third-fullhd">
 						<aside class="box">
 							<h3 class="box-title">
-								Attendees List
-								<button class="button is-light is-pulled-right" @click="helpModal = true"><span class="is-hidden-touch">Need some</span> Tips?</button>
+								{{content.attendeesList}}
+								<button class="button is-light is-pulled-right" @click="helpModal = true">
+									<span class="is-hidden-touch">{{content.needTips}}</span>
+									<span class="is-hidden-desktop">{{content.needTipsShort}}</span>
+								</button>
 							</h3>
 							<b-modal :active.sync="helpModal" has-modal-card trap-focus :destroy-on-hide="false" aria-role="dialog" aria-modal>
 								<HelpModal />
@@ -79,7 +83,7 @@
 			return {
 
 				self: this,
-				content: this.$root.content.Company,
+				content: this.$root.content.NetworkingRooms,
 				commonContent: this.$root.content.common,
 
 				helpModal: false,

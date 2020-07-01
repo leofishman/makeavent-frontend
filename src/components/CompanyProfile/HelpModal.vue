@@ -1,7 +1,7 @@
 <template>
 	<div class="modal-card">
 		<header class="modal-card-head">
-			<p class="modal-card-title">Tips</p>
+			<p class="modal-card-title">{{content.tips}}</p>
 		</header>
 		<section class="modal-card-body">
 			<p>
@@ -16,5 +16,10 @@
 <script>
 	export default {
 		name: "NetworkingAttendee",
+		data() {
+			return {
+				content: this.$root.content.NetworkingRooms,
+			}
+		}
 	}
 </script>

@@ -2378,8 +2378,14 @@ main {
 	.title-page {
 		margin-top: 0;
 	}
-	.room-previews {
+	.new-room {
 		margin-top: 2rem;
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+	}
+	.room-previews {
+		margin-top: 1rem;
 		.room-preview {
 			text-align: center;
 			.box {
@@ -3325,7 +3331,7 @@ main {
 #under-nav-hint {
 	width: 100%;
 	padding: 20px;
-	background-color: $primary;
+	background-color: $secondary;
 	color: $white;
 	text-align: center;
 	line-height: 36px;

@@ -20,16 +20,18 @@
 					</div>
 					<div id="networking-attendees" class="column is-half-tablet is-one-third-fullhd">
 						<aside class="box">
+							<div class="has-text-centered">
+								<h3>{{content.tips}}</h3>
+								<p>
+									This is the Networking room, grab a drink, turn on your camera and connect with other attendees! Remember that networking is always better if others can see your face. <strong> Don’t be shy, turn on your camera!</strong>
+								</p>
+								<p>
+									Below you can request business cards from the meetup attendees and join the video chat to have a live networking with the person from the list
+								</p>
+							</div>
 							<h3 class="box-title">
 								{{content.attendeesList}}
-								<button class="button is-light is-pulled-right" @click="helpModal = true">
-									<span class="is-hidden-touch">{{content.needTips}}</span>
-									<span class="is-hidden-desktop">{{content.needTipsShort}}</span>
-								</button>
 							</h3>
-							<b-modal :active.sync="helpModal" has-modal-card trap-focus :destroy-on-hide="false" aria-role="dialog" aria-modal>
-								<HelpModal />
-							</b-modal>
 
 							<input type="search" name="search-attendees" placeholder="Search attendee" class="input search-attendees">
 

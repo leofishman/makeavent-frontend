@@ -2394,18 +2394,31 @@ main {
 			}
 		}
 	}
+	#under-nav-hint {
+		.container {
+			@media screen and (min-width: $tablet) {
+				width: 50%;
+				margin-left: 0;
+			}
+			@media screen and (min-width: $fullhd) {
+				width: calc(100vw - 33.3333%);
+				margin-left: 0;
+			}
+		}
+	}
 }
 #networking-attendees {
 	position: relative;
 	.box {
 		width: 100%;
 		box-shadow: $shadow-2;
+		overflow-y: auto;
 		@media screen and (min-width: $tablet) {
 			width: calc(50% - 37px);
 			position: fixed;
-			right: 32px;
+			right: 22px;
 			bottom: 32px;
-			height: calc(100% - 210px);
+			height: calc(100% - 131px);
 		}
 		@media screen and (min-width: $fullhd) {
 			width: calc(33.33% - 37px);
@@ -2421,8 +2434,8 @@ main {
 		margin-left: -1rem;
 		margin-right: -1rem;
 		margin-bottom: -1rem;
-		overflow-y: auto;
-		max-height: calc(100vh - 526px);
+		/*overflow-y: auto;
+		max-height: calc(100vh - 447px);*/
 		.attendee-profile {
 			padding-left: 1rem;
 			padding-right: 1rem;

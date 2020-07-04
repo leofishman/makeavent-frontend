@@ -21,7 +21,10 @@
 					<div id="networking-attendees" class="column is-half-tablet is-one-third-fullhd">
 						<aside class="box">
 							<div class="has-text-centered">
-								<h3>{{content.tips}}</h3>
+								<h3>
+									<img src="@/assets/icon/icon-idea.svg" width="25">
+									{{content.tips}}
+								</h3>
 								<p>
 									This is the Networking room, grab a drink, turn on your camera and connect with other attendees! Remember that networking is always better if others can see your face. <strong> Don’t be shy, turn on your camera!</strong>
 								</p>

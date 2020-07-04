@@ -2251,10 +2251,18 @@ main {
 				justify-content: center;
 				display: grid;
 			}
-			.demo-iframe {
+			.demo-modal {
+				.column {
+					.animation-content.modal-content {
+						width: 100vw !important;
+						max-width: 100vw !important;
+						height: 100vh;
+						
+					}
+				}
 				iframe {
-					width: 100%;
-					min-height: 300px;
+					width: 100vw !important;
+					height: 100vh;
 				}
 			}
 		}

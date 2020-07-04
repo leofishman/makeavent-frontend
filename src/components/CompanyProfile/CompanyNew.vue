@@ -31,22 +31,16 @@
                                     </li>
                                 </ul>
                                 <div class="company-demo">
-                                    <button v-if="demo" class="play-demo button is-primary" @click="isComponentModalActive = true">{{content.viewDemo}}</button>
+                                    <button v-if="demo" class="play-demo button is-primary" @click="demoModalActive = true">{{content.viewDemo}}</button>
 
-                                    <b-modal :active.sync="isComponentModalActive"
+                                    <b-modal :active.sync="demoModalActive"
                                     has-modal-card
                                     trap-focus
                                     :destroy-on-hide="false"
                                     aria-role="dialog"
                                     aria-modal>
-                                    <div class="modal-card">
-                                        <header class="modal-card-head">
-                                            <p class="modal-card-title"><span class="is-capitalized">{{name}}</span> {{content.demos}}</p>
-                                        </header>
-                                        <section class="modal-card-body">
-                                            <div v-html="demo" class="demo-iframe"></div>
-                                        </section>
-                                    </div>
+                                    <DemoModal />
+                                    
                                 </b-modal>
                             </div>
                         </div>
@@ -96,6 +90,7 @@
     import Pagetitle from '@/components/Pagetitle.vue';
     import Member from './Member.vue';
     import MemberCustom from './MemberCustom.vue';
+    import DemoModal from './DemoModal.vue';
     import Chat from './Chat.vue';
     import PitchDeck from '@/components/Demoday/Pitchdeck';
 
@@ -111,6 +106,7 @@
             Pagetitle,
             Member,
             MemberCustom,
+            DemoModal,
             Chat,
             PitchDeck
         },
@@ -153,7 +149,7 @@
             }).catch(e => console.log(`${e} inaccessible`))
 
             return {
-                isComponentModalActive: false,
+                demoModalActive: false,
                 self: this,
                 content: this.$root.content.Company,
                 commonContent: this.$root.content.common,

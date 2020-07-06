@@ -61,8 +61,7 @@
 	import {host} from '@/env'
 	import Pagetitle from '@/components/Pagetitle.vue'
 	import NetworkingAttendee from '@/components/CompanyProfile/NetworkingAttendee.vue'
-	import NetworkingPreview from '@/components/CompanyProfile/NetworkingPreview.vue'
-	import HelpModal from '@/components/CompanyProfile/HelpModal.vue'
+	import NetworkingPreview from '@/components/CompanyProfile/NetworkingPreview.vue'	
 
 	export default {
 		name: "NetworkingRooms",
@@ -75,8 +74,7 @@
 		components: {
 			Pagetitle,
 			NetworkingAttendee,
-			NetworkingPreview,
-			HelpModal
+			NetworkingPreview
 		},
 		data () {
 			/* wait until token and sponsors ready*/
@@ -90,8 +88,6 @@
 				self: this,
 				content: this.$root.content.NetworkingRooms,
 				commonContent: this.$root.content.common,
-
-				helpModal: false,
 
 				ready: false,
 

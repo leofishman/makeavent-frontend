@@ -68,7 +68,7 @@
         </div>
 
         <!-- Profile Chat -->
-        <div id="chat">
+        <div id="chat" class="chat-company-profile">
             <div class="chat-top">
                 <article>
                     <h3>{{content.networkingRoom}}</h3>

@@ -4,7 +4,7 @@
 			<p class="modal-card-title"><span class="is-capitalized"></span> {{content.demos}}</p>
 		</header>
 		<section class="modal-card-body">
-			<div class="columns is-multiline member-clasic">
+			<div class="columns is-multiline">
 				<div class="column demo-video-card click" v-for="(demo, index) in demos" :key="index">
 					<div @click="openVideoModal(demo.url)">
 						{{demo.name}}

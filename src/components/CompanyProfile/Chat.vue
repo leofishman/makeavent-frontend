@@ -2,8 +2,8 @@
 	<!-- Profile chat -->
 	<div>
 		<p class="chat-with-title">
-			Chat with <strong class="is-capitalized">{{name}}</strong> team
-			<b-tooltip label="Shift + Enter for line break, Enter to send message" position="is-left">
+			<span>Chat with <strong class="is-capitalized">{{name}}</strong> team</span>
+			<b-tooltip label="Shift + Enter for line break, Enter to send message" position="is-left" type="is-black" size="is-small">
 				<span class="help">?</span>
 			</b-tooltip>
 		</p>
@@ -18,14 +18,10 @@
 				/>
 			</div>
 			<div class="reply-block" v-if="showQuote">
-				<div class="tile is-ancestor">
-					<div class="whitespaces tile is-10">
-						{{$root.content.reply}}&nbsp;<strong>@{{quotedName}}</strong>&nbsp;{{quotedMessage}}
-					</div>
-					<div v-on:click="closeReply()" class="click tile is-2">
-						<img style="width:16%; opacity:50%" src="@/assets/img/cross.svg" alt="">
-					</div>
+				<div class="whitespaces reply-messege">
+					{{$root.content.reply}}&nbsp;<strong>@{{quotedName}}</strong>&nbsp;{{quotedMessage}}
 				</div>
+				<img v-on:click="closeReply()" class="reply-close" src="@/assets/img/cross.svg" alt="">
 			</div>
 
 			<div class="textarea-message">

@@ -113,11 +113,18 @@ main {
 			}
 		}
 		.reply-block {
-			height: 40px;
-			padding: 10px;
+			width: 100%;
 			margin: 0px;
-			.tile.is-ancestor {
-				margin: 0px;
+			padding: 10px;
+			position: absolute;
+			bottom: 0;
+			background: $grey-light;
+			display: flex;
+			justify-content: space-between;
+			.reply-messege {}
+			.reply-close {
+				width: 1rem;
+				opacity:50%
 			}
 		}
 
@@ -2194,7 +2201,10 @@ main {
 			background-color: $grey;
 		}
 	}
-	
+	.chat-bubble {
+		@extend %chat-bubble;
+		height: calc(100vh - 517px);
+	}
 }
 
 // PROFILE COMPANY MEMBER CARD //
@@ -2940,7 +2950,7 @@ main {
 
 %chat-bubble {
 	padding: 10px;
-	height: calc(100vh - 517px);
+	height: calc(100vh - 250px);
 	overflow: auto;
 	position: relative;
 	article {
@@ -2990,6 +3000,9 @@ main {
 	background-color: $grey-lighter;
 	border-top: solid 1px $grey-light;
 	border-bottom: solid 1px $grey-light;
+	bottom: 0;
+	position: fixed;
+	width: 100%;
 	textarea {
 		padding: 0;
 		width: 100%;
@@ -3072,25 +3085,26 @@ main {
 			}
 		}
 	}
-	.chat-with-title {
-		padding: .5rem;
-		border-top: solid 1px $grey-light;
-		border-bottom: solid 1px $grey-light;
-		font-size: 1rem;
-		.help {
-			/*width: 10px;
-			height: 10px;*/
-			padding: 5px 10px;
-			border-radius: 100px;
-			font-weight: bold;
-			background-color: $grey-light;
-		}
-	}
 	.chat-bubble {
 		@extend %chat-bubble;
 	}
 	.textarea-message {
 		@extend %textarea-message;
+	}
+}
+.chat-with-title {
+	padding: .5rem;
+	border-top: solid 1px $grey-light;
+	border-bottom: solid 1px $grey-light;
+	font-size: 1rem;
+	display: flex;
+	align-items: center;
+    justify-content: space-between;
+	.help {
+		padding: 5px 10px;
+		border-radius: 100px;
+		font-weight: bold;
+		background-color: $grey-light;
 	}
 }
 

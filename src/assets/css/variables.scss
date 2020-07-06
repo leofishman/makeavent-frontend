@@ -1,0 +1,83 @@
+
+// Family
+$family-sans-serif: 'Montserrat', sans-serif;
+
+// Set your colors
+$white: #fff;
+$white-ter: #F3F3F3;
+$light: #ebeaea;
+$light-invert: #333;
+$grey-lighter: #f9f9f9;
+$grey-light: #e5e5e5;
+//$grey-light: #a2a2a2;
+$primary: #0051d9;
+$primary-invert: $white;
+$secondary: #00be9d;
+$secondary-invert: $white;
+
+// Radius
+$radius: 3px;
+
+// Nav
+$navbar-z: 99999;
+$navbar-fixed-z: 99999;
+$navbar-height: 5rem;
+$navbar-box-shadow-size: 0 2px 20px 0 rgba(0, 0, 0, 0.15);
+
+// Box
+$box-shadow: none;
+$box-radius: $radius;
+$box-padding: 1rem;
+
+// Form
+$input-border-color: none;
+$input-background-color: $light;
+$input-shadow: none;
+
+// Sidebar
+$sidebar-width: 600px;
+$sidebar-mobile-width: 100px;
+//$sidebar-background: rgba(10, 10, 10, 0.3);
+
+// Tabs
+$tabs-link-active-color: #000;
+$tabs-border-bottom-width: 0;
+
+// Tags
+$tag-radius: 100px;
+
+// Modal
+//$modal-card-title-color: #fff;
+$modal-z: 999999;
+$modal-card-head-radius: 0;
+$modal-card-foot-radius: 0;	
+
+$snackbar-background-color: $white;
+$snackbar-color: $light-invert;
+
+// Shadows
+$shadow-1: 0 10px 40px rgba(0,0,0,0.15);
+$shadow-2: 0 5px 10px rgba(0,0,0,0.15);
+$shadow-3: 0 5px 5px rgba(0,0,0,0.15);
+
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+/*$colors: (
+	"white": ($white, $black),
+	"black": ($black, $white),
+	"light": ($light, $light-invert),
+	"dark": ($dark, $dark-invert),
+	"primary": ($primary, $primary-invert),
+	"info": ($info, $info-invert),
+	"success": ($success, $success-invert),
+	"warning": ($warning, $warning-invert),
+	"danger": ($danger, $danger-invert)
+	);*/
+// Links
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
+
+// Title
+$weight-bold: 700;
+$title-size: 3.3rem;
+$title-weight: $weight-bold;

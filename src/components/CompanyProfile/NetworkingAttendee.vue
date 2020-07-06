@@ -13,7 +13,7 @@
 				<!-- if is in a room -->
 				<small class="attendee-room has-text-success">{{content.atRoom}} 1</small>
 				<!-- else -->
-				<small class="attendee-room has-text-success">{{notInRoom}}</small>
+				<small class="attendee-room has-text-success">{{content.notInRoom}}</small>
 			</div>
 		</div>
 

@@ -2108,12 +2108,19 @@ main {
 // PROFILE COMPANY NEW  //
 //////////////////////////////////////////
 #profile-company-new {
-	.container {
+	.container-edit {
+		width: calc(100vw - 320px);
+		max-width: 100%;
+		margin-left: 0;
 		@media screen and (min-width: $fullhd) {
 			width: calc(100vw - 390px);
-			max-width: 100%;
 			margin-left: 40px;
 		}
+	}
+	#under-nav-hint .container {
+		width: calc(100vw - 360px);
+		max-width: 100%;
+		margin-left: 0;
 	}
 	.section-profile-company {
 		padding-top: 3rem;
@@ -2192,17 +2199,13 @@ main {
 			margin-bottom: 2rem;
 			text-align: center;
 			.bio-content {
-				height: 170px;
-				margin-bottom: .5rem;
-				white-space: nowrap;
+				height: 100px;
+				margin-bottom: 0rem;
 				overflow: hidden;
 				-webkit-mask-image: -webkit-gradient(linear, left 50%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
 			}
 			.bio-content-expand {
-				height: 170px;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
+				
 			}
 		}
 

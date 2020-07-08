@@ -9,10 +9,10 @@
 			<!-- NOT RELEASED -->
 			<!-- <Storycreate v-if="$root.isAdmin(contacts)"/> -->
 
-			<div class="container">
+			<div class="container container-edit">
 				<section class="section section-profile-company">
 					<div class="columns is-desktop">
-						<aside class="column is-full-tablet is-half-widescreen is-one-third-fullhd">
+						<aside class="column is-full-mobile is-half-widescreen is-one-third-fullhd">
 							<div class="profile-top">
 								<figure class="company-logo">
 									<img :src="this.logo">
@@ -47,12 +47,11 @@
 							<div class="profile-bottom">
 								<div class="profile-bio">
 									<p v-html="description" class="bio-content"></p>
-									<button class="button is-success is-fullwidth" v-on:click="bioExpand" >Expand</button>
+									<button class="button is-small is-fullwidth">Read more</button>
 								</div>
 
 								<div class="company-materials">
-									<button v-if="materials" class="play-materials button is-primary" @click="materialsModalActive = true">{{content.viewDemo}}</button>
-
+									<button v-if="materials" class="button is-primary is-fullwidth" @click="materialsModalActive = true">{{content.viewMaterials}}</button>
 									<b-modal
 									:active.sync="materialsModalActive"
 									has-modal-card
@@ -60,10 +59,16 @@
 									:destroy-on-hide="false"
 									aria-role="dialog"
 									aria-modal>
-									<MaterialsModal/></b-modal>
-								</div>
 
-								<PitchDeck v-for="(el, index) in materials" :key="index" :data="el"/>
+									<div class="modal-card demo-modal">
+										<header class="modal-card-head">
+											<p class="modal-card-title">{{name}} {{content.materials}}</p>
+										</header>
+										<section class="modal-card-body">
+											<PitchDeck v-for="(el, index) in materials" :key="index" :data="el"/>
+										</section>
+									</div></b-modal>
+								</div>
 							</div>
 						</aside>
 
@@ -106,7 +111,7 @@
 		import Member from './Member.vue';
 		import MemberCustom from './MemberCustom.vue';
 		import DemoModal from './DemoModal.vue';
-		import MaterialsModal from './MaterialsModal.vue';
+		//import MaterialsModal from './MaterialsModal.vue';
 		import Chat from './Chat.vue';
 		import PitchDeck from '@/components/Demoday/Pitchdeck';
 
@@ -123,7 +128,7 @@
 				Member,
 				MemberCustom,
 				DemoModal,
-				MaterialsModal,
+				//MaterialsModal,
 				Chat,
 				PitchDeck
 			},

@@ -57,7 +57,9 @@ export default {
 		join: "Join",
 		currentlyOnline: "Currently online",
 		viewDemo: "▶ View Demo",
-		demos: "Demos"
+		demos: "Demos",
+		viewMaterials: "View Materials",
+		materials: "Materials"
 	},
 	NetworkingRooms: {
 		intro: "You can create a new chat by clicking on a “Start Chat” button next to the person you want to talk to in the Attendees Section ( at the right side of the screen) or get in the mix by joining existing networking room.",

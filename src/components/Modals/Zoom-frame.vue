@@ -78,7 +78,7 @@ export default {
                     },
                 })
                 .then(res => {
-                    const decrypted = this.$root.decrypt(res.data.encryptedData)
+                    const decrypted = res.data
                     this.html = decrypted
                     document.getElementById('zoom-iframe').contentWindow.document.write(this.html)
                 })

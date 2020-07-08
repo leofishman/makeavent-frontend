@@ -80,7 +80,7 @@
 
             Axios.get(host + `/resources?names=sponsors`)
             .then(res => {
-                const decrypted = this.$root.decrypt(res.data.encryptedData)
+                const decrypted = res.data
                 this.ready = true
                 this.sponsors = decrypted.sponsors
             })

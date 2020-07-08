@@ -71,7 +71,7 @@
                     token: this.$router.currentRoute.query.token
                 })
                 .then(res => {
-                    const decrypted = this.$root.decrypt(res.data.encryptedData)
+                    const decrypted = res.data
                     this.email = decrypted.email
                     this.ready = true
                 })
@@ -124,7 +124,7 @@
                     password: this.password,
                 })
                 .then(res => {
-                    const decrypted = this.$root.decrypt(res.data.encryptedData)
+                    const decrypted = res.data
                     this.$root.profile = decrypted.profile[0]
                     this.$root.usertype = decrypted.type
                     this.$root.token = decrypted.accessLink

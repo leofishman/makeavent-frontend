@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<nav class="navbar" role="navigation" aria-label="main navigation">
-			<div class="container">
+			<div class="container is-fluid">
 				<div class="navbar-brand">
 					<a class="navbar-item" v-on:click="openPage('home')">
 						<img v-if="$root.project.logo" :src="$root.api + $root.project.logo" height="28">

@@ -1,9 +1,8 @@
 <template>
     <div id="agenda">
         <navbar></navbar>
-
-        <div  class="container">
-
+        
+        <div class="container is-fluid">
             <Pagetitle :data="content.conferenceAgenda"/>
 
             <section class="section section-agenda">

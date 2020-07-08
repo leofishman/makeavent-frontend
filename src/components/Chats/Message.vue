@@ -5,8 +5,9 @@
             <b-tooltip
                 :label="$root.content.common.replyHint"
                 :active="showMessageModal === index"
-                position="is-right"
+                position="is-top"
                 always
+                type="is-black"
                 class="reply-button"
             >
                 <p :id="data.id" class="p-message" v-on:click="showReplyButton(data.from, index)" v-html="data.html">

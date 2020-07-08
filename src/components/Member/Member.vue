@@ -1,16 +1,26 @@
 <template>
-	<div class="box member">
-		<img v-on:click="$root.tryBusinessCard(data)" src="@/assets/icon/icon-user.svg" class="member-action click left" title="Request business card">
-		<!-- NOT RELEASED -->
-		<img v-if="canCall" v-on:click="$root.privateCall(data)" src="@/assets/icon/icon-call.svg" class="member-action click right" title="Schedule e-meeting">
-		<figure>
-			<img v-if="!data.photo" :src="`${api}/static/img/avatar-default.png`">
-			<img v-else :src="api + data.photo">
+	<div class="box member">		
+		<figure class="member-avatar">
+			<img v-if="!data.photo" :src="`${host}/static/img/avatar-default.png`">
+			<img v-else :src="host + data.photo">
 		</figure>
-		<h1 class="click" @click="$root.tryBusinessCard(data)">{{data.name}}</h1>
-		<h2>{{data.role}}</h2>
-		<a class="memeber-email">{{data.email}}</a>
+		
+		<h2 class="click member-name" @click="$root.tryBusinessCard(data)">{{data.name}}</h2>
+		<h3 class="member-rol">{{data.role}}</h3>
+		<div class="member-action buttons">
+			<button v-on:click="$root.tryBusinessCard(data)" class="button is-fullwidth">
+				<img src="@/assets/icon/icon-user.svg" width="15" /> Request BIZCARD
+			</button>
+			<button v-if="canCall" v-on:click="$root.privateCall(data)" class="button is-fullwidth">
+				<img src="@/assets/icon/icon-call.svg" width="15" />
+				Schedule e-meeting
+			</button>
+		</div>
+		
 		<nav>
+			<a v-if="data.email" :href="'mailto:' + data.email">
+				<img src="@/assets/icon/icon-email.svg">
+			</a>
 			<a v-if="data.Facebook" target="_blank" :href="data.Facebook">
 				<img src="@/assets/icon/icon-facebook.svg">
 			</a>
@@ -25,25 +35,25 @@
 </template>
 
 <script>
-import {api} from '@/env'
+	import {api} from '@/env'
 
-export default {
-	name: "Member",
-	props: {
-		data: Object
-	},
-	data () {
-		this.$root.canCall(this.data)
-		.then(res => {
-			this.canCall = res
-		})
+	export default {
+		name: "Member",
+		props: {
+			data: Object
+		},
+		data () {
+			this.$root.canCall(this.data)
+			.then(res => {
+				this.canCall = res
+			})
 
-		return {
-			api: api,
-			canCall: this.canCall
+			return {
+				api: api,
+				canCall: this.canCall
+			}
 		}
 	}
-}
 </script>
 
 <style scoped>

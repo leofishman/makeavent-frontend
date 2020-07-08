@@ -1,7 +1,7 @@
 <template>
 	<div id="media-hall">
 		<navbar></navbar>
-		<div class="container">
+		<div class="container is-fluid">
 			<Pagetitle :data="content.title"/>
 
 			<section class="section section-media-hall">

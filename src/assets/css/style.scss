@@ -1,92 +1,5 @@
-// Import font
-//@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
-
-// Import Bulma's core
-//@import "~bulma/sass/utilities/_all";
-
-// Family
-$family-sans-serif: 'Montserrat', sans-serif;
-
-// Set your colors
-$white: #fff;
-$white-ter: #F3F3F3;
-$light: #ebeaea;
-$light-invert: #333;
-$grey-lighter: #f9f9f9;
-$grey-light: #e5e5e5;
-//$grey-light: #a2a2a2;
-$primary: #0051d9;
-$primary-invert: $white;
-$secondary: #00be9d;
-$secondary-invert: $white;
-
-// Radius
-$radius: none;
-
-// Nav
-$navbar-z: 99999;
-$navbar-fixed-z: 99999;
-$navbar-height: 5rem;
-$navbar-box-shadow-size: 0 2px 20px 0 rgba(0, 0, 0, 0.15);
-
-// Box
-$box-shadow: none;
-$box-radius: none;
-$box-padding: 1rem;
-
-// Form
-$input-border-color: none;
-$input-background-color: $light;
-$input-shadow: none;
-
-// Sidebar
-$sidebar-width: 600px;
-$sidebar-mobile-width: 100px;
-//$sidebar-background: rgba(10, 10, 10, 0.3);
-
-// Tabs
-$tabs-link-active-color: #000;
-$tabs-border-bottom-width: 0;
-
-// Tags
-$tag-radius: 100px;
-
-// Modal
-$modal-card-title-color: #fff;
-$modal-z: 999999;
-$modal-card-head-radius: 0;
-$modal-card-foot-radius: 0;	
-
-$snackbar-background-color: $white;
-$snackbar-color: $light-invert;
-
-// Shadows
-$shadow-1: 0 10px 40px rgba(0,0,0,0.15);
-$shadow-2: 0 5px 10px rgba(0,0,0,0.15);
-$shadow-3: 0 5px 5px rgba(0,0,0,0.15);
-
-// Setup $colors to use as bulma classes (e.g. 'is-twitter')
-/*$colors: (
-	"white": ($white, $black),
-	"black": ($black, $white),
-	"light": ($light, $light-invert),
-	"dark": ($dark, $dark-invert),
-	"primary": ($primary, $primary-invert),
-	"info": ($info, $info-invert),
-	"success": ($success, $success-invert),
-	"warning": ($warning, $warning-invert),
-	"danger": ($danger, $danger-invert)
-	);*/
-// Links
-$link: $primary;
-$link-invert: $primary-invert;
-$link-focus-border: $primary;
-
-// Title
-$weight-bold: 700;
-$title-size: 3.3rem;
-$title-weight: $weight-bold;
+@import "./variables.scss";
 
 // Import Bulma and Buefy styles
 @import "~bulma";
@@ -140,6 +53,9 @@ main {
 		flex: none;
 	}
 }
+.modal-close {
+	z-index: 10000000;
+}
 .click {
 	cursor: pointer;
 }
@@ -172,12 +88,11 @@ main {
 // TITLE PAGE //
 //////////////////////////////////////////
 .title-page {
-	padding: 4.5rem 1.5rem 5rem !important;
-	h1 {
-		margin-top: 1.5rem;
-		margin: auto;
+	margin-top: 4rem;
+	margin-bottom: 2rem;
+	color: $grey;
+		/*margin: auto;
 		width: fit-content;
-		color: $grey;
 		position: relative;		
 		text-transform: capitalize;
 		&:before {
@@ -189,218 +104,210 @@ main {
 			left: -50px;
 			background-color: $secondary;
 			box-shadow: 30px 0px 0 -6px $secondary, -33px 20px 0 -2px $secondary;
+			}*/
 		}
-	}
-}
 
-.reply-button {
-	&:hover {
-		cursor: pointer;
-	}
-}
-.reply-block {
-	height: 40px;
-	padding: 10px;
-	margin: 0px;
-	.tile.is-ancestor {
-		margin: 0px;
-	}
-}
-
-.sevfive-left {
-	left: 75% !important;
-	position: fixed !important;
-}
-
-.centrify-content {
-	top:50%;
-	left:50%;
-	transform: translate(-50%, -50%);
-	position: relative;
-}
-
-.member-action {
-	width: 30px;
-	padding: 5px;
-	position: absolute;
-	background-color: $primary;
-	border-radius: 5px;
-	&.left {
-		left: 80%;
-	}
-	&.right {
-		right: 80%;
-	}
-}
-
-/* Page title Primary */
-#demoday, #profile, #profile-company, #profile-booth {
-	.title {
-		&:before {
-			background-color: $primary;
-			box-shadow: 30px 0px 0 -6px $primary, -33px 20px 0 -2px $primary;
-		}
-	}
-}
-
-/* Page title secondary invert */
-#media-partner-booth {
-	.title {
-		&:before {
-			top: -5px;
-			right: -40px;
-			left: auto;
-			background-color: $secondary;
-			box-shadow: -5px -29px 0 -5px $secondary, -23px -21px 0 -8px $secondary;
-		}
-	}
-}
-/* Page title Primary invert */
-#media-hall {
-	.title {
-		&:before {
-			top: -5px;
-			right: -40px;
-			left: auto;
-			background-color: $primary;
-			box-shadow: -5px -29px 0 -5px $primary, -23px -21px 0 -8px $primary;
-		}
-	}
-}
-
-%agendarow {
-	padding-top: 0;
-	padding-bottom: 0;
-	max-width: 95%;
-	position: relative;
-	background: $grey-lighter;
-	position: relative;
-	.column {
-		padding-top: 20px;
-		padding-bottom: 20px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		.has-text-centered {
-			width: 100%;
-		}
-		+.column {
-			border-left: solid 1px #dedede;
-		}
-	}
-
-	&:before {
-		content: "";
-		width: 10px;
-		left: 0;
-		bottom: 0;
-		border-bottom: solid 105px $primary;
-		position: absolute;
-	}
-	&:nth-child(even) {
-		&:before{
-			border-bottom: solid 105px $secondary;
-		}
-	}
-	.agenda-time {
-		max-width: 200px;
-		h3 {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 20px;
-			font-weight: 400;
-			color:$primary;
-			span {
-				margin-left: 10px;
-				text-transform: uppercase;
-				font-size: 15px;
-			}
-		}
-	}
-	.agenda-person {
-		max-width: 300px;
-		justify-content: left;
-		cursor: pointer;
-		&:hover {
-			align-items: center;
-			justify-content: center;
-			background-color: $primary;
-			.data {
-				display: none;
-			}
-			.logo-hover {
-				display: block;
-			}
-		}
-		.data {
-			display: flex;
-			align-items: center;
-			img {
-				margin-right: 10px;
-				width: 65px;
-				height: 65px;
-				object-fit: cover;
-			}
-		}
-		.logo-hover {
-			display: none;
-			img {
-				margin: auto;
-				max-width: 200px;
-				max-height: 60px;
-			}
-		}
-	}
-
-	&:after {
-		content: "";
-		cursor: pointer;
-		color: #fff;
-		text-align: center; 
-		font-size: 2em;
-		padding: 20px 0;
-		width: 50px;
-		height: 50px;
-		background-color: $secondary;
-		background-image: url("../../assets/icon/right-arrow.svg");
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: 50%;
-		position: absolute;
-		right: 0;
-		margin-right: -25px;
-		top: 50%;
-		margin-top: -25px;
-		box-shadow: 0 3px 7px rgba(0,0,0,0.2);
-	}
-	&:nth-child(even) {
-		&:after{
-			background-color: $primary;
-		}
-		.agenda-time {
-
-			h3 {
-				color:$secondary;
-			}
-		}
-		.agenda-person {
+		.reply-button {
 			&:hover {
-				background-color: $secondary;
+				cursor: pointer;
 			}
 		}
-	}
-}
+		.reply-block {
+			width: 100%;
+			margin: 0px;
+			padding: 10px;
+			position: absolute;
+			bottom: 0;
+			background: $grey-light;
+			display: flex;
+			justify-content: space-between;
+			.reply-messege {}
+			.reply-close {
+				width: 1rem;
+				opacity:50%
+			}
+		}
 
-#ongoing-interviews, #media-hall {
-	.agendarow {
-		@extend %agendarow;
-	}
-}
+		.sevfive-left {
+			left: 75% !important;
+			position: fixed !important;
+		}
 
-#upcomming-interviews {
-	.interviewrow {
-		@extend %agendarow;
+		.centrify-content {
+			top:50%;
+			left:50%;
+			transform: translate(-50%, -50%);
+			position: relative;
+		}
+
+		/* Page title Primary */
+		#demoday, #profile, #profile-company, #profile-booth {
+			.title {
+				&:before {
+					background-color: $primary;
+					box-shadow: 30px 0px 0 -6px $primary, -33px 20px 0 -2px $primary;
+				}
+			}
+		}
+
+		/* Page title secondary invert */
+		#media-partner-booth {
+			.title {
+				&:before {
+					top: -5px;
+					right: -40px;
+					left: auto;
+					background-color: $secondary;
+					box-shadow: -5px -29px 0 -5px $secondary, -23px -21px 0 -8px $secondary;
+				}
+			}
+		}
+		/* Page title Primary invert */
+		#media-hall {
+			.title {
+				&:before {
+					top: -5px;
+					right: -40px;
+					left: auto;
+					background-color: $primary;
+					box-shadow: -5px -29px 0 -5px $primary, -23px -21px 0 -8px $primary;
+				}
+			}
+		}
+
+		%agendarow {
+			padding-top: 0;
+			padding-bottom: 0;
+			max-width: 95%;
+			position: relative;
+			background: $grey-lighter;
+			position: relative;
+			.column {
+				padding-top: 20px;
+				padding-bottom: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				.has-text-centered {
+					width: 100%;
+				}
+				+.column {
+					border-left: solid 1px #dedede;
+				}
+			}
+
+			&:before {
+				content: "";
+				width: 10px;
+				left: 0;
+				bottom: 0;
+				border-bottom: solid 105px $primary;
+				position: absolute;
+			}
+			&:nth-child(even) {
+				&:before{
+					border-bottom: solid 105px $secondary;
+				}
+			}
+			.agenda-time {
+				max-width: 200px;
+				h3 {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 20px;
+					font-weight: 400;
+					color:$primary;
+					span {
+						margin-left: 10px;
+						text-transform: uppercase;
+						font-size: 15px;
+					}
+				}
+			}
+			.agenda-person {
+				max-width: 300px;
+				justify-content: left;
+				cursor: pointer;
+				&:hover {
+					align-items: center;
+					justify-content: center;
+					background-color: $primary;
+					.data {
+						display: none;
+					}
+					.logo-hover {
+						display: block;
+					}
+				}
+				.data {
+					display: flex;
+					align-items: center;
+					img {
+						margin-right: 10px;
+						width: 65px;
+						height: 65px;
+						object-fit: cover;
+					}
+				}
+				.logo-hover {
+					display: none;
+					img {
+						margin: auto;
+						max-width: 200px;
+						max-height: 60px;
+					}
+				}
+			}
+
+			&:after {
+				content: "";
+				cursor: pointer;
+				color: #fff;
+				text-align: center; 
+				font-size: 2em;
+				padding: 20px 0;
+				width: 50px;
+				height: 50px;
+				background-color: $secondary;
+				background-image: url("../../assets/icon/right-arrow.svg");
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: 50%;
+				position: absolute;
+				right: 0;
+				margin-right: -25px;
+				top: 50%;
+				margin-top: -25px;
+				box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+			}
+			&:nth-child(even) {
+				&:after{
+					background-color: $primary;
+				}
+				.agenda-time {
+
+					h3 {
+						color:$secondary;
+					}
+				}
+				.agenda-person {
+					&:hover {
+						background-color: $secondary;
+					}
+				}
+			}
+		}
+
+		#ongoing-interviews, #media-hall {
+			.agendarow {
+				@extend %agendarow;
+			}
+		}
+
+		#upcomming-interviews {
+			.interviewrow {
+				@extend %agendarow;
 		// &:after {
 		// 	content: "";
 		// 	cursor: pointer;
@@ -492,12 +399,18 @@ main {
 	border-top-right-radius: 0;
 }
 .modal-card-head {
-	background-color: $secondary;
+	/*background-color: $secondary;*/
 	font-weight: normal !important;
 }
 .modal-card-foot {
 	background-color: $white;
+	justify-content: flex-end;
 }
+.dialog .modal-card .modal-card-foot .button {
+	font-weight: normal;
+}
+
+
 .bcardpreview {
 	.card {
 		width: 400px;
@@ -1435,7 +1348,6 @@ main {
 	}
 }
 .pitchdeck-download {
-	padding: 20px;
 	transition: all 0.3s ease-out;
 	cursor: pointer;
 	position: relative;
@@ -1448,12 +1360,9 @@ main {
 		margin-left: 10px;
 		margin-right: 30px;
 	}
-	div {
-		width: 100%;
-	}
 	p {
-		color: $primary;
-		font-weight: bold;
+		font-size: 1rem;
+		line-height: 1.4rem;
 	}
 	h3 {
 		color: $grey;
@@ -1469,12 +1378,14 @@ main {
 		background-color: $primary;
 		position: absolute;
 		transition: all 0.3s ease-out;
+		border-radius: 0 0 0 $radius;
 	}
 	&:hover {
 		transform: scale(1.02);
 		z-index: 999;
 		&:after {
 			width: 100%;
+			border-radius: 0 0 $radius $radius;
 		}
 	}
 }
@@ -1907,19 +1818,19 @@ main {
 			}
 		}
 		.icon-action {
-					margin-left: 0.5rem;
-					padding: 0.5rem;
-					width: 10px;
-					background-color: $grey-light;
-					box-sizing: content-box;
-					border-radius: 3px;
-				}
-				.icon-ok {
-					background-color: $success;
-				}
-				.icon-close {
-					background-color: $danger;
-				}
+			margin-left: 0.5rem;
+			padding: 0.5rem;
+			width: 10px;
+			background-color: $grey-light;
+			box-sizing: content-box;
+			border-radius: 3px;
+		}
+		.icon-ok {
+			background-color: $success;
+		}
+		.icon-close {
+			background-color: $danger;
+		}
 		.profile-data {
 			h2 {
 				margin-bottom: 15px;
@@ -2134,42 +2045,7 @@ main {
 		}
 	}
 	
-	.profile-bio {
-		width: calc(100vw - 65%);
-		flex: none;
-	}
-	@media screen and (min-width: 1200px) {
-		.profile-bio {
-			width: calc(100vw - 60%);
-		}
-	}
-	@media screen and (min-width: 1400px) {
-		.profile-bio {
-			width: calc(100vw - 70%);
-		}
-	}
-	@media screen and (min-width: 1600px) {
-		.profile-bio {
-			width: calc(100vw - 66%);
-		}
-	}
-	@media screen and (min-width: 1700px) {
-		.profile-bio {
-			width: calc(100vw - 66%);
-		}
-	}
-	.profile-bio .column {
-		padding-left: 0.75rem !important;
-		padding-right: 0.75rem !important;
-		max-width: 50% !important;
-		flex-basis: auto;
-	}
-	@media screen and (min-width: $fullhd) {
-		.profile-bio .column {
-			width: 33% !important;
-			max-width: 33% !important;
-		}
-	}
+	
 }
 
 .bio-description {
@@ -2229,38 +2105,155 @@ main {
 	}
 }
 
-// PROFILE COMPANY MEMBER CARD//
+// PROFILE COMPANY NEW  //
+//////////////////////////////////////////
+#profile-company-new {
+	.container {
+		@media screen and (min-width: $fullhd) {
+			width: calc(100vw - 390px);
+			max-width: 100%;
+			margin-left: 40px;
+		}
+	}
+	.section-profile-company {
+		padding-top: 3rem;
+		.profile-top {
+			margin-bottom: 2rem;
+			.company-logo {
+				margin-left: auto;
+				margin-right: auto;
+				margin-bottom: 1rem;
+				width: 200px;
+				height: 200px;
+				background-color: $white;
+				border-radius: 10rem;
+				box-shadow: $shadow-2;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				img {
+					max-width: 80%;
+				}
+			}
+			.list-network {
+				margin-bottom: 2rem;
+				margin-left: auto;
+				margin-right: auto;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				
+				@media screen and (min-width: $fullhd) {
+					max-width: 80%;
+				}
+				li {
+					min-width: inherit;
+					margin-top: 10px;
+				}
+				span {
+					border-radius: 10rem;
+					padding: .2rem;
+					display: flex;
+					justify-content: center;
+					box-sizing: content-box;
+					&:last-child {
+
+					}
+					img {
+						width: 1.1rem;
+					}
+				}
+			}
+		}
+		.company-demo {
+			.play-demo {
+				margin-left: auto;
+				margin-right: auto;
+				margin-bottom: 2rem;
+				font-size: 1.2rem;
+				justify-content: center;
+				display: grid;
+			}
+			.demo-modal {
+				.column {
+					.animation-content.modal-content {
+						width: 100vw !important;
+						max-width: 100vw !important;
+						height: 100vh;
+					}
+				}
+				iframe {
+					width: 100vw !important;
+					height: 100vh;
+				}
+			}
+		}
+		.profile-bio {
+			margin-bottom: 2rem;
+			text-align: center;
+		}
+
+		.profile-stream {
+			margin-bottom: 3rem;
+			padding: .5rem;
+			min-height: 450px;
+			box-shadow: $shadow-2;
+			background-color: $grey;
+		}
+	}
+	.chat-bubble {
+		@extend %chat-bubble;
+		height: calc(100vh - 517px);
+	}
+}
+
+// PROFILE COMPANY MEMBER CARD //
 //////////////////////////////////////////
 .member {
 	padding: 20px;
 	height: 100%;
+	min-width: 300px;
 	text-align: center;
 	box-shadow: $shadow-2;
 	position: relative;
-	figure {
-		margin-top: -40px;
+	border-top: solid 4rem $primary;
+	@media screen and (min-width: $fullhd) {
+		max-width: 350px;
+		min-width: 300px;
+	}
+	.member-avatar {
 		img {
-			width: 90px;
-			height: 90px;
-			border: solid 2px $secondary;
-			border-top-width: 15px;
+			margin-top: -65px;
+			width: 100px;
+			height: 100px;
+			border-radius: 10rem;
+			border: solid 3px $white;
 			object-fit: cover;
-			background-color: $secondary;
 		}
 	}
-	h1 {
+	.member-name {
 		margin-top: 15px;
-		font-weight: 500;
-		strong {
-			text-transform: uppercase;
-		}
+		font-weight: 600;
+		font-size: 1.2rem;
+		line-height: 1.5rem;
 	}
-	h2 {
-		margin-top: 5px;
-		margin-bottom: 10px;
-		font-size: 0.9em;
+	.member-rol {
+		margin-top: 0.4rem;
+		margin-bottom: 1rem;
+		font-size: 0.9rem;
 		font-weight: normal;
 		font-style: italic;
+	}
+	.member-action {
+		.button {
+			border-color: $light;
+			font-size: .8rem;
+		}
+		img {
+			margin-right: .5rem;
+			opacity: .5;
+			filter: invert(1);
+		}
 	}
 	.memeber-email {
 		cursor: pointer;
@@ -2309,6 +2302,119 @@ main {
 		margin: 15px 0 20px 0;
 		text-align: center;
 		font-weight: bold;
+	}
+}
+
+// NETWORKING ROOM //
+//////////////////////////////////////////
+#networking-rooms {
+	.title-page {
+		margin-top: 0;
+	}
+	.new-room {
+		margin-top: 2rem;
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+	}
+	.room-previews {
+		margin-top: 1rem;
+		.room-preview {
+			text-align: center;
+			.box {
+				width: 100%;
+				box-shadow: $shadow-2;
+			}
+		}
+	}
+	#under-nav-hint {
+		.container {
+			@media screen and (min-width: $tablet) {
+				width: 50%;
+				margin-left: 0;
+			}
+			@media screen and (min-width: $fullhd) {
+				width: calc(100vw - 33.3333%);
+				margin-left: 0;
+			}
+		}
+	}
+}
+#networking-attendees {
+	position: relative;
+	.box {
+		width: 100%;
+		box-shadow: $shadow-2;
+		overflow-y: auto;
+		@media screen and (min-width: $tablet) {
+			width: calc(50% - 37px);
+			position: fixed;
+			right: 22px;
+			bottom: 32px;
+			height: calc(100% - 131px);
+		}
+		@media screen and (min-width: $fullhd) {
+			width: calc(33.33% - 37px);
+		}
+		.box-title {
+			margin-bottom: 1rem;
+		}
+		.search-attendees {
+			margin-bottom: 1rem;
+		}
+	}
+	.attendees-list {
+		margin-left: -1rem;
+		margin-right: -1rem;
+		margin-bottom: -1rem;
+		/*overflow-y: auto;
+		max-height: calc(100vh - 447px);*/
+		.attendee-profile {
+			padding-left: 1rem;
+			padding-right: 1rem;
+			display: flex;
+			justify-content: space-between;
+			padding-top: 1rem;
+			padding-bottom: 1rem;
+			border-top: solid 1px $grey-light;
+			.attendee-info {
+				justify-content: flex-start;
+				display: flex;
+				.attendee-text {
+					.attendee-name {
+						font-weight: 600;
+					}
+					.attendee-company {
+						margin-top: 0;
+						font-style: italic;
+					}
+					.attendee-room {}
+				}
+				.attendee-avatar {
+					margin-right: 1rem;
+					img {
+						border-radius: 10rem;
+						max-width: 60px;
+						border: solid 2px $grey-light;
+					}
+				}
+			}
+			.attendee-request {
+				justify-content: flex-end;
+				.button {
+					font-size: .8rem;
+					+.button {
+						margin-top: 10px;
+					}
+					img {
+						height: 1rem;
+					}
+					span {
+						margin-left: .5rem;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -2836,16 +2942,15 @@ main {
 	}
 }
 .quoted-answer {
-    padding: 0px;
-    font-style: italic;
-    border-bottom: 1px solid white;
-    margin-bottom: 10px;
+	padding: 0px;
+	font-style: italic;
+	border-bottom: 1px solid white;
+	margin-bottom: 10px;
 }
 
 %chat-bubble {
-	margin-top: 57px;
 	padding: 10px;
-	height: calc(100vh - 240px);
+	height: calc(100vh - 250px);
 	overflow: auto;
 	position: relative;
 	article {
@@ -2895,10 +3000,13 @@ main {
 	background-color: $grey-lighter;
 	border-top: solid 1px $grey-light;
 	border-bottom: solid 1px $grey-light;
+	bottom: 0;
+	position: fixed;
+	width: 100%;
 	textarea {
 		padding: 0;
 		width: 100%;
-		height: 90px;
+		height: 50px;
 		resize: none;
 		border: none;
 		color: $black;
@@ -2908,17 +3016,6 @@ main {
 		}
 	}
 }
-%chat-helper {
-	padding: 10px;
-	font-size: 0.8em;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-}
-
-.reply-button {
-
-}
 
 #globalchat, #vipchat {
 	.chat-bubble {
@@ -2927,9 +3024,6 @@ main {
 	}
 	.textarea-message {
 		@extend %textarea-message;
-	}
-	.chat-helper {
-		@extend %chat-helper;
 	}
 }
 
@@ -2949,27 +3043,33 @@ main {
 	right: 0;
 	background-color: $white;
 	box-shadow: $shadow-1;
-
-	h3 {
-		cursor: pointer;
-		&:hover {
-			opacity: 0.7;
-		}
-	}
 	.chat-top {
-		padding: 10px;
-		display: flex;
-		align-items: center;
-		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-		position: absolute;
-		width: 100%;
-		background-color: $white;
-		z-index: $navbar-z;
-		h3 {
-			+h3 {
-				margin-left: 30px;
+		margin: 1rem 0;
+		article	{
+			margin: 0 .5rem;
+			padding: 1rem;
+			background-color: $grey-lighter;
+			text-align: center;
+			border-radius: $radius;
+			&:hover {
+				background-color: $grey-light;
+			}
+			h3 {
+				font-size: 1rem;
+			}
+			img {
+				max-width: 120px;
+				margin-top: 1rem;
+				margin-bottom: 1rem;
+				margin-left: auto;
+				margin-right: auto;
+				display: block;
+			}
+			.button {
+				margin-bottom: 1rem;
 			}
 		}
+		
 		.enterebooth {
 			margin:auto;
 			padding: 5px 25px;
@@ -2978,7 +3078,6 @@ main {
 			text-align: center;
 			border: solid 3px $danger;
 			color: $danger;
-
 			&:hover {
 				background-color: $danger;
 				color: white;
@@ -2992,8 +3091,20 @@ main {
 	.textarea-message {
 		@extend %textarea-message;
 	}
-	.chat-helper {
-		@extend %chat-helper;
+}
+.chat-with-title {
+	padding: .5rem;
+	border-top: solid 1px $grey-light;
+	border-bottom: solid 1px $grey-light;
+	font-size: 1rem;
+	display: flex;
+	align-items: center;
+    justify-content: space-between;
+	.help {
+		padding: 5px 10px;
+		border-radius: 100px;
+		font-weight: bold;
+		background-color: $grey-light;
 	}
 }
 
@@ -3018,9 +3129,9 @@ main {
 		color: $grey;
 		+li {
 			margin-top: 10px;
+			margin-left: 15px;
 		}
 		span {
-			margin-right: 15px;
 			padding: 5px;
 			width: 30px;
 			height: 30px;
@@ -3170,15 +3281,15 @@ main {
 #under-nav-hint {
 	width: 100%;
 	padding: 20px;
-	background-color: $primary;
+	background-color: $secondary;
 	color: $white;
 	text-align: center;
 	line-height: 36px;
+	position: sticky;
 	button {
 		margin-left: 10px;
 	}
 }
-
 
 .bcnote-card-content {
 	padding:5px 10px;
@@ -3222,12 +3333,11 @@ main {
 				filter: invert(1);
 			}
 		}
-		.member-action {
-			background-color: $kaspersky;
+		.member {
+			border-top-color: $kaspersky;
 		}
-		figure {
-			img {
-				border-color: $kaspersky;
+		.pitchdeck-download {
+			&:after {
 				background-color: $kaspersky;
 			}
 		}
@@ -3243,7 +3353,7 @@ main {
 	$rsk: #00d27d;
 	min-height: calc( 100vh - 80px);
 	background-color: $rsk;
-	
+
 	.section-profile-company {
 		a {
 			color: $white;
@@ -3257,15 +3367,6 @@ main {
 		.member {
 			a {
 				color: $rsk;
-			}
-		}
-		.member-action {
-			background-color: $rsk;
-		}
-		figure {
-			img {
-				border-color: $grey;
-				background-color: $grey;
 			}
 		}
 	}
@@ -3297,12 +3398,11 @@ main {
 				filter: invert(1);
 			}
 		}
-		.member-action {
-			background-color: $sto-managers;
+		.member {
+			border-top-color: $sto-managers;
 		}
-		figure {
-			img {
-				border-color: $sto-managers;
+		.pitchdeck-download {
+			&:after {
 				background-color: $sto-managers;
 			}
 		}
@@ -3322,12 +3422,11 @@ main {
 				filter: invert(1);
 			}
 		}
-		.member-action {
-			background-color: $fas;
+		.member {
+			border-top-color: $fas;
 		}
-		figure {
-			img {
-				border-color: $fas;
+		.pitchdeck-download {
+			&:after {
 				background-color: $fas;
 			}
 		}
@@ -3350,15 +3449,18 @@ main {
 				color: $white;
 			}
 		}
-		.member-action {
-			background-color: $mohr-wolfe;
+		.member {
+			border-top-color: $mohr-wolfe-secondary;
 		}
-		figure {
-			img {
-				border-color: $mohr-wolfe-secondary;
+		.profile-bio {
+			color: $white;
+		}
+		.pitchdeck-download {
+			&:after {
 				background-color: $mohr-wolfe-secondary;
 			}
 		}
+
 	}
 }
 /* DECRED */
@@ -3387,15 +3489,6 @@ main {
 				color: $white;
 			}
 		}
-		.member-action {
-			background-color: $decred;
-		}
-		figure {
-			img {
-				border-color: $decred-secondary;
-				background-color: $decred-secondary;
-			}
-		}
 	}
 }
 
@@ -3420,15 +3513,6 @@ main {
 				color: $white;
 			}
 		}
-		.member-action {
-			background-color: $money-on-chain;
-		}
-		figure {
-			img {
-				border-color: $money-on-chain-secondary;
-				background-color: $money-on-chain-secondary;
-			}
-		}
 	}
 }
 /* LIBONOMY */
@@ -3446,15 +3530,6 @@ main {
 			}
 			a {
 				color: $white;
-			}
-		}
-		.member-action {
-			background-color: $libonomy;
-		}
-		figure {
-			img {
-				border-color: $libonomy-secondary;
-				background-color: $libonomy-secondary;
 			}
 		}
 	}
@@ -3477,15 +3552,6 @@ main {
 				}
 			}
 		}
-		.member-action {
-			background-color: $dash;
-		}
-		figure {
-			img {
-				border-color: $dash;
-				background-color: $dash;
-			}
-		}
 	}
 }
 /* LIBONOMY */
@@ -3502,15 +3568,6 @@ main {
 			}
 			a {
 				color: $white;
-			}
-		}
-		.member-action {
-			background-color: $quantia-capital;
-		}
-		figure {
-			img {
-				border-color: $quantia-capital-secondary;
-				background-color: $quantia-capital-secondary;
 			}
 		}
 	}

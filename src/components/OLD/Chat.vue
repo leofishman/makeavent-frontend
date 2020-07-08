@@ -1,49 +1,48 @@
 <template>
 	<!-- Profile chat -->
-	<div style="padding:0px">
+	<div>
+		<p class="chat-with-title">
+			<span>Chat with <strong class="is-capitalized">{{name}}</strong> team</span>
+			<b-tooltip label="Shift + Enter for line break, Enter to send message" position="is-left" type="is-black" size="is-small">
+				<span class="help">?</span>
+			</b-tooltip>
+		</p>
 		<div v-if="chatAvailable" style="padding:0px;">
 			<div :id="`${type}-${name}-messages-box`" class="chat-bubble">
 				<Message
-					v-for="(el, index) in chatHistory"
-					:key="index"
-					:data="el"
-					:index="index"
-					:contacts="parent.contacts"
+				v-for="(el, index) in chatHistory"
+				:key="index"
+				:data="el"
+				:index="index"
+				:contacts="parent.contacts"
 				/>
 			</div>
 			<div class="reply-block" v-if="showQuote">
-				<div class="tile is-ancestor">
-					<div class="whitespaces tile is-10">
-						{{$root.content.reply}}&nbsp;<strong>@{{quotedName}}</strong>&nbsp;{{quotedMessage}}
-					</div>
-					<div v-on:click="closeReply()" class="click tile is-2">
-						<img style="width:16%; opacity:50%" src="@/assets/img/cross.svg" alt="">
-					</div>
+				<div class="whitespaces reply-messege">
+					{{$root.content.reply}}&nbsp;<strong>@{{quotedName}}</strong>&nbsp;{{quotedMessage}}
 				</div>
+				<img v-on:click="closeReply()" class="reply-close" src="@/assets/img/cross.svg" alt="">
 			</div>
-			
+
 			<div class="textarea-message">
 				<textarea 
-					@keydown="sendMessage($event)"
-					v-model="userTextMessage"
-					class="chat-question"
-					type="text"
-					:placeholder="content.chatPlaceholder">
-				</textarea>
-			</div>
-			<div class="chat-helper has-text-grey">
-				<p>{{content.hint}}</p>
-			</div>
-		</div>
-		<div
-			v-else
-			class="chat-bubble click"
-		>	
-			<div v-on:click="isUpgradable()" class="centrify-content">
-				{{isUpdagradable}}
-			</div>
+				@keydown="sendMessage($event)"
+				v-model="userTextMessage"
+				class="chat-question"
+				type="text"
+				:placeholder="content.chatPlaceholder">
+			</textarea>
 		</div>
 	</div>
+	<div
+	v-else
+	class="chat-bubble click"
+	>	
+	<div v-on:click="isUpgradable()" class="centrify-content">
+		{{isUpdagradable}}
+	</div>
+</div>
+</div>
 </template>
 
 <script>
@@ -79,7 +78,7 @@
 				this.$router.currentRoute.path != '/reghall' &&
 				this.$router.currentRoute.path != '/noaccess' &&
 				this.$router.currentRoute.path != '/resetpwd'
-			) {
+				) {
 				this.$root.checkComponentAccess(this.checkAccess).then((res) => {
 					this.getElseContent()
 					this.chat = io(socket, {
@@ -125,83 +124,89 @@
 						this.scrollBehaviour()
 					})
 				})
-				
-				window.EventBus.$on('reply-to-message', (e) => {
-					this.showMessageModal = e.showMessageModal
-					this.showQuote = e.showQuote
-					this.quotedMessage = e.quotedMessage
-					this.quotedName = e.quotedName
-					this.quoteId = e.quoteId
-				})
+
+			window.EventBus.$on('reply-to-message', (e) => {
+				this.showMessageModal = e.showMessageModal
+				this.showQuote = e.showQuote
+				this.quotedMessage = e.quotedMessage
+				this.quotedName = e.quotedName
+				this.quoteId = e.quoteId
+			})
+		}
+
+
+		return {
+			userTextMessage: "",
+			chatHistory: [],
+			chatAvailable: false,
+			content: this.$root.content.Chat,
+
+			showQuote: this.showQuote,
+			showMessageModal:this.showMessageModal,
+			quotedMessage: this.quotedMessage,
+			quotedName: this.quotedName,
+			quoteId: this.quoteId,
+
+			isUpdagradable: ""
+		}
+	},
+	methods: {
+
+		getElseContent () {
+			if (AccessLevels[this.checkAccess].includes('business') || AccessLevels[this.checkAccess].includes('vip')) {
+				this.isUpdagradable = this.$root.content.upgradeToAccess(
+					this.$root.content.business + this.$root.content.or + this.$root.content.vip,
+					this.$root.content.chatWith.toLowerCase() + this.$root.capitalizeFirstLetter(name)
+					)
 			}
+			else
+				this.isUpdagradable = this.$root.content.noAccessTitle(this.$root.content.StartupsDemoDay.ddChat)
+		},
 
-			
-			return {
-				userTextMessage: "",
-				chatHistory: [],
-				chatAvailable: false,
-				content: this.$root.content.Chat,
-				
-				showQuote: this.showQuote,
-				showMessageModal:this.showMessageModal,
-				quotedMessage: this.quotedMessage,
-				quotedName: this.quotedName,
-				quoteId: this.quoteId,
-
-				isUpdagradable: ""
+		isUpgradable () {
+			if (AccessLevels[this.checkAccess].includes('business') || AccessLevels[this.checkAccess].includes('vip')) {
+				let msg = this.$root.content.onlyForUsertype(this.$root.content.chatWith.toLowerCase() + this.$root.capitalizeFirstLetter(this.name), this.$root.content.business + this.$root.content.or + this.$root.content.vip)
+				this.$root.showMessageToUpgradeBusOrVip(msg)
 			}
 		},
-		methods: {
 
-			getElseContent () {
-				if (AccessLevels[this.checkAccess].includes('business') || AccessLevels[this.checkAccess].includes('vip')) {
-					this.isUpdagradable = this.$root.content.upgradeToAccess(
-						this.$root.content.business + this.$root.content.or + this.$root.content.vip,
-						this.$root.content.chatWith.toLowerCase() + this.$root.capitalizeFirstLetter(name)
-					)
-				}
-				else
-					this.isUpdagradable = this.$root.content.noAccessTitle(this.$root.content.StartupsDemoDay.ddChat)
-			},
+		sendMessage (e) {
+			const id = () => {
+				return Math.random().toString().split(".")[1]
+			}
+			if (e.keyCode == 13 && !e.shiftKey) {
+				e.preventDefault();
 
-			isUpgradable () {
-				if (AccessLevels[this.checkAccess].includes('business') || AccessLevels[this.checkAccess].includes('vip')) {
-					let msg = this.$root.content.onlyForUsertype(this.$root.content.chatWith.toLowerCase() + this.$root.capitalizeFirstLetter(this.name), this.$root.content.business + this.$root.content.or + this.$root.content.vip)
-					this.$root.showMessageToUpgradeBusOrVip(msg)
-				}
-			},
+				this.userTextMessage = this.userTextMessage.replace(/\n/g, '<br>')
 
-			sendMessage (e) {
-				const id = () => {
-					return Math.random().toString().split(".")[1]
+				if (this.quotedMessage) {
+					this.chat.emit('new_message', {
+						quoteId: this.quoteId,
+						html: `
+						<div class="quoted-answer">
+						${this.quotedMessage}
+						</div>
+						${this.userTextMessage}
+						`,
+						id: id(),
+						message: this.userTextMessage
+					})
 				}
-				if (e.keyCode == 13 && !e.shiftKey) {
-					e.preventDefault();
-					
-					this.userTextMessage = this.userTextMessage.replace(/\n/g, '<br>')
+				else {
+					this.chat.emit('new_message', { message:this.userTextMessage, id: id(), html:this.userTextMessage })
+				}
+				this.userTextMessage = ""
+				this.showQuote = ''
+				this.quotedMessage = ''
+				this.quotedName = ''
+			}
+		},
 
-					if (this.quotedMessage) {
-						this.chat.emit('new_message', {
-							quoteId: this.quoteId,
-							html: `
-								<div class="quoted-answer">
-									${this.quotedMessage}
-								</div>
-								${this.userTextMessage}
-							`,
-							id: id(),
-							message: this.userTextMessage
-						})
-					}
-					else {
-						this.chat.emit('new_message', { message:this.userTextMessage, id: id(), html:this.userTextMessage })
-					}
-					this.userTextMessage = ""
-					this.showQuote = ''
-					this.quotedMessage = ''
-					this.quotedName = ''
-				}
-			},
+		scrollBehaviour () {
+			let chatlist = document.getElementById(`${this.type}-${this.name}-messages-box`)
+			if (chatlist)
+				chatlist.scrollTo(0, chatlist.scrollHeight)
+		},
 
 			scrollBehaviour () {
 				let chatlist = document.getElementById(`${this.type}-${this.name}-messages-box`)
@@ -235,10 +240,10 @@
 
 			closeReply () {
 				this.showQuote = false
-                this.quotedMessage = ''
-                this.quotedName = ''
-                this.quoteId = ''
-                this.showMessageModal = false
+				this.quotedMessage = ''
+				this.quotedName = ''
+				this.quoteId = ''
+				this.showMessageModal = false
 				window.EventBus.$emit('close-reply')
 			}
 		}
@@ -248,6 +253,6 @@
 <style scoped>
 .whitespaces {
 	white-space: break-spaces;
-    word-break: break-all;
+	word-break: break-all;
 }
 </style>

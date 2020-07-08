@@ -15,15 +15,13 @@ import Agenda from '@/components/Agenda/Agenda'
 import Mediahall from '@/components/Mediahall/Mediahall.vue'
 import Mediapartnerbooth from '@/components/Mediapartnerbooth/Mediapartnerbooth.vue'
 
-/**
- * @Auth
- */
-import Login from '@/components/Auth/Login.vue'
-import LoginWithTempEmail from '@/components/Auth/LoginWithTempEmail.vue'
-import Register from '@/components/Auth/Register'
-import LoginWithNewPassword from '@/components/Auth/LoginWithNewPassword'
-import NoAccess from '@/components/Auth/NoAccess.vue'
-
+import Login from '@/components/Login.vue'
+import LoginWithTempEmail from '@/components/LoginWithTempEmail.vue'
+import Register from '@/components/Register'
+import LoginWithNewPassword from '@/components/LoginWithNewPassword'
+import NoAccess from '@/components/NoAccess.vue'
+import Company from '@/components/CompanyProfile/CompanyNew.vue'
+import NetworkingRooms from '@/components/CompanyProfile/NetworkingRooms.vue'
 import Profile from '@/components/Profile/Profile.vue'
 import MyInterviews from '@/components/Profile/MyInterviews.vue'
 import MyBusinessCards from '@/components/Profile/MyBusinessCards.vue'
@@ -83,6 +81,26 @@ const router = new Router({
             path: '/backstage',
             name: "Backstage",
             component: Backstage,
+        },
+        {
+            path: '/:id/company',
+            name: "Company",
+            component: Company,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            },
+            props: (route) => ({ name: route.query.name })
+        },
+        {
+            path: '/:id/networkingrooms',
+            name: "NetworkingRooms",
+            component: NetworkingRooms,
+            meta: {
+                requiresAuth: true,
+                platformLaunch: true
+            },
+            props: (route) => ({ name: route.query.name })
         },
         {
             path: '/login',

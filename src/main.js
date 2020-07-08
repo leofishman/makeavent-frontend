@@ -10,8 +10,10 @@ import Buefy from 'buefy'
 import '@/assets/css/style.scss'
 window.EventBus = new Vue();
 
-import App from './App.vue'
 import './domchange.js'
+import './global_functions.js'
+
+import App from './App.vue'
 import {api, socket, self, logo, app} from './env'
 const selfhost = self
 
@@ -65,28 +67,6 @@ Vue.component('navbar', Navbar)
 Vue.component('desktop', Desktop)
 Vue.component('Pagetitle', Pagetitle)
 Vue.component('ResetPwd', ResetPwd)
-// Vue.component('mobile', Mobile)
-
-window.toUp = (a) => {
-  if (a)
-    return a.toUpperCase()
-  else
-    return 'UNDEFINED'
-}
-
-window.toLo = (a) => {
-  if (a)
-    return a.toLowerCase()
-  else
-    return 'UNDEFINED'
-}
-
-window.compare = (a, b) => {
-  if (window.toUp(a) == window.toUp(b))
-    return true
-  else 
-    return false
-}
 
 new Vue({
   router,

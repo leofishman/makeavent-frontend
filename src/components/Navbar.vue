@@ -3,7 +3,7 @@
 		<nav class="navbar" role="navigation" aria-label="main navigation">
 			<div class="container is-fluid">
 				<div class="navbar-brand">
-					<a class="navbar-item" v-on:click="openPage('home')">
+					<a class="navbar-item" v-on:click="openPage('/')">
 						<img v-if="$root.project.logo" :src="$root.api + $root.project.logo" height="28">
 					</a>
 
@@ -17,8 +17,8 @@
 				<div id="navbarBasicExample" class="navbar-menu">
 					<div class="navbar-start">
 						<!-- <a class="navbar-item" v-on:click="$root.joinStage('networkingbooth')">{{$root.content.networkingBooth}}</a> -->
-						<a class="navbar-item" v-on:click="openPage('/')">{{$root.content.home}}</a>
-						<a class="navbar-item" v-on:click="openPage('/agenda')">{{$root.content.agenda}}</a>
+						<!-- <a class="navbar-item" v-on:click="openPage('/')">{{$root.content.home}}</a>
+						<a class="navbar-item" v-on:click="openPage('/agenda')">{{$root.content.agenda}}</a> -->
 					</div>
 
 					<div class="navbar-end">

@@ -13,6 +13,7 @@
 
 <script>
 import {api} from '@/env'
+import './index.scss'
 export default {
     name: "Noaccess",
     data() {
@@ -23,8 +24,10 @@ export default {
 }
 </script>
 <style lang="scss">
-    .noaccess-logo {
-        margin: 0px 0px 40px 0px;
-        width: 350px;
+    #noaccess {
+        .title-logo {
+            margin: 0px 0px 40px 0px;
+            width: 350px;
+        }
     }
 </style>

@@ -4,7 +4,7 @@
             <section class="section section-registrationhall">
                 <div class="columns">
                     <div class="column is-half is-offset-one-quarter data-login">
-                        <figure class="image">
+                        <figure class="image title-logo">
                             <img v-if="$root.project.logo" :src="$root.api + $root.project.logo">
                         </figure>
 
@@ -65,6 +65,7 @@
 <script>
 import Axios from 'axios'
 import {self, api} from '@/env'
+import './index.scss'
 
 export default {
     data() {

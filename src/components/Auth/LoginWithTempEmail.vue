@@ -92,6 +92,7 @@
 <script>
 import Axios from 'axios'
 import {self, api} from '@/env'
+import './index.scss'
 
     export default {
         data() {

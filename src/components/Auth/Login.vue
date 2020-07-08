@@ -4,15 +4,12 @@
 			<section class="section section-login">
 				<div class="columns">
 					<div class="column is-half is-offset-one-quarter data-login">
-						<figure class="image">
+						<figure class="image title-logo">
 							<img v-if="$root.project.logo" :src="$root.api + $root.project.logo">
 						</figure>
 						
 						<div class="box">
                             <p style="margin:10px 0px;">{{content.hint}}</p>
-							<p style="margin-bottom:20px;">
-                                <ResetPwd />
-                            </p>
 							<section>
 								<b-field :label="$root.content.email" >
 									<b-input v-model="email" type="email" validation-message="This email is invalid" :placeholder="$root.content.emailPlaceholder"></b-input>
@@ -30,6 +27,9 @@
                                     <div @click="navToReg()" class="click column">
                                         {{$root.content.common.noAccount}}
                                     </div>
+                                    <div style="text-align:right; padding-right:0px;" class="click column">
+                                        <ResetPwd />
+                                    </div>
                                 </div>
 							</section>
 						</div>
@@ -44,6 +44,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import {AUTH} from '@/api/endpoints'
+import './index.scss'
 
 export default {
     data() {

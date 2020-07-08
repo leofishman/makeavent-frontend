@@ -142,7 +142,7 @@
 				return new Promise((resolve, reject) => {
 					Axios.get(`${host}/webinars?name=interviewbooth${this.name.toLowerCase()}`)
 					.then(res => {
-						const decrypted = this.$root.decrypt(res.data.encryptedData)
+						const decrypted = res.data
 						this.interview = decrypted
 
 						if (this.interview.status == 'ongoing') {

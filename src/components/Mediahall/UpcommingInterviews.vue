@@ -45,7 +45,7 @@ export default {
 	methods: {
 		getUpcommingInterviews () {
 			Axios.get(`${host}/interviews/getByType?type=webinar&status=upcomming`).then(res => {
-				const decrypted = this.$root.decrypt(res.data.encryptedData)
+				const decrypted = res.data
 				if (decrypted.length) {
 					this.interviews = decrypted
 					this.ready = true

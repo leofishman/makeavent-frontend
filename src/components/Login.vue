@@ -87,7 +87,7 @@ export default {
                 password: this.password
             })
             .then(res => {
-                const data = this.$root.decrypt(res.data.encryptedData)
+                const data = res.data
                 
                 if (data.redirect) {
                     this.$root.usertype = data.type

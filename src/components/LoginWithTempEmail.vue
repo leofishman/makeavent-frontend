@@ -175,7 +175,7 @@
                     access: this.$router.currentRoute.query.access
                 })
                 .then(res => {
-                    const decrypted = this.$root.decrypt(res.data.encryptedData)
+                    const decrypted = res.data
                     this.password = decrypted.pwd
                     this.type = decrypted.type
                     this.email = decrypted.email
@@ -196,7 +196,7 @@
                     name: this.name,
                 })
                 .then(res => {
-                    const decrypted = this.$root.decrypt(res.data.encryptedData)
+                    const decrypted = res.data
 
                     this.$root.profile = decrypted.profile[0]
                     this.$root.usertype = decrypted.type

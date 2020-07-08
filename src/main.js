@@ -591,7 +591,7 @@ new Vue({
           }
         })
         .then(res => {
-          let data = this.decrypt(res.data.encryptedData)
+          let data = res.data
           this.profile = data.profile
 
           if (!this.profile.Linkedin && !this.profile.Facebook && !this.profile.Telegram && !this.profile.photo) {
@@ -633,7 +633,7 @@ new Vue({
           }
         })
         .then(res => {
-          const data = this.decrypt(res.data.encryptedData)
+          const data = res.data
 
           this.Investors = data.investors
           this.MediaPartners = data.mediapartners
@@ -728,7 +728,7 @@ new Vue({
           }
         })
         .then(res => {
-          const decrypted = this.decrypt(res.data.encryptedData)
+          const decrypted = res.data
           resolve(decrypted)
         })
         .catch(e => {
@@ -783,7 +783,7 @@ new Vue({
           }
         })
         .then(res => {
-          const decrypted = this.decrypt(res.data.encryptedData)
+          const decrypted = res.data
           this.pendingCards = decrypted
           this.pendingCards.map(el => {
             if (!el.photo)
@@ -806,7 +806,7 @@ new Vue({
           }
         })
         .then(res => {
-          const decrypted = this.decrypt(res.data.encryptedData)
+          const decrypted = res.data
           this.activeBusinessCards = decrypted
           this.activeBusinessCards.map(el => {
             if (el.photo)

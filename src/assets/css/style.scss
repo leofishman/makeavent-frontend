@@ -2191,6 +2191,19 @@ main {
 		.profile-bio {
 			margin-bottom: 2rem;
 			text-align: center;
+			.bio-content {
+				height: 170px;
+				margin-bottom: .5rem;
+				white-space: nowrap;
+				overflow: hidden;
+				-webkit-mask-image: -webkit-gradient(linear, left 50%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+			}
+			.bio-content-expand {
+				height: 170px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
 		}
 
 		.profile-stream {
@@ -3099,7 +3112,7 @@ main {
 	font-size: 1rem;
 	display: flex;
 	align-items: center;
-    justify-content: space-between;
+	justify-content: space-between;
 	.help {
 		padding: 5px 10px;
 		border-radius: 100px;

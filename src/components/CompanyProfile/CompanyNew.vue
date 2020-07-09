@@ -46,12 +46,14 @@
 
 							<div class="profile-bottom">
 								<div class="profile-bio">
-									<p v-html="description" class="bio-content"></p>
-									<button class="button is-small is-fullwidth">Read more</button>
+									<p v-html="description" v-bind:class="classes" class="bio-content"></p>
+
+									<button v-if="!expanded" class="button is-small is-fullwidth" @click="bioExpand">Read more</button>
+									<button v-else class="button is-small is-fullwidth" @click="bioCollapse">Show less</button>
 								</div>
 
 								<div class="company-materials">
-									<button v-if="materials" class="button is-primary is-fullwidth" @click="materialsModalActive = true">{{content.viewMaterials}}</button>
+									<button v-if="materials.length" class="button is-primary is-fullwidth" @click="materialsModalActive = true">{{content.viewMaterials}}</button>
 									<b-modal
 									:active.sync="materialsModalActive"
 									has-modal-card
@@ -149,7 +151,7 @@
 				this.bg = ""
 				this.video = ""
 				this.sponsorClass = ""
-				this.materials = ""
+				this.materials = []
 
 				/* wait until token and sponsors ready*/
 				this.$root.check('token Sponsors').then(() => {
@@ -171,6 +173,8 @@
 				}).catch(e => console.log(`${e} inaccessible`))
 
 				return {
+					expanded: false,
+					classes: "bio-content-collapsed",
 					demoModalActive: false,
 					materialsModalActive: false,
 					self: this,
@@ -220,10 +224,12 @@
 					})
 				},
 				bioExpand: function() {
-					this.$emit('onOpen');
+					this.classes="bio-content-expand";
+					this.expanded=true;
 				},
 				bioCollapse: function() {
-					this.$emit('onClose');
+					this.classes="bio-content-collapsed";
+					this.expanded=false;
 				}
 			},
 		}

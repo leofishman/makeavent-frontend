@@ -58,7 +58,7 @@
 
 <script>
 	import axios from 'axios'
-	import {host} from '@/env'
+	import {api} from '@/env'
 	import Pagetitle from '@/components/Pagetitle.vue'
 	import NetworkingAttendee from '@/components/CompanyProfile/NetworkingAttendee.vue'
 	import NetworkingPreview from '@/components/CompanyProfile/NetworkingPreview.vue'	
@@ -91,7 +91,7 @@
 
 				ready: false,
 
-				host: host,
+				api: api,
 			}
 		},
 		methods: {

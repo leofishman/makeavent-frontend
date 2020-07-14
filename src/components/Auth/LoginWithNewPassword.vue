@@ -115,7 +115,7 @@ export default {
     },
     methods: {
         login () {
-            Axios.post(`${host}/login/setNewPassowrd`, {
+            Axios.post(`${api}/login/setNewPassowrd`, {
                 token: this.$router.currentRoute.query.token,
                 email: this.email,
                 password: this.password,

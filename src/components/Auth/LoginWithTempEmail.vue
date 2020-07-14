@@ -168,7 +168,7 @@ import './index.scss'
         },
         methods: {
             fetchPasswordFromDb () {
-                Axios.post(`${host}/login/passwordForTempAccount`, {
+                Axios.post(`${api}/login/passwordForTempAccount`, {
                     access: this.$router.currentRoute.query.access
                 })
                 .then(res => {
@@ -182,7 +182,7 @@ import './index.scss'
             },
 
             login () {
-                Axios.post(`${host}/login`, {
+                Axios.post(`${api}/login`, {
                     email: this.email,
                     newemail: this.newemail,
                     password: this.password,

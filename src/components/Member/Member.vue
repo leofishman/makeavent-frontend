@@ -1,8 +1,8 @@
 <template>
 	<div class="box member">		
 		<figure class="member-avatar">
-			<img v-if="!data.photo" :src="`${host}/static/img/avatar-default.png`">
-			<img v-else :src="host + data.photo">
+			<img v-if="!data.photo" :src="`${api}/static/img/avatar-default.png`">
+			<img v-else :src="api + data.photo">
 		</figure>
 		
 		<h2 class="click member-name" @click="$root.tryBusinessCard(data)">{{data.name}}</h2>

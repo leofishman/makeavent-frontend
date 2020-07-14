@@ -4,7 +4,7 @@
 			<figure class="attendee-avatar">
 				<!-- if user has avatar img here -->
 				<!-- else -->
-				<img :src="`${host}/static/img/avatar-default.png`">
+				<img :src="`${api}/static/img/avatar-default.png`">
 			</figure>
 			<div class="attendee-text">
 				<div class="attendee-name">Elena Obukhova</div>
@@ -32,13 +32,13 @@
 
 <script>
 	import axios from 'axios'
-	import {host} from '@/env'
+	import {api} from '@/env'
 	
 	export default {
 		name: "NetworkingAttendee",
 		data () {
 			return {
-				host: host,
+				api: api,
 				content: this.$root.content.NetworkingRooms,
 			}
 		},

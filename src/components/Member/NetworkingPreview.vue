@@ -7,13 +7,13 @@
 
 <script>
 	import axios from 'axios'
-	import {host} from '@/env'
+	import {api} from '@/env'
 	
 	export default {
 		name: "NetworkingPreview",
 		data () {
 			return {
-				host: host,
+				api: api,
 				content: this.$root.content.NetworkingRooms,
 			}
 		},

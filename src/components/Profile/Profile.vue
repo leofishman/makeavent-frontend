@@ -6,7 +6,7 @@
 
 			<section class="section section-profile">
 				<div class="columns is-variable is-8">
-					<div class="column is-two-fifths profile-main">
+					<div class="column is-one-third profile-main">
 						
 						<!-- Profile top-->
 						<div class="profile-top">
@@ -49,133 +49,102 @@
 										<span v-on:click="$root.openExternalInBlank($root.profile.Facebook)">
 											<img :src="require(`../../assets/icon/icon-facebook.svg`)">
 										</span>
-										<p v-if="!showEditFacebook" v-on:click="$root.openExternalInBlank($root.profile.Facebook)">
-											Facebook
-										</p>
-										<img v-if="!showAcceptFacebook" v-on:click="showAcceptFacebook = true; showEditFacebook = true" class="click icon-action" src="@/assets/img/pencil.svg">
-										<b-field v-if="showEditFacebook">
-											<b-input type="url" class="edit-socials" v-model="newFacebook"></b-input>
-										</b-field>
-										<img v-on:click="update('newFacebook', 'showAcceptFacebook')" v-if="showAcceptFacebook && newFacebook" class="click icon-action icon-ok" src="@/assets/icon/icon-check.svg">
-										<img v-on:click="showAcceptFacebook = false; showEditFacebook = false" v-if="showAcceptFacebook" class="click icon-action icon-close" src="@/assets/icon/icon-close.svg">
-									</li>
-									<li v-else>
-										<span v-on:click="$root.openExternalInBlank($root.profile.Facebook)">
-											<img :src="require(`../../assets/icon/icon-facebook.svg`)">
-										</span>
-										<p v-if="!showEditFacebook">
-											Facebook not set
-										</p>
-										<img v-if="!showAcceptFacebook" v-on:click="showAcceptFacebook = true; showEditFacebook = true" class="click icon-action" src="@/assets/img/pencil.svg">
-										<b-field v-if="showEditFacebook">
-											<b-input type="url" class="edit-socials" v-model="newFacebook"></b-input>
-										</b-field>
-										<img v-on:click="update('newFacebook', 'showAcceptFacebook')" v-if="showAcceptFacebook && newFacebook" class="click icon-action icon-ok" src="@/assets/icon/icon-check.svg">
-										<img v-on:click="showAcceptFacebook = false; showEditFacebook = false" v-if="showAcceptFacebook" class="click icon-action icon-close" src="@/assets/icon/icon-close.svg">
 									</li>
 									<li v-if="$root.profile.Linkedin">
 										<span v-on:click="$root.openExternalInBlank($root.profile.Linkedin)">
 											<img :src="require(`../../assets/icon/icon-linkedin.svg`)">
 										</span>
-										<p v-if="!showEditLinkedin" v-on:click="$root.openExternalInBlank($root.profile.Linkedin)">
-											Linkedin
-										</p>
-										<img v-if="!showAcceptLinkedin" v-on:click="showAcceptLinkedin = true; showEditLinkedin = true" class="click icon-action" src="@/assets/img/pencil.svg">
-										<b-field v-if="showEditLinkedin">
-											<b-input type="url" class="edit-socials" v-model="newLinkedin"></b-input>
-										</b-field>
-										<img v-on:click="update('newLinkedin', 'showAcceptLinkedin')" v-if="showAcceptLinkedin && newLinkedin" class="click icon-action icon-ok" src="@/assets/icon/icon-check.svg">
-										<img v-on:click="showAcceptLinkedin = false; showEditLinkedin = false" v-if="showAcceptLinkedin" class="click icon-action icon-close" src="@/assets/icon/icon-close.svg">
-									</li>
-									<li v-else>
-										<span v-on:click="$root.openExternalInBlank($root.profile.Linkedin)">
-											<img :src="require(`../../assets/icon/icon-linkedin.svg`)">
-										</span>
-										<p v-if="!showEditLinkedin">
-											Linkedin not set
-										</p>
-										<img v-if="!showAcceptLinkedin" v-on:click="showAcceptLinkedin = true; showEditLinkedin = true" class="click icon-action" src="@/assets/img/pencil.svg">
-										<b-field v-if="showEditLinkedin">
-											<b-input type="url" class="edit-socials" v-model="newLinkedin"></b-input>
-										</b-field>
-										<img v-on:click="update('newLinkedin', 'showAcceptLinkedin')" v-if="showAcceptLinkedin && newLinkedin" class="click icon-action icon-ok" src="@/assets/icon/icon-check.svg">
-										<img v-on:click="showAcceptLinkedin = false; showEditLinkedin = false" v-if="showAcceptLinkedin" class="click icon-action icon-close" src="@/assets/icon/icon-close.svg">
 									</li>
 									<li v-if="$root.profile.Telegram">
 										<span v-on:click="$root.openExternalInBlank($root.profile.Telegram)">
 											<img :src="require(`../../assets/icon/icon-telegram.svg`)">
 										</span>
-										<p v-if="!showEditTelegram" v-on:click="$root.openExternalInBlank($root.profile.Telegram)">
-											Telegram
-										</p>
-										<img v-if="!showAcceptTelegram" v-on:click="showAcceptTelegram = true; showEditTelegram = true" class="click icon-action" src="@/assets/img/pencil.svg">
-										<b-field v-if="showEditTelegram">
-											<b-input type="url" class="edit-socials" v-model="newTelegram"></b-input>
-										</b-field>
-										<img v-on:click="update('newTelegram', 'showAcceptTelegram')" v-if="showAcceptTelegram && newTelegram" class="click icon-action icon-ok" src="@/assets/icon/icon-check.svg">
-										<img v-on:click="showAcceptTelegram = false; showEditTelegram = false" v-if="showAcceptTelegram" class="click icon-action icon-close" src="@/assets/icon/icon-close.svg">
-									</li>
-									<li v-else>
-										<span >
-											<img :src="require(`../../assets/icon/icon-telegram.svg`)">
-										</span>
-										<p v-if="!showEditTelegram">
-											Telegram not set
-										</p>
-										<img v-if="!showAcceptTelegram" v-on:click="showAcceptTelegram = true; showEditTelegram = true" class="click icon-action" src="@/assets/img/pencil.svg">
-										<b-field v-if="showEditTelegram">
-											<b-input type="url" class="edit-socials" v-model="newTelegram"></b-input>
-										</b-field>
-										<img v-on:click="update('newTelegram', 'showAcceptTelegram')" v-if="showAcceptTelegram && newTelegram" class="click icon-action icon-ok" src="@/assets/icon/icon-check.svg">
-										<img v-on:click="showAcceptTelegram = false; showEditTelegram = false" v-if="showAcceptTelegram" class="click icon-action icon-close" src="@/assets/icon/icon-close.svg">
 									</li>
 									<li v-if="isCalendly() === true">
 										<span v-on:click="$root.openExternalInBlank($root.profile.calendly)">
 											<img :src="require(`../../assets/icon/icon-call-dark.svg`)">
 										</span>
-										<p v-if="!showEditcalendly" v-on:click="$root.openExternalInBlank($root.profile.calendly)">
-											Calendly
-										</p>
-										<img v-if="!showAcceptcalendly" v-on:click="showAcceptcalendly = true; showEditcalendly = true" class="click icon-action" src="@/assets/img/pencil.svg">
-										<b-field v-if="showEditcalendly">
-											<b-input type="url" class="edit-socials" v-model="newcalendly"></b-input>
-										</b-field>
-										<img v-on:click="update('newcalendly', 'showAcceptcalendly')" v-if="showAcceptcalendly && newcalendly" class="click icon-action icon-ok" src="@/assets/icon/icon-check.svg">
-										<img v-on:click="showAcceptcalendly = false; showEditcalendly = false" v-if="showAcceptcalendly" class="click icon-action icon-close" src="@/assets/icon/icon-close.svg">
-									</li>
-									<li v-else-if="isCalendly() == 'no-calendly'">
-										<span v-on:click="$root.openExternalInBlank($root.profile.calendly)">
-											<img :src="require(`../../assets/icon/icon-call-dark.svg`)">
-										</span>
-										<p v-if="!showEditcalendly" v-on:click="$root.openExternalInBlank($root.profile.calendly)">
-											Calendly not set
-										</p>
-										<img v-if="!showAcceptcalendly" v-on:click="showAcceptcalendly = true; showEditcalendly = true" class="click icon-action" src="@/assets/img/pencil.svg">
-										<b-field v-if="showEditcalendly">
-											<b-input type="url" class="edit-socials" v-model="newcalendly"></b-input>
-										</b-field>
-										<img v-on:click="update('newcalendly', 'showAcceptcalendly')" v-if="showAcceptcalendly && newcalendly" class="click icon-action icon-ok" src="@/assets/icon/icon-check.svg">
-										<img v-on:click="showAcceptcalendly = false; showEditcalendly = false" v-if="showAcceptcalendly" class="click icon-action icon-close" src="@/assets/icon/icon-close.svg">
 									</li>
 								</ul>
+
+								<button class="button is-light is-small is-fullwidth" @click="networksModalActive = true">
+									Edit My Networks
+								</button>
+								<b-modal
+								:active.sync="networksModalActive"
+								has-modal-card
+								trap-focus
+								:destroy-on-hide="false"
+								aria-role="dialog"
+								aria-modal>
+
+								<div class="modal-card demo-modal">
+									<header class="modal-card-head">
+										<p class="modal-card-title">Edit My Networks</p>
+									</header>
+									<section class="modal-card-body">
+										
+										<div class="network-field">
+											<b-field label="Facebook" grouped horizontal>
+												<b-input type="url" v-model="newFacebook" expanded  placeholder="Set URL"></b-input>
+												<p class="control">
+												<button v-on:click="update('newFacebook', 'showAcceptFacebook')" class="button is-primary">Save</button>
+												<button v-on:click="showAcceptFacebook = false; showEditFacebook = false"  class="button">Cancel</button>
+											</p>
+											</b-field>
+										</div>
+
+										<div class="network-field">
+											<b-field label="Linkedin" grouped horizontal>
+												<b-input type="url" v-model="newLinkedin" expanded placeholder="Set URL"></b-input>
+												<p class="control">
+												<button v-on:click="update('newLinkedin', 'showAcceptLinkedin')" class="button is-primary">Save</button>
+												<button v-on:click="showAcceptLinkedin = false; showEditLinkedin = false"  class="button">Cancel</button>
+											</p>
+											</b-field>
+										</div>
+
+										<div class="network-field">
+											<b-field label="Telegram" grouped horizontal>
+												<b-input type="url" v-model="newTelegram" expanded placeholder="Set URL"></b-input>
+												<p class="control">
+												<button v-on:click="update('newTelegram', 'showAcceptTelegram')" class="button is-primary">Save</button>
+												<button v-on:click="showAcceptTelegram = false; showEditTelegram = false" class="button">Cancel</button>
+											</p>
+											</b-field>
+										</div>
+
+										<div class="network-field">
+											<b-field label="Calendly" grouped horizontal>
+												<b-input type="url" v-model="newcalendly" expanded placeholder="Set URL"></b-input>
+												<p class="control">
+												<button v-on:click="update('newcalendly', 'showAcceptcalendly')" class="button is-primary">Save</button>
+												<button v-on:click="showAcceptcalendly = false; showEditcalendly = false" class="button">Cancel</button>
+											</p>
+											</b-field>
+										</div>
+									</section>
+								</div></b-modal>
 							</aside>
 						</div>
 
 						<!-- Profile bottom-->
-						<div class="profile-bottom box">
-							<div class="profile-brand">
-								<img v-if="!$root.profile.company" class="level-left" :src="`${api}/static/img/brand-default.png`">
-								<img v-else class="level-left" :src="`${api}/static/img/sponsors/${$root.profile.company.toUpperCase()}/${$root.profile.company.toUpperCase()}.png`">
-							</div>
+						<div class="profile-bottom">
+							<figure class="profile-brand">
+								<img v-if="!profile.company" :src="`${host}/static/img/brand-default.png`">
+								<img v-else :src="`${host}/static/img/sponsors/${profile.company.toUpperCase()}/${profile.company.toUpperCase()}.png`">
+							</figure>
+							
 							<div class="profile-rol">
-								<h3>{{$root.profile.role}}</h3>
-								<img v-if="!showAcceptRole" v-on:click="showAcceptRole = true; showEditRole = true" class="click icon-action" src="@/assets/img/pencil.svg">				
+								<h2 class="user-company">{{profile.company}}</h2>
+								<h3 class="user-rol">{{profile.role}} <img v-if="!showAcceptRole" v-on:click="showAcceptRole = true; showEditRole = true" class="click icon-action" src="@/assets/img/pencil.svg"></h3>
+
+								<b-field v-if="showEditRole">
+									<b-input v-model="newrole"></b-input>
+									<img v-on:click="update('newrole', 'showAcceptRole')" v-if="showAcceptRole && newrole" class="click icon-action icon-ok" src="@/assets/icon/icon-check.svg">
+									<img v-on:click="showAcceptRole = false; showEditRole = false" v-if="showAcceptRole" class="click icon-action icon-close" src="@/assets/icon/icon-close.svg">
+								</b-field>
 							</div>
-							<b-field v-if="showEditRole">
-								<b-input v-model="newrole"></b-input>
-								<img v-on:click="update('newrole', 'showAcceptRole')" v-if="showAcceptRole && newrole" class="click icon-action icon-ok" src="@/assets/icon/icon-check.svg">
-								<img v-on:click="showAcceptRole = false; showEditRole = false" v-if="showAcceptRole" class="click icon-action icon-close" src="@/assets/icon/icon-close.svg">
-							</b-field>
 
 						</div>
 					</div>
@@ -307,6 +276,7 @@
 				showAcceptcalendly: false,
 
 				isCardModalActive: false,
+				networksModalActive: false,
 
 				newrole: "",
 				newLinkedin: "",

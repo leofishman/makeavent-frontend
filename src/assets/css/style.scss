@@ -2825,33 +2825,56 @@ main {
 // LIST NETWORK //
 //////////////////////////////////////////
 .list-network {
+	margin-bottom: 1rem;
+	margin-left: auto;
+	margin-right: auto;
+	&:not(.list-network-edit) {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
 	li {
-		line-height: 25px;
-		display: block;
-		min-width: 125px;
-		font-size: 15px;
-		font-weight: normal;
-		cursor: pointer;
+		min-width: inherit;
 		display: flex;
 		align-items: center;
+		font-size: 15px;
+		font-weight: normal;
+		line-height: 25px;
 		color: $grey;
+		cursor: pointer;
 		+li {
 			margin-top: 10px;
 		}
 		span {
-			padding: 5px;
+			padding: .2rem;
 			width: 30px;
 			height: 30px;
 			background-color: $white;
 			box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+
+			border-radius: 10rem;
+			display: flex;
+			justify-content: center;
+			box-sizing: content-box;
 			img {
 				opacity: 0.5;
+				width: 1.1rem;
 			}
 		}
 	}
 	li:empty
 	{
 		margin-top:0px;
+	}
+}
+.network-field {
+	label {
+		margin-right: 1rem;
+		line-height: 2rem;
+	}
+	+.network-field {
+		margin-top: 1rem;
 	}
 }
 

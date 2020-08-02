@@ -6,14 +6,15 @@
 		</figure>
 		
 		<h2 class="click member-name" @click="$root.tryBusinessCard(data)">{{data.name}}</h2>
+		<h3 class="member-rol">{{data.company}}</h3>
 		<h3 class="member-rol">{{data.role}}</h3>
 		<div class="member-action buttons">
-			<button v-on:click="$root.tryBusinessCard(data)" class="button is-fullwidth">
-				<img src="@/assets/icon/icon-user.svg" width="15" /> Request BIZCARD
+			<button v-if="!$root.checkIfAlreadyAFriend(data)" v-on:click="$root.tryBusinessCard(data)" class="button is-fullwidth">
+				<img src="@/assets/icon/icon-user.svg" width="15" /> {{content.request}}
 			</button>
 			<button v-if="canCall" v-on:click="$root.privateCall(data)" class="button is-fullwidth">
 				<img src="@/assets/icon/icon-call.svg" width="15" />
-				Schedule e-meeting
+				{{content.scheduleMeeting}}
 			</button>
 		</div>
 		
@@ -36,13 +37,17 @@
 
 <script>
 	import {api} from '@/env'
+	import Axios from 'axios'
+	import {MEETUP} from '@/api/endpoints'
 
 	export default {
 		name: "Member",
 		props: {
-			data: Object
+			data: [String, Object]
 		},
 		data () {
+			this.canCall = false
+
 			this.$root.canCall(this.data)
 			.then(res => {
 				this.canCall = res
@@ -50,7 +55,8 @@
 
 			return {
 				api: api,
-				canCall: this.canCall
+				canCall: this.canCall,
+				content: this.$root.content.Member
 			}
 		}
 	}

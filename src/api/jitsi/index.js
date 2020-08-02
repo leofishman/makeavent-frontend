@@ -1,66 +1,28 @@
-const domain = 'meet.jit.si';
+// const domain = 'meet-app.makeavent.com';
+const domain = 'meet-app.makeavent.com'
 import toolbar_buttons_basedOnType from './toolbar_buttons_basedOnType'
-import {startDate} from '@/env'
 
 export default class JitsiModal {
-  constructor ({ vueapp, data }) {
+  constructor ({ vueapp, parentNode, data }) {
+    this.app = vueapp
+    this.data = data
     this.name = data.name
-    this.webinarId = data.webinarId
-    this.parentNode = data.parentNode
-    this.username = vueapp.$root.profile.name
-
-    let folder;
-    
-    if (compare(data.name, 'demoday') || data.name.includes('sponsorbooth')) {
-      folder = "Sponsors"
-    }
-    else if (data.name.includes('interviewbooth')) {
-      folder = "MediaPartners"
-    }
-
-    const host = vueapp.$root[folder].filter(el => compare(el.name, data.host))[0]
-    this.type = host.contacts.filter(el => compare(el._id, vueapp.$root.profile._id)).length ? "speaker" : vueapp.$root.usertype
+    this.webinarRoom = data.webinarRoom
+    this.parentNode = parentNode
+    this.username = this.app.$root.profile.name
 
     if ([
       "5e789eb15f99d434cdeaa9a4"
-    ].includes(vueapp.$root.profile._id))
-      this.type = "admin"
-
-    this.webinarType = ""
-
-    if (this.name.includes('stage'))
-      this.webinarType = this.name
+    ].includes(this.app.$root.profile._id))
+      this.type = "moderator"
     
-    else if (this.name.includes('sponsorbooth'))
-      this.webinarType = 'sponsorbooth'
-
-    else if (compare(this.name, 'demoday'))
-      this.webinarType = "demoday"
-
-    else if (this.name.includes("interviewbooth"))
-      this.webinarType = "interview"
-
-    else if (this.name.includes('meetup'))
-      this.webinarType = "meetup"
-
-    else if (this.name == 'networkingbooth')
-      this.webinarType = 'networkingbooth'
-
-    if (this.webinarType == "sponsorbooth" && this.type == 'basic') {
-      vueapp.$buefy.dialog.alert('We appologies but Voice and Video is available only for Business and Vip')
-    }
-
-    if (this.webinarType == 'interview') {
-      if (compare(data.guest, vueapp.$root.profile._id))
-        this.type = "guest"
-    }
-
-    vueapp.$root.getUser()
-    .then(this.connect())
+    this.webinarType = this.data.type
   }
   connect () {
+    this.type = this.data.speakers.filter(el => compare(el, this.app.$root.profile._id)).length ? "speaker" : this.app.$root.usertype
+
     const options = {
-      roomName: this.webinarId,
+      roomName: this.webinarRoom,
       userInfo: {
         displayName: this.username
       },
@@ -85,9 +47,9 @@ export default class JitsiModal {
         GENERATE_ROOMNAMES_ON_WELCOME_PAGE: true,
         DISPLAY_WELCOME_PAGE_CONTENT: true,
         DISPLAY_WELCOME_PAGE_TOOLBAR_ADDITIONAL_CONTENT: false,
-        APP_NAME: vueapp.$root.project.name,
-        NATIVE_APP_NAME: vueapp.$root.project.name,
-        PROVIDER_NAME: vueapp.$root.project.name,
+        APP_NAME: this.app.$root.project.name,
+        NATIVE_APP_NAME: this.app.$root.project.name,
+        PROVIDER_NAME: this.app.$root.project.name,
         LANG_DETECTION: true,
         INVITATION_POWERED_BY: true,
         AUTHENTICATION_ENABLE: true,
@@ -96,8 +58,10 @@ export default class JitsiModal {
   
         SETTINGS_SECTIONS: [ 'devices', 'language', 'moderator', 'profile', 'calendar' ],
         VIDEO_LAYOUT_FIT: 'both',
+
         filmStripOnly: false,
         VERTICAL_FILMSTRIP: true,
+
         CLOSE_PAGE_GUEST_HINT: false,
         SHOW_PROMOTIONAL_CLOSE_PAGE: false,
         RANDOM_AVATAR_URL_PREFIX: false,
@@ -120,7 +84,7 @@ export default class JitsiModal {
         CONNECTION_INDICATOR_AUTO_HIDE_ENABLED: true,
         CONNECTION_INDICATOR_AUTO_HIDE_TIMEOUT: 5000,
         CONNECTION_INDICATOR_DISABLED: true,
-        VIDEO_QUALITY_LABEL_DISABLED: false,
+        VIDEO_QUALITY_LABEL_DISABLED: true,
         RECENT_LIST_ENABLED: true,
         OPTIMAL_BROWSERS: [ 'chrome', 'chromium', 'firefox', 'nwjs', 'electron' ],
         UNSUPPORTED_BROWSERS: [],
@@ -132,20 +96,20 @@ export default class JitsiModal {
       },
       configOverwrite: {
         hosts: {
-          domain: 'meet.jit.si',  
-          muc: 'conference.meet.jit.si'
+          domain: 'meet-app.makeavent.com',  
+          muc: 'conference.meet-app.makeavent.com'
         },
   
-        bosh: '//meet.jit.si/http-bind',
-        websocket: 'wss://meet.jit.si/xmpp-websocket',
+        bosh: '//meet-app.makeavent.com/http-bind',
+        websocket: 'wss://meet-app.makeavent.com/xmpp-websocket',
   
         clientNode: 'http://jitsi.org/jitsimeet',  
         testing: {
           enableFirefoxSimulcast: false,
           p2pTestMode: false
         },
-        enableNoAudioDetection: true,
-        enableNoisyMicDetection: true,
+        enableNoAudioDetection: false,
+        enableNoisyMicDetection: false,
 
         useNicks: false,
 
@@ -157,8 +121,8 @@ export default class JitsiModal {
           disableKick: !compare(this.type, 'speaker') ? true : false
         },
 
-        startAudioMuted: 1,
-        startVideoMuted: 1,
+        startAudioMuted: 0,
+        startVideoMuted: 0,
   
         desktopSharingChromeExtId: null,
         desktopSharingChromeSources: [ 'screen', 'window', 'tab' ],
@@ -173,9 +137,9 @@ export default class JitsiModal {
         //     appKey: '<APP_KEY>' // Specify your app key here.
         //     // A URL to redirect the user to, after authenticating
         //     // by default uses:
-        //     // 'https://meet.jit.si/static/oauth.html'
+        //     // 'https://meet-app.makeavent.com/static/oauth.html'
         //     redirectURI:
-        //          'https://meet.jit.si/subfolder/static/oauth.html'
+        //          'https://meet-app.makeavent.com/subfolder/static/oauth.html'
         // },
         // When integrations like dropbox are enabled only that will be shown,
         // by enabling fileRecordingsServiceEnabled, we show both the integrations
@@ -222,7 +186,7 @@ export default class JitsiModal {
         // enableFeaturesBasedOnToken: false,
 
         // Enable lock room for all moderators, even when userRolesBasedOnToken is enabled and participants are guests.
-        // lockRoomGuestEnabled: false,
+        // lockRoomGuestEnabled: true,
 
         // When enabled the password used for locking a room is restricted to up to the number of digits specified
         // roomPasswordNumberOfDigits: 10,
@@ -265,7 +229,7 @@ export default class JitsiModal {
         // If third party requests are disabled, no other server will be contacted.
         // This means avatars will be locally generated and callstats integration
         // will not function.
-        // disableThirdPartyRequests: false,
+        disableThirdPartyRequests: true,
   
   
         // Peer-To-Peer mode: used (if enabled) when there are just 2 participants.
@@ -279,7 +243,7 @@ export default class JitsiModal {
   
             // The STUN servers that will be used in the peer to peer connections
             stunServers: [
-                // { urls: 'stun:meet.jit.si:4446' },
+                // { urls: 'stun:meet-app.makeavent.com:4446' },
                 { urls: 'stun:meet-jit-si-turnrelay.jitsi.net:443' }
             ],
   
@@ -397,30 +361,31 @@ export default class JitsiModal {
         //    // to the specified URL for an app download page.
         //    downloadAppsUrl: 'https://docs.example.com/our-apps.html'
         // },
-_peerConnStatusOutOfLastNTimeout: false,
-_peerConnStatusRtcMuteTimeout: false,
-abTesting: false,
-avgRtpStatsN: false,
-callStatsConfIDNamespace: false,
-callStatsCustomScriptUrl: false,
-desktopSharingSources: false,
-disableAEC: false,
-disableAGC: false,
-disableAP: false,
-disableHPF: false,
-disableNS: false,
-enableLipSync: false,
-enableTalkWhileMuted: false,
-forceJVB121Ratio: false,
-hiddenDomain: false,
-ignoreStartMuted: false,
-nick: false,
-startBitrate: false,  
+        _peerConnStatusOutOfLastNTimeout: false,
+        _peerConnStatusRtcMuteTimeout: false,
+        abTesting: false,
+        avgRtpStatsN: false,
+        callStatsConfIDNamespace: false,
+        callStatsCustomScriptUrl: false,
+        desktopSharingSources: false,
+        disableAEC: false,
+        disableAGC: false,
+        disableAP: false,
+        disableHPF: false,
+        disableNS: false,
+        enableLipSync: false,
+        enableTalkWhileMuted: false,
+        forceJVB121Ratio: false,
+        hiddenDomain: false,
+        ignoreStartMuted: false,
+        nick: false,
+        startBitrate: false,  
   
         makeJsonParserHappy: 'even if last key had a trailing comma',
-    }
+      }
     };
-    this.jitsiWebinar = new JitsiMeetExternalAPI(domain, options);
+    
+    this.stream = new JitsiMeetExternalAPI(domain, options)
 
     return true
   }

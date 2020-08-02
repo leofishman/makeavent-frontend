@@ -3,10 +3,6 @@
 		<nav class="navbar" role="navigation" aria-label="main navigation">
 			<div class="container is-fluid">
 				<div class="navbar-brand">
-					<a class="navbar-item" v-on:click="openPage('/')">
-						<img v-if="$root.project.logo" :src="$root.api + $root.project.logo" height="28">
-					</a>
-
 					<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
 						<span aria-hidden="true"></span>
 						<span aria-hidden="true"></span>
@@ -16,6 +12,18 @@
 
 				<div id="navbarBasicExample" class="navbar-menu">
 					<div class="navbar-start">
+						<div @click="toggleOpenMeetupSettings" v-if="$root.isUserAdmin" class="navbar-item">
+							<div class="buttons">
+								<a>
+									<img class="menu-icon" src="@/assets/menu.svg" alt="">
+								</a>
+							</div>
+						</div>
+						
+						<a class="navbar-item" v-on:click="openPage('/')">
+							<img v-if="$root.project.logo" :src="$root.api + $root.project.logo" height="28">
+						</a>
+
 						<!-- <a class="navbar-item" v-on:click="$root.joinStage('networkingbooth')">{{$root.content.networkingBooth}}</a> -->
 						<!-- <a class="navbar-item" v-on:click="openPage('/')">{{$root.content.home}}</a>
 						<a class="navbar-item" v-on:click="openPage('/agenda')">{{$root.content.agenda}}</a> -->
@@ -90,6 +98,13 @@ export default {
 		logout () {
 			localStorage.auth = ""
 			this.$router.push('/login')
+		},
+
+		toggleOpenMeetupSettings () {
+			if (this.$root.openMeetupSettings)
+				this.$root.openMeetupSettings = false
+			else
+				this.$root.openMeetupSettings = true
 		}
     },
     data() {
@@ -100,3 +115,8 @@ export default {
     },
 }
 </script>
+<style lang="scss">
+	.menu-icon {
+		max-height: 1.5rem !important;
+	}
+</style>

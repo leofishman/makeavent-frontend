@@ -1,0 +1,122 @@
+@import "@/assets/css/variables.scss";
+@import "bulma/sass/utilities/initial-variables.sass";
+@import "bulma/sass/utilities/derived-variables.sass";
+
+#networking-rooms {
+	.title-page {
+		margin-top: 0;
+	}
+	.new-room {
+		margin-top: 2rem;
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+	}
+	.room-previews {
+		margin-top: 1rem;
+		.room-preview {
+			text-align: center;
+			.box {
+				width: 100%;
+                box-shadow: $shadow-2;
+                &:hover {
+                    cursor: pointer;
+                }
+				.logo {
+					max-width: 200px;
+					height: auto;
+					margin-bottom: 16px;
+				}
+			}
+        }
+	}
+	#under-nav-hint {
+		.container {
+			@media screen and (min-width: $tablet) {
+				width: 50%;
+				margin-left: 0;
+			}
+			@media screen and (min-width: $fullhd) {
+				width: calc(100vw - 33.3333%);
+				margin-left: 0;
+			}
+		}
+	}
+}
+#networking-attendees {
+	position: relative;
+	.box {
+		width: 100%;
+		box-shadow: $shadow-2;
+		overflow-y: auto;
+		@media screen and (min-width: $tablet) {
+			width: calc(50% - 37px);
+			position: fixed;
+			right: 22px;
+			bottom: 32px;
+			height: calc(100% - 131px);
+		}
+		@media screen and (min-width: $fullhd) {
+			width: calc(33.33% - 37px);
+		}
+		.box-title {
+			margin-bottom: 1rem;
+		}
+		.search-attendees {
+			margin-bottom: 1rem;
+		}
+	}
+	.attendees-list {
+		margin-left: -1rem;
+		margin-right: -1rem;
+		margin-bottom: -1rem;
+		/*overflow-y: auto;
+		max-height: calc(100vh - 447px);*/
+		.attendee-profile {
+			padding-left: 1rem;
+			padding-right: 1rem;
+			display: flex;
+			justify-content: space-between;
+			padding-top: 1rem;
+			padding-bottom: 1rem;
+			border-top: solid 1px $grey-light;
+			.attendee-info {
+				justify-content: flex-start;
+				display: flex;
+				.attendee-text {
+					.attendee-name {
+						font-weight: 600;
+					}
+					.attendee-company {
+						margin-top: 0;
+						font-style: italic;
+					}
+					.attendee-room {}
+				}
+				.attendee-avatar {
+					margin-right: 1rem;
+					img {
+						border-radius: 10rem;
+						max-width: 60px;
+						border: solid 2px $grey-light;
+					}
+				}
+			}
+			.attendee-request {
+				justify-content: flex-end;
+				.button {
+					font-size: .8rem;
+					+.button {
+						margin-top: 10px;
+					}
+					img {
+						height: 1rem;
+					}
+					span {
+						margin-left: .5rem;
+					}
+				}
+			}
+		}
+	}
+}

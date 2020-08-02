@@ -1,15 +1,19 @@
 <template>
 	<div class="modal-card demo-modal">
 		<header class="modal-card-head">
-			<p class="modal-card-title"><span class="is-capitalized"></span> {{content.demos}}</p>
+			<p class="modal-card-title"><span class="is-capitalized"></span>{{name}} {{content.demos}}</p>
 		</header>
 		<section class="modal-card-body">
 			<div class="columns is-multiline">
 				<div class="column demo-video-card click" v-for="(demo, index) in demos" :key="index">
-					<div @click="openVideoModal(demo.url)">
-						{{demo.name}}
-						<img :src="getThumbnail(demo.url)" alt=""/>
-					</div>
+					{{demo.name}}
+					<div @click="openVideoModal(demo.link)" v-bind:style="{
+						backgroundImage: `url(${getThumbnail(demo.link)})`,
+						'height': '150px',
+						'background-repeat': 'no-repeat',
+						'background-position': 'left',
+						'margin-top': '10px'
+					}"></div>
 				</div>
 			</div>
 		</section>
@@ -18,19 +22,14 @@
 <script>
 	export default {
 		name: "DemoModal",
+		props: {
+			name: String,
+			demos: Array
+		},
 		data() {
 			return {
-				content: this.$root.content.Company,
-				
-				isDemoModalActive: false,
-
-				demos: [
-					{ name: 'Future mix', url: 'https://www.youtube.com/embed/nMcb7bS-I88?controls=0' },
-					{ name: 'This is another mix', url: 'https://www.youtube.com/embed/nMcb7bS-I88?controls=0' },
-					{ name: 'And another', url: 'https://www.youtube.com/embed/nMcb7bS-I88?controls=0' },
-					{ name: 'The last one', url: 'https://www.youtube.com/embed/nMcb7bS-I88?controls=0' },
-					{ name: 'This is another mix', url: 'https://www.youtube.com/embed/nMcb7bS-I88?controls=0' },
-				]
+				content: this.$root.content.Meetup,
+				isDemoModalActive: false
 			}
 		},
 		methods: {
@@ -58,7 +57,7 @@
 
 	.demo-video-card {
 		min-width: 200px;
-		max-width: 200px;
+		max-width: 100%;
 
 		&:hover {
 			box-shadow: $navbar-box-shadow-size;
@@ -75,6 +74,10 @@
 			width:95%;
 			height:95%;
 			margin:auto;
+			transform: translate(-50%, -50%);
+			top: 50%;
+			left: 50%;
+			position: absolute;
 		}
 	}
 </style>

@@ -36,7 +36,7 @@
                                 </div>
                                 
                                 <b-button :disabled="!buttonready" v-on:click="login()" type="is-primary" size="is-medium">
-                                    {{$root.content.submit}}
+                                    {{$root.content.common.submit}}
                                 </b-button>
 
                                 <div class="bottom">

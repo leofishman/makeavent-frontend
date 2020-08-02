@@ -14,7 +14,7 @@
 				</b-field>
 
 				<b-button :disabled="!inputsReady" type="is-secondary" size="is-medium">
-					{{content.submit}}
+					{{content.common.submit}}
 				</b-button>
 			</form>
 		</div> -->

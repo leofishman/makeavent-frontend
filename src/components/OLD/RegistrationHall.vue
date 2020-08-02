@@ -40,7 +40,7 @@
                             <div class="columns is-centred">
                                 <div class="column has-text-centered">
                                     <b-button class="is-child" @click="save()" :disabled="!inputsReady" type="is-secondary" size="is-medium">
-                                        {{content.submit}}
+                                        {{content.common.submit}}
                                     </b-button>
                                 </div>
                                 <!-- <div class="column has-text-centered">

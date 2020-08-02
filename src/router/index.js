@@ -12,22 +12,24 @@ import Agenda from '@/components/Agenda/Agenda'
 /**
  * @Media
  */
-import Mediahall from '@/components/Mediahall/Mediahall.vue'
-import Mediapartnerbooth from '@/components/Mediapartnerbooth/Mediapartnerbooth.vue'
+import Mediahall from '@/components/Mediahall/Mediahall'
+import Mediapartnerbooth from '@/components/Mediapartnerbooth/Mediapartnerbooth'
 
 /**
  * @Auth
  */
-import Login from '@/components/Auth/Login.vue'
-import LoginWithTempEmail from '@/components/Auth/LoginWithTempEmail.vue'
+import Login from '@/components/Auth/Login'
+import LoginWithTempEmail from '@/components/Auth/LoginWithTempEmail'
 import Register from '@/components/Auth/Register'
 import LoginWithNewPassword from '@/components/Auth/LoginWithNewPassword'
-import NoAccess from '@/components/Auth/NoAccess.vue'
+import NoAccess from '@/components/Auth/NoAccess'
 
-import Profile from '@/components/Profile/Profile.vue'
-import MyInterviews from '@/components/Profile/MyInterviews.vue'
-import MyBusinessCards from '@/components/Profile/MyBusinessCards.vue'
+import Profile from '@/components/Profile/Profile'
+import MyInterviews from '@/components/Profile/MyInterviews'
+import MyBusinessCards from '@/components/Profile/MyBusinessCards'
 import AcceptInterview from '@/components/AcceptInterview'
+import MeetupProfile from '@/components/Meetup/MeetupProfile'
+import NetworkingRoom from '@/components/Networking/NetworkingRooms'
 
 import Backstage from '@/components/Backstage'
 
@@ -43,8 +45,7 @@ const router = new Router({
             name: 'Home',
             component: Home,
             meta: {
-                requiresAuth: true,
-                platformLaunch: true
+                requiresAuth: true
             }
         },
         {
@@ -52,8 +53,7 @@ const router = new Router({
             name: 'Profile',
             component: Profile,
             meta: {
-                requiresAuth: true,
-                platformLaunch: true
+                requiresAuth: true
             }
         },
         {
@@ -61,8 +61,7 @@ const router = new Router({
             name: 'MyInterviews',
             component: MyInterviews,
             meta: {
-                requiresAuth: true,
-                platformLaunch: true
+                requiresAuth: true
             }
         },
         {
@@ -70,8 +69,7 @@ const router = new Router({
             name: 'MyBusinessCards',
             component: MyBusinessCards,
             meta: {
-                requiresAuth: true,
-                platformLaunch: true
+                requiresAuth: true
             }
         },
         {
@@ -89,8 +87,7 @@ const router = new Router({
             name: "Password",
             component: Login,
             meta: {
-                requiresAuth: false,
-                platformLaunch: true
+                requiresAuth: false
             }
         },
         {
@@ -98,8 +95,7 @@ const router = new Router({
             name: "Register",
             component: Register,
             meta: {
-                requiresAuth: false,
-                platformLaunch: true
+                requiresAuth: false
             }
         },
         {
@@ -107,8 +103,7 @@ const router = new Router({
             name: "LoginWithTempEmail",
             component: LoginWithTempEmail,
             meta: {
-                requiresAuth: false,
-                platformLaunch: true
+                requiresAuth: false
             }
         },
         {
@@ -116,8 +111,7 @@ const router = new Router({
             name: "AcceptInterview",
             component: AcceptInterview,
             meta: {
-                requiresAuth: true,
-                platformLaunch: true
+                requiresAuth: true
             }
         },
         {
@@ -125,8 +119,7 @@ const router = new Router({
             name: "LoginWithNewPassword",
             component: LoginWithNewPassword,
             meta: {
-                requiresAuth: false,
-                platformLaunch: true
+                requiresAuth: false
             }
         },
         {
@@ -134,8 +127,7 @@ const router = new Router({
             name: "Mediahall",
             component: Mediahall,
             meta: {
-                requiresAuth: true,
-                platformLaunch: true
+                requiresAuth: true
             }
         },
         {
@@ -143,8 +135,7 @@ const router = new Router({
             name: "MediaPartnerProfile",
             component: Mediapartnerbooth,
             meta: {
-                requiresAuth: true,
-                platformLaunch: true
+                requiresAuth: true
             }
         },
         {
@@ -152,12 +143,36 @@ const router = new Router({
             name: "Agenda",
             component: Agenda,
             meta: {
-                requiresAuth: true,
-                platformLaunch: true
+                requiresAuth: true
             }
+        },
+        {
+            path: '/meetup',
+            name: "Meetup",
+            component: MeetupProfile,
+            meta: {
+                requiresAuth: true
+            },
+            props: (route) => ({ id: route.query.id })
+        },
+        {
+            path: '/networking',
+            name: "NetworkingRoom",
+            component: NetworkingRoom,
+            meta: {
+                requiresAuth: true
+            },
+            props: (route) => ({ id: route.query.id }),
         }
     ]
 })
+
+function isMeetupWithId (to) {
+    if (to.name == "Meetup" && to.query.id)
+        return true
+    else
+        return false
+}
 
 router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth) {
@@ -168,9 +183,9 @@ router.beforeEach((to, from, next) => {
                 }
             })
             .then(res => {
-                // until stuff not ready
-                if (to.path != '/profile')
+                if (to.path == '/')
                     next('/profile')
+
                 else
                     next()
             })

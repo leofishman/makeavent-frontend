@@ -21,7 +21,7 @@
                                 <div class="tile">
                                     <div>
                                         <b-button :disabled="!inputsReady" v-on:click="login()" type="is-primary" size="is-medium">
-                                            {{$root.content.submit}}
+                                            {{$root.content.common.submit}}
                                         </b-button>
                                     </div>
                                     <div @click="navToReg()" class="click column">

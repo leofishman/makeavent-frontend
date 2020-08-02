@@ -2,11 +2,11 @@
     <div class="modal-card">
         <div class="modal-card-head">
             <p class="modal-card-title">
-                Please choose an action
+                {{content.title}}
             </p>
         </div>
         <div class="modal-card-body">
-            <b-collapse :open="false" class="card" animation="slide" aria-id="contentIdForA11y3">
+            <!-- <b-collapse :open="false" class="card" animation="slide" aria-id="contentIdForA11y3"> -->
                 <div
                     slot="trigger" 
                     slot-scope="props"
@@ -14,7 +14,7 @@
                     role="button"
                     aria-controls="contentIdForA11y3">
                     <p class="card-header-title">
-                        Request business card
+                        {{content.title}}
                     </p>
                     <a class="card-header-icon">
                         <b-icon
@@ -24,20 +24,20 @@
                 </div>
                 <div class="card-content bcnote-card-content">
                     <p>
-                        Add note to your business card request
+                        {{content.note}}
                     </p>
                     <textarea v-model="reqNote" class="bcnote content"></textarea>
                 </div>
                 <footer class="card-footer" >
-                    <a v-on:click="onConfirm()" class="card-footer-item">Confirm</a>
+                    <a v-on:click="onConfirm()" class="card-footer-item">{{comm_content.submit}}</a>
                 </footer>
-            </b-collapse>
+            <!-- </b-collapse> -->
 
-            <div v-on:click="$root.privateCall(targetContact)" style="box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);" class="click">
+            <!-- <div v-on:click="$root.privateCall(targetContact)" style="box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);" class="click">
                 <p class="card-header-title">
                     Schedule a private call
                 </p>
-            </div>
+            </div> -->
 
             <div v-on:click="requestInterview()" style="box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);" class="click" v-if="allowInterview">
                 <p class="card-header-title">
@@ -62,7 +62,10 @@ export default {
         
         return {
             allowInterview: this.allowInterview,
-            reqNote: ""
+            reqNote: "",
+
+            content: this.$root.content.ActionsWithUsers,
+            comm_content: this.$root.content.common
         }
     },
     methods: {

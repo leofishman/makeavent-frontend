@@ -122,7 +122,7 @@
                                 <div class="tile">
                                     <div class="tile is-child">
                                         <b-button :disabled="!buttonready" v-on:click="register()" type="is-primary" size="is-medium">
-                                            {{$root.content.submit}}
+                                            {{$root.content.common.submit}}
                                         </b-button>
                                     </div>
                                     <div @click="navToLogin()" style="padding: 30px 0px;" class="click tile is-child">

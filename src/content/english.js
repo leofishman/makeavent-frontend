@@ -15,6 +15,10 @@ export default {
         open: "Open Backstage"
     },
 
+    JitsiStream: {
+        willStartIn: "Meetup will start in "
+    },
+
     Mediahall: {
         title: "Media Hall",
         mp: "Media Partner",
@@ -23,6 +27,12 @@ export default {
         nois: "There is no upcomming interviews",
         oi: "Ongoing Interviews",
         noupi: "There is no ongoing interviews"
+    },
+
+    ActionsWithUsers: {
+        title: "Request business card",
+        note: "Add note to your business card request",
+        
     },
 
     RegistrationHall: {
@@ -49,7 +59,62 @@ export default {
 
     Profile: {
         mbc: "My Business Card",
-        mi: "My Interviews"
+        mi: "My Interviews",
+        editProfile: "Edit Profile",
+        setUrl: "Set URL",
+    },
+
+    Meetup: {
+        joinNowTitle: "Enter e-booth",
+		requestBC: "You can request our bussiness cards from the VIP e-meeting room",
+		networkingRoom: "Networking Room",
+		join: "Join",
+		currentlyOnline: "Currently online",
+		viewDemo: "▶ View Demo",
+		demos: "Demo",
+		viewMaterials: "View Materials",
+        materials: "Materials",
+        readMore: "Read more",
+        showLess: "Show less"
+    },
+
+    DragableJitsi: {
+        room: "Room"
+    },
+
+	NetworkingRooms: {
+        // intro: "You can create a new chat by clicking on a “Start Chat” button next to the person you want to talk to in the Attendees Section ( at the right side of the screen) or get in the mix by joining existing networking room.",
+        intro: `You can create a new room by clicking on <b>Create new Room</b> button or get in the mix by joining existing networking room.`,
+		newRoom: "Create new Room",
+		attendeesList: "Attendees List",
+		tips: "Tips",
+		needTips: "Need some Tips?",
+		needTipsShort: "Tips?",
+		peopleOnline: "user online",
+		atRoom: "At room",
+		notInRoom: "Not in a room",
+        requestBizcard: "Request Business Card",
+        viewBusinessCard: "View Business Card",
+        startChat: "Start a Chat",
+        join: "Join",
+        searchAttendee: "Search attendee",
+        tip1: `This is the Networking room, grab a drink, turn on your camera and connect with other attendees! Remember that networking is always better if others can see your face. <strong> Don’t be shy, turn on your camera!</strong>`,
+        tip2: `Below you can request business cards from the meetup attendees and join the video chat to have a live networking with the person from the list`,
+        joinRoom: "Join Room",
+        room: "Room",
+        networkingRoom: "Networking Room"
+    },
+
+    MeetupAdminSidebar: {
+        toggleNetworkingRoom: "Open Networking Room",
+        networkingRoom: "Networking Room",
+        isOpened: " is opened",
+        isClosed: " is closed",
+    },
+    
+    Member: {
+        request: "Request Business Card",
+        scheduleMeeting: "Schedule e-meeting"
     },
 
     Company: {
@@ -139,14 +204,12 @@ export default {
     },
     
     print: "Print",
-    save: "Save",
     actionsWithBusCard: 'Click save to send card to your email or print to see it now',
     reply: "Reply",    
     email: "Email",
     emailPlaceholder: "Please enter your email",
     passwordPlaceholderFromEmail: "Please enter password from email",
     
-    submit: "Submit",
     wrongPassTitle: "No account with such email and password",
     error: "Error",
     openChat: "Open Chat",
@@ -170,9 +233,7 @@ export default {
     old: "Old ",
     new: "New ",
     systemGenerated: "System generated ",
-    companyName: "Company Name",
     pleaseEnter: "Please enter your ",
-    role: "Role",
     name: "Name",
     calendly: "Calendly",
     dontHave: (name) => { return `Dont have ${name}?` },
@@ -219,6 +280,7 @@ export default {
     },
 
     common: {
+        submit: "Submit",
         Website: "Website",
         join: "Join",
         investor: 'Investor',
@@ -240,7 +302,13 @@ export default {
         replyHint: 'Right mouse click to reply',
         webinarNotStarted: "Webinar not started yet",
         noAccount: "Don't have account? Register!",
-        haveAccount: "Already have account? Login!"
+        haveAccount: "Already have account? Login!",
+        cancel: 'Cancel',
+        save: "save",
+        company: "Company",
+        companyName: "Company Name",
+        role: "Role",
+        yourRole: "Your Role"
     },
 
     StartupsDemoDay: {
@@ -292,7 +360,8 @@ export default {
         5: 'We appologies, but <b>Startups Demo Day Pitching e-Booth</b> is available only for <b>Investors</b>',
         6: 'We appologies, but we preparing Fund profile',
         7: `We appologies, but this company is not a part of <b>${window.capitalizeFirstLetter(process.env.VUE_APP_APP_NAME)}</b>. <br><br>We suggest requesting business card and asking for a company website.`,
-        8: 'No user with such email'
+        8: 'No user with such email',
+        9: 'We appologies, but meetup organizator has not opened <b>Networking Room</b> yet'
     },
 
     VipMeetingRoom: {

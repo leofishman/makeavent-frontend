@@ -44,7 +44,7 @@
 									<h2 class="user-name">{{$root.profile.name}}</h2>
 									<p class="user-email">{{$root.profile.email}}</p>
 								</div>
-								<ul class="list-network">
+								<ul v-if="ready" class="list-network">
 									<li v-if="$root.profile.Facebook">
 										<span v-on:click="$root.openExternalInBlank($root.profile.Facebook)">
 											<img :src="require(`../../assets/icon/icon-facebook.svg`)">
@@ -68,7 +68,7 @@
 								</ul>
 
 								<button class="button is-light is-small is-fullwidth" @click="networksModalActive = true">
-									Edit My Networks
+									{{content.editProfile}}
 								</button>
 								<b-modal
 								:active.sync="networksModalActive"
@@ -80,49 +80,61 @@
 
 								<div class="modal-card demo-modal">
 									<header class="modal-card-head">
-										<p class="modal-card-title">Edit My Networks</p>
+										<p class="modal-card-title">{{content.editProfile}}</p>
 									</header>
 									<section class="modal-card-body">
+
+										<div class="network-field">
+											<b-field :label="comm_content.role" grouped horizontal>
+												<b-input type="text" v-model="newRole" expanded :placeholder="comm_content.yourRole"></b-input>
+												<p class="control">
+											</p>
+											</b-field>
+										</div>
+
+										<div class="network-field">
+											<b-field :label="comm_content.company" grouped horizontal>
+												<b-input type="text" v-model="newCompany" expanded :placeholder="comm_content.companyName"></b-input>
+												<p class="control">
+											</p>
+											</b-field>
+										</div>
 										
 										<div class="network-field">
 											<b-field label="Facebook" grouped horizontal>
-												<b-input type="url" v-model="newFacebook" expanded  placeholder="Set URL"></b-input>
+												<b-input type="url" v-model="newFacebook" expanded  :placeholder="content.setUrl"></b-input>
 												<p class="control">
-												<button v-on:click="update('newFacebook', 'showAcceptFacebook')" class="button is-primary">Save</button>
-												<button v-on:click="showAcceptFacebook = false; showEditFacebook = false"  class="button">Cancel</button>
 											</p>
 											</b-field>
 										</div>
 
 										<div class="network-field">
 											<b-field label="Linkedin" grouped horizontal>
-												<b-input type="url" v-model="newLinkedin" expanded placeholder="Set URL"></b-input>
+												<b-input type="url" v-model="newLinkedin" expanded :placeholder="content.setUrl"></b-input>
 												<p class="control">
-												<button v-on:click="update('newLinkedin', 'showAcceptLinkedin')" class="button is-primary">Save</button>
-												<button v-on:click="showAcceptLinkedin = false; showEditLinkedin = false"  class="button">Cancel</button>
 											</p>
 											</b-field>
 										</div>
 
 										<div class="network-field">
 											<b-field label="Telegram" grouped horizontal>
-												<b-input type="url" v-model="newTelegram" expanded placeholder="Set URL"></b-input>
+												<b-input type="url" v-model="newTelegram" expanded :placeholder="content.setUrl"></b-input>
 												<p class="control">
-												<button v-on:click="update('newTelegram', 'showAcceptTelegram')" class="button is-primary">Save</button>
-												<button v-on:click="showAcceptTelegram = false; showEditTelegram = false" class="button">Cancel</button>
 											</p>
 											</b-field>
 										</div>
 
 										<div class="network-field">
 											<b-field label="Calendly" grouped horizontal>
-												<b-input type="url" v-model="newcalendly" expanded placeholder="Set URL"></b-input>
+												<b-input type="url" v-model="newCalendly" expanded :placeholder="content.setUrl"></b-input>
 												<p class="control">
-												<button v-on:click="update('newcalendly', 'showAcceptcalendly')" class="button is-primary">Save</button>
-												<button v-on:click="showAcceptcalendly = false; showEditcalendly = false" class="button">Cancel</button>
 											</p>
 											</b-field>
 										</div>
+									</section>
+									<section class="modal-card-foot">
+										<button @click="networksModalActive = false" class="button">{{comm_content.cancel}}</button>
+										<button v-on:click="updateProfile()" class="button is-primary">{{comm_content.save}}</button>
 									</section>
 								</div></b-modal>
 							</aside>
@@ -131,19 +143,13 @@
 						<!-- Profile bottom-->
 						<div class="profile-bottom">
 							<figure class="profile-brand">
-								<img v-if="!profile.company" :src="`${host}/static/img/brand-default.png`">
-								<img v-else :src="`${host}/static/img/sponsors/${profile.company.toUpperCase()}/${profile.company.toUpperCase()}.png`">
+								<img v-if="!$root.profile.company" :src="`${api}/static/img/brand-default.png`">
+								<img v-else :src="`${api}/static/img/sponsors/${$root.profile.company.toUpperCase()}/${$root.profile.company.toUpperCase()}.png`">
 							</figure>
 							
 							<div class="profile-rol">
-								<h2 class="user-company">{{profile.company}}</h2>
-								<h3 class="user-rol">{{profile.role}} <img v-if="!showAcceptRole" v-on:click="showAcceptRole = true; showEditRole = true" class="click icon-action" src="@/assets/img/pencil.svg"></h3>
-
-								<b-field v-if="showEditRole">
-									<b-input v-model="newrole"></b-input>
-									<img v-on:click="update('newrole', 'showAcceptRole')" v-if="showAcceptRole && newrole" class="click icon-action icon-ok" src="@/assets/icon/icon-check.svg">
-									<img v-on:click="showAcceptRole = false; showEditRole = false" v-if="showAcceptRole" class="click icon-action icon-close" src="@/assets/icon/icon-close.svg">
-								</b-field>
+								<h2 class="user-company">{{$root.profile.company}}</h2>
+								<h3 class="user-rol">{{$root.profile.role}}</h3>
 							</div>
 
 						</div>
@@ -250,39 +256,36 @@
 			}
 
 			this.$root.check('profile').then(() => {
+				this.newRole = this.$root.profile.role
+				this.newCompany = this.$root.profile.company
+				this.newLinkedin = this.$root.profile.Linkedin
+				this.newFacebook = this.$root.profile.Facebook
+				this.newTelegram = this.$root.profile.Telegram
+				this.newCalendly = this.$root.profile.calendly
 				this.ready = true
 			}).catch(e => console.log(`${e} inaccessible`))
 
 			return {
-				profileParamsFocus: this.profileParamsFocus,
 				content: this.$root.content.Profile,
+				comm_content: this.$root.content.common,
+
+				profileParamsFocus: this.profileParamsFocus,
 				api: api,
 				ready: this.ready,
 				activeTab: 0,
 				activeTabInterview: 0,
 				
-				showEditRole: false,
-				showEditLinkedin: false,
-				showEditFacebook: false,
-				showEditTelegram: false,
-				showEditPhoto: false,
-				showEditcalendly: false,
-
-				showAcceptRole: false,
-				showAcceptLinkedin: false,
-				showAcceptFacebook: false,
-				showAcceptTelegram: false,
-				showAcceptPhoto: false,
-				showAcceptcalendly: false,
-
 				isCardModalActive: false,
 				networksModalActive: false,
 
-				newrole: "",
+				showEditPhoto: false,
+
+				newRole: "",
+				newCompany: "",
 				newLinkedin: "",
 				newFacebook: "",
 				newTelegram: "",
-				newcalendly: "",
+				newCalendly: "",
 				newPhoto: ""
 			}
 		},
@@ -315,18 +318,22 @@
 				this.newPhoto = this.$refs.file.files[0];
 			},
 
-			update (el, param) {
+			updateProfile () {
 				axios.post(api + '/login/socials_reg', {
-					[el.replace('new', '')]: this[el],
+					role: this.newRole,
+					company: this.newCompany,
+					Linkedin: this.newLinkedin,
+					Facebook: this.newFacebook,
+					Telegram: this.newTelegram,
+					calendly: this.newCalendly,
 				}, {
 					headers: {
 						authorization: localStorage.auth
 					}
 				})
 				.then(res => {
-					this[param] = false
-					this[param.replace('Accept', 'Edit')] = false
 					this.$root.getUser()
+					this.networksModalActive = false
 				})
 				.catch(e => {
 					this.$root.createError(e, 'oops')

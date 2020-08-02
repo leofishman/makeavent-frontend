@@ -5,16 +5,19 @@ import Vue from 'vue'
 import VueSocketIO from 'socket.io-client'
 import Notifications from 'vue-notification'
 import Axios from 'axios'
-import crypto from 'crypto'
 import Buefy from 'buefy'
-import '@/assets/css/style.scss'
+import VueDraggableResizable from 'vue-draggable-resizable'
 window.EventBus = new Vue();
+
+import '@/assets/css/style.scss'
+import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 
 import './domchange.js'
 import './global_functions.js'
 
 import App from './App.vue'
 import {api, socket, self, logo, app} from './env'
+import {MEETUP} from '@/api/endpoints'
 const selfhost = self
 
 /**
@@ -67,6 +70,7 @@ Vue.component('navbar', Navbar)
 Vue.component('desktop', Desktop)
 Vue.component('Pagetitle', Pagetitle)
 Vue.component('ResetPwd', ResetPwd)
+Vue.component('vue-draggable-resizable', VueDraggableResizable)
 
 new Vue({
   router,
@@ -187,6 +191,9 @@ new Vue({
         logo: logo,
         name: this.capitalizeFirstLetter(app)
       },
+      meetup: {
+        demo: ""
+      },
       api: api,
 
       selectedLanguage: this.selectedLanguage,
@@ -196,6 +203,8 @@ new Vue({
       content: Content[this.selectedLanguage],
 
       openGlobalChat: false,
+      openMeetupSettings: false,
+      isUserAdmin: false,
 
       modals: [],
 
@@ -208,7 +217,11 @@ new Vue({
     
       Speakingagenda: this.Speakingagenda,
 
-      compare: window.compare
+      compare: window.compare,
+
+      showDragableConference: false,
+      roomForDragableConference: {},
+      activeRooms: [],
     }
   },
   methods: {
@@ -236,12 +249,12 @@ new Vue({
     },
 
     isAdmin (contacts) {
-      let x = contacts.filter(el => compare(el.email, this.profile.email))
+      let x = contacts.filter(el => compare(el, this.profile._id))
       return x.length ? true : false;
     },
 
     privateCall (contact) {
-      if (!this.isThatMe(contact.email)) {
+      if (!this.isThatMe(contact._id)) {
         if (this.checkIfAlreadyAFriend(contact)) {
           if (contact.calendly) {
             this.openExternalInBlank(contact.calendly)
@@ -415,8 +428,11 @@ new Vue({
       //   this.createError(this.content.ErrorMessages[0], 'explorer')
     },
 
-    checkIfAlreadyAFriend (card) {    
-      if (this.activeBusinessCards) {
+    checkIfAlreadyAFriend (card) {
+      if (this.isThatMe(card._id)) {
+        return true
+      }
+      else if (this.activeBusinessCards) {
         if (this.activeBusinessCards.filter(el => compare(el._id, card._id) ).length)
           return true
         else
@@ -601,7 +617,7 @@ new Vue({
 
     canCall (data) {
       return new Promise(async (resolve, reject) => {
-        if (!this.isThatMe(data.email)) {
+        if (!this.isThatMe(data._id)) {
           this.checkComponentAccess('privatecall')
           .then(res => {
             if (res) {
@@ -778,15 +794,15 @@ new Vue({
       })
     },
 
-    isThatMe (email) {
-      if (compare(this.profile.email, email))
+    isThatMe (id) {
+      if (compare(this.profile._id, id))
         return true
       else
         return false
     },
 
     async showBCrequesttoast (el, index) {
-      if (!this.isThatMe(el.email)) {
+      if (!this.isThatMe(el._id)) {
         this.$buefy.modal.open({
           parent: this,
           props: {
@@ -878,6 +894,22 @@ new Vue({
 
     childsEqualsToData (id, data) {
       return Array.from(document.getElementById(id).children).length == data.length ? true : false;
+    },
+
+    joinRoom (room) {
+      Axios.post(MEETUP.joinMeetupRoom, {		
+        id: room.parentMeetup,
+        roomId: room._id
+      },
+      {
+        headers: {
+          authorization: localStorage.auth
+        }
+      }).then(res => {
+        this.showDragableConference = true
+        room.participants.push(this.profile._id)
+        this.roomForDragableConference = room
+      })
     }
   },
   watch: {

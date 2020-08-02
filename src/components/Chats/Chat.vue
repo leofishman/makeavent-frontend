@@ -1,25 +1,27 @@
 <template>
 	<!-- Profile chat -->
 	<div style="padding:0px">
+		<p class="chat-with-title">
+			<span>Chat with <strong class="is-capitalized">{{name}}</strong> team</span>
+			<b-tooltip label="Shift + Enter for line break, Enter to send message" position="is-left" type="is-black" size="is-small">
+				<span class="help">?</span>
+			</b-tooltip>
+		</p>
 		<div v-if="chatAvailable" style="padding:0px;">
-			<div :id="`${type}-${name}-messages-box`" class="chat-bubble">
+			<div :id="`${type}-${_id}-messages-box`" class="chat-bubble">
 				<Message
 					v-for="(el, index) in chatHistory"
 					:key="index"
 					:data="el"
 					:index="index"
-					:contacts="parent.contacts"
+					:contacts="contacts"
 				/>
 			</div>
 			<div class="reply-block" v-if="showQuote">
-				<div class="tile is-ancestor">
-					<div class="whitespaces tile is-10">
-						{{$root.content.reply}}&nbsp;<strong>@{{quotedName}}</strong>&nbsp;{{quotedMessage}}
-					</div>
-					<div v-on:click="closeReply()" class="click tile is-2">
-						<img style="width:16%; opacity:50%" src="@/assets/img/cross.svg" alt="">
-					</div>
+				<div class="whitespaces reply-messege">
+					{{$root.content.reply}}&nbsp;<strong>@{{quotedName}}</strong>&nbsp;{{quotedMessage}}
 				</div>
+				<img v-on:click="closeReply()" class="reply-close" src="@/assets/img/cross.svg" alt="">
 			</div>
 			
 			<div class="textarea-message">
@@ -30,9 +32,6 @@
 					type="text"
 					:placeholder="content.chatPlaceholder">
 				</textarea>
-			</div>
-			<div class="chat-helper has-text-grey">
-				<p>{{content.hint}}</p>
 			</div>
 		</div>
 		<div
@@ -59,7 +58,8 @@
 			Message
 		},
 		props: {
-			parent: Object,
+			_id: String,
+			contacts: Array,
 			name: String,
 			type: String,
 			checkAccess: String
@@ -79,13 +79,13 @@
 				this.$router.currentRoute.path != '/reghall' &&
 				this.$router.currentRoute.path != '/noaccess' &&
 				this.$router.currentRoute.path != '/resetpwd'
-			) {
+				) {
 				this.$root.checkComponentAccess(this.checkAccess).then((res) => {
 					this.getElseContent()
 					this.chat = io(socket, {
 						query: {
 							token: localStorage.auth,
-							[this.type]: this.name
+							[this.type]: this._id
 						}
 					})
 
@@ -103,9 +103,9 @@
 						// scroll chat to bottom
 						let self = this
 						let scrollTimer = setInterval(() => {
-							if (self.$root.childsEqualsToData(`${self.type}-${self.name}-messages-box`, self.chatHistory)) {
+							if (self.$root.childsEqualsToData(`${self.type}-${self._id}-messages-box`, self.chatHistory)) {
 								clearInterval(scrollTimer)
-								self.scrollBehaviour()	
+								self.scrollBehaviour()
 							}
 						}, 50)
 					})
@@ -117,7 +117,7 @@
 						let reply = this.chatHistory.filter(el => compare(this.$root.profile.email, el.from.email) && compare(data.quoteId, el.id))
 						
 						if (reply.length) {
-							this.fireNotification(name, data)   
+							this.fireNotification(this._id, data)   
 						}
 
 						this.chatHistory.push(data)
@@ -204,7 +204,7 @@
 			},
 
 			scrollBehaviour () {
-				let chatlist = document.getElementById(`${this.type}-${this.name}-messages-box`)
+				let chatlist = document.getElementById(`${this.type}-${this._id}-messages-box`)
 				if (chatlist)
 					chatlist.scrollTo(0, 123456789)
 			},

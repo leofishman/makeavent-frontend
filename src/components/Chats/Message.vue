@@ -48,13 +48,13 @@
         messageClass () {
             let admins = []
             this.contacts.map(el => {
-                admins.push(el.email)
+                admins.push(el)
             })
 
-            if (this.$root.isThatMe(this.data.from.email))
+            if (this.$root.isThatMe(this.data.from._id))
                 return 'bubble-mine'
 
-            else if (admins.includes(this.data.from.email))
+            else if (admins.includes(this.data.from._id))
                 return 'bubble-admin'
 
             else
@@ -67,7 +67,7 @@
             this.quotedMessage = ''
             this.quotedName = ''
 
-            if (!compare(from.email, this.$root.profile.email)) {
+            if (!compare(from._id, this.$root.profile._id)) {
                 if (this.showMessageModal === index)
                     this.showMessageModal = false
                 
@@ -75,8 +75,6 @@
                     this.showMessageModal = index
             }
         },
-
-        
 
         doReply (el, index) {
             this.showMessageModal = false

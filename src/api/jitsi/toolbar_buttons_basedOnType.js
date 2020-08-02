@@ -60,31 +60,60 @@ const sponsorbooth = {
 
 const meetup = {
     speaker: [
-        'mute-everyone', 'fullscreen', 'chat',
-        'microphone', 'camera', 'desktop'
+        'mute-everyone', 'fullscreen', 'sharedvideo',
+        'microphone', 'camera', 'desktop', 'tileview'
     ],
     admin: [
         'mute-everyone', 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
-        'fodeviceselection', 'hangup', 'profile', 'chat', 'settings',
+        'fodeviceselection', 'hangup', 'profile', 'settings', 'recording',
         'raisehand', 'videoquality', 'invite', 'stats', 'e2ee', 'security'
     ],
     basic: [
-        'fullscreen', 'raisehand', 'chat',
+        'fullscreen', 'raisehand', 'tileview'
     ],
     business: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
+        'fullscreen', 'raisehand', 'tileview'
     ],
     vip: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
+        'fullscreen', 'raisehand', 'tileview'
     ],
     media: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
+        'fullscreen', 'raisehand', 'tileview'
     ],
     investor: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
+        'fullscreen', 'raisehand', 'tileview'
     ],
     startup: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
+        'fullscreen', 'raisehand', 'tileview'
+    ]
+}
+
+const networkingroom = {
+    speaker: [
+        'fullscreen', 'microphone', 'camera', 'desktop', 'tileview', 'sharedvideo'
+    ],
+    admin: [
+        'mute-everyone', 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
+        'fodeviceselection', 'hangup', 'profile', 'settings', 'recording',
+        'raisehand', 'videoquality', 'invite', 'stats', 'e2ee', 'security'
+    ],
+    basic: [
+        'fullscreen', 'raisehand', 'tileview'
+    ],
+    business: [
+        'fullscreen', 'raisehand', 'tileview'
+    ],
+    vip: [
+        'fullscreen', 'raisehand', 'tileview'
+    ],
+    media: [
+        'fullscreen', 'raisehand', 'tileview'
+    ],
+    investor: [
+        'fullscreen', 'raisehand', 'tileview'
+    ],
+    startup: [
+        'fullscreen', 'raisehand', 'tileview'
     ]
 }
 
@@ -156,34 +185,6 @@ const privatecall = {
 
 }
 
-const networkingbooth = {
-    speaker: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
-    ],
-    admin: [
-        'mute-everyone', 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
-        'fodeviceselection', 'hangup', 'profile', 'chat', 'settings',
-        'raisehand', 'videoquality', 'invite', 'stats', 'e2ee', 'security'
-    ],
-    basic: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
-    ],
-    business: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
-    ],
-    vip: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
-    ],
-    media: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
-    ],
-    investor: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
-    ],
-    startup: [
-        'fullscreen', 'raisehand', 'chat', 'microphone', 'camera'
-    ]
-}
 
 export default {
     stage1: stages,
@@ -192,5 +193,6 @@ export default {
     demoday: demoday,
     interview: interview,
     privatecall: privatecall,
-    meetup: meetup
+    meetup: meetup,
+    networkingroom: networkingroom
 }

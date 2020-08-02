@@ -1,0 +1,50 @@
+@import "@/assets/css/variables.scss";
+@import "bulma/sass/utilities/initial-variables.sass";
+@import "bulma/sass/utilities/derived-variables.sass";
+
+%chat-bubble {
+	padding: 10px;
+	height: calc(100vh - 250px);
+	overflow: auto;
+	position: relative;
+	article {
+		display: flex;
+		justify-content: flex-start;
+		h3 {
+			margin-bottom: 3px;
+			font-size: 0.9rem;
+			font-weight: normal;
+		}
+		p {
+			padding: 10px 20px;
+			border-radius: 5px;
+			font-size: 0.9em;
+			cursor: pointer;
+		}
+		+article {
+			margin-top: 18px;
+		}
+	}
+	.bubble-mine {
+		display: flex;
+		justify-content: flex-end;
+		h3 {
+			text-align: right;
+		}
+		p {
+			background-color: $light;
+		}
+	}
+	.bubble-remote {
+		p {
+			color: $white;
+			background-color: $blue;
+		}
+	}
+	.bubble-admin {
+		p {
+			color: $white;
+			background-color: $danger;
+		}
+	}
+}

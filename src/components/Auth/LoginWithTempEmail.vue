@@ -57,23 +57,23 @@
                                     </div>
                                 </div>
                                 <b-field
-                                    :label="$root.content.companyName"
+                                    :label="$root.content.common.companyName"
                                     >
                                     <b-input
                                     type="text"
                                     :disabled="disable_companyName"
                                     v-model="companyName"
-                                    :placeholder="$root.content.pleaseEnter + $root.content.companyName"
+                                    :placeholder="$root.content.pleaseEnter + $root.content.common.companyName"
                                     ></b-input>
                                 </b-field>
 
-                                <b-field :label="$root.content.role">
-                                    <b-input type="text" :disabled="disable_role" v-model="role" :placeholder="$root.content.pleaseEnter + $root.content.role"></b-input>
+                                <b-field :label="$root.content.common.role">
+                                    <b-input type="text" :disabled="disable_role" v-model="role" :placeholder="$root.content.pleaseEnter + $root.content.common.role"></b-input>
                                 </b-field>
 
 
                                 <b-button :disabled="!buttonready" v-on:click="login()" type="is-primary" size="is-medium">
-                                    {{$root.content.submit}}
+                                    {{$root.content.common.submit}}
                                 </b-button>
 
                                 <div class="bottom">

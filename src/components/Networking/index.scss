@@ -3,6 +3,7 @@
 @import "bulma/sass/utilities/derived-variables.sass";
 
 #networking-rooms {
+	position: relative;
 	.title-page {
 		margin-top: 0;
 	}
@@ -13,9 +14,14 @@
 		display: block;
 	}
 	.room-previews {
+		position: relative;
 		margin-top: 1rem;
 		.room-preview {
+			position: relative;
 			text-align: center;
+			.loading-overlay {
+				margin: 12px;
+			}
 			.box {
 				width: 100%;
                 box-shadow: $shadow-2;

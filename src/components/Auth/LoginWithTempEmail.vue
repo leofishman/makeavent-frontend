@@ -23,7 +23,7 @@
                                 <div class="columns only-bot-margin">
                                     <div v-if="email.includes('@makeavent.com')" class="column nopadding" style="padding-right:5px !important;">
                                         <b-field :label="$root.content.systemGenerated + $root.content.email">
-                                            <b-input disabled type="password" v-model="email" ></b-input>
+                                            <b-input disabled type="password" :placeholder="common.pwd_place" v-model="email" ></b-input>
                                         </b-field>
                                     </div>
                                     <div v-else class="column nopadding" style="padding-right:5px !important;">
@@ -45,35 +45,41 @@
                                         <b-field
                                         :label="$root.content.systemGenerated + $root.content.password"
                                         >
-                                        <b-input id="loginwithtemp1-password-input" disabled type="password" v-model="password" ></b-input>
+                                        <b-input
+                                            id="loginwithtemp1-password-input"
+                                            :placeholder="common.pwd_place"
+                                            disabled type="password" v-model="password" ></b-input>
                                     </b-field>
                                     </div>
                                     <div class="column nopadding" style="padding-left:5px !important">
                                         <b-field
                                         :label="$root.content.new + $root.content.password"
                                         >
-                                        <b-input id="loginwithtemp2-password-input" type="password" v-model="newpassword" :placeholder="$root.content.pleaseEnter + $root.content.new.toLowerCase() + $root.content.password"></b-input>
+                                        <b-input
+                                            id="loginwithtemp2-password-input"
+                                            :placeholder="$root.content.pleaseEnter + $root.content.new.toLowerCase() + $root.content.password"
+                                            type="password" v-model="newpassword"></b-input>
                                         </b-field>
                                     </div>
                                 </div>
                                 <b-field
-                                    :label="$root.content.common.companyName"
+                                    :label="common.companyName"
                                     >
                                     <b-input
                                     type="text"
                                     :disabled="disable_companyName"
                                     v-model="companyName"
-                                    :placeholder="$root.content.pleaseEnter + $root.content.common.companyName"
+                                    :placeholder="$root.content.pleaseEnter + common.companyName"
                                     ></b-input>
                                 </b-field>
 
-                                <b-field :label="$root.content.common.role">
-                                    <b-input type="text" :disabled="disable_role" v-model="role" :placeholder="$root.content.pleaseEnter + $root.content.common.role"></b-input>
+                                <b-field :label="common.role">
+                                    <b-input type="text" :disabled="disable_role" v-model="role" :placeholder="$root.content.pleaseEnter + common.role"></b-input>
                                 </b-field>
 
 
                                 <b-button :disabled="!buttonready" v-on:click="login()" type="is-primary" size="is-medium">
-                                    {{$root.content.common.submit}}
+                                    {{common.submit}}
                                 </b-button>
 
                                 <div class="bottom">
@@ -128,6 +134,8 @@ import './index.scss'
             }
 
             return {
+                common: this.$root.content.common,
+
                 buttonready: this.buttonready,
 
                 type: this.type,

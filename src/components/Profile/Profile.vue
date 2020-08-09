@@ -142,16 +142,24 @@
 
 						<!-- Profile bottom-->
 						<div class="profile-bottom">
-							<figure class="profile-brand">
-								<img v-if="!$root.profile.company" :src="`${api}/static/img/brand-default.png`">
-								<img v-else :src="`${api}/static/img/sponsors/${$root.profile.company.toUpperCase()}/${$root.profile.company.toUpperCase()}.png`">
-							</figure>
-							
-							<div class="profile-rol">
-								<h2 class="user-company">{{$root.profile.company}}</h2>
-								<h3 class="user-rol">{{$root.profile.role}}</h3>
+							<div class="columns" style="width:100%">
+								<div class="column">
+									<div class="profile-rol">
+										<h2 class="user-company" style="text-align:right">{{comm_content.company}}</h2>
+										<h2 class="user-rol" style="text-align:right; display:block">{{comm_content.role}}</h2>
+									</div>
+								</div>
+								<div class="column">
+									<div class="profile-rol">
+										<h3 class="user-company" style="text-align:left">{{$root.profile.company}}</h3>
+										<h3 class="user-rol">{{$root.profile.role}}</h3>
+									</div>
+								</div>
 							</div>
-
+							<!-- <figure class="profile-brand"> -->
+								<!-- <img v-if="!$root.profile.company" :src="`${api}/static/img/brand-default.png`">
+								<img v-else :src="`${api}/static/img/sponsors/${$root.profile.company.toUpperCase()}/${$root.profile.company.toUpperCase()}.png`"> -->
+							<!-- </figure> -->
 						</div>
 					</div>
 					<div class="column profile-data">

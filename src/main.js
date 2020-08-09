@@ -16,7 +16,7 @@ import './domchange.js'
 import './global_functions.js'
 
 import App from './App.vue'
-import {api, socket, self, logo, app} from './env'
+import {api, socket, self, logo, app, type} from './env'
 import {MEETUP} from '@/api/endpoints'
 const selfhost = self
 
@@ -33,7 +33,7 @@ import Content from './content'
 /**
  * @global_components
  */
-import Navbar from './components/Navbar.vue'
+import Navbar from './components/Navbar/Navbar.vue'
 import Desktop from './views/desktop/Index.vue'
 import Pagetitle from './components/Pagetitle.vue'
 import ResetPwd from './components/Auth/ResetPwd.vue'
@@ -54,7 +54,8 @@ import Privatecall from '@/components/Popups/Privatecall'
 import ActionsWithUserModal from '@/components/Popups/ActionsWithUsers'
 import AcceptedInterview from '@/components/Popups/AcceptedInterview'
 
-import AccessLevels from '@/api/accessLevels'
+import AccessLevels from '@/middleware/accessLevels'
+import ActionsLord from '@/middleware/ActionsLord'
 
 /**
  * @VUE_uses
@@ -75,46 +76,45 @@ Vue.component('vue-draggable-resizable', VueDraggableResizable)
 new Vue({
   router,
   render: h => h(App),
-  data() {
-    this.shouldCheckResources = this.$router.currentRoute.name != "Noaccess" &&
-    this.$router.currentRoute.name != "Password" &&
-    this.$router.currentRoute.name != "Backstage" &&
-    this.$router.currentRoute.name != "LoginThenBusinessCard" && 
-    this.$router.currentRoute.name != "LoginWithTempEmail" &&
-    this.$router.currentRoute.name != "Login" &&
-    this.$router.currentRoute.name != "RegistrationHall" &&
-    this.$router.currentRoute.name != "LoginWithNewPassword" &&
-    this.$router.currentRoute.name != "Register";
+  data() {   
+    let self = this
     
-    this.pendingCards = []
-
+    this.project       = {}
+    this.pendingCards  = []
     this.MediaPartners = undefined
-    this.Speakers = undefined
-    this.Sponsors = undefined
+    this.Speakers      = undefined
+    this.Sponsors      = undefined
+    
+    /**
+     * @description This identifies project type and there are logic based on this type
+     */
+    this.project.type = type
+
+    this.actionsLord = new ActionsLord(this)
 
     this.selectedLanguage = localStorage.selectedLanguage
     if (!this.selectedLanguage || this.selectedLanguage === undefined)
       this.selectedLanguage = "EN"
     
-    let self = this
-
     // update resousrce every 60 seconds
     setInterval(() => {
-      if (this.shouldCheckResources) {
-        this.getResourses()
+      if (this.shouldCheckResources()) {
+
+        this.actionsLord.GET_RESOURCES ? this.getResourses() : null;
+      
       }
     }, 60000)
 
     setInterval(() => {
-      if (this.shouldCheckResources) {
+      if (this.shouldCheckResources()) {
         this.getUser()
         this.getPengingCards()
         this.getActiveBusinessCards()
       }
-    }, 15000)
-
-    this.getUser()
-    .then(this.getResourses())
+    }, 15000);
+    
+    (this.shouldCheckResources() ? this.getUser() : Promise.resolve(true))
+    .then(this.actionsLord.GET_RESOURCES ? this.getResourses() : Promise.resolve(true))
     .then(_ => {
       if (this.$router.currentRoute.query.mediaName && this.$router.currentRoute.query.type == "acceptinterview") {
         Axios.post(api + "/webinars/acceptinterviewinvitation", {
@@ -225,6 +225,19 @@ new Vue({
     }
   },
   methods: {
+    shouldCheckResources () {
+      if ( this.$router.currentRoute.name != "Noaccess" &&
+      this.$router.currentRoute.name != "Password" &&
+      this.$router.currentRoute.name != "Backstage" &&
+      this.$router.currentRoute.name != "LoginThenBusinessCard" && 
+      this.$router.currentRoute.name != "LoginWithTempEmail" &&
+      this.$router.currentRoute.name != "Login" &&
+      this.$router.currentRoute.name != "RegistrationHall" &&
+      this.$router.currentRoute.name != "LoginWithNewPassword" &&
+      this.$router.currentRoute.name != "Register" )
+        return true
+    },
+
     canRequestInterview () {
       if (this.checkComponentAccess('interview')) {
         return true
@@ -897,18 +910,42 @@ new Vue({
     },
 
     joinRoom (room) {
-      Axios.post(MEETUP.joinMeetupRoom, {		
-        id: room.parentMeetup,
-        roomId: room._id
-      },
-      {
-        headers: {
-          authorization: localStorage.auth
-        }
-      }).then(res => {
-        this.showDragableConference = true
-        room.participants.push(this.profile._id)
-        this.roomForDragableConference = room
+      if (!room.participants.includes(this.profile._id)) {
+        let promises = this.activeRooms.filter(el => {
+          if (el.participants.includes(this.profile._id))
+            return this.leaveRoom(el.parentMeetup, el._id)
+        })
+  
+        Axios.post(MEETUP.joinMeetupRoom, {		
+          id: room.parentMeetup,
+          roomId: room._id
+        },
+        {
+          headers: {
+            authorization: localStorage.auth
+          }
+        }).then(res => {
+          this.showDragableConference = true
+          room.participants.push(this.profile._id)
+          this.roomForDragableConference = room
+        })
+      }
+    },
+
+    leaveRoom (id, roomId) {
+      return new Promise((resolve, reject) => {
+        Axios.post(MEETUP.leaveMeetupRoom, {		
+          id: id,
+          roomId: roomId
+        },
+        {
+          headers: {
+            authorization: localStorage.auth
+          }
+        }).then(res => {
+          this.activeRooms = res.data
+          resolve()
+        })
       })
     }
   },

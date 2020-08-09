@@ -1,11 +1,15 @@
 <template>
     <article :class="messageClass()">
         <div>
-            <h3 class="click" v-on:click="$root.tryBusinessCard(data.from, index)">{{data.from.name.split(" ")[0]}}</h3>
+            
+            <h3 class="click"
+            v-on:click="$root.tryBusinessCard(data.from, index)"
+            >{{data.from.name.split(" ")[0]}}</h3>
+
             <b-tooltip
                 :label="$root.content.common.replyHint"
                 :active="showMessageModal === index"
-                position="is-top"
+                position="is-bottom"
                 always
                 type="is-black"
                 class="reply-button"
@@ -23,6 +27,7 @@
             data: Object,
             index: Number,
             contacts: Array,
+            parentChat: String
         },
         data () {
             let self = this
@@ -84,11 +89,14 @@
             this.quoteId = el.id
 
             window.EventBus.$emit('reply-to-message', {
-                showMessageModal: this.showMessageModal,
-                showQuote: this.showQuote,
-                quotedMessage: this.quotedMessage,
-                quotedName: this.quotedName,
-                quoteId: this.quoteId,
+                chat: this.parentChat,
+                data: {
+                    showMessageModal: this.showMessageModal,
+                    showQuote: this.showQuote,
+                    quotedMessage: this.quotedMessage,
+                    quotedName: this.quotedName,
+                    quoteId: this.quoteId,
+                }
             })
         },
     },

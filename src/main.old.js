@@ -28,7 +28,7 @@ import Content from './content'
 /**
  * @global_components
  */
-import Navbar from './components/Navbar.vue'
+import Navbar from './components/Navbar/Navbar.vue'
 import Desktop from './views/desktop/Index.vue'
 import Pagetitle from './components/Pagetitle.vue'
 import ResetPwd from './components/Auth/ResetPwd.vue'
@@ -50,7 +50,7 @@ import Privatecall from '@/components/Popups/Privatecall'
 import ActionsWithUserModal from '@/components/Popups/ActionsWithUsers'
 import AcceptedInterview from '@/components/Popups/AcceptedInterview'
 
-import AccessLevels from '@/api/accessLevels'
+import AccessLevels from '@/middleware/accessLevels'
 
 /**
  * @VUE_uses

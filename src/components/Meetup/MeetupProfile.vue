@@ -59,7 +59,7 @@
 							:meetup="$root.meetup"
 						/>
 
-						<div class="columns is-multiline member-clasic">
+						<div class="speakers-container columns is-multiline member-clasic">
 							<div class="column" v-for="(el, index) in speakers" :key="index">
 								<Member :data="el"/>
 							</div>
@@ -70,7 +70,7 @@
 		</div>
 
 		<!-- Profile Chat -->
-		<div id="chat" class="chat-company-profile">
+		<div class="chat-company-profile">
 			<div class="chat-top">
 				<article>
 					<h3>{{content.networkingRoom}}</h3>
@@ -79,7 +79,7 @@
 					<!-- <p class="has-text-success">{{content.currentlyOnline}}: ##</p> -->
 				</article>
 			</div>
-			<Chat v-if="ready" :checkAccess="'companychat'" type="company" :contacts="$root.meetup.speakers" :name="$root.meetup.name" :_id="id" />
+			<Chat v-bind:key="id" v-if="ready" :checkAccess="'companychat'" type="company" :contacts="$root.meetup.speakers" :name="$root.meetup.name" :_id="id" />
 		</div>
 
 		<b-modal
@@ -113,8 +113,9 @@
 </template>
 
 <script>
+	import VueSocketIO from 'socket.io-client'
 	import Axios from 'axios'
-	import {api} from '@/env'
+	import {api, socket} from '@/env'
 	import {MEETUP} from '@/api/endpoints'
 	import Storycreate from '@/components/Stories/StoryCreate.vue'
 	import socialLogos from '@/assets/img/socials'
@@ -241,6 +242,14 @@
 					.then(res => {
 						this.$root.meetup = res.data.meetup
 						this.ready = true
+
+						window.io = VueSocketIO(socket, {
+							query: {
+								token: localStorage.auth,
+								project: this.$root.meetup._id
+							}
+						})
+
 						this.getExternalCss()
 
 						if ( this.$root.isAdmin(this.$root.meetup.speakers) ) {

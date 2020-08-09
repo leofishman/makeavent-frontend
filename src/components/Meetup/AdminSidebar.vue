@@ -1,26 +1,27 @@
 <template>
-    <b-sidebar id="meetup-admin-sidebar"
-        type="is-light"
-        :fullheight="true"
-        :fullwidth="false"
-        :overlay="true"
-        :right="false"
-        :can-cancel="false"
-        :open.sync="$root.openMeetupSettings"
-    >
-        <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="false"></b-loading>
-        <div class="menu-el">
-            <p class="menu-label">
-                
-            </p>
+    <div>
+        <b-sidebar id="meetup-admin-sidebar"
+            type="is-light"
+            :fullheight="true"
+            :fullwidth="false"
+            :overlay="false"
+            :right="false"
+            :can-cancel="false"
+            :open.sync="$root.openMeetupSettings"
+        >
+        <div v-on:click="closeSidebar()" class="sidebar-background"></div>
+        <div class="content">
+            <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="false"></b-loading>
+            <div class="menu-el">
+                <p class="menu-label">
+                    
+                </p>
 
-            <b-switch v-model="isSwitchedCustom"
-                :true-value="content.networkingRoom + content.isOpened"
-                :false-value="content.networkingRoom + content.isClosed">
-                {{ isSwitchedCustom }}
-            </b-switch>
+                <b-switch v-model="isSwitchedCustom">{{ getSwitchText() }}</b-switch>
+            </div>
         </div>
-    </b-sidebar>
+        </b-sidebar>
+    </div>
 </template>
 
 <script>
@@ -36,14 +37,15 @@
                 content: this.content,
                 comm_content: this.$root.content.common,
 
-                isSwitchedCustom: this.$root.meetup.networkingRoomOpened
-                    ? this.content.networkingRoom + this.content.isOpened
-                    : this.content.networkingRoom + this.content.isClosed,
+                isSwitchedCustom: true,
                 isLoading: false,
-
             }
         },
         methods: {
+            closeSidebar () {
+                this.$root.openMeetupSettings = false
+            },
+
             switchNetworkingRoom () {
                 Axios.post(MEETUP.toggleNetworkingRoom, {
                     id: this.$root.meetup._id
@@ -57,6 +59,12 @@
                     this.$root.meetup.networkingRoomOpened = res.data.newStatus
                     this.isLoading = false
                 })
+            },
+
+            getSwitchText () {
+                return this.$root.meetup.networkingRoomOpened 
+                    ? this.content.networkingRoom + this.content.isOpened
+                    : this.content.networkingRoom + this.content.isClosed;
             }
         },
         watch: {
@@ -67,21 +75,6 @@
         },
     }
 </script>
-
 <style lang="scss">
-    #meetup-admin-sidebar {
-        .sidebar-content {
-            padding: 90px 10px;
-            width: 300px;
-            display: block;
-
-            .menu-el {
-                margin: 10px 0px;
-
-                .menu-label {
-                    font-size: 1.25em;
-                }
-            }            
-        }
-    }
+    @import "./index.scss";
 </style>

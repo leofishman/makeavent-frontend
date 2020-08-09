@@ -1,5 +1,7 @@
 <template>
     <div id="login">
+        <b-loading :is-full-page="true" :active.sync="isGlobalLoaderOpen" :can-cancel="false"></b-loading>
+
 		<div class="container">
 			<section class="section section-login">
 				<div class="columns">
@@ -19,15 +21,15 @@
 									<b-input id="login-password-input" v-model="password" type="password" :placeholder="$root.content.passwordPlaceholderFromEmail" password input></b-input>
 								</b-field>
                                 <div class="tile">
-                                    <div>
+                                    <div class="tile is-child">
                                         <b-button :disabled="!inputsReady" v-on:click="login()" type="is-primary" size="is-medium">
                                             {{$root.content.common.submit}}
                                         </b-button>
                                     </div>
-                                    <div @click="navToReg()" class="click column">
+                                    <div @click="navToReg()" style="padding: 19px 0px;" class="click tile is-child">
                                         {{$root.content.common.noAccount}}
                                     </div>
-                                    <div style="text-align:right; padding-right:0px;" class="click column">
+                                    <div style="text-align:right; padding: 30px 0px;" class="click tile is-child">
                                         <ResetPwd />
                                     </div>
                                 </div>
@@ -54,7 +56,9 @@ export default {
         this.inputsReady = false
 
         return {
+            isGlobalLoaderOpen: false,
             content: this.$root.content.Login,
+
             email: this.email,
             password: this.password,
             inputsReady: this.inputsReady
@@ -78,6 +82,7 @@ export default {
         },
 
         login () {
+            this.isGlobalLoaderOpen = true
             axios.post(AUTH.LOGIN, {
                 email: this.email,
                 password: this.password

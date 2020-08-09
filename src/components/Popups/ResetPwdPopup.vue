@@ -7,7 +7,7 @@
         </div>
         <div class="modal-card-body">
             <b-field :label="globContent.email">
-                <b-input type="email" v-model="email"></b-input>
+                <b-input id="reset-pwd-email-input" type="email" v-model="email"></b-input>
             </b-field>
         </div>
          <footer class="modal-card-foot">
@@ -32,6 +32,26 @@ export default {
             email: this.email
         }
     },
+    mounted () {
+        const self = this
+
+        const onEnter = function (event) {
+            if (self.buttonActive) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    self.sendReset()
+                }
+            }
+        }
+
+        const timer = setInterval(() => {
+            const input = document.getElementById('reset-pwd-email-input')
+            if ( input ) {
+                clearInterval(timer)
+                input.addEventListener('keyup', onEnter)
+            }
+        })
+    },
     methods: {
         sendReset () {
             Axios.post(api + `/login/resetuserpwd`, {
@@ -39,7 +59,16 @@ export default {
             })
             .then(res => {
                 if (res.data) {
-                    this.$buefy.dialog.alert(this.content.emailSent)
+                    this.$buefy.dialog.confirm({
+                        title: 'Success',
+                        message: this.content.emailSent,
+                        cancelText: '',
+                        canCancel: false,
+                        confirmText: 'Ok',
+                        onConfirm: () => {
+                            this.$parent.close()
+                        }
+                    })
                 }
             })
             .catch(e => {

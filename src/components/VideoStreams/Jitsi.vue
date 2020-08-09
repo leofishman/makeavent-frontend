@@ -79,8 +79,9 @@ export default {
         countdownForWebinar () {
             let self = this
             this.timerCheckStream = setInterval(() => {
-                self.$parent.getMeetup()
-                .then(self.checkStreamStarted)
+                if (self.$root.shouldCheckResources())
+                    self.$parent.getMeetup()
+                    .then(self.checkStreamStarted)
             }, 5000)
         },
 
@@ -145,11 +146,13 @@ export default {
 }
 </script>
 <style lang="scss">
+@import "./index.scss";
 @import "@/assets/css/variables.scss";
 @import "bulma/sass/utilities/initial-variables.sass";
 @import "bulma/sass/utilities/derived-variables.sass";
-@import '@/assets/css/chatBubble.scss';
-@import '@/assets/css/textarea_message.scss';
+@import "@/assets/css/chatBubble.scss";
+@import "@/assets/css/textarea_message.scss";
+@import "@/assets/css/noselect.scss";
 
 #video-stream {
     .box {
@@ -158,6 +161,14 @@ export default {
         min-height: 450px;
         box-shadow: $shadow-2;
         background-color: transparent;
+        .content {
+            span {
+                @extend %noselect;
+                &:hover {
+                    cursor: default;
+                }
+            }
+        }
     }
     .screensaver {
         object-fit: cover;

@@ -11,7 +11,7 @@
 				<div class="attendee-company" v-html="user.role + ' ' + user.company"></div>
 				
 				<small v-if="roomIdUserIn" class="attendee-room has-text-success">{{content.atRoom}} {{roomIdUserIn}} {{content.join}}</small>
-				<small v-else class="attendee-room has-text-success">{{content.notInRoom}}</small>
+				<small v-else class="attendee-room has-text-danger">{{content.notInRoom}}</small>
 			</div>
 		</div>
 
@@ -52,7 +52,7 @@
 			isInRoom () {
 				let includesCheck = false
 				this.activeRooms.map((el, index) => {
-					if (el.participants.includes(this.$root.profile._id)) {
+					if (el.participants.includes(this.user._id)) {
 						includesCheck = true
 						this.roomIdUserIn = index+1
 						this.roomObjectUserIn = el

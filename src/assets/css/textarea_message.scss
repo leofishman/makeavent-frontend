@@ -3,6 +3,7 @@
 @import "bulma/sass/utilities/derived-variables.sass";
 
 %textarea-message {
+	box-sizing: content-box;
 	padding: 10px;
 	background-color: $grey-lighter;
 	border-top: solid 1px $grey-light;

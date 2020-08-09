@@ -8,17 +8,19 @@
       type="is-light"
       :fullheight="true"
       :fullwidth="false"
-      :overlay="true"
+      :overlay="false"
       :right="true"
       :can-cancel="false"
       :open.sync="$root.openGlobalChat"
+      class="height-100"
     >
-      <div>
-        <section id="chats-sidebar" style="padding-top:80px; overflow:hidden; background:white;">
-          <b-tabs class="chat" style="width:600px; pointer-events:all" type="is-toggle" expanded >
+      <div v-on:click="$root.switchOpen()" class="sidebar-background"></div>
+      <div id="chats-sidebar">
+        <section>
+          <b-tabs class="chat" type="is-toggle" expanded >
             <b-tab-item :label="$root.project.name + ' ' + $root.content.common.coffeeChat">
               <div id="globalchat">
-                <Chat checkAccess="globalchat" :contacts="[]" type="globalchat" name="global" _id="global" />
+                <Chat v-bind:key="'globalchat'" checkAccess="globalchat" :contacts="[]" type="globalchat" name="global" _id="global" />
               </div>
             </b-tab-item>
           </b-tabs>
@@ -27,6 +29,7 @@
     </b-sidebar>
     
     <DragableConference v-if="$root.showDragableConference" :room="$root.roomForDragableConference"/>
+    <!-- <DragableConference v-if="true" :room="$root.roomForDragableConference"/> -->
   </main>
 </template>
 
@@ -42,23 +45,18 @@ export default {
     DragableConference
   },
   data() {
-    let self = this
-    onDomChange(function () {
-      if (Array.from(document.getElementsByClassName('sidebar-background')).length)
-        document.getElementsByClassName('sidebar-background')[0].addEventListener('click', (e) => {
-          if (e.path[1].id == "chats-sidebar")
-            self.$root.switchOpen()
-        })
-    })
-
     return {
       self: this, // need for chat
       contacts: [], // need for chat
     }
-  }
+  },
+
 }
 </script>
 
-<style lang="css">
-  
+<style lang="scss">
+@import "@/components/Chats/index.scss";
+.chat-wrapper {
+  @extend %chat-wrapper;
+}
 </style>

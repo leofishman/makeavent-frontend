@@ -50,7 +50,7 @@
 	import {socket} from '@/env'
 	import env from '@/env'
 	import io from 'socket.io-client'
-	import AccessLevels from '@/api/accessLevels'
+	import AccessLevels from '@/middleware/accessLevels'
 
 	export default {
 		name: "Chat",
@@ -136,10 +136,12 @@
 
 
 		return {
+			content: this.$root.content.Chat,
+			common_content: this.$root.content.common,
+
 			userTextMessage: "",
 			chatHistory: [],
 			chatAvailable: false,
-			content: this.$root.content.Chat,
 
 			showQuote: this.showQuote,
 			showMessageModal:this.showMessageModal,
@@ -155,9 +157,8 @@
 		getElseContent () {
 			if (AccessLevels[this.checkAccess].includes('business') || AccessLevels[this.checkAccess].includes('vip')) {
 				this.isUpdagradable = this.$root.content.upgradeToAccess(
-					this.$root.content.business + this.$root.content.or + this.$root.content.vip,
-					this.$root.content.chatWith.toLowerCase() + this.$root.capitalizeFirstLetter(name)
-					)
+					this.$root.content.business + this.common_content.or + this.$root.content.vip,
+					this.content.chatWith.toLowerCase() + this.$root.capitalizeFirstLetter(name))
 			}
 			else
 				this.isUpdagradable = this.$root.content.noAccessTitle(this.$root.content.StartupsDemoDay.ddChat)
@@ -165,7 +166,7 @@
 
 		isUpgradable () {
 			if (AccessLevels[this.checkAccess].includes('business') || AccessLevels[this.checkAccess].includes('vip')) {
-				let msg = this.$root.content.onlyForUsertype(this.$root.content.chatWith.toLowerCase() + this.$root.capitalizeFirstLetter(this.name), this.$root.content.business + this.$root.content.or + this.$root.content.vip)
+				let msg = this.$root.content.onlyForUsertype(this.content.chatWith.toLowerCase() + this.$root.capitalizeFirstLetter(this.name), this.$root.content.business + this.$root.content.or + this.$root.content.vip)
 				this.$root.showMessageToUpgradeBusOrVip(msg)
 			}
 		},

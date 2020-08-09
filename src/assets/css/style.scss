@@ -74,6 +74,16 @@ main {
 	.tag {
 		margin-left: 0.5rem;
 	}
+
+	.rounded, .loading-overlay {
+		border-radius: 290486px;
+		.loading-icon::after {
+			top: calc(50% - 1em);
+			left: calc(50% - 1.25em);
+			width: 2em;
+			height: 2em;
+		}
+	}
 }
 
 .padding-top-20 {
@@ -86,6 +96,19 @@ main {
 	font-weight: 900;
 	text-align: center;
 	margin-top: 10px;
+}
+
+.sidebar-background {
+	opacity: 0;
+	animation-name: fade-in;
+	animation-fill-mode: both;
+	animation-duration: 1s;
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  20% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 // TITLE PAGE //
@@ -108,30 +131,6 @@ main {
 			background-color: $secondary;
 			box-shadow: 30px 0px 0 -6px $secondary, -33px 20px 0 -2px $secondary;
 			}*/
-		}
-
-		.reply-button {
-			&:hover {
-				cursor: pointer;
-			}
-		}
-		.reply-block {
-			width: 100%;
-			margin: 0px;
-			padding: 10px;
-			position: absolute;
-			bottom: 0;
-			background: $grey-light;
-			display: flex;
-			justify-content: space-between;
-			.reply-messege {}
-			.reply-close {
-				width: 1rem;
-				opacity:50%;
-				&:hover {
-					cursor: pointer;
-				}
-			}
 		}
 
 		.sevfive-left {
@@ -365,29 +364,6 @@ main {
 	box-shadow:$shadow-2;
 }
 
-
-// NAVBAR //
-//////////////////////////////////////////
-// Menu
-.navbar {
-	box-shadow: $navbar-box-shadow-size;
-	position: fixed;
-	width: 100%;
-	top: 0px;
-	left: 0px;
-}
-.navbar-item.has-dropdown:focus .navbar-link, .navbar-item.has-dropdown:hover .navbar-link, .navbar-item.has-dropdown.is-active .navbar-link {
-	background-color: $primary;
-}
-.navbar-link:not(.is-arrowless)::after {
-	border-color: #fff;
-}
-.navbar-start {
-	a {
-		font-weight: 600;
-	}
-}
-
 // ANIMATIONS //
 //////////////////////////////////////////
 .stage, .main, .platinum, .gold, .silver, .bronze, .basic, .ms-main, .ms-platinum, .ms-gold, .social-list a {
@@ -542,48 +518,6 @@ main {
 	// 		}
 	// 	}
 	// }
-}
-
-// REGISTRATION HALL //
-//////////////////////////////////////////
-#registrationhall,#logintempemail,#register,#loginwithnewpwd {
-	margin-top: -80px;
-	
-	.data-login {
-		figure {
-			margin: auto;
-			max-width: 50%;
-		}
-		.box {
-			margin-top: 50px;
-			padding: 40px;
-			background-color: none;
-			h1 {
-				margin-bottom: 10px;
-			}
-			p {
-				font-size: 0.875em;
-			}
-			section {
-				margin-top: 40px;
-				margin-bottom: 20px;
-				.label {
-					font-weight: 400;
-					display: block;
-					font-weight: normal;
-				}
-				.input:focus {
-					background-color: $white;
-				}
-				.button {
-					margin-top: 20px;
-					padding-left: 2em;
-					padding-right: 2em;
-					font-weight: bold;
-				}
-			}
-		}
-	}
 }
 
 // LIVE FEED //
@@ -2429,103 +2363,6 @@ main {
 	font-style: italic;
 	border-bottom: 1px solid white;
 	margin-bottom: 10px;
-}
-
-#globalchat, #vipchat {
-	.chat-bubble {
-		@extend %chat-bubble;
-		margin-top: 0px;
-	}
-	.textarea-message {
-		@extend %textarea-message;
-	}
-}
-
-#chats-sidebar {
-	.tab-content {
-		padding: 0px;
-	}
-}
-
-// CHAT //
-//////////////////////////////////////////
-#chat {
-	width: 300px;
-	height: calc(100vh - 80px);
-	position: fixed;
-	top: 79px;
-	right: 0;
-	background-color: $white;
-	box-shadow: $shadow-1;
-	.chat-top {
-		margin: 1rem 0;
-		article	{
-			margin: 0 .5rem;
-			padding: 1rem;
-			background-color: $grey-lighter;
-			text-align: center;
-			border-radius: $radius;
-			&:hover {
-				background-color: $grey-light;
-			}
-			h3 {
-				font-size: 1rem;
-			}
-			img {
-				max-width: 120px;
-				margin-top: 1rem;
-				margin-bottom: 1rem;
-				margin-left: auto;
-				margin-right: auto;
-				display: block;
-			}
-			.button {
-				margin-bottom: 1rem;
-			}
-		}
-		
-		.enterebooth {
-			margin:auto;
-			padding: 5px 25px;
-			width: 100%;
-			font-size: 20px;
-			text-align: center;
-			border: solid 3px $danger;
-			color: $danger;
-			&:hover {
-				background-color: $danger;
-				color: white;
-				opacity: 1;
-			}
-		}
-	}
-	.chat-bubble {
-		@extend %chat-bubble;
-	}
-	.textarea-message {
-		@extend %textarea-message;
-	}
-}
-.chat-with-title {
-	padding: .5rem;
-	border-top: solid 1px $grey-light;
-	border-bottom: solid 1px $grey-light;
-	font-size: 1rem;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	.help {
-		padding: 5px 10px;
-		border-radius: 100px;
-		font-weight: bold;
-		background-color: $grey-light;
-	}
-}
-
-#messages-box {
-	.chat-bubble {
-		@extend %chat-bubble;
-	}
 }
 
 

@@ -6,8 +6,27 @@
                     <p class="modal-card-title">{{content.room}} {{room._id}}</p>
                     <img class="click webinar-close-icon" src="@/assets/icon/icon-close-black.svg" @click="destroyModal" />
                 </header>
-                <section class="modal-card-body">
-                    <div :id="`jitsi-frame-${room._id}`"></div>
+                <section id="jitsi-frame-parent" class="modal-card-body">
+                    <div :id="`jitsi-frame-${room._id}`" class="hide-jitsi-until-loaded box">
+                        <div v-if="showScreensaver" class="content-box">
+                            <div class="content">
+                                <span>{{content.loading}}</span>
+                            </div>
+                            <!-- <b-loading :is-full-page="false" :active.sync="showScreensaver" :can-cancel="false"></b-loading> -->
+                            <svg class="custom-loader" width="64" height="64" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#333">
+                                <g fill="none" fill-rule="evenodd" stroke-width="2">
+                                    <circle cx="22" cy="22" r="1">
+                                        <animate attributeName="r" begin="0s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"/>
+                                        <animate attributeName="stroke-opacity" begin="0s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"/>
+                                    </circle>
+                                    <circle cx="22" cy="22" r="1">
+                                        <animate attributeName="r" begin="-0.9s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"/>
+                                        <animate attributeName="stroke-opacity" begin="-0.9s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"/>
+                                    </circle>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
                 </section>
             </div>
         </b-modal>
@@ -30,7 +49,8 @@ export default {
             width: 600,
             height: 400,
             modalActive: true,
-            target: `jitsi-frame-${this.room._id}`
+            target: `jitsi-frame-${this.room._id}`,
+            showScreensaver: true
         }
     },
     mounted () {
@@ -45,7 +65,7 @@ export default {
     },
     computed: {
         getPositionX () {
-            return (window.innerWidth / 2) - this.width/2
+            return window.innerWidth/2 - this.width/2
         },
 
         getPositionY () {
@@ -58,9 +78,16 @@ export default {
             window.addEventListener('message', (e) => {
                 try {
                     if (JSON.parse(e.data).method == '__ready__') {
+                        
                         this.showScreensaver = false;
+                        document
+                            .getElementsByClassName("hide-jitsi-until-loaded")[0]
+                            .classList
+                            .replace('hide-jitsi-until-loaded', 'hide-jitsi-until-loaded--active')
+
+                        document.getElementById(this.target).children[0].style.height = this.height - 65 + "px"
+
                         if (!once) {
-                            console.log(this.streamApp.type);
                             if (this.streamApp.type != 'speaker') {
                                 this.streamApp.stream.executeCommand('toggleVideo')
                                 this.streamApp.stream.executeCommand('toggleAudio');
@@ -90,8 +117,6 @@ export default {
                         role: 'speaker'
                     })
             })
-
-            document.getElementById(this.target).children[0].style.height = this.height - 65 + "px"
         },
 
         onResize (x, y, width, height) {
@@ -106,34 +131,39 @@ export default {
         },
 
         leaveRoom () {
-            Axios.post(MEETUP.leaveMeetupRoom, {		
-                id: this.room.parentMeetup,
-                roomId: this.room._id
-            },
-            {
-                headers: {
-                    authorization: localStorage.auth
-                }
-            }).then(res => {
-                this.$root.activeRooms = res.data
-            })
+            this.$root.leaveRoom(this.room.parentMeetup, this.room._id)
         }
     },
     watch: {
         room: function () {
+            try {
+                document.getElementById(this.target).children[0].remove()
+                this.target = `jitsi-frame-${this.room._id}`
+                this.showScreensaver = true
+                document
+                    .getElementsByClassName("hide-jitsi-until-loaded")[0]
+                    .classList
+                    .replace('hide-jitsi-until-loaded--active', 'hide-jitsi-until-loaded')
+
+                document.getElementById(this.target).children[0].style.height = this.height - 65 + "px"
+
+            } catch (e) { console.log(e) }
+
             let self = this
+
             let timer = setInterval(function () {
                 if (document.getElementById(self.target)) {
                     clearInterval(timer)
                     self.join()
                 }
-
             })
         }
     },
 }
 </script>
 <style lang="scss">
+@import "./index.scss";
+
 #dragablejitsimodal {
     .modal {
         &:focus {

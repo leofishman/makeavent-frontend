@@ -3,9 +3,10 @@
 @import "bulma/sass/utilities/derived-variables.sass";
 
 %chat-bubble {
-	padding: 10px;
+	box-sizing: content-box;
+	padding: 10px 10px 0px 10px;
 	height: calc(100vh - 250px);
-	overflow: auto;
+	overflow-y: scroll;
 	position: relative;
 	article {
 		display: flex;
@@ -14,6 +15,7 @@
 			margin-bottom: 3px;
 			font-size: 0.9rem;
 			font-weight: normal;
+			width: min-content;
 		}
 		p {
 			padding: 10px 20px;
@@ -22,14 +24,14 @@
 			cursor: pointer;
 		}
 		+article {
-			margin-top: 18px;
+			margin: 9px 0px;
 		}
 	}
 	.bubble-mine {
 		display: flex;
 		justify-content: flex-end;
 		h3 {
-			text-align: right;
+			right: 0px;
 		}
 		p {
 			background-color: $light;

@@ -5,3 +5,4 @@ export const self         = process.env.VUE_APP_SELF_HOST
 export const socket       = process.env.VUE_APP_SOCKET_HOST
 export const logo         = process.env.VUE_APP_LOGO
 export const communitySrv = process.env.VUE_APP_COMMUNITY_SERVICE
+export const type         = process.env.VUE_APP_PROJECT_TYPE

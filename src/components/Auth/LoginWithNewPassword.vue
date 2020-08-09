@@ -18,12 +18,12 @@
                                 <div class="columns only-bot-margin">
                                     <div class="column" style="padding-left:0px;">
                                         <b-field :label="$root.content.password">
-                                            <b-input id="new-pwd-setter" type="password" v-model="password"></b-input>
+                                            <b-input id="new-pwd-setter" :placeholder="common.pwd_place" type="password" v-model="password"></b-input>
                                         </b-field>
                                     </div>
                                     <div class="column" style="padding-left:0px;">
                                         <b-field :label="$root.content.passwordConfirmation">
-                                            <b-input id="new-pwd-setter" type="password" v-model="passwordConfirmation"></b-input>
+                                            <b-input id="new-pwd-setter-confirm" :placeholder="common.pwd_place" type="password" v-model="passwordConfirmation"></b-input>
                                         </b-field>
                                     </div>
                                 </div>
@@ -63,35 +63,37 @@ export default {
         this.passwordConfirmation = ""
         this.email = ""
 
-    if (this.$router.currentRoute.query.token) {
-        Axios.post(api + '/login/approve_reset_pwd', {
-            token: this.$router.currentRoute.query.token
-        })
-        .then(res => {
-            const decrypted = res.data
-            this.email = decrypted.email
-            this.ready = true
-        })
-        .catch(e => {
-            if (e.response)
-                if (e.response.data)
-                    if (compare(e.response.data.error, "WRONG RESET PWD TOKEN")) {
-                        this.$router.push("/login")
-                    }
+        if (this.$router.currentRoute.query.token) {
+            Axios.post(api + '/login/approve_reset_pwd', {
+                token: this.$router.currentRoute.query.token
+            })
+            .then(res => {
+                this.email = res.data.email
+                this.ready = true
+            })
+            .catch(e => {
+                if (e.response)
+                    if (e.response.data)
+                        if (compare(e.response.data.error, "WRONG RESET PWD TOKEN")) {
+                            // this.$router.push("/login")
+                            console.log(e.response.data.error)
+                        }
+                        else
+                            this.$root.createError(e, 'oops')
                     else
                         this.$root.createError(e, 'oops')
                 else
                     this.$root.createError(e, 'oops')
-            else
-                this.$root.createError(e, 'oops')
-        })
-    }
-    else {
-        this.$router.push('/login')
-    }
+            })
+        }
+        else {
+            this.$router.push('/login')
+        }
 
         return {
             content: this.$root.content.LoginWithNewPassword,
+            common: this.$root.content.common,
+
             ready: this.ready,
 
             buttonready: this.buttonready,
@@ -102,14 +104,26 @@ export default {
         }
     },
     mounted () {
-        let input = document.getElementById("new-pwd-setter")
-        let self = this
-        input.addEventListener('keyup', function (event) {
+        const self = this
+
+        const onEnter = function (event) {
             if (self.buttonready) {
                 if (event.keyCode === 13) {
                     event.preventDefault();
                     self.login()
                 }
+            }
+        }
+
+        let timer = setInterval(() => {
+            const input = document.getElementById("new-pwd-setter")
+            const input1 = document.getElementById("new-pwd-setter-confirm")
+
+            if ( input && input1 ) {
+                clearInterval(timer)
+                
+                input.addEventListener('keyup', onEnter)
+                input1.addEventListener('keyup', onEnter)
             }
         })
     },

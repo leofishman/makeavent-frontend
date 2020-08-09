@@ -29,10 +29,26 @@ export default {
         noupi: "There is no ongoing interviews"
     },
 
+    Rooms: {
+        NetworkingRoom: "Networking Room",
+        MeetupHall: "Meetup Hall"
+    },
+
+    Navbar: {
+        backTo: (to) => { return `Back to ${to}` },
+        settings: "Settings",
+        networkingBooth: "Networking Booth",
+        home: "Home",
+        profile: "Profile",
+        agenda: "Agenda",
+        logout: "Logout",
+        openChat: "Open Chat",
+        closeChat: "Close Chat",
+    },
+
     ActionsWithUsers: {
         title: "Request business card",
         note: "Add note to your business card request",
-        
     },
 
     RegistrationHall: {
@@ -79,7 +95,8 @@ export default {
     },
 
     DragableJitsi: {
-        room: "Room"
+        room: "Room",
+        loading: "Connecting you to the room, please wait."
     },
 
 	NetworkingRooms: {
@@ -124,7 +141,11 @@ export default {
 
     Chat: {
         chatPlaceholder: "Please enter your question here",
-        hint: "Shift + Enter for line break, Enter to send message"
+        hint: "Shift + Enter for line break, Enter to send message",
+        chatWith: "Chat with ",
+        chatHint: `<b>- Shift + Enter</b> for line break<br>
+            <b>- Enter</b> to send message.<br>
+            <b>- Click</b> on chat member name to get Business Card`,
     },
 
     Storycreate: {
@@ -165,8 +186,6 @@ export default {
     passwordNotSame: "Passwords are not same!",
     minLength: "Minimum password length is 6 symbols.",
 
-    logout: "Logout",
-
     noAccessTitle: (to) => { return `We are apologizing but You don't have access to ${to}`},
 
     acceptLaterNote: (profile) => {
@@ -175,24 +194,17 @@ export default {
     userConfirmedSharingInfo: ({name, role, company}) => {
         return `${name} ${role} at ${company} shared business card with you`
     },
-    howToConfirmBusinessCardSharing: "Go to Profile -> My Business Cards -> Pending and click 'accept' to share business card.",
+    howToConfirmBusinessCardSharing: `Go to Profile -> My Business Cards -> Pending and click 'accept' to share business card.`,
     
     buyTicket: (type) => {
         return `Buy ${type} ticket`
     },
 
     googleHint: "For the better experience our team recommends to use Google Chrome",
-    home: "Home",
+
     comebackSoon: "Page will be available when conference starts",
     pageWillBeLater: "Please come back later",
-    agenda: "Agenda",
-    mediahall: "Media Hall",
-    eMeetup: "E-Meetup",
-    networkingBooth: "Networking Booth",
     
-    team: "team",
-    chatWith: "Chat with ",
-    chatHint: "Shift + Enter for line break, Enter to send message",
     areYouSure: `Please confirm that you want to`,
     request: 'request',
     businessCard: 'business card',
@@ -212,8 +224,6 @@ export default {
     
     wrongPassTitle: "No account with such email and password",
     error: "Error",
-    openChat: "Open Chat",
-    closeChat: "Close Chat",
     
     contactSupport: "If you have issues logging in or did not receive email with password, please contact support at",
     onlyForUsertype: (component, forthem) => {
@@ -254,7 +264,7 @@ export default {
     upgradeToAccess: (x, y) => {
         return `Please upgrade your ticket to ${x} to access ${y}`
     },
-    or: " or ",
+
     globalChat: "Global Chat",
     
     requestOfflineCopy: "Request recorded copy",
@@ -280,6 +290,7 @@ export default {
     },
 
     common: {
+        or: " or ",
         submit: "Submit",
         Website: "Website",
         join: "Join",
@@ -308,7 +319,9 @@ export default {
         company: "Company",
         companyName: "Company Name",
         role: "Role",
-        yourRole: "Your Role"
+        yourRole: "Your Role",
+        pwd_place: "123456",
+        team: "team",
     },
 
     StartupsDemoDay: {
@@ -390,6 +403,9 @@ export default {
         telegram: "Telegram (optional)",
         photo: "Photo (optional)",
         free: "Free",
+        name_place: "Tom",
+        pwd_place: "123456",
+        email_place: "example.com",
     },
 
     Snackbars: {

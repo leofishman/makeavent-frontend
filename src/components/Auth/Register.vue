@@ -1,5 +1,7 @@
 <template>
     <div id="register">
+        <b-loading :is-full-page="true" :active.sync="isGlobalLoaderOpen" :can-cancel="false"></b-loading>
+
         <div class="container">
             <section class="section section-registrationhall">
                 <div class="columns">
@@ -13,22 +15,22 @@
                             <p v-html="content.title"></p>
                             <section>
                                 <b-field :label="$root.content.name"> 
-                                    <b-input v-model="name" ></b-input>
+                                    <b-input v-model="name" :placeholder="content.name_place"></b-input>
                                 </b-field>
 
                                 <b-field :label="$root.content.email">
-                                    <b-input id="register-email" type="email" v-model="email" ></b-input>
+                                    <b-input id="register-email" type="email" :placeholder="content.email_place" v-model="email" ></b-input>
                                 </b-field>
 
                                 <div class="columns only-bot-margin">
                                     <div class="column" style="padding-left:0px;">
                                         <b-field :label="$root.content.password">
-                                            <b-input type="password" v-model="password"></b-input>
+                                            <b-input id="register-pwd" type="password" :placeholder="content.pwd_place" v-model="password"></b-input>
                                         </b-field>
                                     </div>
                                     <div class="column" style="padding-left:0px;">
                                         <b-field :label="$root.content.passwordConfirmation">
-                                            <b-input type="password" v-model="passwordConfirmation"></b-input>
+                                            <b-input id="register-pwd-conf" type="password" :placeholder="content.pwd_place" v-model="passwordConfirmation"></b-input>
                                         </b-field>
                                     </div>
                                 </div>
@@ -88,6 +90,7 @@ export default {
         
         return {
             buttonready: this.buttonready,
+            isGlobalLoaderOpen: false,
 
             type: this.type,
 
@@ -107,16 +110,26 @@ export default {
         }
     },
     mounted () {
-        let input = document.getElementById("register-email")
-        let self = this
-        input.addEventListener('keyup', function (event) {
+        const self = this
+        const onEnter = function (event) {
             if (self.buttonready) {
                 if (event.keyCode === 13) {
                     event.preventDefault();
                     self.register()
                 }
             }
+        }
+
+        let timer = setInterval(() => {
+            let input = document.getElementById("register-pwd")
+            let input1 = document.getElementById("register-pwd-conf")
+            if ( input && input1 ) {
+                clearInterval(timer)
+                input.addEventListener('keyup', onEnter)
+                input1.addEventListener('keyup', onEnter)
+            }
         })
+
     },
     methods: {
         navToLogin () {
@@ -128,6 +141,8 @@ export default {
         },
 
         async register () {
+            this.isGlobalLoaderOpen = true
+            
             Axios.post(`${api}/register?r=authorization`, {
                 email: this.email,
                 name: this.name,

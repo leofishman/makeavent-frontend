@@ -1,0 +1,39 @@
+@import "@/assets/css/variables.scss";
+@import "bulma/sass/utilities/initial-variables.sass";
+@import "bulma/sass/utilities/derived-variables.sass";
+@import "@/assets/css/chatBubble.scss";
+@import "@/assets/css/textarea_message.scss";
+@import "@/assets/css/noselect.scss";
+
+.hide-jitsi-until-loaded {
+    iframe {
+        display: none;
+    }
+    &--active {
+        iframe {
+            display: block;
+            height: 400px !important;
+        }
+    }
+    .screensaver {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+    .content {
+        font-size: 22px;
+        span {
+            @extend %noselect;
+            &:hover {
+                cursor: default;
+            }
+        }
+    }
+    .custom-loader {
+        display: block;
+        margin: auto;
+    }
+}

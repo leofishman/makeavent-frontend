@@ -119,7 +119,7 @@ export default {
 		
 		logout () {
 			localStorage.auth = ""
-			this.$root.switchOpen()
+			this.$root.openGlobalChat = false
 			this.$router.push('/login')
 		},
 

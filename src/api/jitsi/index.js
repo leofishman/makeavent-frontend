@@ -10,16 +10,36 @@ export default class JitsiModal {
     this.webinarRoom = data.webinarRoom
     this.parentNode = parentNode
     this.username = this.app.$root.profile.name
+  }
 
+  defineType () {
     if ([
-      "5e789eb15f99d434cdeaa9a4"
+      // define here a list of "us" to always be moderators
+      // "5e789eb15f99d434cdeaa9a4"
     ].includes(this.app.$root.profile._id))
-      this.type = "moderator"
+      this.isAdmin = true
+
+    if (this.data.admins.includes(this.app.$root.profile._id))
+      this.isAdmin = true
     
+    this.isSpeaker = this.data.speakers.filter(el => compare(el, this.app.$root.profile._id)).length
+      ? true
+      : false;
+
+    if ( this.isSpeaker )
+      this.type = 'speaker'
+
+    if ( this.isAdmin )
+      this.type = 'moderator'
+
+    if ( !this.type )
+      this.type = 'basic'
+
     this.webinarType = this.data.type
   }
+
   connect () {
-    this.type = this.data.speakers.filter(el => compare(el, this.app.$root.profile._id)).length ? "speaker" : this.app.$root.usertype
+    this.defineType()
 
     const options = {
       roomName: this.webinarRoom,
@@ -37,10 +57,10 @@ export default class JitsiModal {
         TOOLBAR_TIMEOUT: 4000,
         TOOLBAR_ALWAYS_VISIBLE: false,
         DEFAULT_REMOTE_DISPLAY_NAME: '',
-        SHOW_JITSI_WATERMARK: false,
+        SHOW_JITSI_WATERMARK: true,
         JITSI_WATERMARK_LINK: 'https://jitsi.org',
         SHOW_WATERMARK_FOR_GUESTS: false,
-        SHOW_BRAND_WATERMARK: false,
+        SHOW_BRAND_WATERMARK: true,
         BRAND_WATERMARK_LINK: '',
         SHOW_POWERED_BY: false,
         SHOW_DEEP_LINKING_IMAGE: false,
@@ -121,8 +141,8 @@ export default class JitsiModal {
           disableKick: !compare(this.type, 'speaker') ? true : false
         },
 
-        startAudioMuted: 0,
-        startVideoMuted: 0,
+        // startAudioMuted: 0,
+        // startVideoMuted: 0,
   
         desktopSharingChromeExtId: null,
         desktopSharingChromeSources: [ 'screen', 'window', 'tab' ],
@@ -131,7 +151,7 @@ export default class JitsiModal {
         // Recording
 
         // Whether to enable file recording or not.
-        // fileRecordingsEnabled: false,
+        fileRecordingsEnabled: true,
         // Enable the dropbox integration.
         // dropbox: {
         //     appKey: '<APP_KEY>' // Specify your app key here.
@@ -152,7 +172,7 @@ export default class JitsiModal {
         // fileRecordingsServiceSharingEnabled: false,
 
         // Whether to enable live streaming or not.
-        // liveStreamingEnabled: false,
+        liveStreamingEnabled: true,
 
         // Transcription (in interface_config,
         // subtitles and buttons can be configured)
@@ -376,7 +396,7 @@ export default class JitsiModal {
         enableLipSync: false,
         enableTalkWhileMuted: false,
         forceJVB121Ratio: false,
-        hiddenDomain: false,
+        hiddenDomain: "recorder.meet-app.makeavent.com",
         ignoreStartMuted: false,
         nick: false,
         startBitrate: false,  

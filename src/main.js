@@ -148,31 +148,12 @@ new Vue({
           token: localStorage.auth
         }
       })
-  
-      window.io.on('connect', () => {
-        console.log('socket connected')
-      })
-  
-      // window.io.on('logout', () => {
-      //   localStorage.auth = ""
-      //   this.$router.push('/login')
-      // })
-  
-      setInterval(() => {
-        window.io.emit('auth', { id:localStorage.auth })
-      }, 30000)
-  
+      this.reloadSocketListeners()
+
       Notification.requestPermission().then(function(result) {
         self.notificationAllowed = true
       });
   
-      window.io.on('incomming_contact_request', (data) => {
-        this.openIncomingContactRequest(data)
-      })
-  
-      window.io.on('request_contact_confirmed', (data) => {
-        this.friendRequestAccepted(data)
-      })
     })
     .catch(e => {
       this.$router.push('/login')
@@ -191,9 +172,9 @@ new Vue({
         logo: logo,
         name: this.capitalizeFirstLetter(app)
       },
-      meetup: {
-        demo: ""
-      },
+      meetup: false,
+      meetupExtraData: {},
+
       api: api,
 
       selectedLanguage: this.selectedLanguage,
@@ -203,7 +184,7 @@ new Vue({
       content: Content[this.selectedLanguage],
 
       openGlobalChat: false,
-      openMeetupSettings: false,
+      openMeetupSettings: true, // by default should be true
       isUserAdmin: false,
 
       modals: [],
@@ -222,9 +203,39 @@ new Vue({
       showDragableConference: false,
       roomForDragableConference: {},
       activeRooms: [],
+      speakerProfiles: []
     }
   },
   methods: {
+    reloadSocketListeners () {
+        
+      window.io.on('connect', (lala) => {
+        console.log('socket connected')
+      })
+  
+      // window.io.on('logout', () => {
+      //   localStorage.auth = ""
+      //   this.$router.push('/login')
+      // })
+  
+      clearInterval(this.authSocketCheck)
+      this.authSocketCheck = setInterval(() => {
+        window.io.emit('auth', { id:localStorage.auth })
+      }, 30000)
+  
+      window.io.on('incomming_contact_request', (data) => {
+        this.openIncomingContactRequest(data)
+      })
+  
+      window.io.on('request_contact_confirmed', (data) => {
+        this.friendRequestAccepted(data)
+      })
+
+      window.io.on('stage_change_for_user', (msg) => {
+        window.EventBus.$emit('STAGE_MANAGER:stage_change_for_user', msg)
+      })
+    },
+
     shouldCheckResources () {
       if ( this.$router.currentRoute.name != "Noaccess" &&
       this.$router.currentRoute.name != "Password" &&
@@ -262,8 +273,7 @@ new Vue({
     },
 
     isAdmin (contacts) {
-      let x = contacts.filter(el => compare(el, this.profile._id))
-      return x.length ? true : false;
+      return contacts.includes(this.profile._id)
     },
 
     privateCall (contact) {
@@ -835,7 +845,7 @@ new Vue({
       let note2 = this.content.acceptLaterNote(`${selfhost}/profile`)
 
       this.$buefy.snackbar.open({
-        duration: 100000,
+        duration: 1000000,
         message: `
           <div>
             <div style="">

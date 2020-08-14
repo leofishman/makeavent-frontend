@@ -160,6 +160,8 @@ export default {
                 this.$router.push('/')
             })
             .catch(e => {
+                this.isGlobalLoaderOpen = false
+                
                 console.log(e)
                 if (compare(e.response.data.error, 'Already exists'))
                     this.$root.createError('User with such email already exists, please login.', 'oops')

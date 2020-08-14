@@ -2,9 +2,8 @@
 	<div class="attendee-profile">
 		<div class="attendee-info">
 			<figure class="attendee-avatar">
-				<!-- if user has avatar img here -->
-				<!-- else -->
-				<img :src="`${api}/static/img/avatar-default.png`">
+				<img v-if="user.photo" :src="api + user.photo">
+				<img v-else :src="`${api}/static/img/avatar-default.png`">
 			</figure>
 			<div class="attendee-text">
 				<div class="attendee-name" v-html="user.name"></div>

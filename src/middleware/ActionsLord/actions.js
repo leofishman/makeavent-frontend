@@ -34,6 +34,22 @@ export default class Actions {
                 else {
                     this.parent.$router.push(this.parent.$router.history._startLocation)
                 }
+            },
+
+            SHOULD_GET_MEETUP_ATTENDEES_ROOMS () {
+                if ( compare(this.parent.$router.currentRoute.name, 'NetworkingRoom') ) {
+                    return true
+                }
+                else
+                    return false
+            },
+
+            SHOULD_GET_MEETUP () {
+                if ( this.parent.cloo(this.parent.$router.currentRoute.name,
+                    'Meetup|NetworkingRoom' ))
+                        return true
+                else
+                    return false
             }
         }
     }

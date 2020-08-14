@@ -1,0 +1,76 @@
+@import "@/assets/css/variables.scss";
+
+%attendee-info {
+    justify-content: flex-start;
+    display: flex;
+}
+%attendee-text {
+
+}
+%attendee-name {
+    font-weight: 600;
+}
+%attendee-company {
+    margin-top: 0;
+    font-style: italic;
+}
+%attendee-room {
+
+}
+%attendee-avatar {
+    margin-right: 1rem;
+    img {
+        border-radius: 10rem;
+        max-width: 60px;
+        border: solid 2px $grey-light;
+    }
+}
+%attendee-request {
+    justify-content: flex-end;
+    .button {
+        font-size: .8rem;
+        +.button {
+            margin-top: 10px;
+        }
+        img {
+            height: 1rem;
+        }
+        span {
+            margin-left: .5rem;
+        }
+    }
+}
+
+%attendee-profile {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-top: solid 1px $grey-light;
+}
+
+.attendee-profile {
+    .attendee-info {
+        @extend %attendee-info;
+        
+        .attendee-text {
+            @extend %attendee-text !optional;
+            .attendee-name {
+                @extend %attendee-name;
+            }
+            .attendee-company {
+                @extend %attendee-company;
+            }
+            .attendee-room {}
+            @extend %attendee-room !optional;
+        }
+        .attendee-avatar {
+            @extend %attendee-avatar;
+        }
+    }
+    .attendee-request {
+        @extend %attendee-request;
+    }
+}

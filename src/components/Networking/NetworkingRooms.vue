@@ -2,58 +2,69 @@
 	<div id="networking-rooms">
 		<navbar></navbar>
 
-		<div class="container is-fluid">
-			<section class="section section-networking-rooms">
-				<div class="columns">
-					<div class="column">
-						<Pagetitle data="Networking Rooms"/>
-						<p v-html="content.intro"></p>
-						
-						<button @click="createNewRoom" :disabled="createNewRoomLoading" class="new-room is-rounded button is-primary is-medium">
-							<b-loading class="rounded" :is-full-page="false" :active.sync="createNewRoomLoading" :can-cancel="false"></b-loading>
-							{{content.newRoom}}
-						</button>
+		<div :style="{
+			zIndex:2,
+			position:'relative',
+			width: getMainFrameWidth(),
+			left: $root.openMeetupSettings
+				? '300px'
+				: '0px'
+		}" :class="$root.openMeetupSettings ? 'squeezed-container' : ''"
+		>
 
-						<div class="room-previews columns is-mobile is-multiline is-centered">
-							<NetworkingPreview
-								v-for="(el, index) in $root.activeRooms"
-								:key="index"
-								:room="el"
-								:roomId="index+1"
-							/>
-						</div>
-					</div>
-					<div id="networking-attendees" class="column is-half-tablet is-one-third-fullhd">
-						<aside class="box">
-							<div class="has-text-centered">
-								<h3>
-									<img src="@/assets/icon/icon-idea.svg" width="25">
-									<p v-html="content.tips"></p>
-								</h3>
-								<p v-html="content.tip1"></p>
-								<p v-html="content.tip2"></p>
-							</div>
-							<h3 class="box-title">
-								{{content.attendeesList}}
-							</h3>
+			<div class="container is-fluid">
+				<section class="section section-networking-rooms">
+					<div class="columns">
+						<div class="column">
+							<Pagetitle data="Networking Rooms"/>
+							<p v-html="content.intro"></p>
+							
+							<button @click="createNewRoom" :disabled="createNewRoomLoading" class="new-room is-rounded button is-primary is-medium">
+								<b-loading class="rounded" :is-full-page="false" :active.sync="createNewRoomLoading" :can-cancel="false"></b-loading>
+								{{content.newRoom}}
+							</button>
 
-							<input v-model="searchQuery" type="search" name="search-attendees" :placeholder="content.searchAttendee" class="input search-attendees">
-
-							<div class="attendees-list">
-								<NetworkingAttendee
-									v-for="(el, index) in meetupAttendeesToShow"
+							<div class="room-previews columns is-mobile is-multiline is-centered">
+								<NetworkingPreview
+									v-for="(el, index) in $root.activeRooms"
 									:key="index"
-									:user="el"
-									:activeRooms="$root.activeRooms"
+									:room="el"
+									:roomId="index+1"
 								/>
 							</div>
-						</aside>
+						</div>
+						<div id="networking-attendees" class="column is-half-tablet is-one-third-fullhd">
+							<aside class="box" style="overflow: hidden">
+								<div class="has-text-centered">
+									<h3>
+										<img src="@/assets/icon/icon-idea.svg" width="25">
+										<p v-html="content.tips"></p>
+									</h3>
+									<p v-html="content.tip1"></p>
+									<p v-html="content.tip2"></p>
+								</div>
+								<h3 class="box-title">
+									{{content.attendeesList}}
+								</h3>
+
+								<input v-model="searchQuery" type="search" name="search-attendees" :placeholder="content.searchAttendee" class="input search-attendees">
+
+								<div class="attendees-list" style="overflow: scroll; height: calc(100vh - 67%);">
+									<NetworkingAttendee
+										v-for="(el, index) in meetupAttendeesToShow"
+										:key="index"
+										:user="el"
+										:activeRooms="$root.activeRooms"
+									/>
+								</div>
+							</aside>
+						</div>
 					</div>
-				</div>
-			</section>
+				</section>
+			</div>
 		</div>
 
-		<AdminSidebar />
+		<AdminSidebar v-if="$root.meetup" />
 	</div>
 </template>
 
@@ -89,9 +100,17 @@
 				this.getAttendees()
 				this.getRooms()
 	
-				setInterval(() => {
-					this.getAttendees()
-					this.getRooms()
+				if ( this.$root.cronAttendeesRooms )
+					clearInterval(this.$root.cronAttendeesRooms)
+
+				this.$root.cronAttendeesRooms = setInterval(() => {
+					if (this.$root.actionsLord.SHOULD_GET_MEETUP_ATTENDEES_ROOMS()) {
+						this.getAttendees()
+						this.getRooms()
+					}
+					else {
+						clearInterval(this.$root.cronAttendeesRooms)
+					}
 				}, 5000)
 			})
 
@@ -113,6 +132,12 @@
 			}
 		},
 		methods: {
+			getMainFrameWidth () {
+				return this.$root.openMeetupSettings
+				? window.innerWidth - 620 + 'px'
+				: '100%'
+			},
+
 			getAttendees () {
 				Axios.create({
 					baseURL: MEETUP.getMeetupAttendees + '?id=' + this.id,
@@ -183,6 +208,7 @@
 			},
 
 			getMeetup () {
+				console.log(208);
 				return new Promise((resolve, rejects) => {
 					Axios.create({
 						baseURL: MEETUP.getById + '?id=' + this.id,
@@ -193,17 +219,19 @@
 					.then(res => {
 						this.$root.meetup = res.data.meetup
 
-						if (!window.io.query.project)
+						if (!window.io.query.project) {
 							window.io = VueSocketIO(socket, {
 								query: {
 									token: localStorage.auth,
 									project: this.$root.meetup._id
 								}
 							})
+							this.$root.reloadSocketListeners()
+						}
 
 						this.getExternalCss()
 
-						if ( this.$root.isAdmin(this.$root.meetup.speakers) ) {
+						if ( this.$root.isAdmin(this.$root.meetup.admins) ) {
 							this.$root.isUserAdmin = true
 						}
 

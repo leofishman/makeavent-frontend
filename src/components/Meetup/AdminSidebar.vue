@@ -9,68 +9,65 @@
             :can-cancel="false"
             :open.sync="$root.openMeetupSettings"
         >
-        <div v-on:click="closeSidebar()" class="sidebar-background"></div>
-        <div class="content">
-            <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="false"></b-loading>
-            <div class="menu-el">
-                <p class="menu-label">
-                    
-                </p>
-
-                <b-switch v-model="isSwitchedCustom">{{ getSwitchText() }}</b-switch>
+            <div class="content">
+                <HintControls :parent="this" />
+                <NetworkingRoomSwitcher :parent="this" />
+                <StartWebinar :parent="this" />
+                <BackstageControls
+                    v-if="$root.speakerProfiles"
+                    :Speakers="$root.speakerProfiles"
+                    :parent="this" />
             </div>
-        </div>
         </b-sidebar>
     </div>
 </template>
 
 <script>
     import Axios from 'axios'
-	import {MEETUP} from '@/api/endpoints'
+    import {MEETUP} from '@/api/endpoints'
+    import NetworkingRoomSwitcher from './AdminSidebar/NetworkingRoomSwitcher.vue'
+    import StartWebinar from './AdminSidebar/StartWebinar.vue'
+    import BackstageControls from './AdminSidebar/BackstageControls.vue'
+    import HintControls from './AdminSidebar/HintControls.vue'
 
     export default {
         name: "AdminSidebar",
+        components: {
+            NetworkingRoomSwitcher,
+            StartWebinar,
+            BackstageControls,
+            HintControls
+        },
         data() {
             this.content = this.$root.content.MeetupAdminSidebar
+
+            if ( !localStorage.showHints )
+                localStorage.showHints = 'true'
 
             return {
                 content: this.content,
                 comm_content: this.$root.content.common,
-
-                isSwitchedCustom: true,
-                isLoading: false,
+                showHints: this.shouldShowHint()
             }
         },
         methods: {
-            closeSidebar () {
-                this.$root.openMeetupSettings = false
-            },
-
-            switchNetworkingRoom () {
-                Axios.post(MEETUP.toggleNetworkingRoom, {
-                    id: this.$root.meetup._id
-                },
-                {
-                    headers: {
-                        authorization: localStorage.auth
-                    }
-                })
-                .then(res => {
-                    this.$root.meetup.networkingRoomOpened = res.data.newStatus
-                    this.isLoading = false
-                })
-            },
-
-            getSwitchText () {
-                return this.$root.meetup.networkingRoomOpened 
-                    ? this.content.networkingRoom + this.content.isOpened
-                    : this.content.networkingRoom + this.content.isClosed;
+            shouldShowHint () {
+                if ( localStorage.showHints == 'false' )
+                    return false
+                else
+                    return true
             }
         },
         watch: {
-            isSwitchedCustom: function () {
-                this.isLoading = true
-                this.switchNetworkingRoom()
+            'showHints': function () {
+                if ( this.showHints ) {
+                    this.showHints = false
+                    localStorage.showHints = 'false'
+                }
+                else {
+                    this.showHints = true
+                    localStorage.showHints = 'true'
+                }
             }
         },
     }

@@ -59,8 +59,7 @@
 
 <script>
 	import Message from './Message'
-	import {socket} from '@/env'
-	import env from '@/env'
+	import {socket, self} from '@/env.js'
 	import io from 'socket.io-client'
 	import AccessLevels from '@/middleware/accessLevels'
 
@@ -224,7 +223,7 @@
 				
 				if (this.$root.notificationAllowed || Notification.permission == "granted") {
 					window.notification = new Notification(`${data.from.name.split(" ")[0]} from ${data.from.company} replied to you.`, {
-						icon: `${env.self}/img/sponsors/${chatname}/${chatname}.png`,
+						icon: `${self}/img/sponsors/${chatname}/${chatname}.png`,
 						body: data.message,
 					})
 					let self = this

@@ -1,37 +1,122 @@
 <template>
-    <div id="video-stream">
-        <div class="box">
-            <div class="content-box" v-if="showScreensaver">
-                <div class="content">
-                    <span>{{content.willStartIn}}</span> {{clock}}
+    <div>
+        <div v-if="id == 'mainroom'" id="mainroom" class="video-stream">
+            <div class="box">
+                <div class="content-box" v-if="showScreensaver">
+                    <div v-if="defaultLoader" class="content">
+                        <span>{{content.willStartIn}}</span> {{clock}}
+                    </div>
+                    <div v-else-if="joiningBackstage" class="content">
+                        <span v-html="content.joiningBackstage"></span>
+                    </div>
+                    <div v-else-if="joiningMainroom" class="content">
+                        <span v-html="content.joiningMainroom"></span>
+                    </div>
+                    
+                    <div :style="{
+                        backgroundColor: meetup.screensaverColor,
+                        opacity: meetup.screensaverColor ? 0.6 : 0
+                    }" class="scr-saver-fileld__bg"></div>
+                    <video v-if="meetup.screensaver" class="screensaver" autoplay muted loop>
+                        <source :src="meetup.screensaver" type="video/mp4">
+                    </video>
                 </div>
-                <video v-if="$root.meetup.screensaver" class="screensaver" autoplay muted loop>
-                    <source :src="$root.meetup.screensaver" type="video/mp4">
-                </video>
+                <div :id="jitsiTarget" class="card-image"></div>
             </div>
-            <div id="jitsi-modal-target" class="card-image"></div>
+        </div>
+    
+        <div v-if="id == 'backstage'" id="backstage" class="video-stream">
+            <div class="box">
+                <div class="content-box" v-if="showScreensaver">
+                    <div v-if="defaultLoader" class="content">
+                        <span>{{content.willStartIn}}</span> {{clock}}
+                    </div>
+                    <div v-else-if="joiningBackstage" class="content">
+                        <span v-html="content.joiningBackstage"></span>
+                    </div>
+                    <div v-else-if="joiningMainroom" class="content">
+                        <span v-html="content.joiningMainroom"></span>
+                    </div>
+                    
+                    <div :style="{
+                        backgroundColor: meetup.screensaverColor,
+                        opacity: meetup.screensaverColor ? 0.6 : 0
+                    }" class="scr-saver-fileld__bg"></div>
+                    <video v-if="meetup.screensaver" class="screensaver" autoplay muted loop>
+                        <source :src="meetup.screensaver" type="video/mp4">
+                    </video>
+                </div>
+                <div :id="jitsiTarget" class="card-image"></div>
+            </div>
         </div>
     </div>
 </template>
 <script>
-import jitsi from '@/api/jitsi'
+import Axios       from 'axios'
+import VueSocketIO from 'socket.io-client'
+import {MEETUP}    from '@/api/endpoints'
+import jitsi       from '@/api/jitsi'
+import {api, STAGES_MANAGER_HOST, STAGES_MANAGER_PATH} from '@/env'
 
 export default {
     name: "JitsiStream",
     props: {
+        _id: String,
         meetup: Object
     },
     data () {
+        window.EventBus.$on('STAGE_MANAGER:stage_change_for_user', (msg) => {
+            this.defineHowToRender()
+            
+            if ( this.userType != "admin" ) {
+                const isInBackstage  = msg.backstage.participants.includes(this.$root.profile._id)
+                const isInFrontStage = msg.frontstage.participants.includes(this.$root.profile._id)
+
+                this.backstage  = msg.backstage
+                this.frontstage = msg.frontstage
+
+                if ( isInBackstage ) {
+                    this.id = "backstage"
+                }
+
+                if ( isInFrontStage ) {
+                    this.id = "mainroom"
+                }
+            }
+        })
+
+        this.id = this._id
+        this.defineHowToRender()
         this.countdown(this.$root.meetup.startDate)
 
         return {
+            content: this.$root.content.JitsiStream,
+
             showScreensaver: true,
             clock: this.clock,
             dotsGoingUp: true,
-            content: this.$root.content.JitsiStream
+            userType: "",
+            id: this._id, 
+
+            defaultLoader: true,
+            joiningBackstage: false,
+            joiningMainroom: false,
+
+            jitsiTarget: `jitsi-modal-target-${this.id}`
         }
     },
     methods: {
+        defineHowToRender () {
+            if ( this.meetup.speakers.includes(this.$root.profile._id) )
+                this.userType = 'speaker'
+            
+            else
+                this.userType = 'basic'
+            
+            if (this.$root.isUserAdmin)
+                this.userType = 'admin'
+        },
+
         countdown (time) {
             const self = this
             const countDownDate = new Date(time).getTime();
@@ -79,67 +164,172 @@ export default {
         countdownForWebinar () {
             let self = this
             this.timerCheckStream = setInterval(() => {
-                if (self.$root.shouldCheckResources())
-                    self.$parent.getMeetup()
-                    .then(self.checkStreamStarted)
+                if ( self.$root.shouldCheckResources() )
+                    if ( !self.$root.cronMeetupSchema ) {
+                        self.$parent.getMeetup()
+                        .then(() => {
+                            if ( self.checkStreamStarted() ) {
+                                clearInterval(this.timerCheckStream)
+                                self.startStream()
+                            }
+                        })
+                    }
+                    else {
+                        if ( self.checkStreamStarted() ) {
+                            clearInterval(this.timerCheckStream)
+                            self.startStream()
+                        }
+                    }
             }, 5000)
         },
 
         checkStreamStarted () {
-            if (this.$root.meetup.status == "ongoing") {
-                clearInterval(this.timerCheckStream)
+            if ( this.userType == 'admin' )
+                return true
 
-                let once = false
-                window.addEventListener('message', (e) => {
-                    try {
-                        if (JSON.parse(e.data).method == '__ready__') {
-                            this.showScreensaver = false;
-                            if (!once) {
-                                if (this.streamApp.type != 'speaker') {
-                                    this.streamApp.stream.executeCommand('toggleVideo')
-                                    this.streamApp.stream.executeCommand('toggleAudio');
-                                    once = true
-                                }
+            else if ( this.userType == "speaker" ) {
+                if ( this.id == "backstage" )
+                    return true
+
+                else if ( this.id == "mainroom" ) {
+                    if (this.$root.meetup.status == "ongoing")
+                        return true
+
+                    else
+                        return false
+                }
+            }
+
+            else if ( this.userType == "basic" ) {
+                if ( this.id == "mainroom" )
+                    if (this.$root.meetup.status == "ongoing")
+                        return true
+
+                    else
+                        return false
+            }
+        },
+
+        getBackstage () {
+            if ( this.userType == 'admin' )
+                return new Promise((resolve, reject) => {
+                    Axios.create({
+                        baseURL: MEETUP.getMeetupBackstage + '?id=' + this.$root.meetup._id,
+                        headers: {
+                            authorization: localStorage.auth
+                        }
+                    })()
+                    .then(res => {
+                        this.backstage = res.data
+                        resolve()
+                    })
+                    .catch(reject)
+                })
+            else
+                return
+		},
+
+        startStream () {
+            clearInterval(this.timerCheckStream)
+
+            let once = false
+            window.addEventListener('message', (e) => {
+                try {
+                    if (JSON.parse(e.data).method == '__ready__') {
+                        this.showScreensaver = false;
+                        if (!once) {
+                            if (this.streamApp.type != 'speaker') {
+                                this.streamApp.stream.executeCommand('toggleVideo')
+                                this.streamApp.stream.executeCommand('toggleAudio');
+                                once = true
                             }
                         }
-                    } catch (e) {}
+                    }
+                } catch (e) {}
+            })
+
+            this.$root.check('meetup')
+            .then(async () => {
+                const meetup = this.$root.meetup
+                meetup.type = "meetup"
+
+                if ( this.id == "backstage" ) {
+                    await this.getBackstage()
+                    meetup.webinarRoom = this.backstage._id
+                }
+
+                this.streamApp = new jitsi({
+                    vueapp: this,
+                    parentNode: document.getElementById(this.jitsiTarget),
+                    data: this.$root.meetup
+                })
+                this.streamApp.connect()
+
+                this.streamApp.stream.addEventListener('participantJoined', (e) => {
+                    if ( this.streamApp.type == 'speaker' )
+                        this.streamApp.stream.executeCommand('changeRole', {
+                            id: e.id,
+                            role: 'speaker'
+                        })
                 })
 
-                this.$root.check('meetup')
-                .then(() => {
-                    this.$root.meetup.type = "meetup"
-                    this.streamApp = new jitsi({
-                        vueapp: this,
-                        parentNode: document.getElementById("jitsi-modal-target"),
-                        data: this.$root.meetup
-                    })
-                    this.streamApp.connect()
+                document.getElementById(this.jitsiTarget).children[0].style.height = "450px"
+            })
+        },
 
-                    this.streamApp.stream.addEventListener('participantJoined', (e) => {
-                        if (this.streamApp.type == 'speaker')
-                            this.streamApp.stream.executeCommand('changeRole', {
-                                id: e.id,
-                                role: 'speaker'
-                            })
-                    })
-
-                    document.getElementById("jitsi-modal-target").children[0].style.height = "450px"
-                })
-
-
-            }
-            else {
+        createJitsiParent () {
+            setTimeout(() => {
+                const div = document.createElement('div')
+                div.id = this.jitsiTarget
+                document.getElementById(this.id).children[0].insertAdjacentElement('beforeend', div)
+                clearInterval(this.timerCheckStream)
+                this.countdownForWebinar()
+            }, 500)
+        }
+    },
+    watch: {
+        '$root.meetup.status': function () {
+            if ( !this.checkStreamStarted(this) ) {
+                document.getElementById(this.jitsiTarget).remove()
                 this.showScreensaver = true
             }
+            else {
+                if ( !document.getElementById(this.jitsiTarget) ) {
+                    this.createJitsiParent()
+                }
+            }
+        },
+        'id': function () {
+            this.showScreensaver = true
+
+            if ( this.id == "mainroom" ) {
+                this.joiningBackstage = false
+                this.joiningMainroom  = true
+            }
+
+            if ( this.id == "backstage" ) {
+                this.joiningBackstage = true
+                this.joiningMainroom  = false
+            }
+
+            document.getElementById(this.jitsiTarget).remove()
+                
+            this.jitsiTarget      = `jitsi-modal-target-${this.id}`
+            this.defaultLoader    = false
+
+            this.createJitsiParent()
         }
     },
     mounted () {
+        this.defineHowToRender()
         let self = this
 
         let timer = setInterval(() => {
-            if (document.getElementById("jitsi-modal-target")) {
+            if (document.getElementById(this.jitsiTarget)) {
                 clearInterval(timer)
-                self.checkStreamStarted()
+                if ( self.checkStreamStarted() ) {
+                    self.startStream()
+                }
             }
         })
     }
@@ -147,45 +337,4 @@ export default {
 </script>
 <style lang="scss">
 @import "./index.scss";
-@import "@/assets/css/variables.scss";
-@import "bulma/sass/utilities/initial-variables.sass";
-@import "bulma/sass/utilities/derived-variables.sass";
-@import "@/assets/css/chatBubble.scss";
-@import "@/assets/css/textarea_message.scss";
-@import "@/assets/css/noselect.scss";
-
-#video-stream {
-    .box {
-        margin-bottom: 3rem;
-        padding: 0px;
-        min-height: 450px;
-        box-shadow: $shadow-2;
-        background-color: transparent;
-        .content {
-            span {
-                @extend %noselect;
-                &:hover {
-                    cursor: default;
-                }
-            }
-        }
-    }
-    .screensaver {
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-        position: relative;
-        top: 0;
-        left: 0;
-    }
-    .webinar-close-icon {
-        position: absolute;
-        right: 20px;
-        width: 20px;
-        top: 20px;
-    }
-    .filmstrip {
-        display: none !important;
-    }
-}
 </style>

@@ -13,5 +13,10 @@ export const MEETUP = {
     addMeetupRoom: communitySrv + '/meetup/add-room',
     joinMeetupRoom: communitySrv + '/meetup/join-room',
     leaveMeetupRoom: communitySrv + '/meetup/leave-room',
-    toggleNetworkingRoom: communitySrv + '/meetup/toggle-networking-room'
+    toggleNetworkingRoom: communitySrv + '/meetup/toggle-networking-room',
+    toggleWebinarStatus: communitySrv + '/meetup/toggle-webinar-status',
+    getMeetupBackstage: communitySrv + '/meetup/get-backstage',
+    getMeetupFrontstage: communitySrv + '/meetup/get-mainstage',
+    sendToBackstage: communitySrv + '/meetup/send-to-backstage',
+    sendToMainstage: communitySrv + '/meetup/send-to-mainstage',
 }

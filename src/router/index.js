@@ -163,6 +163,15 @@ const router = new Router({
                 requiresAuth: true
             },
             props: (route) => ({ id: route.query.id }),
+        },
+        {
+            path: '/fullscreenRoom',
+            name: "NetworkingRoom",
+            component: NetworkingRoom,
+            meta: {
+                requiresAuth: true
+            },
+            props: (route) => ({ id: route.query.id }),
         }
     ]
 })

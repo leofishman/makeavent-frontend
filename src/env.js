@@ -6,3 +6,5 @@ export const socket       = process.env.VUE_APP_SOCKET_HOST
 export const logo         = process.env.VUE_APP_LOGO
 export const communitySrv = process.env.VUE_APP_COMMUNITY_SERVICE
 export const type         = process.env.VUE_APP_PROJECT_TYPE
+export const STAGES_MANAGER_HOST = process.env.VUE_APP_STAGES_MANAGER_HOST
+export const STAGES_MANAGER_PATH = process.env.VUE_APP_STAGES_MANAGER_PATH

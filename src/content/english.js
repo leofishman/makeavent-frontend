@@ -16,7 +16,9 @@ export default {
     },
 
     JitsiStream: {
-        willStartIn: "Meetup will start in "
+        willStartIn: "Meetup will start in ",
+        joiningMainroom: "You are now joining to main Video stream,<br>please take comfortable position and<br> we wish you good luck!",
+        joiningBackstage: "You are now joining Backstage.<br>Backstage is designed to test microphone, screensharing, video etc."
     },
 
     Mediahall: {
@@ -123,10 +125,32 @@ export default {
     },
 
     MeetupAdminSidebar: {
-        toggleNetworkingRoom: "Open Networking Room",
-        networkingRoom: "Networking Room",
         isOpened: " is opened",
         isClosed: " is closed",
+
+        netRoomHint: "Toggle this checkbox when you want attendees to be able to go for networking in <b>Networking Room</b>",
+        toggleNetworkingRoom: "Open Networking Room",
+        networkingRoom: "Networking Room",
+
+        videoConferenceOpened: "Start Video Conference",
+        videoConference: "Video Conference",
+        videoConfHint: "Toggle this checkbox when your speaekers ready to start. Attendees will start seeing <b>Video Conference</b>",
+
+        backstageSettings: "Backstage Controls",
+        backstageHint: "Click to show backstage settings popup.",
+
+        hintShowed: "Hints displayed",
+        hintClosed: "Hints closed",
+        showHints: "Show hints?",
+        hintHints: "Toggle this checkbox to <b>show/hide</b> all hints"
+    },
+
+    BackstageControlsModal: {
+        title: "Backstage Controls",
+        speakers: "Speakers",
+        inviteToBackstage: "Send to Backstage",
+        sendToMain: "Send to Public Room",
+        searchPlaceholder: "Start typeing speaker name or company to find"
     },
     
     Member: {

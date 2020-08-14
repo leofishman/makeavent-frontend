@@ -105,6 +105,7 @@ export default {
             })
             .catch(e => {
                 console.log(e)
+                this.isGlobalLoaderOpen = false
                 this.$buefy.dialog.alert({
                     title: this.$root.content.error,
                     message: this.$root.content.wrongPassTitle,

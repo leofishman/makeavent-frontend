@@ -37,7 +37,6 @@
 	}
 }
 .absolute-sub-nav {
-	position: absolute;
 	width: 100%;
 	padding: 20px;
 	color: $white;
@@ -46,5 +45,10 @@
 	z-index: 30;
 	button {
 		margin-left: 10px;
+	}
+	&--squeezed-for-left-meetup-admin-sidebar {
+		@extend .absolute-sub-nav;
+		width: calc(100% - 320px);
+		left: calc(330px - 10px - 0.75rem);
 	}
 }

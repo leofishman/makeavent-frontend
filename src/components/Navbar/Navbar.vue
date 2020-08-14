@@ -15,7 +15,7 @@
 						<div v-if="$root.actionsLord.SHOW_MEETUP_SETTINGS_BUTTON()" class="navbar-item settings-button">
 							<div class="buttons">
 								<a @click="toggleOpenMeetupSettings" class="button">
-									<img src="@/assets/Navbar/settings.svg" alt="">
+									<img src="@/assets/img/Navbar/settings.svg" alt="">
 									{{content.settings}}
 									<span class="tag is-info" v-if="$root.pendingCards.length" variant="light">{{$root.pendingCards.length}}</span>
 								</a>
@@ -35,12 +35,12 @@
 						<div class="navbar-item">
 							<div class="buttons">
 								<a v-on:click="openPage('profile')" class="button">
-									<img src="@/assets/Navbar/profile.svg" alt="">
+									<img src="@/assets/img/Navbar/profile.svg" alt="">
 									{{content.profile}}
 									<span class="tag is-info" v-if="$root.pendingCards.length" variant="light">{{$root.pendingCards.length}}</span>
 								</a>
 								<a v-on:click="$root.switchOpen()" class="button">
-									<img src="@/assets/Navbar/chat.svg" alt="">
+									<img src="@/assets/img/Navbar/chat.svg" alt="">
 									{{content.openChat}}
 								</a>
 								<a v-on:click="logout()" class="button">{{content.logout}}</a>
@@ -56,7 +56,7 @@
 			<b-button v-on:click="setCalendly()" type="is-primary is-inverted">please set your calendly</b-button>
 		</div> -->
 
-		<div v-if="$root.actionsLord.SHOW_BACK_TO_MEETUP_HALL()" class="absolute-sub-nav">
+		<div v-if="$root.actionsLord.SHOW_BACK_TO_MEETUP_HALL()" :class="getSubNavbarClass()">
 			<div class="columns">
 				<div class="column">
 					<b-button
@@ -128,6 +128,13 @@ export default {
 				this.$root.openMeetupSettings = false
 			else
 				this.$root.openMeetupSettings = true
+		},
+
+		getSubNavbarClass () {
+			if ( this.$root.openMeetupSettings && this.$root.cloo(this.$router.currentRoute.name, 'Meetup|NetworkingRoom') )
+				return 'absolute-sub-nav--squeezed-for-left-meetup-admin-sidebar'
+			else
+				return 'absolute-sub-nav'
 		}
     },
     data() {

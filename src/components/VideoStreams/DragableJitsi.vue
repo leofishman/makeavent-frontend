@@ -105,6 +105,7 @@ export default {
                     name: "Private call",
                     webinarRoom: this.room._id,
                     speakers: this.room.participants,
+                    admins: [],
                     type: "networkingroom"
                 }
             })

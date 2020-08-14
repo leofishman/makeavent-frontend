@@ -4,6 +4,62 @@
 @import "@/assets/css/chatBubble.scss";
 @import "@/assets/css/textarea_message.scss";
 @import "@/assets/css/noselect.scss";
+@import "@/assets/css/_popup-form.scss";
+
+.video-stream {
+    .scr-saver-fileld__bg {
+        @extend %scr-saver-fileld__bg;
+    }
+    .box {
+        margin-bottom: 3rem;
+        padding: 0px;
+        min-height: 450px;
+        box-shadow: $shadow-2;
+        background-color: transparent;
+        position: relative;
+        .content-box {
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            .content {
+                font-size: 48px;
+                color: #0000007a;
+                font-weight: 900;
+                position: absolute;
+                z-index: 1000;
+                transform: translate(-50%, -50%);
+                top: 50%;
+                left: 50%;
+                margin: 0px;
+                span {
+                    @extend %noselect;
+                    font-size: 22px;
+                    display: block;
+                    &:hover {
+                        cursor: default;
+                    }
+                }
+            }
+        }
+    }
+    .screensaver {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+    .webinar-close-icon {
+        position: absolute;
+        right: 20px;
+        width: 20px;
+        top: 20px;
+    }
+    .filmstrip {
+        display: none !important;
+    }
+}
 
 .hide-jitsi-until-loaded {
     iframe {
@@ -23,12 +79,15 @@
         top: 0;
         left: 0;
     }
-    .content {
-        font-size: 22px;
-        span {
-            @extend %noselect;
-            &:hover {
-                cursor: default;
+    .content-box {
+        .content {
+            span {
+                font-size: 22px;
+                display: block;
+                @extend %noselect;
+                &:hover {
+                    cursor: default;
+                }
             }
         }
     }

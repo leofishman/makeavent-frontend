@@ -1,0 +1,286 @@
+.group-popup-form-wrap .stuff-item  {
+    // width: calc(100% - 12px);
+    width: 100%;
+    max-width: 712px;
+}
+.group-popup-form-wrap .stuff-field {
+    display: flex;
+    // align-items: center;
+    justify-content: flex-start;
+    // width: calc(100% - 12px);
+    // max-width: 698px;
+    .field {
+        width: 46.7%;
+        input {
+            margin-bottom: 12px;
+        }
+    }
+    .field + .field {
+        margin-left: 15px;
+    }
+    .close-icon {
+        margin-left: auto;
+        border-radius: 50%;
+        background-color: #ff3860;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        cursor: pointer;
+        margin-top: 7px;
+        // font-size: 12px;
+        // line-height: 1em;
+        // margin-left: auto;
+        // margin-bottom: 12px;
+        position: relative;
+
+        .inner-icon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+    &__link {
+        position: relative;
+        .control.is-clearfix {
+            width: 100%;
+        }
+        .valid-url {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            &.first {
+                bottom: 12px;
+            }
+        }
+        input {
+            border-radius: 5px !important;
+        }
+    }
+}
+.group-steps.stuff-popup-form .stuff-item {
+    margin-bottom: 5px;
+}
+.group-steps.stuff-popup-form {
+    display: flex;
+    flex-flow: column;
+}
+.group-steps .stuff-popup.add-new {
+    margin-bottom: 24px;
+    background-color: #0051D9;
+    color: white;
+    &:hover {
+        background-color: #0051D9;
+        opacity: .7;
+    }
+}
+.group-steps.stuff-popup-form {
+    .button.is-success.is-outlined {
+        background-color: #0051D9;
+        color: white;
+        border: 0px solid;
+        &:hover {
+            opacity: .7;
+        }
+    }
+    .sbt-btn {
+        margin-top: auto;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+.group-popup-form .scr-saver-fileld {
+    margin-bottom: 20px;
+    display: flex;
+    .field {
+        width: 100%;
+    }
+    input {
+        margin-bottom: 12px;
+    }
+}
+.group-popup-form .scr-saver-fileld.scr-saver-fileld--cp {
+    min-height: 36px;
+    input {
+        margin-bottom: 0;
+    }
+}
+.group-popup-form .scr-saver-fileld__iframe {
+    position: relative;
+    height: 370px;
+    iframe {
+        width: 100%;
+        height: 370px;
+    }
+}
+
+%scr-saver-fileld__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: .6;
+}
+.scr-saver-fileld__bg {
+    @extend %scr-saver-fileld__bg;
+}
+.group-popup-form .scr-saver-fileld__bg {
+    @extend %scr-saver-fileld__bg;
+}
+
+.group-popup-form .preview-item-wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    height: 100%;
+}
+.group-popup-form .preview-item-wrap .preview-item {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    color: white;
+    height: 100%;
+}
+.group-popup-form .preview-item-wrap .preview-item__logo {
+    margin-top: 97px;
+    width: 98.16px;
+    height: 98.16px;
+    background-color: white;
+    border-radius: 50%;
+}
+.group-popup-form .preview-item-wrap .preview-item__title {
+    margin-top: 16px;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 1.5em;
+}
+.group-popup-form .preview-item-wrap .preview-item__description,
+.group-popup-form .preview-item-wrap .preview-item__sp-name {
+    font-size: 18px;
+    line-height: 1.67em;
+}
+.group-popup-form .preview-item-wrap .preview-item__description {
+    margin-top: auto;
+    margin-bottom: 17px;
+}
+.group-popup-form .scr-saver-fileld__colorpicker {
+    display: flex;
+    position: relative;
+}
+
+.group-steps .stuff-list {
+    margin-bottom: 56px;
+    max-height: 250px;
+    height: 250px;
+    overflow-y: visible;
+    overflow-x: hidden;
+    margin-right: -15px;
+    position: relative;
+
+    /* width */
+    &::-webkit-scrollbar {
+        width: 8px;
+        scrollbar-gutter: auto;
+    }
+        
+    /* Track */
+    &::-webkit-scrollbar-track {
+        border-radius: 5px;
+        // background: rgba(75, 75, 75, 0.1);
+    }
+    
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+    }
+    &--demo {
+        overflow: overlay;
+    }
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: rgba(75, 75, 75, 0.1);
+        box-shadow: inset 0 0 5px grey; 
+    }
+    &::-webkit-scrollbar-thumb {        
+        background: rgba(75, 75, 75, 0.32);
+    }
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: rgba(75, 75, 75, 0.5);
+    }
+}
+.group-popup-form .socials-edit__add-item {
+    display: flex;
+    .field {
+        width: 35.5%;
+        padding-right: 24px;
+        margin: 0 !important;
+        &:last-child {
+            padding-right: 0;
+        }
+    }
+}
+.group-popup-form .socials-edit__buttons {
+    &.field.has-addons {
+        width: 29%;
+        justify-content: space-between; 
+        .button.is-success[disabled]{
+            background-color: #0051D9;
+            color: white;
+            border: 0px solid;
+            opacity: .5;
+        }
+    }   
+}
+@media screen and (max-width: 768px){
+    .group-popup-form .socials-edit__add-item {
+        .field {
+            padding-right: 0;
+        }
+    }
+    .group-popup-form-wrap .stuff-item {
+        width: calc(100% - 10px);
+    }
+    .group-steps .stuff-field {
+        .socials-edit__buttons {
+            justify-content: space-between;
+            width: 100% !important;
+        }
+        flex-flow: column;
+        .field {
+            width: 100%;
+        }
+        .field + .field {
+            margin-left: 0px;
+        }
+        .close-icon {
+            margin-right: auto;
+            margin-left: 0;
+            order: -1;
+            margin-bottom: 24px;
+            margin-top: 0;
+        }
+    }
+    .group-steps .stuff-item {
+        &:last-child {
+            border-bottom: 0px solid #ccc;
+        }
+        border-bottom: 1px solid #ccc;  
+    }
+}
+
+@media (max-width: 575.98px) {   
+    .group-steps .stuff-list {
+        margin-right: 0;
+    } 
+    .group-popup-form-wrap .stuff-item {
+        width: calc(100% - 15px);
+    }
+}

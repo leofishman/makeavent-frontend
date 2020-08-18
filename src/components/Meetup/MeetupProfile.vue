@@ -43,12 +43,16 @@
 							</div>
 
 							<div class="profile-bottom">
+								<div class="speakers-title--top">
+									{{$root.meetup.company_name}}
+								</div>
+
 								<div v-if="expanded && $root.meetup.stuff" class="profile-bio">
 									<button v-if="$root.meetup.stuff.length" class="button is-primary is-fullwidth" @click="materialsModalActive = true">{{content.viewMaterials}}</button>
 								</div>
 
 								<div class="profile-bio">
-									<p v-html="$root.meetup.description" v-bind:class="classes" class="bio-content"></p>
+									<p v-html="$root.meetup.company_description" v-bind:class="classes" class="bio-content"></p>
 
 									<button v-if="!expanded" class="button is-small is-fullwidth" @click="bioExpand">{{content.readMore}}</button>
 									<button v-else class="button is-small is-fullwidth" @click="bioCollapse">{{content.showLess}}</button>
@@ -86,7 +90,13 @@
 								/>
 							</div>
 
+							<h1 class="meetup-title" v-html="$root.meetup.meetup_name"></h1>
+							<div class="meetup-description" v-html="$root.meetup.meetup_topic"></div>
+
 							<div class="speakers-container columns is-multiline member-clasic">
+								<div class="speakers-title">
+									{{content.speakers}}
+								</div>
 								<div class="column" v-for="(el, index) in $root.speakerProfiles" :key="index">
 									<Member :data="el"/>
 								</div>

@@ -47,6 +47,31 @@
 	background-size: 100%;
 	background-attachment: fixed;
 
+	.meetup-title {
+		font-size: 42px;
+		margin: 10px 0px;
+	}
+
+	.meetup-description {
+		font-size: 18px;
+		margin: 10px 0px;
+	}
+
+	.speakers-title {
+		display: block;
+		width: 100%;
+		padding: 1rem 0px 0rem 0.75rem;
+		font-weight: 600;
+		font-size: 20px;
+		margin-top: 20px;
+		&--top {
+			@extend .speakers-title;
+			margin-top: 0px;
+			margin-bottom: 20px;
+			padding: 0px;
+		}
+	}
+
 	.container-edit {
 		width: calc(100vw - 320px);
 		max-width: 100%;
@@ -215,6 +240,7 @@
 			}
 			.bio-content-expand {
 				height: auto;
+				padding: 10px 0px;
 			}
 		}
 

@@ -17,8 +17,8 @@ export default {
 
     JitsiStream: {
         willStartIn: "Meetup will start in ",
-        joiningMainroom: "You are now joining to main Video stream,<br>please take comfortable position and<br> we wish you good luck!",
-        joiningBackstage: "You are now joining Backstage.<br>Backstage is designed to test microphone, screensharing, video etc."
+        joiningMainroom: "You are now joining to main Video stream, please take comfortable position and we wish you good luck!",
+        joiningBackstage: "You are now joining Backstage. Backstage is designed to test microphone, screensharing, video etc."
     },
 
     Mediahall: {
@@ -67,9 +67,6 @@ export default {
         skip: "Skip"
     },
 
-    Meetup: {
-        title: "e-Meetup",
-    },
     Booth: {
         title: "lorem ipsum",
         joinNowTitle: "Join E-booth"
@@ -93,7 +90,8 @@ export default {
 		viewMaterials: "View Materials",
         materials: "Materials",
         readMore: "Read more",
-        showLess: "Show less"
+        showLess: "Show less",
+        speakers: "Speakers"
     },
 
     DragableJitsi: {

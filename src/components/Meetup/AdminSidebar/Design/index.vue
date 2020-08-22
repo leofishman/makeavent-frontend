@@ -1,0 +1,65 @@
+<template>
+  <section>
+      <item class="admin-bar__design">
+            <p class="admin-bar__list-item-header" slot="header">Design</p>
+            <template slot="inner">
+                <div class="admin-bar__design-switchers">
+                    <switchers @updateActive="updateActive" :isActive="isActive"/>
+                </div>
+                <div class="admin-bar__design-colors" v-if="isActive">
+                    <p class="admin-bar__design-colors-par">Colors</p>
+                    <colors/>
+                </div>
+            </template>
+      </item>
+  </section>
+</template>
+
+<script>
+import {mapMutations} from 'vuex'
+
+import Item from '@/components/Global/admin-sidebar/Item/'
+import Switchers from './Switchers'
+import Colors from './Colors'
+
+export default {
+    components: {
+        Item,
+        Switchers,
+        Colors
+    },
+    watch: {
+        isActive(){
+            this.updateCustomColor(this.isActive)
+            if(!this.isActive){
+                // Primary  
+                let query = `#app .networking-rooms .is-primary, #app .meetup-profile .is-primary`
+                Array.from(document.querySelectorAll(query)).map(el => {
+                    el.style.backgroundColor = ''
+                })
+                // Light                
+                query = `.meetup-profile, .networking-rooms, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms aside, #app .meetup-profile aside, #app .networking-rooms nav, #app .meetup-profile nav, .meetup-profile article, .networking-rooms article`
+                Array.from(document.querySelectorAll(query)).map(el => {
+                    el.style.backgroundColor = ''
+                })
+                // Dark                
+                query = `#app .networking-rooms .h1, #app .meetup-profile .h1, #app .networking-rooms .h2, #app .meetup-profile .h2, #app .networking-rooms .h3, #app .meetup-profile .h3, #app .networking-rooms .h4, #app .meetup-profile .h4, #app .networking-rooms .h5, #app .meetup-profile .h5, #app .networking-rooms .h6, #app .meetup-profile .h6, #app .networking-rooms h1, #app .meetup-profile h1, #app .networking-rooms h2, #app .meetup-profile h2, #app .networking-rooms h3, #app .meetup-profile h3, #app .networking-rooms h4, #app .meetup-profile h4, #app .networking-rooms h5, #app .meetup-profile h5, #app .networking-rooms h6, #app .meetup-profile h6, #app .networking-rooms p, #app .meetup-profile p, #app .networking-rooms storng, #app .meetup-profile storng, #app .networking-rooms em, #app .meetup-profile em, #app .networking-rooms ol ol, #app .meetup-profile ol ol, #app .networking-rooms ol ul, #app .meetup-profile ol ul, #app .networking-rooms ul ol, #app .meetup-profile ul ol, #app .networking-rooms ul ul, #app .meetup-profile ul ul, #app .networking-rooms ul li, #app .meetup-profile ul li, #app .networking-rooms ol li, #app .meetup-profile ol li, #app .networking-rooms sub, #app .meetup-profile sub, #app .networking-rooms sup, #app .meetup-profile sup, #app .networking-rooms code, #app .meetup-profile code, #app .networking-rooms kbd, #app .meetup-profile kbd, #app .networking-rooms pre, #app .meetup-profile pre, #app .networking-rooms samp, #app .meetup-profile samp, #app .networking-rooms svg, #app .meetup-profile svg, #app .networking-rooms th, #app .meetup-profile th, #app .networking-rooms tr, #app .meetup-profile tr, #app .networking-rooms button, #app .meetup-profile button, #app .networking-rooms optgroup, #app .meetup-profile optgroup, #app .networking-rooms strong, #app .meetup-profile strong, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms span, #app .meetup-profile span`
+                Array.from(document.querySelectorAll(query)).map(el => {
+                    el.style.color = ''
+                })
+            }
+        }
+    },
+    data(){
+        return {
+            isActive: this.$store.getters.meetupFull.custom_colors
+        }
+    },
+    methods: {
+      ...mapMutations(['updateCustomColor']),
+        updateActive(val) {
+            this.isActive = val
+        }
+    }
+}
+</script>

@@ -11,9 +11,9 @@
             <b-field class="stuff-field__link">
                 <b-input 
                     required
-                    :placeholder="content.stuffPopupForm.placeholder.file"
+                    :placeholder="$root.content.stuffPopupForm.placeholder.file"
                     v-model="socialsItem.link"
-                    :validation-message="content.stuffPopupForm.validation.file"
+                    :validation-message="$root.content.stuffPopupForm.validation.file"
                 ></b-input>            
                 <p 
                     :class="[index > 0 ? 'valid-url help is-danger' : 'valid-url help is-danger first' ]"

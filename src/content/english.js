@@ -430,6 +430,197 @@ export default {
         email_place: "example.com",
     },
 
+    globalForms: {
+        popupTitle: 'Please tell us more about your community',
+        buttons: {
+            cancel: 'Cancel',
+            back: 'Back',
+            next: 'Next',
+            submit: 'Submit',
+            addNew: 'Add new',
+            update: 'Update',
+            copy: 'Copy Link'
+        },
+        validation: {            
+            noFound: 'No results found',
+            noItems: 'There are no items',
+            required: 'This field are required'
+        },        
+        placeholders: {
+            search: 'Type to search',
+            name: 'Name',
+            massage: 'Description',
+            date: "Type or select a date..",
+            file: 'Click to upload',
+            sizes: 'Recomendations px, max size, etc.',
+            exmLink: 'Example: https://www.youtube.com/watch?v=Qnh87zAcAeg'
+        },
+        labels: {
+            baseInfo: 'Base info',
+            name: "Name",
+            massage: "Description",
+            copy: "Copy"
+        }
+    },
+    meetupPopupForm: {
+        title: 'Wizard title',
+        stepName: {
+            name: 'Base info',
+            date: 'Date',
+            logo: "Logo",
+            preview: "Preview",
+            confirm: 'Confirm'
+        },
+        labels: {
+            title: "Basic Info",
+            date: "Date",
+            logo: "Upload your Meetup logo",
+            preview: "Upload your Meetup preview",
+            confirm: "Confirm your data"
+        },
+        validation: {
+            name: "This field are required",
+            massage: "This field are required"
+        },
+        placeholders: {
+            name: "Name",
+            massage: "Description",
+            date: "Type or select a date..",
+        },
+        confirmFields: {
+            name: 'Name',
+            massage: 'Description',
+            date: "Date",
+            confirm: 'Confirm'
+        }
+    },
+    groupEditPopupForm: {
+        title: 'Custom Form',
+        labels: {
+            location: "Location",
+            name: "Basic Info",
+            description: "Description",
+            logo: "Logo",
+            interest: " Main interest",
+            subinterest: " Sub interest",
+        },
+        validation: {
+            location: 'This location is invalid',
+            name: 'This field are required',
+            unqName: 'This name exist',
+            massage: 'This field are required',
+            interest: 'This interest is invalid',
+        },
+        placeholders: {
+            location: 'Type to search',
+            name: 'Name',
+            massage: 'Description',
+            interest: 'Type to search',
+            file: 'Click to upload',
+            sizes: 'Recomendations px, max size, etc.'
+        }
+    },
+    groupPopupForm: {
+        stepName: {
+            location: 'Location',
+            name: 'Info',
+            logo: 'Logo',
+            interest: 'Main interest',
+            subInterest: 'Sub interest',
+            confirm: 'Confirm'
+        },
+        labels: {
+            location: 'Location',
+            name: "Basic Info",
+            logo: "Upload your Community Logo",
+            interest: "Interest",
+            subInterest: "Detailed interest",
+        },
+        validation: {
+            location: 'This location is invalid',
+            noFound: 'No results found',
+            noItems: 'There are no items',
+            name: 'This field are required',
+            nameExt: 'This name exist',
+            message: 'This field are required',
+            logo: 'Logo',
+            interest: 'This interest is invalid',
+            dropFile: 'Drop your files here or click to upload'
+        },
+        placeholders: {
+            location: 'Type to search',
+            name: 'Name',
+            message: 'Description',
+            logo: 'Click to upload',
+            interest: 'Type to search',
+        },
+        confirmFields: {
+            location: 'Location',
+            name: 'Name',
+            message: 'Description',
+            interest: 'Main interest',
+            subInterest: 'Sub interest',
+        }
+    },
+    groupStuffPopupForm: {
+        title: 'Please save group documents',
+    },
+    stuffPopupForm: {
+        title: 'Please save meetup documents',
+        labels: {
+            document: 'Set your document'
+        },
+        placeholder: {
+            name: 'Name',
+            file: 'Link',
+        },
+        validation: {
+            name: 'This field are required',
+            file: 'This field are required',
+        }
+    },
+    demoPopupFrom: {
+        title: 'Please save meetup demo',
+        labels: {
+            demo: 'Set your demo'
+        }
+    },
+    groupDemoPopupFrom: {
+        title: 'Please save group demo',
+        labels: {
+            demo: 'Set your demo'
+        }
+    },
+    socialsPopupFrom: {
+        title: 'Please add group socials',
+        labels: {
+            title: 'Set your socials',
+        }
+    },
+    meetupSocialsPopupFrom: {
+        title: 'Please add meetup socials',
+        labels: {
+            title: 'Set your socials',
+        }
+    },
+    screenSaverPopupFrom: {
+        create: {
+            labels: {
+                video: 'URL of video',
+                preview: 'Preview'
+            }
+        },
+        edit: {
+
+        }
+    },
+    inviteSpeaker: {
+        title: 'Invite Speaker',
+        labels: {
+            invite: 'Invite by link',
+        }
+    }, 
+    
     Snackbars: {
         bcAccepted: (data) => {
             return `${data.name} ${data.role ? data.role + " at " + data.company : ''} accepted your business card request`

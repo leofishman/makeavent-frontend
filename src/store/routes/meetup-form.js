@@ -46,9 +46,20 @@ export default {
   postCreateInviteLink(params){
     return api().post('/meetup/create-inv-link', params, {
       ...opts     
-    })
-    
-  }
+    })    
+  },
+  toggleNetworkingRoom(params){
+    console.log('params', params);
+    return api().post('/meetup/toggle-networking-room', params, {
+      ...opts     
+    })    
+  },
+  toggleMeetupRoom(params){
+    console.log('params', params);
+    return api().post('/meetup/toggle-meetup-room', params, {
+      ...opts     
+    })    
+  },
 }
 
 // export default function postAddPreview (params) {

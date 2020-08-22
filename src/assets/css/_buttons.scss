@@ -1,0 +1,93 @@
+.btn-wrap {
+    display: flex;
+    align-items: center;
+}
+
+.is-grey, .is-red, .is-red-dark, .is-green, .is-green-dark {
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.015em;
+    border-radius: 5px;
+    &:hover {
+        color: white;
+    }
+    position: relative;
+    div, span {
+        color: white !important;
+    }
+}
+
+.is-green {
+    background-color: #00BE9D !important;
+}
+
+.is-green-dark {
+    background-color: #009278 !important;
+}
+
+.is-red {
+    background-color: #E90000 !important;
+}
+
+.is-red-dark {
+    background-color: #C20000 !important;
+}
+
+.is-grey {
+    background-color: rgba(75, 75, 75, 0.64) !important;
+}
+
+.bnt-icon--cycle, .bnt-icon--square  {
+    margin-right: 8px;
+    background-color: white;
+}
+
+.bnt-icon--cycle {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+}
+
+.bnt-icon--square {
+    width: 15px;
+    height: 15px;
+}
+
+
+.bnt-icon--binding {
+    width: 24.26px;
+    height: 17.8px;
+    // background: url("https://hh.ru/");
+    background-image: url("../../assets/icon/icon-binding.svg");
+    background-size: cover;
+    background-position: 50% 50%;
+    margin-right: 4px;
+}
+
+.share-icon--fb {
+    width: 25px;
+    height: 25px;
+    // background: url("https://hh.ru/");
+    background-image: url("../../assets/icon/share-fb.svg");
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+.share-icon--ytb {
+    width: 32.35px;
+    height: 22.25px;
+    // background: url("https://hh.ru/");
+    background-image: url("../../assets/icon/share-ytb.svg");
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+.share-icon--twitch {
+    width: 26.11px;
+    height: 27.24px;
+    // background: url("https://hh.ru/");
+    background-image: url("../../assets/icon/share-twitch.svg");
+    background-size: cover;
+    background-position: 50% 50%;
+}

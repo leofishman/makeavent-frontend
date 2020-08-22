@@ -4,17 +4,17 @@
             <b-field>
                 <b-input 
                     required
-                    :placeholder="content.stuffPopupForm.placeholder.name"
+                    :placeholder="$root.content.stuffPopupForm.placeholder.name"
                     v-model="demosItem.name"
-                    :validation-message="content.stuffPopupForm.validation.name"
+                    :validation-message="$root.content.stuffPopupForm.validation.name"
                 ></b-input>
             </b-field>
             <b-field class="stuff-field__link">
                 <b-input 
                     required
-                    :placeholder="content.stuffPopupForm.placeholder.file"
+                    :placeholder="$root.content.stuffPopupForm.placeholder.file"
                     v-model="demosItem.link"
-                    :validation-message="content.stuffPopupForm.validation.file"
+                    :validation-message="$root.content.stuffPopupForm.validation.file"
                 ></b-input>    
                 <p 
                     :class="index ? 'valid-url help is-danger' : 'first valid-url help is-danger'"
@@ -52,8 +52,8 @@
 </template>
 
 <script>
-import Accordion from "@/components/global/accordion/accordion";
-import AccordionItem from "@/components/global/accordion/accordion-item";
+import Accordion from "@/components/Global/accordion/accordion";
+import AccordionItem from "@/components/Global/accordion/accordion-item";
 
 export default {
     props: ['demosItem', 'index', 'updated'],

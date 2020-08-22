@@ -1,5 +1,5 @@
 <template>    
-    <div class="group-popup-form-wrap" v-if="show">
+    <div class="group-popup-form-wrap">
         <div class="group-popup-form">
             <div class="group-popup-form__header">
                 <p><slot name="title"></slot></p>
@@ -19,15 +19,9 @@
 <script>
 
 export default {
-  data(){
-    return {
-      show: true,
-    }
-  },
   methods: {
     close(){
-        // console.log('close');
-      this.show = false
+      this.$emit('close')
     }
   },
 }

@@ -10,6 +10,11 @@
 @import './_steps.scss';
 @import './_popup-form.scss';
 @import './_soc-edit.scss';
+@import './adminBar';
+@import './buttons';
+
+// Fonts icons
+@import url('https://cdn.materialdesignicons.com/5.3.45/css/materialdesignicons.min.css');
 
 // TYPOGRAPHY //
 //////////////////////////////////////////
@@ -38,6 +43,10 @@ body {
 }
 main {
 	margin-top: 5rem;
+}
+
+.meetup-profile, .networking-rooms {
+	min-height: calc(100vh - 5rem);
 }
 @media screen and (min-width: $desktop) {
 	.container {

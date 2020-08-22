@@ -18,6 +18,15 @@ import './global_functions.js'
 import App from './App.vue'
 import {api, socket, self, logo, app, type} from './env'
 import {MEETUP} from '@/api/endpoints'
+
+import util from '@/util'
+
+Vue.prototype.util = util
+
+import lodash from 'lodash'
+
+Vue.prototype._ = lodash
+
 const selfhost = self
 
 /**
@@ -57,6 +66,9 @@ import AcceptedInterview from '@/components/Popups/AcceptedInterview'
 import AccessLevels from '@/middleware/accessLevels'
 import ActionsLord from '@/middleware/ActionsLord'
 
+import store from './store'
+
+
 /**
  * @VUE_uses
  */
@@ -75,6 +87,7 @@ Vue.component('vue-draggable-resizable', VueDraggableResizable)
 
 new Vue({
   router,
+  store,
   render: h => h(App),
   data() {   
     let self = this

@@ -77,7 +77,7 @@
 	import Pagetitle from '@/components/Pagetitle'
 	import NetworkingAttendee from '@/components/Networking/NetworkingAttendee'
 	import NetworkingPreview from '@/components/Networking/NetworkingPreview'
-	import AdminSidebar from '@/components/Meetup/AdminSidebar'
+	import AdminSidebar from '@/components/Meetup/AdminSidebar/index.vue'
 
 	export default {
 		name: "NetworkingRooms",

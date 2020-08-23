@@ -25,6 +25,17 @@
         }
     }
 }
+.admin-sidebar__list-item .accordion__trigger .accordion-trigger__arrow {
+    svg {
+        transition: .3s all ease-in-out;
+        transform: rotate(180deg);
+    }
+}
+.admin-sidebar__list-item .accordion__trigger.accordion__trigger_active .accordion-trigger__arrow{
+    svg {
+        transform: rotate(0deg);
+    }
+}
 #meetup-admin-sidebar .sidebar-content {
     background-color: white;
     width: 380px !important;

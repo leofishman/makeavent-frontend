@@ -9,10 +9,11 @@
             :mobile-mode="mobileMode"            
             @change="changeStep"
         >   
+            <!-- Company info -->
             <b-step-item step="1" :label="$root.content.meetupPopupForm.stepName.company" :clickable="isStepsClickable" disabled>
                 <company-step @update="updateCompany"/>
             </b-step-item>
-            
+            <!-- End Company info -->            
             <!-- Base info -->
             <b-step-item step="2" :label="$root.content.meetupPopupForm.stepName.name" :clickable="isStepsClickable" disabled>
                 <h2 class="title">{{$root.content.meetupPopupForm.labels.title}}</h2>

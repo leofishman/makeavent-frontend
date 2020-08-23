@@ -84,10 +84,11 @@
 
 							<div v-else>
 								<JitsiStream
-									v-if="$root.meetup.service == 'jitsi'"
+									v-if="$root.meetup.service == 'jitsi' && defineHowToRender() == 'speaker'"
 									:meetup="$root.meetup"
 									_id="mainroom"
 								/>
+								<video v-else id="videoElement" autoplay="true" muted="muted"></video>
 							</div>
 
 							<h1 class="meetup-title" v-html="$root.meetup.meetup_name"></h1>
@@ -174,7 +175,8 @@
 	import Chat from '@/components/Chats/Chat.vue'
 	import PitchDeck from '@/components/CompanyComponents/Pitchdeck'
 	import JitsiStream from '@/components/VideoStreams/Jitsi'
-	import AdminSidebar from '@/components/Meetup/AdminSidebar'
+	import AdminSidebar from '@/components/Meetup/AdminSidebar/index'
+	
 	export default {
 		props: {
 			id: {
@@ -236,6 +238,16 @@
 			}
 		},
 		methods: {
+			defineHowToRender () {
+				if ( this.$root.meetup.speakers.includes(this.$root.profile._id) )
+					this.userType = 'speaker'
+				
+				else
+					this.userType = 'basic'
+				
+				if (this.$root.isUserAdmin)
+					this.userType = 'admin'
+			},
 			openAndTrack (link) {
 				this.$root.track(name, link)
 				this.$root.openExternalInBlank(link)
@@ -283,6 +295,18 @@
 					this.$root.speakerProfiles = res.data
 				})
 			},
+			renderRtmpVideo () {
+				if (flvjs.isSupported() && this.defineHowToRender() == 'basic') {
+					var videoElement = document.getElementById('videoElement');
+					var flvPlayer = flvjs.createPlayer({
+						type: 'flv',
+						url: `http://95.216.165.245:8000/liveSTREAM_NAME/${this.id}`
+					});
+					flvPlayer.attachMediaElement(videoElement);
+					flvPlayer.load();
+					flvPlayer.play();
+				}
+			},
 			getMeetup () {
 				return new Promise((resolve, rejects) => {
 					Axios.create({
@@ -294,6 +318,9 @@
 					.then(res => {
 						this.$root.meetup = res.data.meetup
 						this.ready = true
+
+						this.renderRtmpVideo()
+
 						if (!window.io.query.project) {
 							window.io = VueSocketIO(socket, {
 								query: {

@@ -6,8 +6,8 @@
                 <b-input 
                     required
                     v-model="link"
-                    :placeholder="content.globalForms.placeholders.exmLink"
-                    :validation-message="content.globalForms.validation.required"
+                    :placeholder="$root.content.globalForms.placeholders.exmLink"
+                    :validation-message="$root.content.globalForms.validation.required"
                 ></b-input>
                 <p 
                     class="valid-url help is-danger"
@@ -55,14 +55,14 @@
                 @click.prevent="back"
                 class="button is-danger is-outlined"
             >
-                {{$root.content.globalForms.buttons.cancel}}
+                {{$root.$root.content.globalForms.buttons.cancel}}
             </b-button> 
             <b-button
                 class="button is-success is-outlined submit-button"  
                 :disabled="submitDisabled"
                 @click.prevent="submit"           
             >
-                {{$root.content.globalForms.buttons.submit}}
+                {{$root.$root.content.globalForms.buttons.submit}}
             </b-button>
         </div>
     </section>

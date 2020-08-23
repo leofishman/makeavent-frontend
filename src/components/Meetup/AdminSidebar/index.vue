@@ -24,6 +24,7 @@
                     <shortcuts/>
                     <transmition/>
                     <information/>
+                    <speakers/>
                     <streaming/>
                     <share/>
                     <design/>
@@ -45,16 +46,16 @@ import Design from './Design/'
 
 import Share from './Share/'
 import Streaming from './Streaming/'
-import Shortcuts from './Shortcuts'
+import Shortcuts from './Shortcuts/'
+import Speakers from './Speakers/'
 
 import {mapActions} from 'vuex'
 
 export default {
     name: 'AdminSidebarWrap',
     components: {
-         BackstageControls,
-         Transmition, Information, Design,
-        Share, Streaming, Shortcuts
+        BackstageControls, Transmition, Information, Design,
+        Share, Streaming, Shortcuts, Speakers
     },
     async mounted() {
         const obj = {

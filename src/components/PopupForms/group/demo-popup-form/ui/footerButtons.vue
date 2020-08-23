@@ -5,7 +5,7 @@
             :disabled="submitDisabled"
             @click.prevent="submit"           
         >
-            {{$root.content.globalForms.buttons.submit}}
+            {{$root.$root.content.globalForms.buttons.submit}}
         </b-button>
     </div>
 </template>

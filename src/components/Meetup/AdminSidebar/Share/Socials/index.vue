@@ -6,6 +6,7 @@
                 <twitter/>
                 <linkedin/>
             </div>
+            <ActiveButton class="admin-bar__share-social-list-btn admin-bar__button" :name="'Add New Source'"/>
     </div>
 </template>
 
@@ -14,9 +15,11 @@ import Facebook from './Facebook'
 import Linkedin from './Linkedin'
 import Twitter from './Twitter'
 
+import {ActiveButton} from '@/components/Global/controll/'
+
 export default {
     components: {
-        Facebook, Linkedin, Twitter
+        Facebook, Linkedin, Twitter, ActiveButton
     }
 }
 </script>

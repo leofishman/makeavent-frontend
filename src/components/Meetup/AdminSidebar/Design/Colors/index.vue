@@ -1,8 +1,8 @@
 <template>
   <div>      
-        <primary/>
-        <dark/>
-        <light/>
+      <primary :isLight="light"/>
+      <dark :isLight="light"/>
+      <light :isLight="light"/>
   </div>
 </template>
 
@@ -12,10 +12,23 @@ import Light from './Light'
 import Primary from './Primary'
 
 export default {
+    props: {
+      isLight: Boolean
+    },
     components: {
-        Dark,
-        Light,
-        Primary,
+      Dark,
+      Light,
+      Primary,
+    },
+    watch: {
+      isLight(){
+        this.light = this.$props.isLight
+      }
+    },
+    data(){
+      return {
+        light: this.$props.isLight
+      }
     }
 }
 </script>

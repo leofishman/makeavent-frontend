@@ -5,7 +5,7 @@
             <div class="input-disabled">
                 <input class="input-disabled__inner" :value="link" readonly>
                 <div class="input-disabled__copt-btn-wrap">
-                    <b-tooltip :label="content.globalForms.labels.copy" type="is-black" position="is-top" :class="isActive ? 'is-active': ''">
+                    <b-tooltip :label="$root.content.globalForms.labels.copy" type="is-black" position="is-top" :class="isActive ? 'is-active': ''">
                         <button class="input-disabled__copt-btn" @click="copy">{{$root.content.globalForms.buttons.copy}}</button>
                     </b-tooltip>
                 </div>
@@ -16,7 +16,6 @@
 
 <script>
 import MeetupFormRoutes from '@/store/routes/meetup-form'
-
 export default {
     data(){
         return {
@@ -31,17 +30,14 @@ export default {
             id: '5f3130b5804407190c832711'
         }
         const res = await MeetupFormRoutes.postCreateInviteLink(obj);
-
         this.link = res.data 
     },
     methods: {
         copy() {
-            var copyText = document.querySelector('.input-disabled__inner')
-
+            var copyText = document.querySelector('.stuff-field__link .input-disabled__inner')
             /* Select the text field */
             copyText.select();
             copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-
             /* Copy the text inside the text field */
             document.execCommand("copy");
             this.isActive = true
@@ -59,13 +55,11 @@ export default {
         position: relative;
         height: 40px;
         padding: 5px 15px;
-
         display: flex;
         align-items: center;
     }
     .input-disabled__copt-btn-wrap {
         display: flex;
-
         position: absolute;
         transform: translateY(-50%);
         top: 50%;
@@ -93,12 +87,9 @@ export default {
         line-height: 1em;
         letter-spacing: -0.015em;
         color: #FFFFFF;
-
         border: 0px;
         cursor: pointer;
-
         transition: all .3s ease-in-out;
-
         &:hover {
             background: rgba(75, 75, 75, 0.5);
         }
@@ -114,17 +105,15 @@ export default {
         color: #4B4B4B;        
         font-family: 'Montserrat';
         outline: 0px;
-
         -webkit-touch-callout: none; 
         -webkit-user-select: none;  
         -khtml-user-select: none; 
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-
         &::selection {
             color: #4B4B4B;
             background: transparent;
         }
     }
-</style>
+</style> 

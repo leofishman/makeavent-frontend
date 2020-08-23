@@ -14,10 +14,14 @@
 					<div class="navbar-start">
 						<div v-if="$root.actionsLord.SHOW_MEETUP_SETTINGS_BUTTON()" class="navbar-item settings-button">
 							<div class="buttons">
-								<a @click="toggleOpenMeetupSettings" class="button">
-									<img src="@/assets/img/Navbar/settings.svg" alt="">
+								<a @click="toggleOpenMeetupSettings" :class="sideBarActive ? 'setting-adminbar is-active' : 'setting-adminbar'">
+									<svg width="16" height="25" viewBox="0 0 16 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M14 2L3 12.5L14 23" stroke="black" stroke-opacity="0.34" stroke-width="3"/>
+									</svg>
+
+									<!-- <img src="@/assets/img/Navbar/settings.svg" alt="">
 									{{content.settings}}
-									<span class="tag is-info" v-if="$root.pendingCards.length" variant="light">{{$root.pendingCards.length}}</span>
+									<span class="tag is-info" v-if="$root.pendingCards.length" variant="light">{{$root.pendingCards.length}}</span> -->
 								</a>
 							</div>
 						</div>
@@ -71,8 +75,12 @@
 	</div>
 </template>
 <script>
+
 import calendly from '@/components/Popups/setCalendly'
 import {api} from '@/env'
+
+import routes from '@/store/routes/meetup-form'
+
 
 export default {
     name: "navbar",
@@ -123,9 +131,17 @@ export default {
 			this.$router.push('/login')
 		},
 
-		toggleOpenMeetupSettings () {
-			if (this.$root.openMeetupSettings)
+		async toggleOpenMeetupSettings () {
+			this.sideBarActive = !this.sideBarActive
+			if (this.$root.openMeetupSettings){
 				this.$root.openMeetupSettings = false
+				const obj = {
+					id: this.$root.meetup._id,
+					color_schema: this.$store.getters.meetupFull.color_schema,
+					custom_colors: this.$store.getters.meetupFull.custom_colors
+				}
+				await routes.postUpdate(obj)
+			}
 			else
 				this.$root.openMeetupSettings = true
 		},
@@ -144,6 +160,7 @@ export default {
 
 			api: api,
 			chatIsOpened: false,
+			sideBarActive: true
         }
     },
 }

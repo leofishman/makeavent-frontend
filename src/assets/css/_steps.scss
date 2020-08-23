@@ -7,7 +7,8 @@
     transform: translate(-50%, -50%);
     padding: 15px;
 
-    max-width: 798px;
+    // max-width: 798px;
+    width: 798px;
     &.edit-form {
         position: unset;
         transform: translate(0%, 0%);
@@ -38,6 +39,7 @@
     max-height: 100%;
 }
 .group-popup-form {
+    width: 100%;
     box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
     // min-height: 512px;
     margin: auto;

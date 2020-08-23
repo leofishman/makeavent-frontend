@@ -5,7 +5,7 @@
             :disabled="submitDisabled"
             @click.prevent="submit"           
         >
-        {{$root.content.globalForms.buttons.submit}}
+        {{$root.$root.content.globalForms.buttons.submit}}
         </b-button>
     </div>
 </template>
@@ -18,7 +18,7 @@ export default {
     methods: {
         submit(){
             const updated = this.$props.updated
-            const id = '5f0f6ddf769bc8055cb2b945'
+            const id = this.$root.meetup._id
             const stuffArray = this.$props.stuffArray.map(item => {
                 return {                    
                     file: item.file,

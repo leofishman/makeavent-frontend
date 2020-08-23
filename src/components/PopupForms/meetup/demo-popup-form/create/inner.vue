@@ -6,7 +6,7 @@
                 class="button is-success submit-button stuff-popup add-new" 
                 @click="addNew"           
             >
-                {{$root.content.globalForms.buttons.addNew}}
+                {{$root.$root.content.globalForms.buttons.addNew}}
             </b-button>
         </div>  
         <input-list :demosArray="demosArray" @checkArr="checkSubmit" />

@@ -274,8 +274,10 @@
 		@extend .default-meetup-container;
 		z-index: 2;
 		position: relative;
-		width: calc(100% - 600px);
-		margin-left: 300px;
+		// width: calc(100% - 600px);
+		// margin-left: 300px;
+		width: calc(100% - 700px);
+		margin-left: 380px;
 		.container-edit {
 			margin-left: 0px;
 		}

@@ -5,7 +5,7 @@
             <ActiveButton
                 @clicked="showBackstageControlPopup = true" 
                 :name="content.backstageSettings"
-                class="admin-bar__shortcuts-btn">
+                class="admin-bar__shortcuts-btn admin-bar__button">
             </ActiveButton>
         </div>
 </template>

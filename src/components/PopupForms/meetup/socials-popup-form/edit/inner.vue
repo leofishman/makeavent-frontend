@@ -25,7 +25,7 @@
                     class="button is-danger is-outlined submit-button stuff-popup add-new" 
                     @click="clearItem"           
                 >
-                    {{$root.content.globalForms.buttons.cancel}}
+                    {{$root.$root.content.globalForms.buttons.cancel}}
                 </b-button>
                 <b-button
                     v-if="!isUpdateItem"
@@ -33,7 +33,7 @@
                     @click="addNew"                      
                     :disabled="addDisabled"
                 >
-                    {{$root.content.globalForms.buttons.addNew}}
+                    {{$root.$root.content.globalForms.buttons.addNew}}
                 </b-button>
                 <b-button
                     v-if="isUpdateItem"
@@ -41,7 +41,7 @@
                     @click="updateSingle"                      
                     :disabled="addDisabled"
                 >
-                    {{$root.content.globalForms.buttons.update}}
+                    {{$root.$root.content.globalForms.buttons.update}}
                 </b-button>
             </b-field>
         </div> 

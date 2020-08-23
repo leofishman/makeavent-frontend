@@ -96,7 +96,6 @@
 
 <script>
     import {mapActions, mapGetters} from 'vuex'
-    import eng from '@/english'
     import autocompleteLocation from './autocompleteLocation'
     import autocompleteInterests from './autocompleteInterests'
     import autocompleteSubInterests from './autocompleteSubInterests'
@@ -112,8 +111,7 @@
                 file: {},        
                 oldInterest: false,
                 interest: false,     
-                subInterest: false,            
-                content: eng,
+                subInterest: false, 
                 saveDisabled: false,
                 unqName: true
             }

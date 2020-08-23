@@ -4,7 +4,30 @@
         <!-- <h2 class="form-title">{{$root.content.groupEditPopupForm.title}}</h2> -->
         <div class="group-popup-form--edit-from__scroll">
             <div class="edit-field basic-info">
-                <h2 class="title">{{$root.content.meetupPopupForm.labels.title}}</h2>
+                <h2 class="title">{{$root.content.meetupPopupForm.labels.title}}</h2>         
+                <b-field>
+                    <b-input 
+                        :placeholder="$root.content.meetupPopupForm.placeholders.company_name"
+                        v-model="company_name"
+                        :validation-message="$root.content.meetupPopupForm.validation.name"
+                        required 
+                    >
+                    </b-input>
+                </b-field>
+                <b-field>
+                    <b-input 
+                        v-model="company_description"
+                        :placeholder="$root.content.meetupPopupForm.placeholders.company_description"
+                        maxlength="200" 
+                        type="textarea"
+                        :validation-message="$root.content.meetupPopupForm.validation.massage"
+                        required
+                    >
+                    </b-input>
+                </b-field>
+            </div>
+
+            <div class="edit-field">  
                 <b-field>
                     <b-input 
                         :placeholder="$root.content.meetupPopupForm.placeholders.name"
@@ -24,7 +47,7 @@
                         required
                     >
                     </b-input>
-                </b-field>
+                </b-field>     
             </div>
 
             <div class="edit-field location-field">
@@ -161,6 +184,8 @@ export default {
     return {
         name: '',
         message: '',
+        company_name: '',
+        company_description: '',
         date: new Date(),
         file: {},  
         fileUplodated: false,
@@ -180,6 +205,12 @@ export default {
       message() {
         this.сheckAllFields()
       },
+      company_name() {
+        this.сheckAllFields()
+      },
+      company_description() {
+        this.сheckAllFields()
+      },
       date() {
         this.сheckAllFields()
       },
@@ -190,6 +221,9 @@ export default {
         }
         await this.getMeetupById(obj)
         this.name = this.$store.state.meetupForm.name;
+        this.message = this.$store.state.meetupForm.message;
+        this.company_name = this.$store.state.meetupForm.company_name;
+        this.company_description = this.$store.state.meetupForm.company_description
         this.message = this.$store.state.meetupForm.message;
         const date = new Date(Date.parse(this.$store.state.meetupForm.date));
 
@@ -245,9 +279,11 @@ export default {
     сheckAllFields(){
         const name = this.name;
         const message = this.message;
+        const company_name = this.company_name;
+        const company_description = this.company_description;
         const logo = this.$store.state.meetupForm.logo;   
         // if(validLocation && name && message && logo && interest && subInterest ){
-        if(name && message && logo ){
+        if(name && message && logo && company_name && company_description){
             this.saveDisabled = false
             return true
         } else {
@@ -259,6 +295,8 @@ export default {
     async submit() {
         const name = this.name;
         const description = this.message;
+        const company_name = this.company_name;
+        const company_description = this.company_description;
         const date = this.date;
 
         let file =  '', 
@@ -284,6 +322,8 @@ export default {
             id: this.$root.meetup._id,
             name: name,
             description: description,
+            company_name: company_name,
+            company_description: company_description,
             date: date,
             image: file,
             preview: filePreview,

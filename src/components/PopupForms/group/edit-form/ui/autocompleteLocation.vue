@@ -19,7 +19,6 @@
 
 <script>
   import {mapActions} from 'vuex'
-  import eng from '@/english'
 
   export default {
     props: ['location'],
@@ -31,7 +30,6 @@
       return {
         data: false,
         name: '',
-        content: eng
         // selected: null
       }
     },

@@ -10,15 +10,9 @@
 
 <script>
 import EditForm from './ui/edit-form'
-import eng from '@/english'
 
 export default {
   name: 'GroupPopupForm',
-  data(){
-    return {
-      content: eng
-    }
-  },
   methods: {
     close(){
       this.show = false

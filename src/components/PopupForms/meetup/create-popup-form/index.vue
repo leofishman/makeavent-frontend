@@ -1,6 +1,6 @@
 <template>
-  <div class="group-popup-form-wrap" v-if="show">
-    <div class="group-popup-form">
+  <!-- <div class="group-popup-form-wrap" v-if="show"> -->
+    <!-- <div class="group-popup-form">
       <div class="group-popup-form__header">
         <p>{{$root.content.meetupPopupForm.title}}</p>
         <img class="close" src="@/assets/icon/steps-close.png" @click="close">
@@ -10,20 +10,24 @@
           @submitForm="close"
         />
       </div>
-    </div>
-  </div>
+    </div> -->
+    
+    <wrap>      
+      <template slot="title">{{$root.content.meetupPopupForm.title}}</template>
+      <steps slot="inner-from"/>
+    </wrap>
+  <!-- </div> -->
 </template>
 
 <script>
 import steps from './ui/steps'
-import eng from '@/english'
+import wrap from '@/components/Global/popup-form'
 
 export default {
   name: 'GroupPopupForm',
   data(){
     return {
       show: true,
-      content: eng
     }
   },
   methods: {
@@ -32,7 +36,8 @@ export default {
     }
   },
   components: {
-    steps
+    steps,
+    wrap
   }
 }
 </script>

@@ -79,7 +79,7 @@ export default {
     },
     async mounted(){        
         const obj = {
-            id: '5f0f6ddf769bc8055cb2b945'
+            id: this.$root.meetup._id
         }
         await this.getMeetupById(obj)
         this.meetup = this.$store.state.meetupForm

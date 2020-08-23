@@ -59,7 +59,7 @@ export default {
     },
     async mounted() {
         const obj = {
-            id: '5f3130b5804407190c832711'
+            id: this.$root.meetup._id
         }
         await this.getMeetupById(obj)
     },

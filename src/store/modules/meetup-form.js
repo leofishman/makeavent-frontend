@@ -6,6 +6,7 @@ export default {
         // getMeetupById
         async getMeetupById(ctx, meetupIdObj) {
             const meetup = await MeetupController.getMeetupById(meetupIdObj) 
+            console.log('meetup meetup meetup', meetup);
             ctx.commit('updateMeetup', meetup)                 
         },
         async toggleMeetupNetworkingRoom(ctx, meetupIdObj){
@@ -22,6 +23,8 @@ export default {
         updateMeetup(state, meetup){            
             state.name = meetup.meetup_name           
             state.message = meetup.meetup_topic
+            state.company_name = meetup.company_name
+            state.company_description = meetup.company_description
             state.date = meetup.date
             state.logo = meetup.image
             state.preview = meetup.preview
@@ -55,6 +58,8 @@ export default {
     state: {
         name: '',
         message: '',
+        company_name: '',
+        company_description: '',
         logo: '',
         date: '',
         preview: '',

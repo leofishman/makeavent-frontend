@@ -166,7 +166,7 @@
                         @click.prevent="previous.action"
                         v-if="firstStep"
                     >
-                        {{$root.$root.content.globalForms.buttons.cancel}}
+                        {{$root.content.globalForms.buttons.cancel}}
                     </b-button>       
                     <b-button
                         outlined
@@ -175,7 +175,7 @@
                         @click.prevent="previous.action"
                         v-if="!firstStep"
                     >
-                        {{$root.$root.content.globalForms.buttons.back}}
+                        {{$root.content.globalForms.buttons.back}}
                     </b-button>                    
                     <b-button
                         outlined
@@ -184,14 +184,14 @@
                         @click.prevent="next.action"            
                         v-if="!lastStep"  
                     >
-                        {{$root.$root.content.globalForms.buttons.next}}
+                        {{$root.content.globalForms.buttons.next}}
                     </b-button>
                     <b-button
                         class="button is-success is-outlined submit-button"  
                         @click.prevent="submit"         
                         v-if="lastStep"  
                     >
-                        {{$root.$root.content.globalForms.buttons.submit}}
+                        {{$root.content.globalForms.buttons.submit}}
                     </b-button>
                 </div>
             </template>

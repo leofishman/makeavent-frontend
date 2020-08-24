@@ -1,10 +1,10 @@
 <template>
   <section>
       <item class="admin-bar__speakers">
-            <p class="admin-bar__list-item-header" slot="header">Speakers</p>
+            <p class="admin-bar__list-item-header" slot="header">{{this.$root.content.adminSidebar.items.speakers.title}}</p>
             <template slot="inner">
                 <div class="admin-bar__speakers-list">
-                    <active-button class="admin-bar__button" :name="'Manage Backstage'"/>
+                    <active-button class="admin-bar__button" :name="$root.content.adminSidebar.items.buttons.manage"/>
                     <template v-if="$store.getters.meetupFull.speakers">
                         <div class="admin-bar__speakers-cards">
                             <speaker-card 
@@ -14,7 +14,7 @@
                             />
                         </div>
                     </template>
-                    <active-button @clicked="openAddFrom" class="admin-bar__button" :name="'Add Speaker'"/>
+                    <active-button @clicked="openAddFrom" class="admin-bar__button" :name="$root.content.adminSidebar.items.buttons.add"/>
                 </div>
             </template>
       </item>

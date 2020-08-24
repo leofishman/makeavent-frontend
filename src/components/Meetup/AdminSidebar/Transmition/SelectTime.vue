@@ -1,7 +1,7 @@
 <template>
-    <b-field label="Schedule Opening Time">
+    <b-field :label="$root.content.adminSidebar.items.transmition.labels.time">
         <b-clockpicker
-            placeholder="Select"
+            :placeholder="$root.content.adminSidebar.items.transmition.placeholders.time"
             icon="clock"
             editable
         >

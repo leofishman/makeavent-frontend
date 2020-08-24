@@ -2,7 +2,7 @@
     <b-button class="is-green-dark" @click="click">
             <div class="btn-wrap">
                 <div class="bnt-icon--binding"></div>
-                <div>Stop Streaming</div>
+                <div>{{this.$root.content.adminSidebar.items.shortcuts.buttons.h_streaming}}</div>
             </div>
     </b-button>
 </template>

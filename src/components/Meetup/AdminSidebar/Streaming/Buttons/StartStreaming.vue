@@ -2,7 +2,7 @@
     <b-button class="is-green" @click="click">
         <div class="btn-wrap">
             <div class="bnt-icon--binding"></div>
-            <div>Start Streaming</div>
+            <div>{{this.$root.content.adminSidebar.items.streaming.buttons.start}}</div>
         </div>                        
     </b-button>
 </template>

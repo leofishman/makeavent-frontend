@@ -1,7 +1,7 @@
 <template>
   <section>
       <item class="admin-bar__design">
-            <p class="admin-bar__list-item-header" slot="header">Design</p>
+            <p class="admin-bar__list-item-header" slot="header">{{this.$root.content.adminSidebar.items.design.title}}</p>
             <template slot="inner">
                 <div class="admin-bar__design-switchers">
                     <switchers 
@@ -12,10 +12,10 @@
                     />
                 </div>
                 <div class="admin-bar__design-colors" v-if="isActive">
-                    <p class="admin-bar__design-colors-par">Colors</p>
+                    <p class="admin-bar__design-colors-par">{{this.$root.content.adminSidebar.items.design.subtitle}}</p>
                     <colors :isLight="isLight"/>
                 </div>
-                <active-button class="admin-bar__button" @clicked="openScreenSaver" :name="'Change Background'"/>
+                <active-button class="admin-bar__button" @clicked="openScreenSaver" :name="$root.content.adminSidebar.items.design.button"/>
             </template>
       </item>
   </section>

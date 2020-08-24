@@ -1,10 +1,10 @@
 <template>
   <section>
       <item class="admin-bar__share">
-            <p class="admin-bar__list-item-header" slot="header">Share</p>
+            <p class="admin-bar__list-item-header" slot="header">{{this.$root.content.adminSidebar.items.share.title}}</p>
             <template slot="inner">
-                <in-active-button @clicked="copy" class="admin-bar__button" :name="'Copy link to Clipboard'"/>
-                <in-active-button class="admin-bar__button" :name="'Send Email Invitations'"/>
+                <in-active-button @clicked="copy" class="admin-bar__button" :name="$root.content.adminSidebar.items.share.buttons.clipboard"/>
+                <in-active-button class="admin-bar__button" :name="$root.content.adminSidebar.items.share.buttons.invitations"/>
                 <input :value="link" class="input-disabled__inner" type="text">
                 <socials/>
             </template>

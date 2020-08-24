@@ -6,9 +6,9 @@
           :active.sync="isLoading" 
           :can-cancel="false"
       />
-      <b-field :label="'Meetup Room'">  
+      <b-field :label="$root.content.adminSidebar.items.transmition.labels.meetup">  
         <b-switch v-model="isSwitched">
-          Close
+          {{this.$root.content.adminSidebar.items.transmition.placeholders.close}}
         </b-switch>
       </b-field>
   </div>

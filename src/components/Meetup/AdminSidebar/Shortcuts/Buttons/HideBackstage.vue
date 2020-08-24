@@ -1,5 +1,5 @@
 <template>
-  <active-button class="admin-bar__button admin-bar__shortcuts-btn" @clicked="click" :name="'Hide Backstage Window'"/>
+  <active-button class="admin-bar__button admin-bar__shortcuts-btn" @clicked="click" :name="$root.content.adminSidebar.items.shortcuts.buttons.h_backst"/>
 </template>
 
 <script>

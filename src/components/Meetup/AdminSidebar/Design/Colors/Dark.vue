@@ -1,7 +1,7 @@
 <template>
   <div class="admin-sidebar-color-item">
       <color-item @blur="updateColorShema" @input="check" :defaultColor="defaultColor">
-        <p slot="name">Dark</p>
+        <p slot="name">{{this.$root.content.adminSidebar.items.design.colors.dark}}</p>
       </color-item>
       <!-- <div>{{$store.getters.meetupFull.logo}}</div> -->
   </div>

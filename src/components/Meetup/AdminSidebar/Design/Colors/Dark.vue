@@ -1,6 +1,6 @@
 <template>
   <div class="admin-sidebar-color-item">
-      <color-item @input="check" :defaultColor="defaultColor">
+      <color-item @blur="updateColorShema" @input="check" :defaultColor="defaultColor">
         <p slot="name">Dark</p>
       </color-item>
       <!-- <div>{{$store.getters.meetupFull.logo}}</div> -->
@@ -10,6 +10,8 @@
 <script>
 import {mapMutations} from 'vuex'
 import ColorItem from '@/components/Global/admin-sidebar/ColorItem'
+
+import routes from '@/store/routes/meetup-form'
 
 export default {
     props: {
@@ -31,6 +33,15 @@ export default {
         ColorItem
     },
     methods: {
+        async updateColorShema(){
+            console.log('updateColorShema');
+            const obj = {
+                id: this.$root.meetup._id,
+                color_schema: this.$store.getters.meetupFull.color_schema,
+                custom_colors: this.$store.getters.meetupFull.custom_colors
+            }
+            await routes.postUpdate(obj)
+        },
         check(val){
             this.updateColor(val)
         },

@@ -1,7 +1,7 @@
 <template>
     <div class="admin-sidebar-color-item">
         <div class="admin-sidebar-color-item__color-picker">
-            <color-picker  :color="currentColor" v-model="currentColor" @input="updateColor" />
+            <color-picker @blur="blur"  :color="currentColor" v-model="currentColor" @input="updateColor" />
         </div>
         <div 
             :class="activeClass"
@@ -27,6 +27,9 @@ export default {
         updateColor(val) {
             this.currentColor = val
             this.$emit('input',this.currentColor)
+        },
+        blur(){
+            this.$emit('blur')
         }
     },
     data(){

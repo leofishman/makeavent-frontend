@@ -465,6 +465,7 @@ export default {
     meetupPopupForm: {
         title: 'Wizard title',
         stepName: {
+            company: 'Company',
             name: 'Base info',
             date: 'Date',
             logo: "Logo",
@@ -472,6 +473,7 @@ export default {
             confirm: 'Confirm'
         },
         labels: {
+            company: 'Company',
             title: "Basic Info",
             date: "Date",
             logo: "Upload your Meetup logo",
@@ -484,7 +486,9 @@ export default {
         },
         placeholders: {
             name: "Name",
+            company_name: "Company name",
             massage: "Description",
+            company_description: "Company description",
             date: "Type or select a date..",
         },
         confirmFields: {

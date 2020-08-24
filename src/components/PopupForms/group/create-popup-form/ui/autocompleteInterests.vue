@@ -19,7 +19,6 @@
 
 <script>
   import {mapActions} from 'vuex'
-  import eng from '@/english'
 
   export default {
     async mounted() {
@@ -29,7 +28,6 @@
       return {
         data: false,
         name: '',
-        content: eng
         // selected: null
       }
     },

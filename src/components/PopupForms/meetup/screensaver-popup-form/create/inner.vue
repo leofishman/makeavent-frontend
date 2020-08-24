@@ -6,8 +6,8 @@
                 <b-input 
                     required
                     v-model="link"
-                    :placeholder="content.globalForms.placeholders.exmLink"
-                    :validation-message="content.globalForms.validation.required"
+                    :placeholder="$root.content.globalForms.placeholders.exmLink"
+                    :validation-message="$root.content.globalForms.validation.required"
                 ></b-input>
                 <p 
                     class="valid-url help is-danger"
@@ -79,7 +79,7 @@ export default {
     },
     async mounted(){        
         const obj = {
-            id: '5f0f6ddf769bc8055cb2b945'
+            id: this.$root.meetup._id
         }
         await this.getMeetupById(obj)
         this.meetup = this.$store.state.meetupForm

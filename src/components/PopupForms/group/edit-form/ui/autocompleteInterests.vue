@@ -19,7 +19,6 @@
 
 <script>
   import {mapActions} from 'vuex'
-  import eng from '@/english'
 
   export default {
     props: ['interest'],
@@ -31,7 +30,6 @@
         data: false,
         name: 'Arts & Culture',
         // selected: null
-        content: eng
       }
     },
     watch: {

@@ -6,6 +6,7 @@ export default {
         // getMeetupById
         async getMeetupById(ctx, meetupIdObj) {
             const meetup = await MeetupController.getMeetupById(meetupIdObj) 
+            console.log('meetup meetup meetup', meetup);
             ctx.commit('updateMeetup', meetup)                 
         },
         async toggleMeetupNetworkingRoom(ctx, meetupIdObj){
@@ -19,15 +20,18 @@ export default {
     },
     mutations: {
         // update Meetup
-        updateMeetup(state, meetup){             
-            state.name = meetup.name           
-            state.message = meetup.description
+        updateMeetup(state, meetup){            
+            state.name = meetup.meetup_name           
+            state.message = meetup.meetup_topic
+            state.company_name = meetup.company_name
+            state.company_description = meetup.company_description
             state.date = meetup.date
             state.logo = meetup.image
             state.preview = meetup.preview
             state.demo = meetup.demo
             state.stuff = meetup.stuff
             state.socials = meetup.socials
+            state.speakers = meetup.speakers
             state.networkingRoomOpened = meetup.networkingRoomOpened
             state.meetupRoomOpened = meetup.meetupRoomOpened
             state.screensaverColor = meetup.screensaverColor
@@ -37,6 +41,9 @@ export default {
         },
         updateCustomColor(state, val){
             state.custom_colors = val
+        },
+        updateColorMode(state, val){
+            state.color_schema.isLight = val
         },
         updateSchemaColor(state, color){
             state.color_schema[color.key] = color.value
@@ -51,11 +58,14 @@ export default {
     state: {
         name: '',
         message: '',
+        company_name: '',
+        company_description: '',
         logo: '',
         date: '',
         preview: '',
         custom_colors: false,
         color_schema: {
+            isLight: true,
             primary: '#0051d9',
             dark: '#4b4b4b',
             light: '#ffffff',
@@ -64,7 +74,8 @@ export default {
         meetupRoomOpened: false,
         demo: [],
         stuff: [],
-        socials: []
+        socials: [],
+        speakers: []
     },
     getters: {
         meetupFull(state){

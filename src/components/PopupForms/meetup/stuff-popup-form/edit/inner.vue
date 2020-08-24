@@ -1,6 +1,6 @@
 <template>
     <section class="group-steps stuff-popup-form">
-        <h2 class="title">{{$root.$root.content.stuffPopupForm.labels.document}}</h2>     
+        <h2 class="title">{{$root.content.stuffPopupForm.labels.document}}</h2>     
         <div>
             <b-button
                 class="button is-success submit-button stuff-popup add-new" 
@@ -24,7 +24,7 @@ export default {
     components: {
         inputList, footerButtons
     },
-    async mounted(){        
+    async mounted(){      
         const obj = {
             id: this.$root.meetup._id
         }

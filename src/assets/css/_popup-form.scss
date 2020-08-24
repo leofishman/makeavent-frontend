@@ -3,6 +3,46 @@
     width: 100%;
     max-width: 712px;
 }
+.group-popup-form-wrap.group-popup-form--edit-from  {
+    .group-popup-form--edit-from__scroll {
+        max-height: 620px;
+        overflow-y: scroll;
+        margin-right: -15px;
+        padding-right: 15px;
+        
+        /* width */
+        &::-webkit-scrollbar {
+            width: 8px;
+            scrollbar-gutter: auto;
+        }
+            
+        /* Track */
+        &::-webkit-scrollbar-track {
+            border-radius: 5px;
+            // background: rgba(75, 75, 75, 0.1);
+        }
+        
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+        }
+        &--demo {
+            overflow: overlay;
+        }
+        /* Track */
+        &::-webkit-scrollbar-track {
+            background: rgba(75, 75, 75, 0.1);
+            box-shadow: inset 0 0 5px grey; 
+        }
+        &::-webkit-scrollbar-thumb {        
+            background: rgba(75, 75, 75, 0.32);
+        }
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: rgba(75, 75, 75, 0.5);
+        }
+    }
+}
 .group-popup-form-wrap .stuff-field {
     display: flex;
     // align-items: center;

@@ -24,6 +24,7 @@
                     <shortcuts/>
                     <transmition/>
                     <information/>
+                    <speakers/>
                     <streaming/>
                     <share/>
                     <design/>
@@ -45,20 +46,20 @@ import Design from './Design/'
 
 import Share from './Share/'
 import Streaming from './Streaming/'
-import Shortcuts from './Shortcuts'
+import Shortcuts from './Shortcuts/'
+import Speakers from './Speakers/'
 
 import {mapActions} from 'vuex'
 
 export default {
     name: 'AdminSidebarWrap',
     components: {
-         BackstageControls,
-         Transmition, Information, Design,
-        Share, Streaming, Shortcuts
+        BackstageControls, Transmition, Information, Design,
+        Share, Streaming, Shortcuts, Speakers
     },
     async mounted() {
         const obj = {
-            id: '5f3130b5804407190c832711'
+            id: this.$root.meetup._id
         }
         await this.getMeetupById(obj)
     },

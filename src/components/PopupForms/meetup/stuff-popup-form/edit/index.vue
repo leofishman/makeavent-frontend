@@ -1,7 +1,11 @@
 <template>
-  <wrap v-if="show" @close="close">      
-    <template slot="title">{{$root.content.stuffPopupForm.title}}</template>
-    <inner slot="inner-from" @submitForm="close" />
+  <wrap v-if="show" @close="close">     
+    <p slot="title">{{$root.content.stuffPopupForm.title}}</p>
+    <template slot="inner-from">
+      <section>
+        <inner  @submitForm="close" />
+      </section>
+    </template>    
   </wrap>
 </template>
 
@@ -10,17 +14,15 @@ import wrap from '@/components/Global/popup-form'
 import inner from './inner'
 
 export default {
-  props: ['show'],
-  
+  mounted(){
+    console.log('$root.content', this.$root.content);
+  },
   data(){
     return {
-      show: this.$props.show,
+      show: true,
     }
   },
   methods: {
-    close(){
-      this.show = false
-    },
     close(){
       this.show = false
     }

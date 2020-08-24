@@ -175,7 +175,6 @@
     import autocompleteLocation from './autocompleteLocation'
     import autocompleteInterests from './autocompleteInterests'
     import autocompleteSubInterests from './autocompleteSubInterests'
-    import eng from '@/english'
     
     import Controllers from '@/store/controllers/group-form'
 
@@ -225,8 +224,6 @@
                 fileUplodated: null,
 
                 unqName: true,
-                
-                content: eng
             }
         },
         methods: {

@@ -6,6 +6,10 @@
                 <div class="admin-bar__streaming-list">
                     <buttons/>
                     <sources/>
+                    <active-button
+                        :name="'Add New Source'"
+                        class="admin-bar__shortcuts-btn admin-bar__button">
+                    </active-button>
                 </div>
             </template>
       </item>
@@ -18,11 +22,14 @@ import Item from '@/components/Global/admin-sidebar/Item/'
 import Buttons from './Buttons'
 import Sources from './Sources'
 
+import {ActiveButton} from '@/components/Global/controll/'
+
 export default {
     components: {
         Item,
         Buttons,
-        Sources
+        Sources,
+        ActiveButton
     }
 }
 </script>

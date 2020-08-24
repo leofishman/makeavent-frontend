@@ -2859,3 +2859,34 @@ main {
 		}
 	}
 }
+
+.notification-clipboar {
+	display: flex;
+	align-items: center;
+
+	// .close {
+	// 	background: transparent !important;
+	// }
+	// .close::before {
+	// 	background: rgba(75, 75, 75, 0.32) !important;
+	// }
+}
+.notification-clipboar__text {
+	span {
+		font-weight: 400;
+		font-size: 18px;
+		line-height: 28px;
+		letter-spacing: -0.015em;
+		color: #4B4B4B;
+	}
+}
+.notification-clipboar__icon {
+	width: 56px;
+	height: 56px;
+	background-color: #C4C4C4;
+	margin-right: 7px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

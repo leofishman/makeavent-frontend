@@ -8,15 +8,20 @@
             :label-position="labelPosition"
             :mobile-mode="mobileMode"            
             @change="changeStep"
-        >
+        >   
+            <!-- Company info -->
+            <b-step-item step="1" :label="$root.content.meetupPopupForm.stepName.company" :clickable="isStepsClickable" disabled>
+                <company-step @update="updateCompany"/>
+            </b-step-item>
+            <!-- End Company info -->            
             <!-- Base info -->
-            <b-step-item step="1" :label="content.meetupPopupForm.stepName.name" :clickable="isStepsClickable" disabled>
+            <b-step-item step="2" :label="$root.content.meetupPopupForm.stepName.name" :clickable="isStepsClickable" disabled>
                 <h2 class="title">{{$root.content.meetupPopupForm.labels.title}}</h2>
                 <b-field>
                     <b-input 
-                        :placeholder="content.meetupPopupForm.placeholders.name"
+                        :placeholder="$root.content.meetupPopupForm.placeholders.name"
                         v-model="name"
-                        :validation-message="content.meetupPopupForm.validation.name"
+                        :validation-message="$root.content.meetupPopupForm.validation.name"
                         required 
                     >
                     </b-input>
@@ -24,10 +29,10 @@
                 <b-field>
                     <b-input 
                         v-model="message"
-                        :placeholder="content.meetupPopupForm.placeholders.massage"
+                        :placeholder="$root.content.meetupPopupForm.placeholders.massage"
                         maxlength="200" 
                         type="textarea"
-                        :validation-message="content.meetupPopupForm.validation.massage"
+                        :validation-message="$root.content.meetupPopupForm.validation.massage"
                         required
                     >
                     </b-input>
@@ -35,11 +40,11 @@
             </b-step-item>
             <!-- END Base info -->
             <!-- Logo -->
-            <b-step-item step="2" :label="content.meetupPopupForm.stepName.date" :clickable="isStepsClickable" :type="{'is-success': isProfileSuccess}">
+            <b-step-item step="3" :label="$root.content.meetupPopupForm.stepName.date" :clickable="isStepsClickable" :type="{'is-success': isProfileSuccess}">
                 <h2 class="title">{{$root.content.meetupPopupForm.labels.date}}</h2>                
                 <b-field class="input-date">
                     <b-datetimepicker
-                        :placeholder="content.meetupPopupForm.placeholders.date"
+                        :placeholder="$root.content.meetupPopupForm.placeholders.date"
                         icon="calendar-today"
                         v-model="date"
                         @input="inputDate">
@@ -48,7 +53,7 @@
                 </b-field>
             </b-step-item>
             <!-- Logo -->
-            <b-step-item step="3" :label="content.meetupPopupForm.stepName.logo" :clickable="isStepsClickable" disabled>
+            <b-step-item step="4" :label="$root.content.meetupPopupForm.stepName.logo" :clickable="isStepsClickable" disabled>
                 <h2 class="title">{{$root.content.meetupPopupForm.labels.logo}}</h2>
                  <section class="file-uploader">
                     <b-field>
@@ -83,7 +88,7 @@
             </b-step-item>
             <!-- END Logo -->
             <!-- Preview -->
-            <b-step-item step="4" :label="content.meetupPopupForm.stepName.preview" :clickable="isStepsClickable" disabled>
+            <b-step-item step="5" :label="$root.content.meetupPopupForm.stepName.preview" :clickable="isStepsClickable" disabled>
                 <h2 class="title">{{$root.content.meetupPopupForm.labels.preview}}</h2>
                  <section class="file-uploader file-uploader--video">
                     <b-field>
@@ -117,7 +122,7 @@
                 </section>
             </b-step-item>
             <!-- END preview -->
-            <b-step-item step="5" :label="content.meetupPopupForm.stepName.confirm" :clickable="isStepsClickable">
+            <b-step-item step="6" :label="$root.content.meetupPopupForm.stepName.confirm" :clickable="isStepsClickable">
                 <h2 class="title last-step">{{$root.content.meetupPopupForm.labels.confirm}}</h2>
                 <div class="confirm-data">
                     <div class="confirm-data__row">
@@ -203,9 +208,12 @@
     import {mapActions} from 'vuex'
     import MeetupFormRoutes from '@/store/routes/meetup-form'
 
-    import eng from '@/english'
+    import CompanyStep from './CompanyStep'
 
     export default {
+        components: {
+            CompanyStep
+        },
         mounted(){
             this.hideDatePlaceholder()
         },
@@ -246,6 +254,8 @@
 
                 name: '',
                 message: '',
+                company_name: '',
+                company_description: '',
                 date: new Date(),
                 file: {},  
                 fileUplodated: false,
@@ -255,20 +265,25 @@
                 previewFileValid: true,
                 currentDate: new Date(),
                 nextDisabled: true,
-                
-                content: eng
             }
         },
         methods: {
+            updateCompany(obj){
+                this.company_name = obj.company_name
+                this.company_description = obj.company_description
+                this.nextDisabled = !obj.valid
+            },
             changeStep() {                
                 const currentStep = this.activeStep+1
-                const validStep = Boolean(this.name.length && this.message)
+                const validCompany = Boolean(this.company_name.length && this.message)
+                const validStep = Boolean(this.name.length && this.company_description.length)
                 const validDate = this.date.getTime() !== this.currentDate.getTime()
 
-                if(currentStep === 1 && validStep) this.nextDisabled = false
-                else if(currentStep === 2 && validDate) this.nextDisabled = false
-                else if(currentStep === 3 && this.fileUplodated) this.nextDisabled = false
-                else if(currentStep === 4 && this.PfileUplodated) this.nextDisabled = false
+                if(currentStep === 1 && validCompany) this.nextDisabled = false
+                else if(currentStep === 2 && validStep) this.nextDisabled = false
+                else if(currentStep === 3 && validDate) this.nextDisabled = false
+                else if(currentStep === 4 && this.fileUplodated) this.nextDisabled = false
+                else if(currentStep === 5 && this.PfileUplodated) this.nextDisabled = false
                 else this.nextDisabled = true                
             },
             // End steps checkers
@@ -331,6 +346,10 @@
             async submit() {
                 const name = this.name;
                 const description = this.message;
+
+                const company_name = this.company_name;
+                const company_description = this.company_description;
+
                 const date = this.date;
 
                 const fileName = this.file.name
@@ -354,6 +373,8 @@
                     const data = {      
                         name: name,
                         description: description,
+                        company_name: company_name,
+                        company_description: company_description,
                         date: date,
                         image: this.fileUplodated,
                         preview: PfileUplodated,
@@ -370,7 +391,7 @@
         computed: {
             lastStep(){
                 const currentStep = this.activeStep+1
-                return currentStep === 5
+                return currentStep === 6
             },
             firstStep(){
                 const currentStep = this.activeStep+1

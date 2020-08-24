@@ -34,7 +34,6 @@ export default {
     },
     methods: {
         async updateColorShema(){
-            console.log('updateColorShema');
             const obj = {
                 id: this.$root.meetup._id,
                 color_schema: this.$store.getters.meetupFull.color_schema,

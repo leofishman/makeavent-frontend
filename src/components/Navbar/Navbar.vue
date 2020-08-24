@@ -79,9 +79,6 @@
 import calendly from '@/components/Popups/setCalendly'
 import {api} from '@/env'
 
-import routes from '@/store/routes/meetup-form'
-
-
 export default {
     name: "navbar",
     props: {

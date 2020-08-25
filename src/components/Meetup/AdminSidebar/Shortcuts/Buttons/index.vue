@@ -22,17 +22,20 @@
       />
       <BackstageControls 
         :Speakers="$root.speakerProfiles"
-        :parent="this" 
-        v-if="!isBackstage"
-        @clicked="clickBackstage" 
+        :parent="this"
       />
-      <hide-backstage
+      <show-backstage
         v-if="isBackstage"
+        class="admin-bar__shortcuts-btn"
+        :name="';aallala'"
+        @clicked="clickBackstage"
+      >
+      </show-backstage>
+      <hide-backstage
+        v-if="!isBackstage"
+        class="admin-bar__shortcuts-btn"
+        :name="';aallala'"
         @clicked="clickBackstage" 
-      />
-      <active-button 
-        class="admin-bar__button"
-        :name="'Manage Backstage'"
       />
   </div>
 </template>
@@ -46,37 +49,39 @@ import StopStreaming from './StopStreaming'
 
 import BackstageControls from '../../BackstageControls'
 import HideBackstage from './HideBackstage'
+import ShowBackstage from './ShowBackstage'
 
 import {ActiveButton} from '@/components/Global/controll/'
 
 export default {
-    data(){
-        return {
-            isRecording: false,
-            isStreaming: false,
-            isBackstage: false
-        }
-    },
-    methods: {
-        clickRecording() {
-            this.isRecording = !this.isRecording
-        },
-        clickStreaming() {
-            this.isStreaming = !this.isStreaming
-        },
-        clickBackstage(){          
-          this.isBackstage = !this.isBackstage
-        }
-    },
-    components: {
-        StartRecording, StartStreaming,
-        StopRecording, StopStreaming,
-        BackstageControls, HideBackstage,
-        ActiveButton
+  data(){
+    return {
+      isRecording: false,
+      isStreaming: false,
+      isBackstage: false
     }
+  },
+  methods: {
+    clickRecording() {
+      this.isRecording = !this.isRecording
+    },
+    clickStreaming() {
+      this.isStreaming = !this.isStreaming
+    },
+    clickBackstage(){
+      if ( this.$root.showBackstage )
+        this.$root.showBackstage = false
+      else
+        this.$root.showBackstage = true
+
+      this.isBackstage = !this.isBackstage
+    }
+  },
+  components: {
+    StartRecording, StartStreaming,
+    StopRecording, StopStreaming,
+    BackstageControls, HideBackstage,
+    ActiveButton, ShowBackstage
+  }
 }
 </script>
-
-<style>
-
-</style>

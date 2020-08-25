@@ -1,27 +1,29 @@
 <template>
     <section class="group-steps stuff-popup-form">
-        <h2 class="title">{{$root.content.screenSaverPopupFrom.create.labels.video}}</h2>     
+        <b-loading style="margin:15px" :is-full-page="false" :active.sync="loader" :can-cancel="false"></b-loading>
+        
+        <h2 class="title">{{content.create.labels.video}}</h2>     
         <div class="scr-saver-fileld stuff-field__link">
             <b-field>
                 <b-input 
                     required
                     v-model="link"
-                    :placeholder="$root.content.globalForms.placeholders.exmLink"
-                    :validation-message="$root.content.globalForms.validation.required"
+                    :placeholder="global_content.placeholders.exmLink"
+                    :validation-message="global_content.validation.required"
                 ></b-input>
                 <p 
                     class="valid-url help is-danger"
                     v-if="!validURL && link"
-                >Invalid link</p>
+                >{{content.invalidLink}}</p>
             </b-field>
         </div>
         <div class="scr-saver-fileld scr-saver-fileld--cp">
-            <b-switch v-model="activeCP">Backdrop</b-switch>
+            <b-switch v-model="activeCP">{{content.backdrop}}</b-switch>
             <div v-if="activeCP" class="scr-saver-fileld__colorpicker">
                 <colorPicker  :color="defaultColor" v-model="defaultColor"/>
             </div>
         </div>
-        <h2 class="title">{{$root.content.screenSaverPopupFrom.create.labels.preview}}</h2>  
+        <h2 class="title">{{content.create.labels.preview}}</h2>  
         <div class="wrapper">        
             <div class=" frame-container scr-saver-fileld__iframe" >
                 <iframe 
@@ -34,7 +36,7 @@
                     <div v-html="iframeMarkup"></div>
                 </div>
                 <div class="scr-saver-fileld__bg" 
-                    :style="{ backgroundColor: activeCP ? defaultColor : '#333', opacity: activeCP ? .6 : 1}">
+                    :style="{ backgroundColor: activeCP ? defaultColor : '#333', opacity: activeCP ? .6 : 0}">
                 </div>
                 <div class="preview-item-wrap">
                     <div class="preview-item">
@@ -49,20 +51,20 @@
             </div> 
         </div> 
         <div class="sbt-btn">
-            <b-button
+            <!-- <b-button
                 outlined
                 type="is-danger"
-                @click.prevent="back"
+                @click="close"
                 class="button is-danger is-outlined"
             >
-                {{$root.content.globalForms.buttons.cancel}}
-            </b-button> 
+                {{global_content.buttons.cancel}}
+            </b-button>  -->
             <b-button
                 class="button is-success is-outlined submit-button"  
                 :disabled="submitDisabled"
-                @click.prevent="submit"           
+                @click="submit()"
             >
-                {{$root.content.globalForms.buttons.submit}}
+                {{global_content.buttons.submit}}
             </b-button>
         </div>
     </section>
@@ -77,24 +79,30 @@ export default {
     components: {
         colorPicker
     },
-    async mounted(){        
+    async mounted(){
+        this.loader = true
         const obj = {
             id: this.$root.meetup._id
         }
         await this.getMeetupById(obj)
         this.meetup = this.$store.state.meetupForm
         this.link = this.meetup.screensaver 
-        this.defaultColor = this.meetup.screensaverColor 
+        this.defaultColor = this.meetup.screensaverColor
+        this.loader = false
     },
     data(){
-        return { 
+        return {
+            content: this.$root.content.screenSaverPopupFrom,
+            global_content: this.$root.content.globalForms,
+
             meetup: {},
             link: '',
             iframeMarkup: false,
             validURL: true,
-            activeCP: true,
+            activeCP: this.$root.meetup.screensaverColor ? true : false,
             defaultColor: '',
-            submitDisabled: true
+            submitDisabled: false,
+            loader: false
         }
     },
     watch: {
@@ -105,6 +113,8 @@ export default {
     methods: {
         ...mapActions(['getMeetupById']),
         submit(){
+            this.submitDisabled = true
+            this.loader = true
             const id = this.$root.meetup._id
             if(this.validURL && this.link && id) {
                 const obj = {
@@ -115,7 +125,9 @@ export default {
                 }
                 router.postAddScreensaver(obj)
             }
-            
+            this.loader = false
+            this.$parent.close()
+            this.submitDisabled = false
         },
         checkLink(){
             this.validURL = this.util.validURL(this.link)
@@ -149,6 +161,15 @@ export default {
             }  else {
                 this.submitDisabled = true
             }
+        },
+        close () {
+            this.$parent.close()
+        }
+    },
+    watch: {
+        activeCP () {
+            if ( !this.activeCP ) 
+                this.defaultColor = ""
         }
     }
 }

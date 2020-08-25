@@ -14,7 +14,11 @@
                 type="is-black"
                 class="reply-button"
             >
-                <p :id="data.id" class="p-message is-dark-changeable--color is-light-changeable--bg" v-on:click="showReplyButton(data.from, index)" v-html="data.html">
+                <p
+                    :id="data.id"
+                    class="p-message is-light-changeable--bg distinct-color invert-color"
+                    v-on:click="showReplyButton(data.from, index)"
+                    v-html="data.html">
                 </p>
             </b-tooltip>
         </div>

@@ -26,11 +26,11 @@ export default {
     async mounted(){
         const obj = {
             role: 'speaker',
-            userId: '5e77e58545b09b6e3e40a4d6',
-            id: '5f3130b5804407190c832711'
+            userId: this.$root.profile._id,
+            id: this.$root.meetup._id
         }
         const res = await MeetupFormRoutes.postCreateInviteLink(obj);
-        this.link = res.data 
+        this.link = res.data
     },
     methods: {
         copy() {

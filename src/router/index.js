@@ -32,6 +32,7 @@ import MeetupProfile from '@/components/Meetup/MeetupProfile'
 import NetworkingRoom from '@/components/Networking/NetworkingRooms'
 
 import Backstage from '@/components/Backstage'
+import ConfirmInvitation from '@/components/ConfirmInvitation'
 
 Vue.use(Router)
 
@@ -172,6 +173,15 @@ const router = new Router({
                 requiresAuth: true
             },
             props: (route) => ({ id: route.query.id }),
+        },
+        {
+            path: "/confirm_invitation",
+            name: "ConfirmInvitation",
+            component: ConfirmInvitation,
+            meta: {
+                requiresAuth: false
+            },
+            props: (route) => ({ link:route.query.link  })
         }
     ]
 })

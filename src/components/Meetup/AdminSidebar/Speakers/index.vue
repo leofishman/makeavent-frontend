@@ -1,10 +1,13 @@
 <template>
   <section>
       <item class="admin-bar__speakers">
-            <p class="admin-bar__list-item-header" slot="header">{{this.$root.content.adminSidebar.items.speakers.title}}</p>
+            <p class="admin-bar__list-item-header" slot="header">{{$root.content.adminSidebar.items.speakers.title}}</p>
             <template slot="inner">
                 <div class="admin-bar__speakers-list">
-                    <active-button class="admin-bar__button" :name="$root.content.adminSidebar.items.buttons.manage"/>
+                    <BackstageControls 
+                        :Speakers="$root.speakerProfiles"
+                        :parent="this"
+                    />
                     <template v-if="$store.getters.meetupFull.speakers">
                         <div class="admin-bar__speakers-cards">
                             <speaker-card 
@@ -14,7 +17,7 @@
                             />
                         </div>
                     </template>
-                    <active-button @clicked="openAddFrom" class="admin-bar__button" :name="$root.content.adminSidebar.items.buttons.add"/>
+                    <active-button @clicked="openAddFrom" class="admin-bar__button" :name="$root.content.adminSidebar.items.speakers.buttons.add"/>
                 </div>
             </template>
       </item>
@@ -25,6 +28,7 @@
 import Item from '@/components/Global/admin-sidebar/Item/'
 import {ActiveButton} from '@/components/Global/controll/'
 
+import BackstageControls from '@/components/Meetup/AdminSidebar/BackstageControls'
 import InviteForm from '@/components/PopupForms/meetup/invite-popup-form/'
 
 import SpeakerCard from './SpeakerCard'
@@ -32,16 +36,14 @@ import SpeakerCard from './SpeakerCard'
 export default {
     components: {
         ActiveButton, Item,
-        SpeakerCard, InviteForm
+        SpeakerCard, InviteForm, BackstageControls
     },
     methods: {
         openAddFrom(){
             this.$buefy.modal.open({
-                // fullScreen: true,
                 hasModalCard: true,
                 canCancel: true,
                 trapFocus: true,
-                // customClass: 'modal-dark fullscreen-iframe',
                 component: InviteForm,
                 parent: this
             })

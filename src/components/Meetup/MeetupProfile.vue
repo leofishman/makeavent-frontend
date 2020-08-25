@@ -46,13 +46,13 @@
 							</div>
 
 							<div class="profile-bottom">
-								<div class="speakers-title--top">
+								<div class="speakers-title--top is-dark-changeable--color">
 									{{$root.meetup.company_name}}
 								</div>
 
 								<div v-if="expanded && $root.meetup.stuff" class="profile-bio">
 									<button v-if="$root.meetup.stuff.length"
-										class="button is-primary-changeable--bg is-fullwidth is-light-changeable"
+										class="button is-primary is-primary-changeable--bg is-fullwidth invert-color"
 										@click="materialsModalActive = true"
 									>{{content.viewMaterials}}</button>
 								</div>
@@ -75,7 +75,7 @@
 								<div v-if="!expanded && $root.meetup.stuff"
 									class="company-materials">
 									<button v-if="$root.meetup.stuff.length"
-										class="button is-primary-changeable--bg is-fullwidth is-light-changeable"
+										class="button is-primary is-primary-changeable--bg is-fullwidth invert-color"
 										@click="materialsModalActive = true"
 									>{{content.viewMaterials}}</button>
 								</div>
@@ -91,7 +91,7 @@
 										_id="mainroom"
 									/>
 								</div>
-								<div class="column">
+								<div v-if="$root.showBackstage" class="column">
 									<JitsiStream
 										v-if="$root.meetup.service == 'jitsi'"
 										:meetup="$root.meetup"
@@ -131,7 +131,9 @@
 					<article class="is-light-changeable--bg">
 						<h3 class="is-dark-changeable--color">{{content.networkingRoom}}</h3>
 						<img src="@/assets/img/join-chat.png" />
-						<button class="button is-primary is-primary-changeable--bg is-medium is-light-changeable--color" v-on:click="goNetworking()">{{content.join}}</button>
+						<button
+							class="button is-primary is-primary-changeable--bg is-medium invert-color"
+							v-on:click="goNetworking()">{{content.join}}</button>
 						<!-- <p class="has-text-success">{{content.currentlyOnline}}: ##</p> -->
 					</article>
 				</div>
@@ -339,6 +341,15 @@
 					.then(res => {
 						this.$root.meetup = res.data.meetup
 						this.ready = true
+
+						Axios.post('http://localhost:8083/meetup/delete-from-meetup', {
+							userId: "5e789eb15f99d434cdeaa9a4",
+							id: this.$root.meetup._id
+						}, {
+							headers: {
+								authorization: localStorage.auth
+							}
+						})
 
 						this.renderRtmpVideo()
 

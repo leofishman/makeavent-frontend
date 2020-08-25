@@ -47,6 +47,17 @@
 	background-size: 100%;
 	background-attachment: fixed;
 
+	.default-meetup-container--squeezed-for-left-meetup-admin-sidebar {
+		.meetup-title {
+			font-size: 42px;
+			margin: 10px 15px;
+		}
+		.meetup-description {
+			font-size: 18px;
+			margin: 10px 15px;
+		}
+	}
+
 	.meetup-title {
 		font-size: 42px;
 		margin: 10px 0px;
@@ -276,7 +287,7 @@
 		position: relative;
 		// width: calc(100% - 600px);
 		// margin-left: 300px;
-		width: calc(100% - 700px);
+		width: calc(100% - 680px);
 		margin-left: 380px;
 		.container-edit {
 			margin-left: 0px;

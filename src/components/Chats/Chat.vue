@@ -36,11 +36,11 @@
 				</div>
 			</div>
 			
-			<div class="textarea-message is-light-changeable--bg">
+			<div class="textarea-message is-light-changeable--bg distinct-color">
 				<textarea 
 					@keydown="sendMessage($event)"
 					v-model="userTextMessage"
-					class="chat-question is-dark-changeable--color is-light-changeable--bg"
+					class="chat-question is-light-changeable--bg distinct-color invert-color"
 					type="text"
 					:placeholder="content.chatPlaceholder">
 				</textarea>

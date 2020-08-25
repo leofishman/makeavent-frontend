@@ -1,6 +1,6 @@
 import {startDate, meetupDate} from '../env'
 
-export default {
+export default {   
     Agenda: {
         conferenceAgenda: "Conference Agenda",
     },
@@ -134,7 +134,7 @@ export default {
         videoConferenceOpened: "Start Video Conference",
         videoConference: "Video Conference",
 
-        backstageSettings: "Backstage Controls",
+        backstageSettings: "Manage Speakers",
     },
 
     BackstageControlsModal: {
@@ -306,6 +306,7 @@ export default {
     },
 
     common: {
+        copiedToClipboard: "Link copied to clipboard",
         or: " or ",
         submit: "Submit",
         Website: "Website",
@@ -453,7 +454,7 @@ export default {
             baseInfo: 'Base info',
             name: "Name",
             massage: "Description",
-            copy: "Copy"
+            copy: "Copied"
         }
     },
     meetupPopupForm: {
@@ -610,7 +611,9 @@ export default {
         },
         edit: {
 
-        }
+        },
+        invalidLink: "Invalid Link",
+        backdrop: "Backdrop"
     },
     inviteSpeaker: {
         title: 'Invite Speaker',

@@ -40,7 +40,7 @@ export default {
             this.$buefy.notification.open({
                 duration: 3000,
                 position: 'is-bottom-left',
-                message: this.clipboar,
+                message: this.clipboard,
             })
         }
     },

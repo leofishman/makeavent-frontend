@@ -1,44 +1,30 @@
 <template>
-    <b-sidebar id="meetup-admin-sidebar"
-    
-            type="is-light"
-            :fullheight="true"
-            :fullwidth="false"
-            :overlay="false"
-            :right="false"
-            :can-cancel="false"
-            :open.sync="$root.openMeetupSettings"
-        
+    <b-sidebar id="meetup-admin-sidebar"    
+        type="is-light"
+        :fullheight="true"
+        :fullwidth="false"
+        :overlay="false"
+        :right="false"
+        :can-cancel="false"
+        :open.sync="$root.openMeetupSettings"        
     >   
         <div class="content">
             <div class="admin-sidebar-wrap">
-                    <h3 class="admin-sidebar-wrap-header">Options</h3>
-                    <!-- <HintControls :parent="this" />
-                    <NetworkingRoomSwitcher :parent="this" />
-                    <StartWebinar :parent="this" />
-                    <BackstageControls 
-                        v-if="$root.speakerProfiles" 
-                        :Speakers="$root.speakerProfiles"
-                        :parent="this" 
-                    /> -->
-                    <shortcuts/>
-                    <transmition/>
-                    <information/>
-                    <speakers/>
-                    <streaming/>
-                    <share/>
-                    <design/>
+                <h3 class="admin-sidebar-wrap-header">{{this.$root.content.adminSidebar.items.title}}</h3>
+                <shortcuts/>
+                <transmition/>
+                <information/>
+                <speakers/>
+                <streaming/>
+                <share/>
+                <design/>
             </div>
         </div>
     </b-sidebar>
 </template>
 
 <script>
-// import NetworkingRoomSwitcher from './NetworkingRoomSwitcher'
-// import StartWebinar from './StartWebinar'
 import BackstageControls from './BackstageControls'
-// import HintControls from './HintControls'
-
 
 import Transmition from './Transmition/'
 import Information from './Information/'

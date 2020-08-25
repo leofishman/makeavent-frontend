@@ -1,7 +1,7 @@
 <template>
   <section>
       <item class="admin-bar__shortcuts">
-            <p class="admin-bar__list-item-header" slot="header">Shortcuts</p>
+            <p class="admin-bar__list-item-header" slot="header">{{this.$root.content.adminSidebar.items.shortcuts.title}}</p>
             <template slot="inner">
                 <div class="admin-bar__shortcuts-list">
                     <buttons/>

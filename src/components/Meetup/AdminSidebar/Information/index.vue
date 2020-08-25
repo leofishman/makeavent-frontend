@@ -1,11 +1,11 @@
 <template>
   <section>
       <item class="admin-bar__info">
-            <p class="admin-bar__list-item-header" slot="header">Information</p>
+            <p class="admin-bar__list-item-header" slot="header">{{this.$root.content.adminSidebar.items.information.title}}</p>
             <template slot="inner">
-                <active-button @clicked="openMeetups" class="admin-bar__button" :name="'Edit Meetup Info'"/>
-                <active-button class="admin-bar__button" :name="'Edit Company Info'"/>
-                <active-button @clicked="openDocuments" class="admin-bar__button" :name="'Edit Documents'"/>
+                <active-button @clicked="openMeetups" class="admin-bar__button" :name="$root.content.adminSidebar.items.information.buttons.meetup"/>
+                <active-button class="admin-bar__button" :name="$root.content.adminSidebar.items.information.buttons.company"/>
+                <active-button @clicked="openDocuments" class="admin-bar__button" :name="$root.content.adminSidebar.items.information.buttons.documents"/>
                 <!-- <edit-documents /> -->
             </template>
       </item>

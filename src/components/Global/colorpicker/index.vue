@@ -5,7 +5,7 @@
 		</div>
 	    <span class="input-group-addon color-picker-container">
 		    <span class="current-color" :style="'background-color: ' + colorValue" @click="togglePicker()"></span>
-		    <chrome :value="colors" @input="updateFromPicker" v-if="displayPicker" />
+		    <chrome :value="colors"  @input="updateFromPicker" v-if="displayPicker" />
 	    </span>
     </div>
 </template>
@@ -56,6 +56,7 @@ export default {
 		hidePicker() {
 			document.removeEventListener('click', this.documentClick);
 			this.displayPicker = false;
+			this.blur()
 		},
 		togglePicker() {
 			this.displayPicker ? this.hidePicker() : this.showPicker();
@@ -78,6 +79,9 @@ export default {
 			if(el !== target && !el.contains(target)) {
 				this.hidePicker()
 			}
+		},
+		blur(){
+			this.$emit('blur')
 		}
 	},
 	watch: {

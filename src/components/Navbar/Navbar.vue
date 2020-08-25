@@ -79,9 +79,6 @@
 import calendly from '@/components/Popups/setCalendly'
 import {api} from '@/env'
 
-import routes from '@/store/routes/meetup-form'
-
-
 export default {
     name: "navbar",
     props: {
@@ -135,12 +132,6 @@ export default {
 			this.sideBarActive = !this.sideBarActive
 			if (this.$root.openMeetupSettings){
 				this.$root.openMeetupSettings = false
-				const obj = {
-					id: this.$root.meetup._id,
-					color_schema: this.$store.getters.meetupFull.color_schema,
-					custom_colors: this.$store.getters.meetupFull.custom_colors
-				}
-				await routes.postUpdate(obj)
 			}
 			else
 				this.$root.openMeetupSettings = true

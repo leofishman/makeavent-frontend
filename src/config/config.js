@@ -1,6 +1,8 @@
+import {api, communitySrv} from '@/env.js'
+
 const config = {
-  server_url: 'http://localhost:3000',
-  api_url: 'https://api.makeavent.com'
+  server_url: communitySrv,
+  api_url: api
 }
 
 export default config

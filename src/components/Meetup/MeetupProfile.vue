@@ -1,5 +1,5 @@
 <template>
-	<div v-if="$root.meetup" class="meetup-profile" :style="isBgImage()">
+	<div v-if="$root.meetup" class="meetup-profile is-light-changeable--bg" :style="isBgImage()">
 		<div class="scr-saver-fileld__bg" :style="isBgImageBackdrop()"></div>
 
 		<video v-if="$root.meetup.preview" class="bg-video" autoplay muted loop>
@@ -38,7 +38,10 @@
 									</li>
 								</ul>
 								<div class="company-demo">
-									<button v-if="$root.meetup.demo.length" class="play-demo button is-primary" @click="demoModalActive = true">{{content.viewDemo}}</button>
+									<button v-if="$root.meetup.demo.length"
+										class="play-demo button is-primary-changeable--bg is-dark-changeable--color"
+										@click="demoModalActive = true"
+									>{{content.viewDemo}}</button>
 								</div>
 							</div>
 
@@ -48,18 +51,33 @@
 								</div>
 
 								<div v-if="expanded && $root.meetup.stuff" class="profile-bio">
-									<button v-if="$root.meetup.stuff.length" class="button is-primary is-fullwidth" @click="materialsModalActive = true">{{content.viewMaterials}}</button>
+									<button v-if="$root.meetup.stuff.length"
+										class="button is-primary-changeable--bg is-fullwidth is-light-changeable"
+										@click="materialsModalActive = true"
+									>{{content.viewMaterials}}</button>
 								</div>
 
 								<div class="profile-bio">
-									<p v-html="$root.meetup.company_description" v-bind:class="classes" class="bio-content"></p>
+									<p v-html="$root.meetup.company_description"
+										v-bind:class="classes"
+										class="bio-content is-dark-changeable--color"></p>
 
-									<button v-if="!expanded" class="button is-small is-fullwidth" @click="bioExpand">{{content.readMore}}</button>
-									<button v-else class="button is-small is-fullwidth" @click="bioCollapse">{{content.showLess}}</button>
+									<button v-if="!expanded"
+										class="button is-small is-fullwidth is-dark-changeable--color"
+										@click="bioExpand"
+									>{{content.readMore}}</button>
+									<button v-else
+										class="button is-small is-fullwidth is-dark-changeable--color"
+										@click="bioCollapse"
+									>{{content.showLess}}</button>
 								</div>
 
-								<div v-if="!expanded && $root.meetup.stuff" class="company-materials">
-									<button v-if="$root.meetup.stuff.length" class="button is-primary is-fullwidth" @click="materialsModalActive = true">{{content.viewMaterials}}</button>
+								<div v-if="!expanded && $root.meetup.stuff"
+									class="company-materials">
+									<button v-if="$root.meetup.stuff.length"
+										class="button is-primary-changeable--bg is-fullwidth is-light-changeable"
+										@click="materialsModalActive = true"
+									>{{content.viewMaterials}}</button>
 								</div>
 							</div>
 						</aside>
@@ -91,11 +109,11 @@
 								<video v-else id="videoElement" autoplay="true" muted="muted"></video>
 							</div>
 
-							<h1 class="meetup-title" v-html="$root.meetup.meetup_name"></h1>
-							<div class="meetup-description" v-html="$root.meetup.meetup_topic"></div>
+							<h1 class="meetup-title is-dark-changeable--color" v-html="$root.meetup.meetup_name"></h1>
+							<div class="meetup-description is-dark-changeable--color" v-html="$root.meetup.meetup_topic"></div>
 
 							<div class="speakers-container columns is-multiline member-clasic">
-								<div class="speakers-title">
+								<div class="speakers-title is-dark-changeable--color">
 									{{content.speakers}}
 								</div>
 								<div class="column" v-for="(el, index) in $root.speakerProfiles" :key="index">
@@ -108,12 +126,12 @@
 			</div>
 
 			<!-- Profile Chat -->
-			<div class="chat-company-profile">
+			<div class="chat-company-profile is-light-changeable--bg">
 				<div class="chat-top">
-					<article>
-						<h3>{{content.networkingRoom}}</h3>
+					<article class="is-light-changeable--bg">
+						<h3 class="is-dark-changeable--color">{{content.networkingRoom}}</h3>
 						<img src="@/assets/img/join-chat.png" />
-						<button class="button is-primary is-medium" v-on:click="goNetworking()">{{content.join}}</button>
+						<button class="button is-primary is-primary-changeable--bg is-medium is-light-changeable--color" v-on:click="goNetworking()">{{content.join}}</button>
 						<!-- <p class="has-text-success">{{content.currentlyOnline}}: ##</p> -->
 					</article>
 				</div>
@@ -138,7 +156,7 @@
 		aria-modal>
 			<div class="modal-card demo-modal">
 				<header class="modal-card-head">
-					<p class="modal-card-title">{{content.materials}}</p>
+					<p class="modal-card-title ">{{content.materials}}</p>
 				</header>
 				<section class="modal-card-body">
 					<PitchDeck v-for="(el, index) in $root.meetup.stuff" :key="index" :data="el"/>
@@ -203,15 +221,18 @@
 				this.getSpeakers()
 			})
 			.catch(e => console.log(`${e} inaccessible`))
+
 			if (!this.$root.speakerProfiles) {
 				this.getSpeakers()
 			}
 			if (this.$root.cronMeetupSchema)
 				clearInterval(this.$root.cronMeetupSchema)
+
 			this.$root.cronMeetupSchema = setInterval(() => {
 				if ( this.$root.actionsLord.SHOULD_GET_MEETUP() )
 					this.getMeetup()
 			}, 5000)
+			
 			return {
 				expanded: false,
 				classes: "bio-content-collapsed",

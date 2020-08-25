@@ -1,7 +1,5 @@
 <template>
         <div class="admin-bar__shortcuts-btn">
-            <p v-if="parent.showHints" class="menu-label" v-html="content.backstageHint"></p>
-
             <ActiveButton
                 @clicked="showBackstageControlPopup = true" 
                 :name="content.backstageSettings"

@@ -41,9 +41,17 @@ export default {
           this.updateColor(val)
         },        
         updateColor(val){
-            let query = `#app .networking-rooms .is-primary, #app .meetup-profile .is-primary`
+            let query = `#app .is-primary-changeable--bg, #app .is-primary-changeable--color, #app .is-primary-changeable--border-top`
             Array.from(document.querySelectorAll(query)).map(el => {
+              if ( Array.from(el.classList).includes('is-primary-changeable--border-top') ) {
+                el.style.borderTop = `solid 4rem ${val}`
+              }
+              else if ( Array.from(el.classList).includes('is-primary-changeable--bg') ) {
                 el.style.backgroundColor = val
+              }
+              else if ( Array.from(el.classList).includes('is-primary-changeable--color') ) {
+                el.style.color = val
+              }
             })
             const obj = {key: 'primary', value: val}
             this.updateSchemaColor(obj)

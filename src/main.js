@@ -241,7 +241,9 @@ new Vue({
       showDragableConference: false,
       roomForDragableConference: {},
       activeRooms: [],
-      speakerProfiles: []
+      speakerProfiles: [],
+
+      
     }
   },
   methods: {

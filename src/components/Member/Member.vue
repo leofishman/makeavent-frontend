@@ -1,20 +1,27 @@
 <template>
-	<div class="box member">		
+	<div class="box member is-primary-changeable--border-top is-light-changeable--bg">		
 		<figure class="member-avatar">
 			<img v-if="!data.photo" :src="`${api}/static/img/avatar-default.png`">
 			<img v-else :src="api + data.photo">
 		</figure>
 		
-		<h2 class="click member-name" @click="$root.tryBusinessCard(data)">{{data.name}}</h2>
-		<h3 class="member-rol">{{data.company}}</h3>
-		<h3 class="member-rol">{{data.role}}</h3>
+		<h2 class="click member-name is-dark-changeable--color is-light-changeable--bg" @click="$root.tryBusinessCard(data)">{{data.name}}</h2>
+		<h3 class="member-rol is-dark-changeable--color is-light-changeable--bg">{{data.company}}</h3>
+		<h3 class="member-rol is-dark-changeable--color is-light-changeable--bg">{{data.role}}</h3>
 		<div class="member-action buttons">
-			<button v-if="!$root.checkIfAlreadyAFriend(data)" v-on:click="$root.tryBusinessCard(data)" class="button is-fullwidth">
-				<img src="@/assets/icon/icon-user.svg" width="15" /> {{content.request}}
+			<button
+				v-if="!$root.checkIfAlreadyAFriend(data)"
+				v-on:click="$root.tryBusinessCard(data)"
+				class="button is-fullwidth is-dark-changeable--color is-light-changeable--bg">
+					<img src="@/assets/icon/icon-user.svg" width="15" />
+					{{content.request}}
 			</button>
-			<button v-if="canCall" v-on:click="$root.privateCall(data)" class="button is-fullwidth">
-				<img src="@/assets/icon/icon-call.svg" width="15" />
-				{{content.scheduleMeeting}}
+			<button
+				v-if="canCall"
+				v-on:click="$root.privateCall(data)"
+				class="button is-fullwidth is-dark-changeable--color is-light-changeable--bg">
+					<img src="@/assets/icon/icon-call.svg" width="15" />
+					{{content.scheduleMeeting}}
 			</button>
 		</div>
 		

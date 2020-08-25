@@ -382,7 +382,6 @@
                         previewExt: formatPreview,
                         groupName: 'test'
                     }
-                    // console.log('data', data);
                     const res = await MeetupFormRoutes.postAddMeetup(data)
                     return false
                 }

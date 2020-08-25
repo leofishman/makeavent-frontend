@@ -208,7 +208,6 @@
 			},
 
 			getMeetup () {
-				console.log(208);
 				return new Promise((resolve, rejects) => {
 					Axios.create({
 						baseURL: MEETUP.getById + '?id=' + this.id,

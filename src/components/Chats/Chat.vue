@@ -2,7 +2,7 @@
 	<!-- Profile chat -->
 	<div class="chat-wrapper" style="padding:0px">
 		<p class="chat-with-title">
-			<span>
+			<span class="is-dark-changeable--color">
 				{{content.chatWith}}
 				<strong class="is-capitalized">{{name}}</strong>
 				 {{common_content.team}}</span>
@@ -36,11 +36,11 @@
 				</div>
 			</div>
 			
-			<div class="textarea-message">
+			<div class="textarea-message is-light-changeable--bg">
 				<textarea 
 					@keydown="sendMessage($event)"
 					v-model="userTextMessage"
-					class="chat-question"
+					class="chat-question is-dark-changeable--color is-light-changeable--bg"
 					type="text"
 					:placeholder="content.chatPlaceholder">
 				</textarea>

@@ -14,10 +14,14 @@ window.toLo = (a) => {
 }
   
 window.compare = (a, b) => {
-    if (window.toUp(a) == window.toUp(b))
-        return true
-    else 
-        return false
+    if (a && b) {
+        if (window.toUp(a) == window.toUp(b))
+            return true
+        else 
+            return false
+    }
+    else
+        return false   
 }
   
 window.capitalizeFirstLetter = (text) => {

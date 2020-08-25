@@ -1,3 +1,5 @@
+@import "@/assets/css/noselect.scss";
+
 .navbar {
     position: relative;
 }
@@ -39,6 +41,7 @@
 #meetup-admin-sidebar .sidebar-content {
     background-color: white;
     width: 380px !important;
+    @extend %noselect;
 }
 .sidebar-content {
     /* width */

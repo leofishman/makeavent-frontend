@@ -6,6 +6,7 @@ export default class JitsiModal {
   constructor ({ vueapp, parentNode, data }) {
     this.app = vueapp
     this.data = data
+
     this.name = data.name
     this.webinarRoom = data.webinarRoom
     this.parentNode = parentNode
@@ -21,10 +22,10 @@ export default class JitsiModal {
 
     if (this.data.admins.includes(this.app.$root.profile._id))
       this.isAdmin = true
-    
-    this.isSpeaker = this.data.speakers.filter(el => compare(el, this.app.$root.profile._id)).length
-      ? true
-      : false;
+
+    this.isSpeaker = this.data.speakers.filter(el => 
+      compare(el._id, this.app.$root.profile._id))
+        .length ? true : false;
 
     if ( this.isSpeaker )
       this.type = 'speaker'

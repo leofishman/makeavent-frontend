@@ -5,8 +5,7 @@ export default {
     actions: {
         // getMeetupById
         async getMeetupById(ctx, meetupIdObj) {
-            const meetup = await MeetupController.getMeetupById(meetupIdObj) 
-            console.log('meetup meetup meetup', meetup);
+            const meetup = await MeetupController.getMeetupById(meetupIdObj)
             ctx.commit('updateMeetup', meetup)                 
         },
         async toggleMeetupNetworkingRoom(ctx, meetupIdObj){

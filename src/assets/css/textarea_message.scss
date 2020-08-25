@@ -22,5 +22,9 @@
 		&:focus {
 			outline: red 3px;
 		}
+		&::placeholder {
+			color: inherit;
+			opacity: 1;
+		}
 	}
 }

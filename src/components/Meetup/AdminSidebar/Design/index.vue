@@ -46,7 +46,12 @@ export default {
                 // Primary  
                 let query = `#app .networking-rooms .is-primary, #app .meetup-profile .is-primary`
                 Array.from(document.querySelectorAll(query)).map(el => {
-                    el.style.backgroundColor = ''
+                    if ( el.className == 'box member is-primary' ) {
+                        el.style.borderTop = `solid 4rem #0051d9`
+                    }
+                    else {
+                        el.style.backgroundColor = ''
+                    }
                 })
                 // 1 Light                
                 query = `.meetup-profile, .networking-rooms, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms aside, #app .meetup-profile aside, #app .networking-rooms nav, #app .meetup-profile nav, .meetup-profile article, .networking-rooms article`

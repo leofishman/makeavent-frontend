@@ -2,7 +2,7 @@
     <article :class="messageClass()">
         <div>
             
-            <h3 class="click"
+            <h3 class="click is-dark-changeable--color"
             v-on:click="$root.tryBusinessCard(data.from, index)"
             >{{data.from.name.split(" ")[0]}}</h3>
 
@@ -14,7 +14,7 @@
                 type="is-black"
                 class="reply-button"
             >
-                <p :id="data.id" class="p-message" v-on:click="showReplyButton(data.from, index)" v-html="data.html">
+                <p :id="data.id" class="p-message is-dark-changeable--color is-light-changeable--bg" v-on:click="showReplyButton(data.from, index)" v-html="data.html">
                 </p>
             </b-tooltip>
         </div>

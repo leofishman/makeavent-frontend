@@ -236,7 +236,7 @@ export default {
     updateLogo(e){
         if(this.file) {
             const image = this.file
-            // console.log('this.file', this.file);
+
             const reader = new FileReader()
             reader.readAsDataURL(image)
             reader.onload = e => {

@@ -1,5 +1,5 @@
 <template>
-    <b-sidebar id="meetup-admin-sidebar"    
+    <b-sidebar id="meetup-admin-sidebar"
         type="is-light"
         :fullheight="true"
         :fullwidth="false"
@@ -10,7 +10,7 @@
     >   
         <div class="content">
             <div class="admin-sidebar-wrap">
-                <h3 class="admin-sidebar-wrap-header">{{this.$root.content.adminSidebar.items.title}}</h3>
+                <h3 class="admin-sidebar-wrap-header">{{content.options}}</h3>
                 <shortcuts/>
                 <transmition/>
                 <information/>
@@ -25,7 +25,6 @@
 
 <script>
 import BackstageControls from './BackstageControls'
-
 import Transmition from './Transmition/'
 import Information from './Information/'
 import Design from './Design/'
@@ -53,15 +52,9 @@ export default {
         ...mapActions(['getMeetupById'])
     },
     data() {
-        this.content = this.$root.content.MeetupAdminSidebar
-
-        if ( !localStorage.showHints )
-            localStorage.showHints = 'true'
-
         return {
-            content: this.content,
+            content: this.$root.content.MeetupAdminSidebar,
             comm_content: this.$root.content.common,
-            showHints: this.shouldShowHint()
         }
     }
 }

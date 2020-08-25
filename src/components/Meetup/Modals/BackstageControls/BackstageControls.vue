@@ -92,7 +92,7 @@ export default {
 				this.speakersToShow = this.Speakers.filter(el => {
 					let up = toUp(el.name)
 					let up2 = toUp(el.company)
-					
+
 					return up.includes(toUp(this.speakerSearch)) ? el : up2.includes(toUp(this.speakerSearch)) ? el : undefined;
 				})
 			else

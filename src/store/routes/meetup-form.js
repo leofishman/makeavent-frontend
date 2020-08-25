@@ -39,7 +39,6 @@ export default {
     })
   },
   postAddScreensaver (params) {
-    console.log('params', params);
     return api().post('/meetup/add-screensaver', params, {
       ...opts     
     })
@@ -50,13 +49,11 @@ export default {
     })    
   },
   toggleNetworkingRoom(params){
-    console.log('params', params);
     return api().post('/meetup/toggle-networking-room', params, {
       ...opts     
     })    
   },
   toggleMeetupRoom(params){
-    console.log('params', params);
     return api().post('/meetup/toggle-meetup-room', params, {
       ...opts     
     })    

@@ -47,6 +47,7 @@ main {
 
 .meetup-profile, .networking-rooms {
 	min-height: calc(100vh - 5rem);
+	@extend %noselect;
 }
 @media screen and (min-width: $desktop) {
 	.container {

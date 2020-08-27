@@ -44,54 +44,7 @@ export default {
     watch: {
         isActive(){
             this.updateCustomColor(this.isActive)
-            if(!this.isActive){
-                let opts = [ 'primary', 'dark', 'light' ]
-                opts.map(el => {
-                    let query = `#app .is-${el}-changeable--bg, #app .is-${el}-changeable--color, #app .is-${el}-changeable--border-top`
-                    
-                    Array.from(document.querySelectorAll(query)).map(el => {
-                        const classList = Array.from(el.classList)
-                
-                        if ( classList.includes(`is-${el}-changeable--border-top`) ) {
-                            if ( classList.includes('distinct-color') )
-                                el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
-                            else
-                                el.style.borderTop = `solid 4rem ${val}`
-                        }
-                        
-                        if ( classList.includes(`is-${el}-changeable--bg`) ) {
-                            if ( classList.includes('distinct-color') )
-                                el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
-                            else
-                                el.style.backgroundColor = val
-                        }
-                        
-                        if ( classList.includes(`is-${el}-changeable--color`) ) {
-                            if ( classList.includes('distinct-color') )
-                                el.style.color = pSBC(0.2, val, invertColor(val))
-                            else
-                                el.style.color = val
-                        }
-
-                        if ( classList.includes('invert-color') )
-                            if ( isRGB(el.style.backgroundColor) ) 
-                                el.style.color = pSBC(
-                                    0.4,
-                                    invertColor(rgbToHex(el.style.backgroundColor)),
-                                    tinycolor(invertColor(rgbToHex(el.style.backgroundColor))).isLight()
-                                        ? "#FFFFFF"
-                                        : "#000000")
-                            
-                            else if ( isHEX(el.style.backgroundColor) )
-                                el.style.color = pSBC(
-                                    0.4,
-                                    invertColor(el.style.backgroundColor),
-                                    tinycolor(invertColor(el.style.backgroundColor)).isLight()
-                                        ? "#FFFFFF"
-                                        : "#000000")
-                    })
-                })
-            }
+            this.updateColorShema(this.isActive)
         }
     },
     data(){
@@ -118,6 +71,67 @@ export default {
                 component: editScreenSaver,
                 parent: this
             })
+        },
+        updateColorShema(val){
+            if(val){
+                let opts = [ 'primary', 'dark', 'light' ]
+                opts.map(el => {
+                    let query = `#app .is-${el}-changeable--bg, #app .is-${el}-changeable--color, #app .is-${el}-changeable--border-top`
+                    
+                    Array.from(document.querySelectorAll(query)).map(el => {
+                        const classList = Array.from(el.classList)
+                        // Border top
+                        if ( classList.includes(`is-${el}-changeable--border-top`) ) {
+                            if ( classList.includes('distinct-color') )
+                                el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
+                            else
+                                el.style.borderTop = `solid 4rem ${val}`
+                        }
+                        // Background
+                        if ( classList.includes(`is-${el}-changeable--bg`) ) {
+                            if ( classList.includes('distinct-color') )
+                                el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
+                            else
+                                el.style.backgroundColor = val
+                        }
+                        // Text color
+                        if ( classList.includes(`is-${el}-changeable--color`) ) {
+                            if ( classList.includes('distinct-color') )
+                                el.style.color = pSBC(0.2, val, invertColor(val))
+                            else
+                                el.style.color = val
+                        }
+
+                        if ( classList.includes('invert-color') )
+                            if ( isRGB(el.style.backgroundColor) ) 
+                                el.style.color = pSBC(
+                                    0.4,
+                                    invertColor(rgbToHex(el.style.backgroundColor)),
+                                    tinycolor(invertColor(rgbToHex(el.style.backgroundColor))).isLight()
+                                        ? "#FFFFFF"
+                                        : "#000000")
+                            
+                            else if ( isHEX(el.style.backgroundColor) )
+                                el.style.color = pSBC(
+                                    0.4,
+                                    invertColor(el.style.backgroundColor),
+                                    tinycolor(invertColor(el.style.backgroundColor)).isLight()
+                                        ? "#FFFFFF"
+                                        : "#000000")
+                    })
+                })
+            } else {                
+                let opts = [ 'primary', 'dark', 'light' ]
+                opts.map(el => {
+                    let query = `#app .is-${el}-changeable--bg, #app .is-${el}-changeable--color, #app .is-${el}-changeable--border-top`
+                    
+                    Array.from(document.querySelectorAll(query)).map(el => {
+                        el.style.borderTop = ''
+                        el.style.backgroundColor = ''
+                        el.style.color = ''
+                    })
+                })
+            }
         }
     }
 }

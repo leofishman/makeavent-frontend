@@ -51,7 +51,7 @@ export default {
 
             if(!this.light) {
                 // query = `.meetup-profile, .networking-rooms, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms aside, #app .meetup-profile aside, #app .networking-rooms nav, #app .meetup-profile nav, .meetup-profile article, .networking-rooms article, .meetup-profile button:not(.is-primary), .networking-rooms button:not(.is-primary)`
-            
+                query = `#app .is-light-changeable, #app .is-light-changeable--color, #app .is-light-changeable--bg, #app .is-light-changeable--border-top`
                 Array.from(document.querySelectorAll(query)).map(el => {
                     el.style.backgroundColor = val
                 })

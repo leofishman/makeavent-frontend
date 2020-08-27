@@ -257,19 +257,21 @@
 				api: api,
 				chat: "",
 				chatAvailable: this.chatAvailable,
-				speakers: []
+				speakers: [],
+
+				videoReady: false,
 			}
 		},
 		methods: {
 			defineHowToRender () {
 				if ( this.$root.meetup.speakers.includes(this.$root.profile._id) )
-					this.userType = 'speaker'
+					return 'speaker'
 				
 				else
-					this.userType = 'basic'
+					return 'basic'
 				
 				if (this.$root.isUserAdmin)
-					this.userType = 'admin'
+					return 'admin'
 			},
 			openAndTrack (link) {
 				this.$root.track(name, link)
@@ -319,11 +321,12 @@
 				})
 			},
 			renderRtmpVideo () {
-				if (flvjs.isSupported() && this.defineHowToRender() == 'basic') {
+				if (!this.videoReady && flvjs.isSupported() && this.defineHowToRender() == 'basic') {
+					this.videoReady = true
 					var videoElement = document.getElementById('videoElement');
 					var flvPlayer = flvjs.createPlayer({
 						type: 'flv',
-						url: `http://95.216.165.245:8000/liveSTREAM_NAME/${this.id}`
+						url: `https://rtmp.makeavent.com/live/${this.id}`
 					});
 					flvPlayer.attachMediaElement(videoElement);
 					flvPlayer.load();
@@ -341,15 +344,6 @@
 					.then(res => {
 						this.$root.meetup = res.data.meetup
 						this.ready = true
-
-						Axios.post('http://localhost:8083/meetup/delete-from-meetup', {
-							userId: "5e789eb15f99d434cdeaa9a4",
-							id: this.$root.meetup._id
-						}, {
-							headers: {
-								authorization: localStorage.auth
-							}
-						})
 
 						this.renderRtmpVideo()
 

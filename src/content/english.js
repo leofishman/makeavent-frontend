@@ -576,6 +576,7 @@ export default {
         validation: {
             name: 'This field are required',
             file: 'This field are required',
+            invalidLink: "Invalid Link"
         }
     },
     demoPopupFrom: {
@@ -639,7 +640,8 @@ export default {
                    off: 'Off',
                    active: 'Active',
                    light: 'Light Mode',
-                   dark: 'Dark Mode'
+                   dark: 'Dark Mode',
+                   resetToDefault: "Reset to Default"
                 }
             },
             information: {
@@ -647,7 +649,8 @@ export default {
                 buttons: {
                     meetup: 'Edit Meetup Info',
                     company: 'Edit Company Info',
-                    documents: 'Edit Documents'
+                    documents: 'Edit Documents',
+                    demos: 'Edit Demo Videos'
                 }
             },
             share: {

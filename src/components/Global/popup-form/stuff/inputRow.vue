@@ -19,7 +19,7 @@
                 <p 
                     :class="index ? 'valid-url help is-danger' : ' valid-url help is-danger'"
                     v-if="!stuffItem.validURL"
-                >Invalid link</p>
+                >{{$root.content.stuffPopupForm.validation.invalidLink}}</p>
             </b-field>
             <span v-if="showFisrt" class="close-icon" @click="removeItem(index)">
                 <span class="inner-icon">x</span>                

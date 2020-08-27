@@ -33,9 +33,8 @@ export default {
       }
     },
     methods: {
-      resetToDefault () {
-        this.$emit("resetToDefault")
-        
+      resetToDefault() {
+        this.$emit("resetToDefault")        
       },
       updateActive(){
         this.isActiveLocal = !this.isActiveLocal

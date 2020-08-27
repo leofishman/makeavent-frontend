@@ -7,13 +7,18 @@
                     <switchers 
                         @updateMode="updateMode"
                         @updateActive="updateActive" 
+                        @resetToDefault="resetToDefault"
                         :isActive="isActive"
                         :isLight="isLight"
                     />
                 </div>
                 <div class="admin-bar__design-colors" v-if="isActive">
                     <p class="admin-bar__design-colors-par">{{content.items.design.subtitle}}</p>
-                    <colors :isLight="isLight"/>
+                    <colors 
+                        :isLight="isLight" 
+                        :defaultValue="defaultValue"
+                        @toggle-default-value="isActiveFalse"
+                    />
                 </div>
                 <active-button class="admin-bar__button" @clicked="openScreenSaver" :name="content.items.design.button"/>
             </template>
@@ -33,6 +38,7 @@ import Switchers from './Switchers'
 import Colors from './Colors'
 import tinycolor from 'tinycolor2'
 
+import routes from '@/store/routes/meetup-form'
 
 export default {
     components: {
@@ -51,11 +57,17 @@ export default {
         return {
             content: this.$root.content.adminSidebar,
             isActive: this.$root.meetup.custom_colors,
-            isLight: this.$root.meetup.color_schema.isLight
+            isLight: this.$root.meetup.color_schema.isLight,
+            defaultValue: {   
+                isActive: false,             
+                primary: '#0051d9',
+                dark: '#4b4b4b',
+                light: '#ffffff',
+            }
         }
     },
     methods: {
-        ...mapMutations(['updateCustomColor', 'updateColorMode']),
+        ...mapMutations(['updateCustomColor', 'updateColorMode', 'updateSchemaColor']),
         updateActive(val) {
             this.isActive = val
         },
@@ -71,6 +83,25 @@ export default {
                 component: editScreenSaver,
                 parent: this
             })
+        },
+        resetToDefault(){
+            this.defaultColorShema()
+            let colorShema = {                
+                primary: '#0051d9',
+                dark: '#4b4b4b',
+                light: '#ffffff',
+            }
+            
+            // Primary
+            let obj = {key: 'primary', value: colorShema.primary}
+            this.updateSchemaColor(obj)
+            // Dark
+            obj = {key: 'dark', value: colorShema.dark}
+            this.updateSchemaColor(obj)
+            // Light
+            obj = {key: 'light', value: colorShema.light}
+            this.updateSchemaColor(obj)
+            this.defaultValue.isActive = true
         },
         updateColorShema(val){
             if(val){
@@ -120,18 +151,31 @@ export default {
                                         : "#000000")
                     })
                 })
-            } else {                
-                let opts = [ 'primary', 'dark', 'light' ]
-                opts.map(el => {
-                    let query = `#app .is-${el}-changeable--bg, #app .is-${el}-changeable--color, #app .is-${el}-changeable--border-top`
-                    
-                    Array.from(document.querySelectorAll(query)).map(el => {
-                        el.style.borderTop = ''
-                        el.style.backgroundColor = ''
-                        el.style.color = ''
-                    })
-                })
+            } else { 
+                this.defaultColorShema()            
             }
+        },
+        defaultColorShema(){   
+            let opts = [ 'primary', 'dark', 'light' ]
+            opts.map(el => {
+                let query = `#app .is-${el}-changeable--bg, #app .is-${el}-changeable--color, #app .is-${el}-changeable--border-top,  .invert-color`
+                
+                Array.from(document.querySelectorAll(query)).map(el => {
+                    el.style.borderTop = ''
+                    el.style.backgroundColor = ''
+                    el.style.color = ''
+                })
+            })
+        },
+        async isActiveFalse(){
+            this.defaultValue.isActive = false
+
+            const obj = {
+                id: this.$root.meetup._id,
+                color_schema: this.$store.getters.meetupFull.color_schema,
+                custom_colors: this.$store.getters.meetupFull.custom_colors
+            }
+            await routes.postUpdate(obj)
         }
     }
 }

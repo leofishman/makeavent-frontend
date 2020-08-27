@@ -1,7 +1,14 @@
 <template>
     <div class="admin-sidebar-color-item">
         <div class="admin-sidebar-color-item__color-picker">
-            <color-picker @blur="blur"  :color="currentColor" v-model="currentColor" @input="updateColor" />
+            <color-picker 
+                @blur="$emit('blur')" 
+                :defaultValue="defaultValue"  
+                :color="currentColor" 
+                v-model="currentColor" 
+                @input="updateColor" 
+                @toggle-default-value="$emit('toggle-default-value')"
+            />
         </div>
         <div 
             :class="activeClass"
@@ -18,7 +25,8 @@ import ColorPicker from '@/components/Global/colorpicker/'
 
 export default {
     props: {
-        defaultColor: String
+        defaultColor: String,
+        defaultValue: Object
     },
     components: {
         ColorPicker
@@ -26,10 +34,7 @@ export default {
     methods: {
         updateColor(val) {
             this.currentColor = val
-            this.$emit('input',this.currentColor)
-        },
-        blur(){
-            this.$emit('blur')
+            this.$emit('input', this.currentColor)
         }
     },
     data(){
@@ -48,7 +53,16 @@ export default {
     watch: {
         defaultColor() {
             return this.$emit('updated', this.$props.defaultColor)
-        }
+        },
+		defaultValue: {			
+			handler(val){
+				// if(this.$props.defaultValue.isActive) {
+					console.log('this.$props.defaultValue.color',this.$props.defaultValue.color);
+					// this.setColor(this.$props.defaultValue.color)
+				// }
+			},
+			deep: true
+		}
     },
     computed: {
         activeClass() {

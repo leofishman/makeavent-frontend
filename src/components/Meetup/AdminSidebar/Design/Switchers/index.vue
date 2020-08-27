@@ -25,6 +25,11 @@ export default {
     components: {
       SwitchComponent
     },
+    watch: {
+      isLight(){
+        this.isLightMode = this.$props.isLight
+      }
+    },
     data(){
       return {
         content: this.$root.content.adminSidebar.items.design.switchers,

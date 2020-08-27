@@ -85,6 +85,7 @@ export default {
             })
         },
         resetToDefault(){
+            this.isLight = true
             this.defaultColorShema()
             let colorShema = {                
                 primary: '#0051d9',

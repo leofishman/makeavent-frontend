@@ -69,6 +69,12 @@ main {
 		flex: none;
 	}
 }
+.centrify-content {
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	position: absolute;
+}
 .modal-close {
 	z-index: 10000000;
 }
@@ -124,6 +130,36 @@ main {
   100% { opacity: 1; }
 }
 
+.loading-overlay {
+	&--dark {
+		.loading-icon::after {
+			-webkit-animation: spinAround 500ms infinite linear;
+			animation: spinAround 500ms infinite linear;
+			border: 2px solid #d6d6d6;
+				border-top-color: #d6d6d6;
+				border-top-width: 2px;
+				border-right-color: #d6d6d6;
+				border-right-width: 2px;
+				border-bottom-width: 2px;
+				border-left-width: 2px;
+			border-radius: 290486px;
+			border-right-color: transparent;
+			border-top-color: transparent;
+			content: "";
+			display: block;
+			height: 1em;
+			position: relative;
+			width: 1em;
+			position: absolute;
+			top: calc(50% - 1.5em);
+			left: calc(50% - 1.5em);
+			width: 3em;
+			height: 3em;
+			border-width: 0.25em;
+		}
+	}
+}
+
 // TITLE PAGE //
 //////////////////////////////////////////
 .title-page {
@@ -149,13 +185,6 @@ main {
 		.sevfive-left {
 			left: 75% !important;
 			position: fixed !important;
-		}
-
-		.centrify-content {
-			top:50%;
-			left:50%;
-			transform: translate(-50%, -50%);
-			position: relative;
 		}
 
 		/* Page title Primary */

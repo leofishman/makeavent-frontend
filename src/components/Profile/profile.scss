@@ -1,8 +1,13 @@
 @import "@/assets/css/variables.scss";
 @import "bulma/sass/utilities/initial-variables.sass";
 @import "bulma/sass/utilities/derived-variables.sass";
+@import "@/assets/css/tabs.scss";
 
 #profile {
+	.title {
+		margin-bottom: 1rem;
+		font-size: 1.5rem;
+	}
 	.list-network {
 		li {
 			line-height: 25px;
@@ -41,6 +46,9 @@
 			}
 		}
 		.profile-main {
+			.b-tabs {
+				@extend %b-tabs;
+			}
 			.profile-top {
 				margin-bottom: 60px;
 				
@@ -183,39 +191,10 @@
 				margin-bottom: 15px;
 			}
 			.b-tabs {
-				background-color: $white;
-				box-shadow:$shadow-2;
-				.tag {
-					margin-left: 0.5rem;
-				}
-				.tabs {
-					ul {
-						background-color: $light;
-						li {
-							&:first-child {
-							}
-							a {
-								padding-top: 0.7rem;
-								padding-bottom: 0.7rem;
-							}
-						}
-						.is-active {
-							background-color: $white;
-							&:last-child {
-								width: 100%;
-								a {
-									justify-content: left;
-								}
-							}
-						}
-					}
-				}
+				@extend %b-tabs;
 			}
 			.business-card {
 				margin-bottom: 40px;
-				.business-card-title {
-					margin-bottom: 1rem;
-				}
 				.businesscardconected, .businesscardpending {
 					display: flex;
 					align-items: center;

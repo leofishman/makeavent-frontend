@@ -1,5 +1,7 @@
 <template>
     <section class="group-steps">
+        <b-loading class="loading-overlay--dark" style="margin:15px" :is-full-page="false" :active.sync="loading" :can-cancel="false"></b-loading>
+
         <b-steps
             v-model="activeStep"
             :animated="isAnimated"
@@ -10,18 +12,18 @@
             @change="changeStep"
         >   
             <!-- Company info -->
-            <b-step-item step="1" :label="$root.content.meetupPopupForm.stepName.company" :clickable="isStepsClickable" disabled>
+            <b-step-item step="1" :label="content.stepName.company" :clickable="isStepsClickable" disabled>
                 <company-step @update="updateCompany"/>
             </b-step-item>
             <!-- End Company info -->            
             <!-- Base info -->
-            <b-step-item step="2" :label="$root.content.meetupPopupForm.stepName.name" :clickable="isStepsClickable" disabled>
-                <h2 class="title">{{$root.content.meetupPopupForm.labels.title}}</h2>
+            <b-step-item step="2" :label="content.stepName.name" :clickable="isStepsClickable" disabled>
+                <h2 class="title">{{content.labels.title}}</h2>
                 <b-field>
                     <b-input 
-                        :placeholder="$root.content.meetupPopupForm.placeholders.name"
+                        :placeholder="content.placeholders.name"
                         v-model="name"
-                        :validation-message="$root.content.meetupPopupForm.validation.name"
+                        :validation-message="content.validation.name"
                         required 
                     >
                     </b-input>
@@ -29,10 +31,10 @@
                 <b-field>
                     <b-input 
                         v-model="message"
-                        :placeholder="$root.content.meetupPopupForm.placeholders.massage"
+                        :placeholder="content.placeholders.massage"
                         maxlength="200" 
                         type="textarea"
-                        :validation-message="$root.content.meetupPopupForm.validation.massage"
+                        :validation-message="content.validation.massage"
                         required
                     >
                     </b-input>
@@ -40,21 +42,21 @@
             </b-step-item>
             <!-- END Base info -->
             <!-- Logo -->
-            <b-step-item step="3" :label="$root.content.meetupPopupForm.stepName.date" :clickable="isStepsClickable" :type="{'is-success': isProfileSuccess}">
-                <h2 class="title">{{$root.content.meetupPopupForm.labels.date}}</h2>                
+            <b-step-item step="3" :label="content.stepName.date" :clickable="isStepsClickable" :type="{'is-success': isProfileSuccess}">
+                <h2 class="title">{{content.labels.date}}</h2>                
                 <b-field class="input-date">
                     <b-datetimepicker
-                        :placeholder="$root.content.meetupPopupForm.placeholders.date"
+                        :placeholder="content.placeholders.date"
                         icon="calendar-today"
                         v-model="date"
                         @input="inputDate">
                     </b-datetimepicker>
-                    <p class="date-placeholder">{{$root.content.meetupPopupForm.placeholders.date}}</p>
+                    <p class="date-placeholder">{{content.placeholders.date}}</p>
                 </b-field>
             </b-step-item>
             <!-- Logo -->
-            <b-step-item step="4" :label="$root.content.meetupPopupForm.stepName.logo" :clickable="isStepsClickable" disabled>
-                <h2 class="title">{{$root.content.meetupPopupForm.labels.logo}}</h2>
+            <b-step-item step="4" :label="content.stepName.logo" :clickable="isStepsClickable" disabled>
+                <h2 class="title">{{content.labels.logo}}</h2>
                  <section class="file-uploader">
                     <b-field>
                         <b-upload v-model="file"
@@ -81,15 +83,15 @@
                             {{ file.name }}
                         </span>
                         <span v-if="!fileValid" class="help is-danger">
-                            Invalid file type
+                            {{$root.content.groupPopupForm.validation.invalidFileType}}
                         </span>
                     </div>
                 </section>
             </b-step-item>
             <!-- END Logo -->
             <!-- Preview -->
-            <b-step-item step="5" :label="$root.content.meetupPopupForm.stepName.preview" :clickable="isStepsClickable" disabled>
-                <h2 class="title">{{$root.content.meetupPopupForm.labels.preview}}</h2>
+            <b-step-item step="5" :label="content.stepName.preview" :clickable="isStepsClickable" disabled>
+                <h2 class="title">{{content.labels.preview}}</h2>
                  <section class="file-uploader file-uploader--video">
                     <b-field>
                         <b-upload v-model="previewFile"
@@ -116,25 +118,25 @@
                             {{ previewFile.name }}
                         </span>
                         <span v-if="!previewFileValid" class="help is-danger">
-                            Invalid file type
+                            {{$root.content.groupPopupForm.validation.invalidFileType}}
                         </span>
                     </div>
                 </section>
             </b-step-item>
             <!-- END preview -->
-            <b-step-item step="6" :label="$root.content.meetupPopupForm.stepName.confirm" :clickable="isStepsClickable">
-                <h2 class="title last-step">{{$root.content.meetupPopupForm.labels.confirm}}</h2>
+            <b-step-item step="6" :label="content.stepName.confirm" :clickable="isStepsClickable">
+                <h2 class="title last-step">{{content.labels.confirm}}</h2>
                 <div class="confirm-data">
                     <div class="confirm-data__row">
-                        <div class="confirm-data__col-field">{{$root.content.meetupPopupForm.confirmFields.name}}</div>
+                        <div class="confirm-data__col-field">{{content.confirmFields.name}}</div>
                         <div class="confirm-data__col-value">{{name}}</div>
                     </div>
                     <div class="confirm-data__row confirm-data__row--description">
-                        <div class="confirm-data__col-field">{{$root.content.meetupPopupForm.confirmFields.massage}}</div>
+                        <div class="confirm-data__col-field">{{content.confirmFields.massage}}</div>
                         <div class="confirm-data__col-value">{{message}}</div>
                     </div>
                     <div class="confirm-data__row">
-                        <div class="confirm-data__col-field">{{$root.content.meetupPopupForm.confirmFields.date}}</div>
+                        <div class="confirm-data__col-field">{{content.confirmFields.date}}</div>
                         <div class="confirm-data__col-value">{{formatDate}}</div>
                     </div>
                     <div class="confirm-data__row confirm-data__row--img-bg">
@@ -167,8 +169,7 @@
                     <b-button
                         outlined
                         type="is-danger"
-                        :disabled="previous.disabled"
-                        @click.prevent="previous.action"
+                        @click="close"
                         v-if="firstStep"
                     >
                         {{$root.content.globalForms.buttons.cancel}}
@@ -239,6 +240,7 @@
         },
         data() {
             return {
+                content: this.$root.content.meetupPopupForm,
                 activeStep: 0,
 
                 isAnimated: true,
@@ -268,6 +270,10 @@
             }
         },
         methods: {
+            close () {
+                window.EventBus.$emit('CreateNewMeetup:close')
+            },
+
             updateCompany(obj){
                 this.company_name = obj.company_name
                 this.company_description = obj.company_description
@@ -344,6 +350,8 @@
             },
             // Submit form
             async submit() {
+                this.loading = true
+
                 const name = this.name;
                 const description = this.message;
 
@@ -383,6 +391,11 @@
                         groupName: 'test'
                     }
                     const res = await MeetupFormRoutes.postAddMeetup(data)
+                    this.close()
+
+                    this.$buefy.dialog.alert(this.content.success)
+
+                    this.loading = false
                     return false
                 }
             },

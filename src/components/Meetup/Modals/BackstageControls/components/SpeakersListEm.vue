@@ -109,7 +109,8 @@ export default {
 <style lang="scss">
 @import "@/assets/css/attendee-profile.scss";
 .attendee-profile {
-    margin: 10px 0px;
+	margin: 10px 0px;
+	min-height: 60px;
     position: relative;
     display: block;
     .attendee-info {

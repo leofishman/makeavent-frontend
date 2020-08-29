@@ -67,6 +67,20 @@ export default {
         skip: "Skip"
     },
 
+    ProfileMeetupsTabs: {
+        title: "Meetups",
+        my: "My meetups",
+        created: "Created",
+        noMeetups: "Unfortunatelly, you didn't join any meetups yet.",
+        noMeetupsCreate: "You didn't create any meetup yet.<br>Please, click the button above to create first.",
+        CreateNewButton: {
+            create: "Create New Meetup"
+        },
+        MeetupsRow: {
+            edit: "Edit"
+        }
+    },
+
     Booth: {
         title: "lorem ipsum",
         joinNowTitle: "Join E-booth"
@@ -439,7 +453,7 @@ export default {
         validation: {            
             noFound: 'No results found',
             noItems: 'There are no items',
-            required: 'This field are required'
+            required: 'This field is required'
         },        
         placeholders: {
             search: 'Type to search',
@@ -451,38 +465,38 @@ export default {
             exmLink: 'Example: https://www.youtube.com/watch?v=Qnh87zAcAeg'
         },
         labels: {
-            baseInfo: 'Base info',
+            baseInfo: 'Meetup Details',
             name: "Name",
             massage: "Description",
             copy: "Copied"
         }
     },
     meetupPopupForm: {
-        title: 'Wizard title',
+        title: 'Create Meetup',
         stepName: {
-            company: 'Company',
-            name: 'Base info',
+            company: 'Company Details',
+            name: 'Meetup Details',
             date: 'Date',
             logo: "Logo",
             preview: "Preview",
             confirm: 'Confirm'
         },
         labels: {
-            company: 'Company',
-            title: "Basic Info",
+            company: 'Company Details',
+            title: "Meetup Details",
             date: "Date",
             logo: "Upload your Meetup logo",
             preview: "Upload your Meetup preview",
             confirm: "Confirm your data"
         },
         validation: {
-            name: "This field are required",
-            massage: "This field are required"
+            name: "This field is required",
+            massage: "This field is required"
         },
         placeholders: {
             name: "Name",
             company_name: "Company name",
-            massage: "Description",
+            massage: "Meetup Topic",
             company_description: "Company description",
             date: "Type or select a date..",
         },
@@ -491,10 +505,12 @@ export default {
             massage: 'Description',
             date: "Date",
             confirm: 'Confirm'
-        }
+        },
+        success: "Thank you for creating meetup with <b>Makeavent</b>. <br> It may take several seconds to prepare and it will apear in your profile.",
+        error: "Oops, there is unexpected error while creating meetup for you. Please contact team."
     },
     groupEditPopupForm: {
-        title: 'Custom Form',
+        title: 'Edit Meetup',
         labels: {
             location: "Location",
             name: "Basic Info",
@@ -505,9 +521,9 @@ export default {
         },
         validation: {
             location: 'This location is invalid',
-            name: 'This field are required',
+            name: 'This field is required',
             unqName: 'This name exist',
-            massage: 'This field are required',
+            massage: 'This field is required',
             interest: 'This interest is invalid',
         },
         placeholders: {
@@ -539,12 +555,13 @@ export default {
             location: 'This location is invalid',
             noFound: 'No results found',
             noItems: 'There are no items',
-            name: 'This field are required',
+            name: 'This field is required',
             nameExt: 'This name exist',
-            message: 'This field are required',
+            message: 'This field is required',
             logo: 'Logo',
             interest: 'This interest is invalid',
-            dropFile: 'Drop your files here or click to upload'
+            dropFile: 'Drop your files here or click to upload',
+            invalidFileType: "This file type is invalid"
         },
         placeholders: {
             location: 'Type to search',
@@ -574,8 +591,8 @@ export default {
             file: 'Link',
         },
         validation: {
-            name: 'This field are required',
-            file: 'This field are required',
+            name: 'This field is required',
+            file: 'This field is required',
             invalidLink: "Invalid Link"
         }
     },

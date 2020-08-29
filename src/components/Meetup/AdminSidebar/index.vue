@@ -13,7 +13,7 @@
                 <h3 class="admin-sidebar-wrap-header">{{content.options}}</h3>
                 <shortcuts/>
                 <transmition/>
-                <information/>
+                <information :id="this.$root.meetup._id"/>
                 <speakers/>
                 <streaming/>
                 <share/>

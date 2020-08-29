@@ -1,0 +1,33 @@
+@import "@/assets/css/variables.scss";
+@import "bulma/sass/utilities/initial-variables.sass";
+@import "bulma/sass/utilities/derived-variables.sass";
+
+%b-tabs {
+    background-color: $white;
+    box-shadow:$shadow-2;
+    .tag {
+        margin-left: 0.5rem;
+    }
+    .tabs {
+        ul {
+            background-color: $light;
+            li {
+                &:first-child {
+                }
+                a {
+                    padding-top: 0.7rem;
+                    padding-bottom: 0.7rem;
+                }
+            }
+            .is-active {
+                background-color: $white;
+                &:last-child {
+                    width: 100%;
+                    a {
+                        justify-content: left;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -72,7 +72,7 @@
                             {{ file.name }}
                         </span>
                         <span v-if="!fileValid" class="help is-danger">
-                            Invalid file type
+                            {{$root.content.groupPopupForm.validation.invalidFileType}}
                         </span>
                     </div>
                 </section>

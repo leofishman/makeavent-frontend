@@ -161,10 +161,12 @@
 								<img v-else :src="`${api}/static/img/sponsors/${$root.profile.company.toUpperCase()}/${$root.profile.company.toUpperCase()}.png`"> -->
 							<!-- </figure> -->
 						</div>
+
+						<MeetupsTabs />
 					</div>
 					<div class="column profile-data">
 						<div class="business-card">
-							<h3 class="business-card-title">{{content.mbc}}</h3>
+							<h3 class="title">{{content.mbc}}</h3>
 							<b-tabs v-model="activeTab">
 								<b-tab-item :label="$root.content.common.connected">
 									<Businesscardconected
@@ -237,12 +239,13 @@
 <script>
 	import {api} from '@/env'
 	import axios from 'axios'
-	import Pagetitle from '@/components/Pagetitle.vue';
-	import Businesscardconected from '@/components/Profile/Businesscardconected.vue';
-	import Businesscardpending from '@/components/Profile/Businesscardpending.vue';
-	import Interviewsupcoming from '@/components/Profile/Interviewsupcoming.vue';
-	import Interviewspast from '@/components/Profile/Interviewspast.vue';
-	import Interviewsfailed from '@/components/Profile/Interviewsfailed.vue';
+	import Pagetitle from '@/components/Pagetitle.vue'
+	import Businesscardconected from '@/components/Profile/Businesscardconected.vue'
+	import Businesscardpending from '@/components/Profile/Businesscardpending.vue'
+	import Interviewsupcoming from '@/components/Profile/Interviewsupcoming.vue'
+	import Interviewspast from '@/components/Profile/Interviewspast.vue'
+	import Interviewsfailed from '@/components/Profile/Interviewsfailed.vue'
+	import MeetupsTabs from './MeetupsTab'
 
 	export default {
 		name: "Profile",
@@ -253,6 +256,7 @@
 			Interviewsupcoming,
 			Interviewspast,
 			Interviewsfailed,
+			MeetupsTabs
 		},
 		props: {
 			data: String

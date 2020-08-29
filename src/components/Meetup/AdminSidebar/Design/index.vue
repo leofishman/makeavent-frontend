@@ -113,15 +113,15 @@ export default {
             }
             
             // Primary
-            let obj = {key: 'primary', value: colorShema.primary, isDefault: true}
+            let obj = {key: 'primary', value: colorShema.primary}
             this.updateSchemaColor(obj)
             this.updateIsDefault()
             // Dark
-            obj = {key: 'dark', value: colorShema.dark, isDefault: true}
+            obj = {key: 'dark', value: colorShema.dark}
             this.updateSchemaColor(obj)
             this.updateIsDefault()
             // Light
-            obj = {key: 'light', value: colorShema.light, isDefault: true}
+            obj = {key: 'light', value: colorShema.light}
             this.updateSchemaColor(obj)
             this.updateIsDefault()
             this.defaultValue.isActive = true

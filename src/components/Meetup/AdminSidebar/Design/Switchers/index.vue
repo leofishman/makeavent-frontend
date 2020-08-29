@@ -9,7 +9,7 @@
         <p v-if="!isActiveLocal" slot="switched-text">{{content.off}}</p>
         <p v-if="isActiveLocal" slot="switched-text">{{content.active}}</p>
       </switch-component>
-      <switch-component v-if="isActiveLocal" class="admin-bar__switcher" :isDefault="isDefault" :isSwitched="!isLightMode" @switchItem="updateMode">  
+      <switch-component v-if="isActiveLocal" class="admin-bar__switcher" :isSwitched="!isLightMode" @switchItem="updateMode">  
         <p v-if="isLightMode" slot="switched-text">{{content.light}}</p>
         <p v-if="!isLightMode" slot="switched-text">{{content.dark}}</p>
       </switch-component>
@@ -47,7 +47,6 @@ export default {
     },
     methods: {
       resetToDefault() {
-        this.isDefault = true
         this.updateIsDefault()
         this.$emit("resetToDefault")        
       },

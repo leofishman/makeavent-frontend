@@ -18,7 +18,10 @@ export default {
     watch: {
       isSwitched(){
         // console.log('this.$props.isSwitched', this.$props.isSwitched);
-        // this.current = this.$props.isSwitched
+        if(this.$store.getters.meetupFull.isDefault) {
+          this.current = this.$props.isSwitched
+          this.$emit('switchItem', !this.current)
+        }
       },
       current() {
         this.$emit('switchItem', this.current)

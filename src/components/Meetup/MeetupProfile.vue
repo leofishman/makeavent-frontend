@@ -167,12 +167,13 @@
 		</b-modal>
 
 		<b-modal
-		:active.sync="demoModalActive"
-		has-modal-card
-		trap-focus
-		:destroy-on-hide="false"
-		aria-role="dialog"
-		aria-modal>
+			:active.sync="demoModalActive"
+			has-modal-card
+			trap-focus
+			:destroy-on-hide="false"
+			aria-role="dialog"
+			aria-modal
+		>
 			<DemoModal :demos="$root.meetup.demo" :name="$root.meetup.name"/>
 		</b-modal>
 
@@ -199,13 +200,13 @@
 
 	
 	export default {
-		mounted(){
-			// console.log('this.$root', this.$root);
-			// if(this.$root) {
-			// 	this.updateColorLight(this.$root.meetup.color_schema.light)
-			// 	this.updateColorDark(this.$root.meetup.color_schema.dark)
-			// }
-		},
+		// mounted(){
+			// console.log('this.$root', this.$root.meetup);
+		// 	// if(this.$root) {
+		// 	// 	this.updateColorLight(this.$root.meetup.color_schema.light)
+		// 	// 	this.updateColorDark(this.$root.meetup.color_schema.dark)
+		// 	// }
+		// },
 		props: {
 			id: {
 				type: String,
@@ -223,11 +224,21 @@
 			JitsiStream,
 			AdminSidebar
 		},
-		data () {
+		data () {			
 			/* wait until token and sponsors ready*/
 			this.$root.check('usertype')
 			.then(() => {
 				this.getMeetup()
+				.then(() => {
+					// console.log('this.$root', this.$root.meetup.custom_colors);
+					if(this.$root.meetup.custom_colors){
+						this.light = this.$root.meetup.color_schema.isLight
+						this.updateColorLight(this.$root.meetup.color_schema.light)
+						this.updateColorDark(this.$root.meetup.color_schema.dark)
+						this.updateColorPrimary(this.$root.meetup.color_schema.primary)
+					}
+				})
+				.catch(e => console.log(e))
 				this.getSpeakers()
 			})
 			.catch(e => console.log(`${e} inaccessible`))
@@ -242,6 +253,8 @@
 				if ( this.$root.actionsLord.SHOULD_GET_MEETUP() )
 					this.getMeetup()
 			}, 5000)
+
+			
 			
 			return {
 				expanded: false,
@@ -268,7 +281,7 @@
 				speakers: [],
 
 				videoReady: false,
-
+				light: false,
 				// isLight: this.$root.meetup ? this.$root.meetup.color_schema.isLight : 'false'
 			}
 		},
@@ -355,7 +368,11 @@
 						this.$root.meetup = res.data.meetup
 						this.ready = true
 
-						this.renderRtmpVideo()
+						try {
+							this.renderRtmpVideo()
+						} catch (e) {
+							console.log(e);
+						}
 
 						if (!window.io.query.project) {
 							window.io = VueSocketIO(socket, {
@@ -394,158 +411,159 @@
 				else
 					return {}
 			},
-		},
-        updateColorDark(val){
-            // let query = `#app .networking-rooms .h1, #app .meetup-profile .h1, #app .networking-rooms .h2, #app .meetup-profile .h2, #app .networking-rooms .h3, #app .meetup-profile .h3, #app .networking-rooms .h4, #app .meetup-profile .h4, #app .networking-rooms .h5, #app .meetup-profile .h5, #app .networking-rooms .h6, #app .meetup-profile .h6, #app .networking-rooms h1, #app .meetup-profile h1, #app .networking-rooms h2, #app .meetup-profile h2, #app .networking-rooms h3, #app .meetup-profile h3, #app .networking-rooms h4, #app .meetup-profile h4, #app .networking-rooms h5, #app .meetup-profile h5, #app .networking-rooms h6, #app .meetup-profile h6, #app .networking-rooms p, #app .meetup-profile p, #app .networking-rooms storng, #app .meetup-profile storng, #app .networking-rooms em, #app .meetup-profile em, #app .networking-rooms ol ol, #app .meetup-profile ol ol, #app .networking-rooms ol ul, #app .meetup-profile ol ul, #app .networking-rooms ul ol, #app .meetup-profile ul ol, #app .networking-rooms ul ul, #app .meetup-profile ul ul, #app .networking-rooms ul li, #app .meetup-profile ul li, #app .networking-rooms ol li, #app .meetup-profile ol li, #app .networking-rooms sub, #app .meetup-profile sub, #app .networking-rooms sup, #app .meetup-profile sup, #app .networking-rooms code, #app .meetup-profile code, #app .networking-rooms kbd, #app .meetup-profile kbd, #app .networking-rooms pre, #app .meetup-profile pre, #app .networking-rooms samp, #app .meetup-profile samp, #app .networking-rooms svg, #app .meetup-profile svg, #app .networking-rooms th, #app .meetup-profile th, #app .networking-rooms tr, #app .meetup-profile tr, #app .networking-rooms button, #app .meetup-profile button, #app .networking-rooms optgroup, #app .meetup-profile optgroup, #app .networking-rooms strong, #app .meetup-profile strong, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms span, #app .meetup-profile span`
-            let query = `#app .is-dark-changeable--bg, #app .is-dark-changeable--color, #app .is-dark-changeable--border-top`
+			
+			updateColorDark(val){
+				// let query = `#app .networking-rooms .h1, #app .meetup-profile .h1, #app .networking-rooms .h2, #app .meetup-profile .h2, #app .networking-rooms .h3, #app .meetup-profile .h3, #app .networking-rooms .h4, #app .meetup-profile .h4, #app .networking-rooms .h5, #app .meetup-profile .h5, #app .networking-rooms .h6, #app .meetup-profile .h6, #app .networking-rooms h1, #app .meetup-profile h1, #app .networking-rooms h2, #app .meetup-profile h2, #app .networking-rooms h3, #app .meetup-profile h3, #app .networking-rooms h4, #app .meetup-profile h4, #app .networking-rooms h5, #app .meetup-profile h5, #app .networking-rooms h6, #app .meetup-profile h6, #app .networking-rooms p, #app .meetup-profile p, #app .networking-rooms storng, #app .meetup-profile storng, #app .networking-rooms em, #app .meetup-profile em, #app .networking-rooms ol ol, #app .meetup-profile ol ol, #app .networking-rooms ol ul, #app .meetup-profile ol ul, #app .networking-rooms ul ol, #app .meetup-profile ul ol, #app .networking-rooms ul ul, #app .meetup-profile ul ul, #app .networking-rooms ul li, #app .meetup-profile ul li, #app .networking-rooms ol li, #app .meetup-profile ol li, #app .networking-rooms sub, #app .meetup-profile sub, #app .networking-rooms sup, #app .meetup-profile sup, #app .networking-rooms code, #app .meetup-profile code, #app .networking-rooms kbd, #app .meetup-profile kbd, #app .networking-rooms pre, #app .meetup-profile pre, #app .networking-rooms samp, #app .meetup-profile samp, #app .networking-rooms svg, #app .meetup-profile svg, #app .networking-rooms th, #app .meetup-profile th, #app .networking-rooms tr, #app .meetup-profile tr, #app .networking-rooms button, #app .meetup-profile button, #app .networking-rooms optgroup, #app .meetup-profile optgroup, #app .networking-rooms strong, #app .meetup-profile strong, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms span, #app .meetup-profile span`
+				let query = `#app .is-dark-changeable--bg, #app .is-dark-changeable--color, #app .is-dark-changeable--border-top`
 
-            if(!this.light) {
-                // query = `.meetup-profile, .networking-rooms, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms aside, #app .meetup-profile aside, #app .networking-rooms nav, #app .meetup-profile nav, .meetup-profile article, .networking-rooms article, .meetup-profile button:not(.is-primary), .networking-rooms button:not(.is-primary)`
-                query = `#app .is-light-changeable, #app .is-light-changeable--color, #app .is-light-changeable--bg, #app .is-light-changeable--border-top`
-                Array.from(document.querySelectorAll(query)).map(el => {
-                    el.style.backgroundColor = val
-                })
-            } else {
-                Array.from(document.querySelectorAll(query)).map(el => {
-                    const classList = Array.from(el.classList)
-              
-                    if ( classList.includes('is-dark-changeable--border-top') ) {
-                        if ( classList.includes('distinct-color') )
-                            el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
-                        else
-                            el.style.borderTop = `solid 4rem ${val}`
-                    }
-                    
-                    if ( classList.includes('is-dark-changeable--bg') ) {
-                        if ( classList.includes('distinct-color') )
-                            el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
-                        else
-                            el.style.backgroundColor = val
-                    }
-                    
-                    if ( classList.includes('is-dark-changeable--color') ) {
-                        if ( classList.includes('distinct-color') )
-                            el.style.color = pSBC(0.2, val, invertColor(val))
-                        else
-                            el.style.color = val
-                    }
+				if(!this.light) {
+					// query = `.meetup-profile, .networking-rooms, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms aside, #app .meetup-profile aside, #app .networking-rooms nav, #app .meetup-profile nav, .meetup-profile article, .networking-rooms article, .meetup-profile button:not(.is-primary), .networking-rooms button:not(.is-primary)`
+					query = `#app .is-light-changeable, #app .is-light-changeable--color, #app .is-light-changeable--bg, #app .is-light-changeable--border-top`
+					Array.from(document.querySelectorAll(query)).map(el => {
+						el.style.backgroundColor = val
+					})
+				} else {
+					Array.from(document.querySelectorAll(query)).map(el => {
+						const classList = Array.from(el.classList)
+				
+						if ( classList.includes('is-dark-changeable--border-top') ) {
+							if ( classList.includes('distinct-color') )
+								el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
+							else
+								el.style.borderTop = `solid 4rem ${val}`
+						}
+						
+						if ( classList.includes('is-dark-changeable--bg') ) {
+							if ( classList.includes('distinct-color') )
+								el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
+							else
+								el.style.backgroundColor = val
+						}
+						
+						if ( classList.includes('is-dark-changeable--color') ) {
+							if ( classList.includes('distinct-color') )
+								el.style.color = pSBC(0.2, val, invertColor(val))
+							else
+								el.style.color = val
+						}
 
-                    if ( classList.includes('invert-color') )
-                        if ( isRGB(el.style.backgroundColor) ) 
-                            el.style.color = pSBC(
-                                0.4,
-                                invertColor(rgbToHex(el.style.backgroundColor)),
-                                tinycolor(invertColor(rgbToHex(el.style.backgroundColor))).isLight()
-                                    ? "#FFFFFF"
-                                    : "#000000")
-                        
-                        else if ( isHEX(el.style.backgroundColor) )
-                            el.style.color = pSBC(
-                                0.4,
-                                invertColor(el.style.backgroundColor),
-                                tinycolor(invertColor(el.style.backgroundColor)).isLight()
-                                    ? "#FFFFFF"
-                                    : "#000000")
-                })
-			}				
-		},		
-        updateColorLight(val){
-            // let query = `.meetup-profile, .networking-rooms, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms aside, #app .meetup-profile aside, #app .networking-rooms nav, #app .meetup-profile nav, .meetup-profile article, .networking-rooms article, .meetup-profile button:not(.is-primary), .networking-rooms button:not(.is-primary)`
-            let query = `#app .is-light-changeable, #app .is-light-changeable--color, #app .is-light-changeable--bg, #app .is-light-changeable--border-top`
-            if(!this.light) {
-                // query = `#app .networking-rooms .h1, #app .meetup-profile .h1, #app .networking-rooms .h2, #app .meetup-profile .h2, #app .networking-rooms .h3, #app .meetup-profile .h3, #app .networking-rooms .h4, #app .meetup-profile .h4, #app .networking-rooms .h5, #app .meetup-profile .h5, #app .networking-rooms .h6, #app .meetup-profile .h6, #app .networking-rooms h1, #app .meetup-profile h1, #app .networking-rooms h2, #app .meetup-profile h2, #app .networking-rooms h3, #app .meetup-profile h3, #app .networking-rooms h4, #app .meetup-profile h4, #app .networking-rooms h5, #app .meetup-profile h5, #app .networking-rooms h6, #app .meetup-profile h6, #app .networking-rooms p, #app .meetup-profile p, #app .networking-rooms storng, #app .meetup-profile storng, #app .networking-rooms em, #app .meetup-profile em, #app .networking-rooms ol ol, #app .meetup-profile ol ol, #app .networking-rooms ol ul, #app .meetup-profile ol ul, #app .networking-rooms ul ol, #app .meetup-profile ul ol, #app .networking-rooms ul ul, #app .meetup-profile ul ul, #app .networking-rooms ul li, #app .meetup-profile ul li, #app .networking-rooms ol li, #app .meetup-profile ol li, #app .networking-rooms sub, #app .meetup-profile sub, #app .networking-rooms sup, #app .meetup-profile sup, #app .networking-rooms code, #app .meetup-profile code, #app .networking-rooms kbd, #app .meetup-profile kbd, #app .networking-rooms pre, #app .meetup-profile pre, #app .networking-rooms samp, #app .meetup-profile samp, #app .networking-rooms svg, #app .meetup-profile svg, #app .networking-rooms th, #app .meetup-profile th, #app .networking-rooms tr, #app .meetup-profile tr, #app .networking-rooms button, #app .meetup-profile button, #app .networking-rooms optgroup, #app .meetup-profile optgroup, #app .networking-rooms strong, #app .meetup-profile strong, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms span, #app .meetup-profile span`
-                query = `#app .is-dark-changeable--bg, #app .is-dark-changeable--color, #app .is-dark-changeable--border-top`
-                Array.from(document.querySelectorAll(query)).map(el => {
-                    el.style.color = val
-                })
-            } else {
-                Array.from(document.querySelectorAll(query)).map(el => {
-                    const classList = Array.from(el.classList)
-              
-                    if ( classList.includes('is-light-changeable--border-top') ) {
-                        if ( classList.includes('distinct-color') )
-                            el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
-                        else
-                            el.style.borderTop = `solid 4rem ${val}`
-                    }
-                    
-                    if ( classList.includes('is-light-changeable--bg') ) {
-                        if ( classList.includes('distinct-color') )
-                            el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
-                        else
-                            el.style.backgroundColor = val
-                    }
-                    
-                    if ( classList.includes('is-light-changeable--color') ) {
-                        if ( classList.includes('distinct-color') )
-                            el.style.color = pSBC(0.2, val, invertColor(val))
-                        else
-                            el.style.color = val
-                    }
-                    if ( classList.includes('invert-color') )
-                        if ( isRGB(el.style.backgroundColor) ) 
-                            el.style.color = pSBC(
-                                0.4,
-                                invertColor(rgbToHex(el.style.backgroundColor)),
-                                tinycolor(invertColor(rgbToHex(el.style.backgroundColor))).isLight()
-                                    ? "#FFFFFF"
-                                    : "#000000")
-                        
-                        else if ( isHEX(el.style.backgroundColor) )
-                            el.style.color = pSBC(
-                                0.4,
-                                invertColor(el.style.backgroundColor),
-                                tinycolor(invertColor(el.style.backgroundColor)).isLight()
-                                    ? "#FFFFFF"
-                                    : "#000000")
-                })
+						if ( classList.includes('invert-color') )
+							if ( isRGB(el.style.backgroundColor) ) 
+								el.style.color = pSBC(
+									0.4,
+									invertColor(rgbToHex(el.style.backgroundColor)),
+									tinycolor(invertColor(rgbToHex(el.style.backgroundColor))).isLight()
+										? "#FFFFFF"
+										: "#000000")
+							
+							else if ( isHEX(el.style.backgroundColor) )
+								el.style.color = pSBC(
+									0.4,
+									invertColor(el.style.backgroundColor),
+									tinycolor(invertColor(el.style.backgroundColor)).isLight()
+										? "#FFFFFF"
+										: "#000000")
+					})
+				}				
+			},		
+			updateColorLight(val){
+				// let query = `.meetup-profile, .networking-rooms, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms aside, #app .meetup-profile aside, #app .networking-rooms nav, #app .meetup-profile nav, .meetup-profile article, .networking-rooms article, .meetup-profile button:not(.is-primary), .networking-rooms button:not(.is-primary)`
+				let query = `#app .is-light-changeable, #app .is-light-changeable--color, #app .is-light-changeable--bg, #app .is-light-changeable--border-top`
+				if(!this.light) {
+					// query = `#app .networking-rooms .h1, #app .meetup-profile .h1, #app .networking-rooms .h2, #app .meetup-profile .h2, #app .networking-rooms .h3, #app .meetup-profile .h3, #app .networking-rooms .h4, #app .meetup-profile .h4, #app .networking-rooms .h5, #app .meetup-profile .h5, #app .networking-rooms .h6, #app .meetup-profile .h6, #app .networking-rooms h1, #app .meetup-profile h1, #app .networking-rooms h2, #app .meetup-profile h2, #app .networking-rooms h3, #app .meetup-profile h3, #app .networking-rooms h4, #app .meetup-profile h4, #app .networking-rooms h5, #app .meetup-profile h5, #app .networking-rooms h6, #app .meetup-profile h6, #app .networking-rooms p, #app .meetup-profile p, #app .networking-rooms storng, #app .meetup-profile storng, #app .networking-rooms em, #app .meetup-profile em, #app .networking-rooms ol ol, #app .meetup-profile ol ol, #app .networking-rooms ol ul, #app .meetup-profile ol ul, #app .networking-rooms ul ol, #app .meetup-profile ul ol, #app .networking-rooms ul ul, #app .meetup-profile ul ul, #app .networking-rooms ul li, #app .meetup-profile ul li, #app .networking-rooms ol li, #app .meetup-profile ol li, #app .networking-rooms sub, #app .meetup-profile sub, #app .networking-rooms sup, #app .meetup-profile sup, #app .networking-rooms code, #app .meetup-profile code, #app .networking-rooms kbd, #app .meetup-profile kbd, #app .networking-rooms pre, #app .meetup-profile pre, #app .networking-rooms samp, #app .meetup-profile samp, #app .networking-rooms svg, #app .meetup-profile svg, #app .networking-rooms th, #app .meetup-profile th, #app .networking-rooms tr, #app .meetup-profile tr, #app .networking-rooms button, #app .meetup-profile button, #app .networking-rooms optgroup, #app .meetup-profile optgroup, #app .networking-rooms strong, #app .meetup-profile strong, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms span, #app .meetup-profile span`
+					query = `#app .is-dark-changeable--bg, #app .is-dark-changeable--color, #app .is-dark-changeable--border-top`
+					Array.from(document.querySelectorAll(query)).map(el => {
+						el.style.color = val
+					})
+				} else {
+					Array.from(document.querySelectorAll(query)).map(el => {
+						const classList = Array.from(el.classList)
+				
+						if ( classList.includes('is-light-changeable--border-top') ) {
+							if ( classList.includes('distinct-color') )
+								el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
+							else
+								el.style.borderTop = `solid 4rem ${val}`
+						}
+						
+						if ( classList.includes('is-light-changeable--bg') ) {
+							if ( classList.includes('distinct-color') )
+								el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
+							else
+								el.style.backgroundColor = val
+						}
+						
+						if ( classList.includes('is-light-changeable--color') ) {
+							if ( classList.includes('distinct-color') )
+								el.style.color = pSBC(0.2, val, invertColor(val))
+							else
+								el.style.color = val
+						}
+						if ( classList.includes('invert-color') )
+							if ( isRGB(el.style.backgroundColor) ) 
+								el.style.color = pSBC(
+									0.4,
+									invertColor(rgbToHex(el.style.backgroundColor)),
+									tinycolor(invertColor(rgbToHex(el.style.backgroundColor))).isLight()
+										? "#FFFFFF"
+										: "#000000")
+							
+							else if ( isHEX(el.style.backgroundColor) )
+								el.style.color = pSBC(
+									0.4,
+									invertColor(el.style.backgroundColor),
+									tinycolor(invertColor(el.style.backgroundColor)).isLight()
+										? "#FFFFFF"
+										: "#000000")
+					})
+				}
+			},		        
+			updateColorPrimary(val){
+				let query = `#app .is-primary-changeable--bg, #app .is-primary-changeable--color, #app .is-primary-changeable--border-top`
+
+				Array.from(document.querySelectorAll(query)).map(el => {
+				const classList = Array.from(el.classList)
+				
+				if ( classList.includes('is-primary-changeable--border-top') ) {
+					if ( classList.includes('distinct-color') )
+					el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
+					else
+					el.style.borderTop = `solid 4rem ${val}`
+				}
+				
+				if ( classList.includes('is-primary-changeable--bg') ) {
+					if ( classList.includes('distinct-color') )
+					el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
+					else
+					el.style.backgroundColor = val
+				}
+				
+				if ( classList.includes('is-primary-changeable--color') ) {
+					if ( classList.includes('distinct-color') )
+					el.style.color = pSBC(0.2, val, invertColor(val))
+					else
+					el.style.color = val
+				}
+
+				if ( classList.includes('invert-color') )
+					if ( isRGB(el.style.backgroundColor) ) 
+					el.style.color = pSBC(
+						0.4,
+						invertColor(rgbToHex(el.style.backgroundColor)),
+						tinycolor(invertColor(rgbToHex(el.style.backgroundColor))).isLight()
+						? "#FFFFFF"
+						: "#000000")
+					
+					else if ( isHEX(el.style.backgroundColor) )
+					el.style.color = pSBC(
+						0.4,
+						invertColor(el.style.backgroundColor),
+						tinycolor(invertColor(el.style.backgroundColor)).isLight()
+						? "#FFFFFF"
+						: "#000000")
+				})
 			}
-		},		        
-        updateColorPrimary(val){
-            let query = `#app .is-primary-changeable--bg, #app .is-primary-changeable--color, #app .is-primary-changeable--border-top`
-
-            Array.from(document.querySelectorAll(query)).map(el => {
-              const classList = Array.from(el.classList)
-              
-              if ( classList.includes('is-primary-changeable--border-top') ) {
-                if ( classList.includes('distinct-color') )
-                  el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
-                else
-                  el.style.borderTop = `solid 4rem ${val}`
-              }
-              
-              if ( classList.includes('is-primary-changeable--bg') ) {
-                if ( classList.includes('distinct-color') )
-                  el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
-                else
-                  el.style.backgroundColor = val
-              }
-              
-              if ( classList.includes('is-primary-changeable--color') ) {
-                if ( classList.includes('distinct-color') )
-                  el.style.color = pSBC(0.2, val, invertColor(val))
-                else
-                  el.style.color = val
-              }
-
-              if ( classList.includes('invert-color') )
-                if ( isRGB(el.style.backgroundColor) ) 
-                  el.style.color = pSBC(
-                    0.4,
-                    invertColor(rgbToHex(el.style.backgroundColor)),
-                    tinycolor(invertColor(rgbToHex(el.style.backgroundColor))).isLight()
-                      ? "#FFFFFF"
-                      : "#000000")
-                
-                else if ( isHEX(el.style.backgroundColor) )
-                  el.style.color = pSBC(
-                    0.4,
-                    invertColor(el.style.backgroundColor),
-                    tinycolor(invertColor(el.style.backgroundColor)).isLight()
-                      ? "#FFFFFF"
-                      : "#000000")
-			})
-		}
+		},
 	}
 </script>
 <style lang="scss">

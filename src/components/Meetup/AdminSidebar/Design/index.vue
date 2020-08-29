@@ -1,7 +1,13 @@
 <template>
   <section>
+            <b-loading 
+                :is-full-page="false" 
+                :active.sync="isLoading" 
+                :can-cancel="false"
+            />
       <item class="admin-bar__design">
             <p class="admin-bar__list-item-header" slot="header">{{content.items.design.title}}</p>
+            
             <template slot="inner">
                 <div class="admin-bar__design-switchers">
                     <switchers 
@@ -63,13 +69,26 @@ export default {
                 primary: '#0051d9',
                 dark: '#4b4b4b',
                 light: '#ffffff',
-            }
+            },
+            isLoading: false
         }
     },
     methods: {
-        ...mapMutations(['updateCustomColor', 'updateColorMode', 'updateSchemaColor']),
-        updateActive(val) {
+        ...mapMutations(['updateCustomColor', 'updateColorMode', 'updateSchemaColor', 'updateIsDefault']),
+        async updateActive(val) {
             this.isActive = val
+            try {
+                this.isLoading = true
+                const obj = {
+                    id: this.$root.meetup._id,
+                    color_schema: this.$store.getters.meetupFull.color_schema,
+                    custom_colors: val
+                }
+                await routes.postUpdate(obj)
+                this.isLoading = false
+            } catch (e){
+                console.log(e);
+            }
         },
         updateMode(val){
             this.updateColorMode(val)
@@ -94,14 +113,17 @@ export default {
             }
             
             // Primary
-            let obj = {key: 'primary', value: colorShema.primary}
+            let obj = {key: 'primary', value: colorShema.primary, isDefault: true}
             this.updateSchemaColor(obj)
+            this.updateIsDefault()
             // Dark
-            obj = {key: 'dark', value: colorShema.dark}
+            obj = {key: 'dark', value: colorShema.dark, isDefault: true}
             this.updateSchemaColor(obj)
+            this.updateIsDefault()
             // Light
-            obj = {key: 'light', value: colorShema.light}
+            obj = {key: 'light', value: colorShema.light, isDefault: true}
             this.updateSchemaColor(obj)
+            this.updateIsDefault()
             this.defaultValue.isActive = true
         },
         updateColorShema(val){

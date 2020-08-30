@@ -38,11 +38,10 @@ p + p {
 // HELPER CLASS //
 //////////////////////////////////////////
 body {
-	background-color: $white-ter;
-	min-height: calc(100vh - 5rem);
+    background-color: #F3F3F3;
+    min-height: 100vh;
 }
 main {
-	margin-top: 5rem;
 }
 
 .meetup-profile, .networking-rooms {

@@ -13,7 +13,11 @@ export default {
         link: String
     },
     data () {
-        axios.get(communitySrv + '/meetup/get-invite?link=' + this.link)
+        axios.get(communitySrv + '/meetup/get-invite?link=' + this.link, {
+            headers: {
+                authorization: localStorage.auth
+            }
+        })
         .then(res => {
             this.$router.push('/profile')
         })

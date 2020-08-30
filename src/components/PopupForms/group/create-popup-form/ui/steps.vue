@@ -256,24 +256,28 @@
                 else this.nextDisabled = true
             },
             updateLogo(e){
-                const fileName = this.file.name
-                if(this.file && this.util.isImage(fileName)) {
-                    const image = this.file
-                    const reader = new FileReader()
-                    reader.readAsDataURL(image)
-                    reader.onload = e => {
-                        this.setLogo(e.target.result)
-                        this.fileUplodated = e.target.result
-                    }
+                try {
+                    const fileName = this.file.name
                     
-                    // this.setLogo(formData);
-                    this.fileValid = true
-                    this.nextDisabled = false
+                    if ( this.file && this.util.isImage(fileName) ) {
+                        const image = this.file
+                        const reader = new FileReader()
+                        reader.readAsDataURL(image)
+                        reader.onload = e => {
+                            this.setLogo(e.target.result)
+                            this.fileUplodated = e.target.result
+                        }
+                        
+                        // this.setLogo(formData);
+                        this.fileValid = true
+                        this.nextDisabled = false
+                    }
+                    else {
+                        this.fileValid = false
+                        this.nextDisabled = true
+                    }
                 }
-                else {
-                    this.fileValid = false
-                    this.nextDisabled = true
-                }
+                catch (e) {}
             },
             changeStep() {           
                 const currentStep = this.activeStep+1;

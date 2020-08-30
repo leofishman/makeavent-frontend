@@ -27,14 +27,12 @@
     position: relative;
     display: flex;
     img {
-        // border-radius: 10rem;
-        // max-width: 60px;
-        // max-height: 60px;
         position: relative;
         width: 100%;
+        max-height: 100%;
         height: max-content;
         display: block;
-        object-fit: cover;
+        object-fit: contain;
         margin: auto;
     }
 }

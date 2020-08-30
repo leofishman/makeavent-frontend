@@ -5,12 +5,12 @@
         <!-- <h2 class="form-title">{{$root.content.groupEditPopupForm.title}}</h2> -->
         <div class="group-popup-form--edit-from__scroll">
             <div class="edit-field basic-info">
-                <h2 class="title">{{$root.content.meetupPopupForm.labels.company}}</h2>         
+                <h2 class="title">{{meetupPopupForm.labels.company}}</h2>         
                 <b-field>
                     <b-input 
-                        :placeholder="$root.content.meetupPopupForm.placeholders.company_name"
+                        :placeholder="meetupPopupForm.placeholders.company_name"
                         v-model="company_name"
-                        :validation-message="$root.content.meetupPopupForm.validation.name"
+                        :validation-message="meetupPopupForm.validation.name"
                         required 
                     >
                     </b-input>
@@ -18,10 +18,10 @@
                 <b-field>
                     <b-input 
                         v-model="company_description"
-                        :placeholder="$root.content.meetupPopupForm.placeholders.company_description"
+                        :placeholder="meetupPopupForm.placeholders.company_description"
                         maxlength="200" 
                         type="textarea"
-                        :validation-message="$root.content.meetupPopupForm.validation.massage"
+                        :validation-message="meetupPopupForm.validation.massage"
                         required
                     >
                     </b-input>
@@ -29,12 +29,12 @@
             </div>
 
             <div class="edit-field">
-				<h2 class="title">{{$root.content.meetupPopupForm.labels.title}}</h2>         
+				<h2 class="title">{{meetupPopupForm.labels.title}}</h2>         
 				<b-field>
 					<b-input 
-						:placeholder="$root.content.meetupPopupForm.placeholders.name"
+						:placeholder="meetupPopupForm.placeholders.name"
 						v-model="name"
-						:validation-message="$root.content.meetupPopupForm.validation.name"
+						:validation-message="meetupPopupForm.validation.name"
 						required 
 					>
 					</b-input>
@@ -42,10 +42,10 @@
 				<b-field>
 					<b-input 
 						v-model="message"
-						:placeholder="$root.content.meetupPopupForm.placeholders.massage"
+						:placeholder="meetupPopupForm.placeholders.massage"
 						maxlength="200" 
 						type="textarea"
-						:validation-message="$root.content.meetupPopupForm.validation.massage"
+						:validation-message="meetupPopupForm.validation.massage"
 						required
 					>
 					</b-input>
@@ -53,10 +53,10 @@
             </div>
 
             <div class="edit-field location-field">
-                <h2 class="title">{{$root.content.meetupPopupForm.labels.date}}</h2>                
+                <h2 class="title">{{meetupPopupForm.labels.date}}</h2>                
                 <b-field class="input-date">
                     <b-datetimepicker
-                        :placeholder="$root.content.meetupPopupForm.placeholders.date"
+                        :placeholder="meetupPopupForm.placeholders.date"
                         icon="calendar-today"
                         v-model="date">
                     </b-datetimepicker>
@@ -64,7 +64,7 @@
             </div>
 
             <div class="edit-field logo-field">
-                <h2 class="title">{{$root.content.meetupPopupForm.labels.logo}}</h2>
+                <h2 class="title">{{meetupPopupForm.labels.logo}}</h2>
                 <section class="file-uploader">
                     <b-field>
                         <b-upload v-model="file"
@@ -80,7 +80,7 @@
                                             size="is-large">
                                         </b-icon>
                                     </p>
-                                    <p>{{$root.content.groupPopupForm.validation.dropFile}}</p>
+                                    <p>{{globalPopupForm.validation.dropFile}}</p>
                                 </div>
                             </section>
                         </b-upload>
@@ -101,7 +101,7 @@
             </div>
 
             <div class="edit-field interets-field">
-                <h2 class="title">{{$root.content.meetupPopupForm.labels.preview}}</h2>
+                <h2 class="title">{{meetupPopupForm.labels.background}}</h2>
                 <section class="file-uploader">
                     <b-field>
                         <b-upload v-model="previewFile"
@@ -117,7 +117,7 @@
                                             size="is-large">
                                         </b-icon>
                                     </p>
-                                    <p>{{$root.content.groupPopupForm.validation.dropFile}}</p>
+                                    <p>{{globalPopupForm.validation.dropFile}}</p>
                                 </div>
                             </section>
                         </b-upload>
@@ -187,8 +187,11 @@ export default {
 	props: {
 		id: String
 	},
-	data(){
+	data () {
 		return {
+			meetupPopupForm: this.$root.content.meetupPopupForm,
+			globalPopupForm: this.$root.content.groupPopupForm,
+
 			name: '',
 			message: '',
 			company_name: '',
@@ -235,56 +238,63 @@ export default {
 		this.message = this.$store.state.meetupForm.message;
 		const date = new Date(Date.parse(this.$store.state.meetupForm.date));
 
-		this.logo = this.config.server_url+this.$store.state.meetupForm.logo;
-		this.background = this.config.server_url+this.$store.state.meetupForm.preview;
-		this.previewUplodated = this.config.server_url+this.$store.state.meetupForm.preview;
+		this.logo = this.$store.state.meetupForm.logo;
+		this.background = this.$store.state.meetupForm.preview;
+		this.previewUplodated = this.$store.state.meetupForm.preview;
+		this.updateLogo()
+		this.updatePreview()
 	},
 	methods: {      
 		...mapActions(['getMeetupById']),
 			
 		updateLogo(e){
-			if(this.file) {
-				const image = this.file
-
-				const reader = new FileReader()
-				reader.readAsDataURL(image)
-				reader.onload = e => {
-					this.fileUplodated = e.target.result
+			try {
+				if ( this.file ) {
+					const image = this.file
+	
+					const reader = new FileReader()
+					reader.readAsDataURL(image)
+					reader.onload = e => {
+						this.fileUplodated = e.target.result
+					}
+					
+					this.saveDisabled = false
 				}
-
-				
-				this.saveDisabled = false
+				else this.saveDisabled = true
 			}
-			else this.saveDisabled = true
+			catch (e) {}
 		},
 			
 		updatePreview(e){
-			if(this.previewFile) {
-				const name = this.previewFile.name
-				if(this.util.isImage(name)){
-					const image = this.previewFile
-					const reader = new FileReader()
-
-					reader.readAsDataURL(image)
-					reader.onload = e => {
-						this.previewUplodated = e.target.result
-						this.previewToup = e.target.result
+			try {
+				if ( this.previewFile ) {
+					const name = this.previewFile.name
+					if(this.util.isImage(name)){
+						const image = this.previewFile
+						const reader = new FileReader()
+	
+						reader.readAsDataURL(image)
+						reader.onload = e => {
+							this.previewUplodated = e.target.result
+							this.previewToup = e.target.result
+						}
+					} else if ( this.util.isVideo(name) ){
+						const video = this.previewFile
+						const reader = new FileReader()
+						reader.readAsDataURL(video)
+						this.previewUplodated = URL.createObjectURL(video)
+						reader.onload = e => {
+							this.previewToup = e.target.result
+						}
+						this.previewFileValid = true
+						this.nextDisabled = false
 					}
-				} else if (this.util.isVideo(name)){
-					const video = this.previewFile
-					const reader = new FileReader()
-					reader.readAsDataURL(video)
-					this.previewUplodated = URL.createObjectURL(video)
-					reader.onload = e => {
-						this.previewToup = e.target.result
-					}
-					this.previewFileValid = true
-					this.nextDisabled = false
+						
+					this.saveDisabled = false
 				}
-					
-				this.saveDisabled = false
+				else this.saveDisabled = true
 			}
-			else this.saveDisabled = true
+			catch (e) {}
 		},
 			
 		сheckAllFields(){

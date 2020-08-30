@@ -8,7 +8,7 @@
                 <p v-html="text"></p>
             </section>
             <footer class="modal-card-foot">
-                <button class="button" type="button" @click="$parent.close()">{{$root.content.common.close}}</button>
+                <button class="button" type="button" @click="close">{{$root.content.common.close}}</button>
             </footer>
         </div>
     </form>
@@ -17,12 +17,21 @@
 export default {
     props: {
         errorMessage: String,
-        text: String
+        text: String,
+        cancelEvent: String
     },
     data() {
         return {
             title: this.$root.content.ErrorMessageModal[this.errorMessage],
             opened: true
+        }
+    },
+    methods: {
+        close () {
+            if ( this.cancelEvent ) {
+                window.EventBus.$emit(this.cancelEvent)
+            }
+            this.$parent.close()
         }
     },
 }

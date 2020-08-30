@@ -208,18 +208,21 @@
                 }
             },
             updateLogo(e){
-                if(this.file) {
-                    const image = this.file
-                    const reader = new FileReader()
-                    reader.readAsDataURL(image)
-                    reader.onload = e => {
-                        this.setLogo(e.target.result)
+                try {
+                    if ( this.file ) {
+                        const image = this.file
+                        const reader = new FileReader()
+                        reader.readAsDataURL(image)
+                        reader.onload = e => {
+                            this.setLogo(e.target.result)
+                        }
                     }
                 }
+                catch (e) {}
             },
             // Submit form
             async submit() {
-                if(await this.uniqueName()){
+                if ( await this.uniqueName() ) {
                     this.unqName = true
                     
                     const name = this.$store.state.groupForm.name;

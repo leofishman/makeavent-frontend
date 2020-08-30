@@ -75,8 +75,13 @@ main {
 	transform: translate(-50%, -50%);
 	position: absolute;
 }
-.modal-close {
-	z-index: 10000000;
+.modal {
+	.animation-content {
+		min-width: 300px;
+	}
+	.modal-close {
+		z-index: 10000000;
+	}
 }
 .click {
 	cursor: pointer;

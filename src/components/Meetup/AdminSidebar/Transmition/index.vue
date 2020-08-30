@@ -1,14 +1,14 @@
 <template>
-  <section>
-      <item class="admin-bar__shortcuts">
-            <p class="admin-bar__list-item-header" slot="header">{{this.$root.content.adminSidebar.items.transmition.title}}</p>
+    <section>
+        <item class="admin-bar__shortcuts">
+            <p class="admin-bar__list-item-header" slot="header">{{transmition.title}}</p>
             <template slot="inner">
                 <meetup-room class="admin-bar__switcher" />
-                <select-time class="admin-bar__switcher"/>
+                <!-- <select-time class="admin-bar__switcher"/> -->
                 <networking-room class="admin-bar__switcher" />
             </template>
-      </item>
-  </section>
+        </item>
+    </section>
 </template>
 
 <script>
@@ -24,6 +24,11 @@ export default {
         MeetupRoom,
         NetworkingRoom,
         SelectTime
-    }
+    },
+    data() {
+        return {
+            transmition: this.$root.content.adminSidebar.items.transmition
+        }
+    },
 }
 </script>

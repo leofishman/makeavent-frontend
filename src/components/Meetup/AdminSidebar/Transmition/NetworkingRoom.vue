@@ -1,16 +1,17 @@
 <template>
   <div>
-      <b-loading 
-          slot="switched-header" 
-          :is-full-page="false" 
-          :active.sync="isLoading" 
-          :can-cancel="false"
-      />
-      <b-field :label="$root.content.adminSidebar.items.transmition.labels.networking">  
-        <b-switch v-model="isSwitched">
-          {{this.$root.content.adminSidebar.items.transmition.placeholders.close}}
-        </b-switch>
-      </b-field>
+    <b-loading 
+      slot="switched-header" 
+      :is-full-page="false" 
+      :active.sync="isLoading" 
+      :can-cancel="false"
+    />
+    <b-field :label="transmition.labels.networking">  
+      <b-switch v-model="isSwitched">
+        <p v-if="isSwitched">{{transmition.placeholders.close}}</p>
+        <p v-else>{{transmition.placeholders.opened}}</p>
+      </b-switch>
+    </b-field>
   </div>
 </template>
 
@@ -39,6 +40,8 @@ export default {
     },
     data(){
       return {
+        transmition: this.$root.content.adminSidebar.items.transmition,
+
         isSwitched: this.$root.meetup.networkingRoomOpened,
         isLoading: false
       }

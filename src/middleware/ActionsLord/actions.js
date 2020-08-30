@@ -2,7 +2,6 @@ export default class Actions {
     constructor (parent) {
         this.parent = parent
 
-
         this.methods = {
             SHOW_MEETUP_SETTINGS_BUTTON () {
                 if (this.parent.cloo(this.parent.$router.currentRoute.name,

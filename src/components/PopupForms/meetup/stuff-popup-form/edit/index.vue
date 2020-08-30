@@ -1,6 +1,6 @@
 <template>
   <wrap v-if="show" @close="close">     
-    <p slot="title">{{$root.content.stuffPopupForm.title}}</p>
+    <p slot="title">{{$root.content.demoPopupForm.title}}</p>
     <template slot="inner-from">
       <section>
         <inner  @submitForm="close" />

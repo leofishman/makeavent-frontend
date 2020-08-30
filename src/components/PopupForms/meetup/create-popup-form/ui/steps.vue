@@ -305,48 +305,54 @@
                 const elem = document.querySelector('.group-steps .step-item .input-date');
                 elem.classList.add('is-active')                
             },
-            updateLogo(e){
-                const fileName = this.file.name
-                
-                if(this.file && this.util.isImage(fileName)) {
-                    const image = this.file
-                    const reader = new FileReader()
-                    reader.readAsDataURL(image)
-                    reader.onload = e => {
-                        this.fileUplodated = e.target.result
+            updateLogo (e) {
+                try {
+                    const fileName = this.file.name
+                    
+                    if ( this.file && this.util.isImage(fileName) ) {
+                        const image = this.file
+                        const reader = new FileReader()
+                        reader.readAsDataURL(image)
+                        reader.onload = e => {
+                            this.fileUplodated = e.target.result
+                        }
+                        
+                        this.fileValid = true
+                        this.nextDisabled = false
                     }
-                    
-                    this.fileValid = true
-                    this.nextDisabled = false
+                    else {
+                        this.fileValid = false
+                        this.nextDisabled = true
+                    }
                 }
-                else {
-                    this.fileValid = false
-                    this.nextDisabled = true
-                }
+                catch (e) {}
             },
-            updatePreview(e){
-                const fileName = this.previewFile.name
-                // && (this.util.isImage(fileName) || this.util.isVideo(fileName) )
-                if(this.previewFile && this.util.isImage(fileName)) {
-                    const image = this.previewFile
-                    const reader = new FileReader()
-                    reader.readAsDataURL(image)
-                    reader.onload = e => {
-                        this.PfileUplodated = e.target.result
-                    }                    
-                    
-                    this.previewFileValid = true
-                    this.nextDisabled = false
-                } else if (this.previewFile && this.util.isVideo(fileName)) {
-                    const video = this.previewFile
-                    this.PfileUplodated = URL.createObjectURL(video)
-
-                    this.previewFileValid = true
-                    this.nextDisabled = false
-                } else {
-                    this.previewFileValid = false
-                    this.nextDisabled = true
+            updatePreview (e) {
+                try {
+                    const fileName = this.previewFile.name
+                    // && (this.util.isImage(fileName) || this.util.isVideo(fileName) )
+                    if ( this.previewFile && this.util.isImage(fileName) ) {
+                        const image = this.previewFile
+                        const reader = new FileReader()
+                        reader.readAsDataURL(image)
+                        reader.onload = e => {
+                            this.PfileUplodated = e.target.result
+                        }                    
+                        
+                        this.previewFileValid = true
+                        this.nextDisabled = false
+                    } else if ( this.previewFile && this.util.isVideo(fileName) ) {
+                        const video = this.previewFile
+                        this.PfileUplodated = URL.createObjectURL(video)
+    
+                        this.previewFileValid = true
+                        this.nextDisabled = false
+                    } else {
+                        this.previewFileValid = false
+                        this.nextDisabled = true
+                    }
                 }
+                catch (e) {}
             },
             // Submit form
             async submit() {
@@ -367,14 +373,17 @@
                 const formatPreview = fileNamePreview.slice(fileNamePreview.lastIndexOf('.'), fileNamePreview.length)
 
                 let PfileUplodated = '';
-                if(typeof this.PfileUplodated === 'string') PfileUplodated = this.PfileUplodated 
+                if ( typeof this.PfileUplodated === 'string' ) PfileUplodated = this.PfileUplodated 
                 else {
-                    const video = this.previewFile
-                    const reader = new FileReader()
-                    reader.readAsDataURL(video)
-                    reader.onload = e => {
-                        PfileUplodated = e.target.result
+                    try {
+                        const video = this.previewFile
+                        const reader = new FileReader()
+                        reader.readAsDataURL(video)
+                        reader.onload = e => {
+                            PfileUplodated = e.target.result
+                        }
                     }
+                    catch (e) {}
                 }
 
                 if(this.lastStep){

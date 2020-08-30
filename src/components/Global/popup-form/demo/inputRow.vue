@@ -4,22 +4,22 @@
             <b-field>
                 <b-input 
                     required
-                    :placeholder="$root.content.stuffPopupForm.placeholder.name"
+                    :placeholder="demoPopupForm.placeholder.name"
                     v-model="demosItem.name"
-                    :validation-message="$root.content.stuffPopupForm.validation.name"
+                    :validation-message="demoPopupForm.validation.name"
                 ></b-input>
             </b-field>
             <b-field class="stuff-field__link">
                 <b-input 
                     required
-                    :placeholder="$root.content.stuffPopupForm.placeholder.file"
+                    :placeholder="demoPopupForm.placeholder.file"
                     v-model="demosItem.link"
-                    :validation-message="$root.content.stuffPopupForm.validation.file"
+                    :validation-message="demoPopupForm.validation.file"
                 ></b-input>    
                 <p 
                     :class="index ? 'valid-url help is-danger' : 'first valid-url help is-danger'"
                     v-if="!demosItem.validURL"
-                >{{$root.content.stuffPopupForm.validation.invalidLink}}</p>
+                >{{demoPopupForm.validation.invalidLink}}</p>
             </b-field>
             <span v-if="showFisrt" class="close-icon" @click="removeItem(index)">
                 <span class="inner-icon">x</span>                
@@ -32,7 +32,7 @@
                         <h3>{{demosItem.name}}</h3>
                     </div>                 
                     <div v-if="!demosItem.name">
-                        <h3>Preview {{index}}</h3>
+                        <h3>{{demoPopupForm.preview}} {{index}}</h3>
                     </div>                        
                 </template>
                 <template slot="accordion-content" v-if="demosItem.validURL && demosItem.iframeMarkup">
@@ -66,6 +66,12 @@ export default {
                 this.checkAllFields()
             },
             deep: true
+        }
+    },
+    data () {
+        return {
+            demoPopupForm: this.$root.content.demoPopupForm,
+
         }
     },
     methods: {        

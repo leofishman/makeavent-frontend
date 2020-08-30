@@ -19,5 +19,6 @@ export const MEETUP = {
     getMeetupFrontstage: communitySrv + '/meetup/get-mainstage',
     sendToBackstage: communitySrv + '/meetup/send-to-backstage',
     sendToMainstage: communitySrv + '/meetup/send-to-mainstage',
-    removeSpeakerFromMeetup: communitySrv + '/meetup/delete-from-meetup'
+    removeSpeakerFromMeetup: communitySrv + '/meetup/delete-from-meetup',
+    isParticipant: communitySrv + '/meetup/is-participant'
 }

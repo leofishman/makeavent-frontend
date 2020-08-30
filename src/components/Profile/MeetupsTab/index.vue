@@ -3,9 +3,9 @@
         <h3 class="title">{{content.title}}</h3>
         <b-tabs v-model="activeTab">
             <b-tab-item :label="content.my">
-                <b-loading class="loading-overlay--dark" :is-full-page="false" :active="!ready" :can-cancel="false"></b-loading>
+                <b-loading v-if="isJoinedMeetup()" class="loading-overlay--dark" :is-full-page="false" :active="!ready" :can-cancel="false"></b-loading>
 
-                <div class="meetups-card-container"  v-if="ready">
+                <div class="meetups-card-container"  v-if="ready && isJoinedMeetup()">
                     <MeetupsRow
                         v-for="(el, index) in loadedMeetups"
                         :key="index"
@@ -17,8 +17,8 @@
 
             <b-tab-item :label="content.created">
                 <CreateNewButton />
-                <b-loading class="loading-overlay--dark" :is-full-page="false" :active="!ready" :can-cancel="false"></b-loading>
-                <div class="meetups-card-container" v-if="ready">
+                <b-loading v-if="isJoinedMeetup()" class="loading-overlay--dark" :is-full-page="false" :active="!ready" :can-cancel="false"></b-loading>
+                <div class="meetups-card-container" v-if="ready && isJoinedMeetup()">
                     <MeetupsRow
                         v-for="(el, index) in filteredOnlyAdmin"
                         :key="index"
@@ -44,7 +44,9 @@ export default {
         MeetupsRow
     },
     data() {
-        this.filterMeetupsOnlyAdminStatus()
+        this.isJoinedMeetup()
+            ? this.filterMeetupsOnlyAdminStatus()
+            : null;
 
         return {
             content: this.$root.content.ProfileMeetupsTabs,
@@ -87,6 +89,17 @@ export default {
             }))
             await Promise.all(promises)
             this.ready = true
+        },
+
+        isJoinedMeetup () {
+            if ( this.$root.profile.meetups ) {
+                if ( this.$root.profile.meetups.length )
+                    return true
+                else
+                    return false
+            }
+            else
+                return false
         }
     },
 }

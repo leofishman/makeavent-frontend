@@ -1,6 +1,6 @@
 <template>
     <section class="group-steps stuff-popup-form">
-        <h2 class="title">{{$root.content.stuffPopupForm.labels.document}}</h2>     
+        <h2 class="title">{{$root.content.demoPopupForm.labels.document}}</h2>     
         <div>
             <b-button
                 class="button is-success submit-button stuff-popup add-new" 

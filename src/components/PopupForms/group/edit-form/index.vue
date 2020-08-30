@@ -13,11 +13,6 @@ import EditForm from './ui/edit-form'
 
 export default {
   name: 'GroupPopupForm',
-  methods: {
-    close(){
-      this.show = false
-    }
-  },
   components: {
     EditForm
   }

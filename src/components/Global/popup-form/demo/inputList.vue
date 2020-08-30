@@ -24,7 +24,7 @@ export default {
     },
     watch: {
         demosArray(array){
-            if(this.isAdd){
+            if ( this.isAdd ) {
                 const index = array.length-1
                 const submitDisabled = ! array[index].name.length > 0
 

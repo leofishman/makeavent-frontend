@@ -4,22 +4,22 @@
             <b-field>
                 <b-input 
                     required
-                    :placeholder="$root.content.stuffPopupForm.placeholder.name"
+                    :placeholder="$root.content.demoPopupForm.placeholder.name"
                     v-model="stuffItem.name"
-                    :validation-message="$root.content.stuffPopupForm.validation.name"
+                    :validation-message="$root.content.demoPopupForm.validation.name"
                 ></b-input>
             </b-field>
             <b-field class="stuff-field__link">
                 <b-input 
                     required
-                    :placeholder="$root.content.stuffPopupForm.placeholder.file"
+                    :placeholder="$root.content.demoPopupForm.placeholder.file"
                     v-model="stuffItem.file"
-                    :validation-message="$root.content.stuffPopupForm.validation.file"
+                    :validation-message="$root.content.demoPopupForm.validation.file"
                 ></b-input>            
                 <p 
                     :class="index ? 'valid-url help is-danger' : ' valid-url help is-danger'"
                     v-if="!stuffItem.validURL"
-                >{{$root.content.stuffPopupForm.validation.invalidLink}}</p>
+                >{{$root.content.demoPopupForm.validation.invalidLink}}</p>
             </b-field>
             <span v-if="showFisrt" class="close-icon" @click="removeItem(index)">
                 <span class="inner-icon">x</span>                

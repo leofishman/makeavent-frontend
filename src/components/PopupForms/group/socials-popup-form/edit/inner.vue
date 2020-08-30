@@ -13,8 +13,8 @@
                 <b-input 
                     required
                     v-model="socialsItem.link"
-                    :placeholder="$root.content.stuffPopupForm.placeholder.file"
-                    :validation-message="$root.content.stuffPopupForm.validation.file"
+                    :placeholder="$root.content.demoPopupForm.placeholder.file"
+                    :validation-message="$root.content.demoPopupForm.validation.file"
                 ></b-input>
                 <p 
                     class="valid-url help is-danger first"

@@ -11,14 +11,14 @@
             <b-field class="stuff-field__link">
                 <b-input 
                     required
-                    :placeholder="$root.content.stuffPopupForm.placeholder.file"
+                    :placeholder="$root.content.demoPopupForm.placeholder.file"
                     v-model="socialsItem.link"
-                    :validation-message="$root.content.stuffPopupForm.validation.file"
+                    :validation-message="$root.content.demoPopupForm.validation.file"
                 ></b-input>            
                 <p 
                     :class="[index > 0 ? 'valid-url help is-danger' : 'valid-url help is-danger first' ]"
                     v-if="!socialsItem.validURL"
-                >{{$root.content.stuffPopupForm.validation.invalidLink}}</p>
+                >{{$root.content.demoPopupForm.validation.invalidLink}}</p>
             </b-field>
             <span class="close-icon" v-if="showFisrt" @click="removeItem(index)">
                 <span class="inner-icon">x</span>                

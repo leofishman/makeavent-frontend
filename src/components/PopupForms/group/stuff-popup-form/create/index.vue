@@ -1,7 +1,7 @@
 
 <template>
   <wrap v-if="show">      
-    <template slot="title">{{$root.content.groupStuffPopupForm.title}}</template>
+    <template slot="title">{{$root.content.groupdemoPopupForm.title}}</template>
     <inner slot="inner-from" @submitForm="close" />
   </wrap>
 </template>

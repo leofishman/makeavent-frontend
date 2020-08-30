@@ -1,8 +1,8 @@
 <template>
-	<div v-if="$root.meetup" class="meetup-profile is-light-changeable--bg" :style="isBgImage()">
-		<div class="scr-saver-fileld__bg" :style="isBgImageBackdrop()"></div>
+	<div v-if="ready" class="meetup-profile is-light-changeable--bg" :style="isBgImage()">
+		<div v-if="util.isImage($root.meetup.preview)" class="scr-saver-fileld__bg" :style="isBgImageBackdrop()"></div>
 
-		<video v-if="$root.meetup.preview" class="bg-video" autoplay muted loop>
+		<video v-if="util.isVideo($root.meetup.preview)" :poster="$root.meetup.screensaverColor" class="bg-video" autoplay muted loop>
 			<source :src="$root.meetup.preview" type="video/mp4">
 		</video>
 
@@ -197,16 +197,9 @@
 	import PitchDeck from '@/components/CompanyComponents/Pitchdeck'
 	import JitsiStream from '@/components/VideoStreams/Jitsi'
 	import AdminSidebar from '@/components/Meetup/AdminSidebar/index'
-
+	import tinycolor from 'tinycolor2'
 	
 	export default {
-		// mounted(){
-			// console.log('this.$root', this.$root.meetup);
-		// 	// if(this.$root) {
-		// 	// 	this.updateColorLight(this.$root.meetup.color_schema.light)
-		// 	// 	this.updateColorDark(this.$root.meetup.color_schema.dark)
-		// 	// }
-		// },
 		props: {
 			id: {
 				type: String,
@@ -227,35 +220,43 @@
 		data () {			
 			/* wait until token and sponsors ready*/
 			this.$root.check('usertype')
+			.then(this.isMeetupParticipant)
+			.then(this.getMeetup)
 			.then(() => {
-				this.getMeetup()
-				.then(() => {
-					// console.log('this.$root', this.$root.meetup.custom_colors);
-					if(this.$root.meetup.custom_colors){
-						this.light = this.$root.meetup.color_schema.isLight
-						this.updateColorLight(this.$root.meetup.color_schema.light)
-						this.updateColorDark(this.$root.meetup.color_schema.dark)
-						this.updateColorPrimary(this.$root.meetup.color_schema.primary)
-					}
-				})
-				.catch(e => console.log(e))
+				this.ready = true
+
+				if(this.$root.meetup.custom_colors){
+					this.light = this.$root.meetup.color_schema.isLight
+					this.updateColorLight(this.$root.meetup.color_schema.light)
+					this.updateColorDark(this.$root.meetup.color_schema.dark)
+					this.updateColorPrimary(this.$root.meetup.color_schema.primary)
+				}
 				this.getSpeakers()
+
+				if (!this.$root.speakerProfiles) {
+					this.getSpeakers()
+				}
+				if (this.$root.cronMeetupSchema)
+					clearInterval(this.$root.cronMeetupSchema)
+
+				this.$root.cronMeetupSchema = setInterval(() => {
+					if ( this.$root.actionsLord.SHOULD_GET_MEETUP() )
+						this.getMeetup()
+				}, 5000)
 			})
-			.catch(e => console.log(`${e} inaccessible`))
+			.catch(e => {
+				if ( e == 'NOT_ATTENDEE' ) {
+					window.EventBus.$on('MeetupProfile:unauthorized:close', () => {
+						this.$router.push({
+							name: "Profile"
+						})
+					})
+					this.$root.createError(this.$root.content.ErrorMessages[10], 'oops', 'MeetupProfile:unauthorized:close')
+				}
+				else
+					this.$root.createError(e, 'oops')
+			})
 
-			if (!this.$root.speakerProfiles) {
-				this.getSpeakers()
-			}
-			if (this.$root.cronMeetupSchema)
-				clearInterval(this.$root.cronMeetupSchema)
-
-			this.$root.cronMeetupSchema = setInterval(() => {
-				if ( this.$root.actionsLord.SHOULD_GET_MEETUP() )
-					this.getMeetup()
-			}, 5000)
-
-			
-			
 			return {
 				expanded: false,
 				classes: "bio-content-collapsed",
@@ -282,7 +283,6 @@
 
 				videoReady: false,
 				light: false,
-				// isLight: this.$root.meetup ? this.$root.meetup.color_schema.isLight : 'false'
 			}
 		},
 		methods: {
@@ -296,10 +296,12 @@
 				if (this.$root.isUserAdmin)
 					return 'admin'
 			},
+
 			openAndTrack (link) {
 				this.$root.track(name, link)
 				this.$root.openExternalInBlank(link)
 			},
+
 			goNetworking () {
 				if (this.$root.meetup.networkingRoomOpened)
 					this.$router.push({
@@ -313,14 +315,17 @@
 				else
 					this.$root.createError(this.$root.content.ErrorMessages[9], 'oops')
 			},
+
 			bioExpand: function() {
 				this.classes="bio-content-expand";
 				this.expanded=true;
 			},
+
 			bioCollapse: function() {
 				this.classes="bio-content-collapsed";
 				this.expanded=false;
 			},
+
 			getExternalCss () {
 				if (this.$root.meetup.cssClass) {
 					let css = document.createElement('link')
@@ -332,6 +337,7 @@
 						'afterbegin', css)
 				}
 			},
+
 			getSpeakers () {
 				Axios.create({
 					baseURL: MEETUP.getSpeakers + '?id=' + this.id,
@@ -343,19 +349,26 @@
 					this.$root.speakerProfiles = res.data
 				})
 			},
+
 			renderRtmpVideo () {
-				if (!this.videoReady && flvjs.isSupported() && this.defineHowToRender() == 'basic') {
-					this.videoReady = true
-					var videoElement = document.getElementById('videoElement');
-					var flvPlayer = flvjs.createPlayer({
-						type: 'flv',
-						url: `https://rtmp.makeavent.com/live/${this.id}`
-					});
-					flvPlayer.attachMediaElement(videoElement);
-					flvPlayer.load();
-					flvPlayer.play();
+				try {
+					if (!this.videoReady && flvjs.isSupported() && this.defineHowToRender() == 'basic') {
+						this.videoReady = true
+						var videoElement = document.getElementById('videoElement');
+						var flvPlayer = flvjs.createPlayer({
+							type: 'flv',
+							url: `https://rtmp.makeavent.com/live/${this.id}`
+						});
+						flvPlayer.attachMediaElement(videoElement);
+						flvPlayer.load();
+						flvPlayer.play();
+					}
+				}
+				catch (e) {
+					console.log(e);
 				}
 			},
+
 			getMeetup () {
 				return new Promise((resolve, rejects) => {
 					Axios.create({
@@ -366,13 +379,8 @@
 					})()
 					.then(res => {
 						this.$root.meetup = res.data.meetup
-						this.ready = true
 
-						try {
-							this.renderRtmpVideo()
-						} catch (e) {
-							console.log(e);
-						}
+						this.renderRtmpVideo()
 
 						if (!window.io.query.project) {
 							window.io = VueSocketIO(socket, {
@@ -383,7 +391,9 @@
 							})
 							this.$root.reloadSocketListeners()
 						}
+
 						this.getExternalCss()
+
 						if ( this.$root.isAdmin(this.$root.meetup.admins) ) {
 							this.$root.isUserAdmin = true
 							if (!this.$root.openMeetupSettings)
@@ -399,25 +409,25 @@
 					})
 				})
 			},
+
 			isBgImage () {
-				if (this.$root.meetup.backgroundImage)
-					return { backgroundImage: `url('${this.$root.meetup.backgroundImage}')` }
+				if (this.util.isImage(this.$root.meetup.preview))
+					return { backgroundImage: `url('${this.$root.meetup.preview}')` }
 				else
 					return {}
 			},
+
 			isBgImageBackdrop () {
-				if (this.$root.meetup.backgroundImage)
+				if (this.util.isImage(this.$root.meetup.preview))
 					return { background:'white', opacity:0.6, zIndex:1, position: 'fixed'}
 				else
 					return {}
 			},
 			
 			updateColorDark(val){
-				// let query = `#app .networking-rooms .h1, #app .meetup-profile .h1, #app .networking-rooms .h2, #app .meetup-profile .h2, #app .networking-rooms .h3, #app .meetup-profile .h3, #app .networking-rooms .h4, #app .meetup-profile .h4, #app .networking-rooms .h5, #app .meetup-profile .h5, #app .networking-rooms .h6, #app .meetup-profile .h6, #app .networking-rooms h1, #app .meetup-profile h1, #app .networking-rooms h2, #app .meetup-profile h2, #app .networking-rooms h3, #app .meetup-profile h3, #app .networking-rooms h4, #app .meetup-profile h4, #app .networking-rooms h5, #app .meetup-profile h5, #app .networking-rooms h6, #app .meetup-profile h6, #app .networking-rooms p, #app .meetup-profile p, #app .networking-rooms storng, #app .meetup-profile storng, #app .networking-rooms em, #app .meetup-profile em, #app .networking-rooms ol ol, #app .meetup-profile ol ol, #app .networking-rooms ol ul, #app .meetup-profile ol ul, #app .networking-rooms ul ol, #app .meetup-profile ul ol, #app .networking-rooms ul ul, #app .meetup-profile ul ul, #app .networking-rooms ul li, #app .meetup-profile ul li, #app .networking-rooms ol li, #app .meetup-profile ol li, #app .networking-rooms sub, #app .meetup-profile sub, #app .networking-rooms sup, #app .meetup-profile sup, #app .networking-rooms code, #app .meetup-profile code, #app .networking-rooms kbd, #app .meetup-profile kbd, #app .networking-rooms pre, #app .meetup-profile pre, #app .networking-rooms samp, #app .meetup-profile samp, #app .networking-rooms svg, #app .meetup-profile svg, #app .networking-rooms th, #app .meetup-profile th, #app .networking-rooms tr, #app .meetup-profile tr, #app .networking-rooms button, #app .meetup-profile button, #app .networking-rooms optgroup, #app .meetup-profile optgroup, #app .networking-rooms strong, #app .meetup-profile strong, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms span, #app .meetup-profile span`
 				let query = `#app .is-dark-changeable--bg, #app .is-dark-changeable--color, #app .is-dark-changeable--border-top`
 
 				if(!this.light) {
-					// query = `.meetup-profile, .networking-rooms, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms aside, #app .meetup-profile aside, #app .networking-rooms nav, #app .meetup-profile nav, .meetup-profile article, .networking-rooms article, .meetup-profile button:not(.is-primary), .networking-rooms button:not(.is-primary)`
 					query = `#app .is-light-changeable, #app .is-light-changeable--color, #app .is-light-changeable--bg, #app .is-light-changeable--border-top`
 					Array.from(document.querySelectorAll(query)).map(el => {
 						el.style.backgroundColor = val
@@ -465,12 +475,12 @@
 										: "#000000")
 					})
 				}				
-			},		
+			},
+
 			updateColorLight(val){
-				// let query = `.meetup-profile, .networking-rooms, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms aside, #app .meetup-profile aside, #app .networking-rooms nav, #app .meetup-profile nav, .meetup-profile article, .networking-rooms article, .meetup-profile button:not(.is-primary), .networking-rooms button:not(.is-primary)`
 				let query = `#app .is-light-changeable, #app .is-light-changeable--color, #app .is-light-changeable--bg, #app .is-light-changeable--border-top`
+
 				if(!this.light) {
-					// query = `#app .networking-rooms .h1, #app .meetup-profile .h1, #app .networking-rooms .h2, #app .meetup-profile .h2, #app .networking-rooms .h3, #app .meetup-profile .h3, #app .networking-rooms .h4, #app .meetup-profile .h4, #app .networking-rooms .h5, #app .meetup-profile .h5, #app .networking-rooms .h6, #app .meetup-profile .h6, #app .networking-rooms h1, #app .meetup-profile h1, #app .networking-rooms h2, #app .meetup-profile h2, #app .networking-rooms h3, #app .meetup-profile h3, #app .networking-rooms h4, #app .meetup-profile h4, #app .networking-rooms h5, #app .meetup-profile h5, #app .networking-rooms h6, #app .meetup-profile h6, #app .networking-rooms p, #app .meetup-profile p, #app .networking-rooms storng, #app .meetup-profile storng, #app .networking-rooms em, #app .meetup-profile em, #app .networking-rooms ol ol, #app .meetup-profile ol ol, #app .networking-rooms ol ul, #app .meetup-profile ol ul, #app .networking-rooms ul ol, #app .meetup-profile ul ol, #app .networking-rooms ul ul, #app .meetup-profile ul ul, #app .networking-rooms ul li, #app .meetup-profile ul li, #app .networking-rooms ol li, #app .meetup-profile ol li, #app .networking-rooms sub, #app .meetup-profile sub, #app .networking-rooms sup, #app .meetup-profile sup, #app .networking-rooms code, #app .meetup-profile code, #app .networking-rooms kbd, #app .meetup-profile kbd, #app .networking-rooms pre, #app .meetup-profile pre, #app .networking-rooms samp, #app .meetup-profile samp, #app .networking-rooms svg, #app .meetup-profile svg, #app .networking-rooms th, #app .meetup-profile th, #app .networking-rooms tr, #app .meetup-profile tr, #app .networking-rooms button, #app .meetup-profile button, #app .networking-rooms optgroup, #app .meetup-profile optgroup, #app .networking-rooms strong, #app .meetup-profile strong, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms span, #app .meetup-profile span`
 					query = `#app .is-dark-changeable--bg, #app .is-dark-changeable--color, #app .is-dark-changeable--border-top`
 					Array.from(document.querySelectorAll(query)).map(el => {
 						el.style.color = val
@@ -517,7 +527,8 @@
 										: "#000000")
 					})
 				}
-			},		        
+			},
+
 			updateColorPrimary(val){
 				let query = `#app .is-primary-changeable--bg, #app .is-primary-changeable--color, #app .is-primary-changeable--border-top`
 
@@ -561,6 +572,23 @@
 						tinycolor(invertColor(el.style.backgroundColor)).isLight()
 						? "#FFFFFF"
 						: "#000000")
+				})
+			},
+
+			isMeetupParticipant () {
+				return new Promise(async (resolve, reject) => {
+					Axios.get(MEETUP.isParticipant + "?id=" + this.id, {
+						headers: {
+							authorization: localStorage.auth
+						}
+					})
+					.then(res => {
+						resolve(true)
+					})
+					.catch(e => {
+						if ( e.response.status == 401 && e.response.data == "Unauthorized" )
+							reject('NOT_ATTENDEE')
+					})
 				})
 			}
 		},

@@ -16,10 +16,11 @@
 
 <script>
 import MeetupFormRoutes from '@/store/routes/meetup-form'
+
 export default {
     data(){
         return {
-            link: this.config.server_url+'/meetup/get-invite?link=',
+            link: '',
             isActive: false
         }
     },

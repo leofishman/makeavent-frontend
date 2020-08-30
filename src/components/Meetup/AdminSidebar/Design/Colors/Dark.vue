@@ -1,6 +1,12 @@
 <template>
   <div class="admin-sidebar-color-item">
-      <color-item @blur="updateColorShema" @input="check" :defaultColor="defaultColor">
+      <color-item 
+        @blur="updateColorShema" 
+        @input="check"  
+        :defaultColor="defaultColor"
+        :defaultValue="$props.defaultValue"
+        @toggle-default-value="$emit('toggle-default-value')"
+      >
         <p slot="name">{{this.$root.content.adminSidebar.items.design.colors.dark}}</p>
       </color-item>
       <!-- <div>{{$store.getters.meetupFull.logo}}</div> -->
@@ -16,7 +22,8 @@ import tinycolor from 'tinycolor2'
 
 export default {
     props: {
-      isLight: Boolean
+      isLight: Boolean,
+      defaultValue: Object
     },
     mounted(){
         if(this.$root.meetup.custom_colors) {
@@ -51,7 +58,7 @@ export default {
 
             if(!this.light) {
                 // query = `.meetup-profile, .networking-rooms, #app .networking-rooms div, #app .meetup-profile div, #app .networking-rooms aside, #app .meetup-profile aside, #app .networking-rooms nav, #app .meetup-profile nav, .meetup-profile article, .networking-rooms article, .meetup-profile button:not(.is-primary), .networking-rooms button:not(.is-primary)`
-            
+                query = `#app .is-light-changeable, #app .is-light-changeable--color, #app .is-light-changeable--bg, #app .is-light-changeable--border-top`
                 Array.from(document.querySelectorAll(query)).map(el => {
                     el.style.backgroundColor = val
                 })

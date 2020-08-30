@@ -1,5 +1,10 @@
 <template>
   <div>      
+      <b-loading 
+          :is-full-page="false" 
+          :active.sync="isLoading" 
+          :can-cancel="false"
+      />
       <switch-component class="admin-bar__switcher" :isSwitched="isActiveLocal" @switchItem="updateActive">  
         <p v-if="!isActiveLocal" slot="switched-text">{{content.off}}</p>
         <p v-if="isActiveLocal" slot="switched-text">{{content.active}}</p>
@@ -17,6 +22,8 @@
 import {SwitchComponent} from "@/components/Global/controll/"
 import { mapMutations } from "vuex"
 
+import routes from '@/store/routes/meetup-form'
+
 export default {
     props: {
       isActive: Boolean,
@@ -25,27 +32,46 @@ export default {
     components: {
       SwitchComponent
     },
+    watch: {
+      isLight(){
+        this.isLightMode = this.$props.isLight
+      }
+    },
     data(){
       return {
         content: this.$root.content.adminSidebar.items.design.switchers,
         isActiveLocal: this.$props.isActive,
-        isLightMode: this.$props.isLight
+        isLightMode: this.$props.isLight,
+        isLoading: false,
       }
     },
     methods: {
-      resetToDefault () {
-        this.$emit("resetToDefault")
-        
+      resetToDefault() {
+        this.updateIsDefault()
+        this.$emit("resetToDefault")        
       },
       updateActive(){
         this.isActiveLocal = !this.isActiveLocal
         this.$emit("updateActive", this.isActiveLocal)
       },
-      updateMode(){
+      async updateMode(){
         this.isLightMode = !this.isLightMode
         this.$emit("updateMode", this.isLightMode)
+
+        try {
+          this.isLoading = true
+          const obj = {
+              id: this.$root.meetup._id,
+              color_schema: this.$store.getters.meetupFull.color_schema,
+              custom_colors: this.$store.getters.meetupFull.custom_colors
+          }
+          await routes.postUpdate(obj)
+          this.isLoading = false
+        } catch (e){
+          console.log(e);
+        }
       },
-      ...mapMutations(["updateSchemaColor", "updateColor"])
+      ...mapMutations(["updateSchemaColor", "updateColor", "updateIsDefault"])
     }
 }
 </script>

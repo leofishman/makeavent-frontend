@@ -1,19 +1,30 @@
 <template>
   <section>
+            <b-loading 
+                :is-full-page="false" 
+                :active.sync="isLoading" 
+                :can-cancel="false"
+            />
       <item class="admin-bar__design">
             <p class="admin-bar__list-item-header" slot="header">{{content.items.design.title}}</p>
+            
             <template slot="inner">
                 <div class="admin-bar__design-switchers">
                     <switchers 
                         @updateMode="updateMode"
                         @updateActive="updateActive" 
+                        @resetToDefault="resetToDefault"
                         :isActive="isActive"
                         :isLight="isLight"
                     />
                 </div>
                 <div class="admin-bar__design-colors" v-if="isActive">
                     <p class="admin-bar__design-colors-par">{{content.items.design.subtitle}}</p>
-                    <colors :isLight="isLight"/>
+                    <colors 
+                        :isLight="isLight" 
+                        :defaultValue="defaultValue"
+                        @toggle-default-value="isActiveFalse"
+                    />
                 </div>
                 <active-button class="admin-bar__button" @clicked="openScreenSaver" :name="content.items.design.button"/>
             </template>
@@ -33,6 +44,7 @@ import Switchers from './Switchers'
 import Colors from './Colors'
 import tinycolor from 'tinycolor2'
 
+import routes from '@/store/routes/meetup-form'
 
 export default {
     components: {
@@ -44,28 +56,99 @@ export default {
     watch: {
         isActive(){
             this.updateCustomColor(this.isActive)
-            if(!this.isActive){
+            this.updateColorShema(this.isActive)
+        }
+    },
+    data(){
+        return {
+            content: this.$root.content.adminSidebar,
+            isActive: this.$root.meetup.custom_colors,
+            isLight: this.$root.meetup.color_schema.isLight,
+            defaultValue: {   
+                isActive: false,             
+                primary: '#0051d9',
+                dark: '#4b4b4b',
+                light: '#ffffff',
+            },
+            isLoading: false
+        }
+    },
+    methods: {
+        ...mapMutations(['updateCustomColor', 'updateColorMode', 'updateSchemaColor', 'updateIsDefault']),
+        async updateActive(val) {
+            this.isActive = val
+            try {
+                this.isLoading = true
+                const obj = {
+                    id: this.$root.meetup._id,
+                    color_schema: this.$store.getters.meetupFull.color_schema,
+                    custom_colors: val
+                }
+                await routes.postUpdate(obj)
+                this.isLoading = false
+            } catch (e){
+                console.log(e);
+            }
+        },
+        updateMode(val){
+            this.updateColorMode(val)
+            this.isLight = val
+        },
+        openScreenSaver(){
+            this.$buefy.modal.open({
+                hasModalCard: true,
+                canCancel: true,
+                trapFocus: true,
+                component: editScreenSaver,
+                parent: this
+            })
+        },
+        resetToDefault(){
+            this.isLight = true
+            this.defaultColorShema()
+            let colorShema = {                
+                primary: '#0051d9',
+                dark: '#4b4b4b',
+                light: '#ffffff',
+            }
+            
+            // Primary
+            let obj = {key: 'primary', value: colorShema.primary}
+            this.updateSchemaColor(obj)
+            this.updateIsDefault()
+            // Dark
+            obj = {key: 'dark', value: colorShema.dark}
+            this.updateSchemaColor(obj)
+            this.updateIsDefault()
+            // Light
+            obj = {key: 'light', value: colorShema.light}
+            this.updateSchemaColor(obj)
+            this.updateIsDefault()
+            this.defaultValue.isActive = true
+        },
+        updateColorShema(val){
+            if(val){
                 let opts = [ 'primary', 'dark', 'light' ]
                 opts.map(el => {
                     let query = `#app .is-${el}-changeable--bg, #app .is-${el}-changeable--color, #app .is-${el}-changeable--border-top`
                     
                     Array.from(document.querySelectorAll(query)).map(el => {
                         const classList = Array.from(el.classList)
-                
+                        // Border top
                         if ( classList.includes(`is-${el}-changeable--border-top`) ) {
                             if ( classList.includes('distinct-color') )
                                 el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
                             else
                                 el.style.borderTop = `solid 4rem ${val}`
                         }
-                        
+                        // Background
                         if ( classList.includes(`is-${el}-changeable--bg`) ) {
                             if ( classList.includes('distinct-color') )
                                 el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
                             else
                                 el.style.backgroundColor = val
                         }
-                        
+                        // Text color
                         if ( classList.includes(`is-${el}-changeable--color`) ) {
                             if ( classList.includes('distinct-color') )
                                 el.style.color = pSBC(0.2, val, invertColor(val))
@@ -91,33 +174,31 @@ export default {
                                         : "#000000")
                     })
                 })
+            } else { 
+                this.defaultColorShema()            
             }
-        }
-    },
-    data(){
-        return {
-            content: this.$root.content.adminSidebar,
-            isActive: this.$root.meetup.custom_colors,
-            isLight: this.$root.meetup.color_schema.isLight
-        }
-    },
-    methods: {
-        ...mapMutations(['updateCustomColor', 'updateColorMode']),
-        updateActive(val) {
-            this.isActive = val
         },
-        updateMode(val){
-            this.updateColorMode(val)
-            this.isLight = val
-        },
-        openScreenSaver(){
-            this.$buefy.modal.open({
-                hasModalCard: true,
-                canCancel: true,
-                trapFocus: true,
-                component: editScreenSaver,
-                parent: this
+        defaultColorShema(){   
+            let opts = [ 'primary', 'dark', 'light' ]
+            opts.map(el => {
+                let query = `#app .is-${el}-changeable--bg, #app .is-${el}-changeable--color, #app .is-${el}-changeable--border-top,  .invert-color`
+                
+                Array.from(document.querySelectorAll(query)).map(el => {
+                    el.style.borderTop = ''
+                    el.style.backgroundColor = ''
+                    el.style.color = ''
+                })
             })
+        },
+        async isActiveFalse(){
+            this.defaultValue.isActive = false
+
+            const obj = {
+                id: this.$root.meetup._id,
+                color_schema: this.$store.getters.meetupFull.color_schema,
+                custom_colors: this.$store.getters.meetupFull.custom_colors
+            }
+            await routes.postUpdate(obj)
         }
     }
 }

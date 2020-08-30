@@ -16,7 +16,7 @@ export default {
     components: {
         Chrome
     },
-	props: ['color'],
+	props: ['color', 'defaultValue'],
 	data() {
 		return {
 			colors: {
@@ -76,8 +76,10 @@ export default {
 		documentClick(e) {
 			var el = this.$refs.colorpicker,
 				target = e.target;
-			if(el !== target && !el.contains(target)) {
-				this.hidePicker()
+			if(target){
+				if(el !== target && !el.contains(target)) {
+					this.hidePicker()
+				}
 			}
 		},
 		blur(){
@@ -94,6 +96,15 @@ export default {
 				this.$emit('input', val);
 				//document.body.style.background = val;
 			}
+		},		
+		defaultValue: {			
+			handler(val){
+				if(this.$props.defaultValue.isActive) {
+					this.setColor(this.$props.defaultValue.color)
+					this.$emit('toggle-default-value')
+				}
+			},
+			deep: true
 		}
 	},
 }

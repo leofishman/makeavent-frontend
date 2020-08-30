@@ -40,12 +40,18 @@ export default {
         },
         updateCustomColor(state, val){
             state.custom_colors = val
+            state.isDefault = false
         },
         updateColorMode(state, val){
             state.color_schema.isLight = val
+            state.isDefault = false
         },
         updateSchemaColor(state, color){
             state.color_schema[color.key] = color.value
+            state.isDefault = false
+        },
+        updateIsDefault(state){
+            state.isDefault = true
         },
         toggleNetworkingRoom(state){
             state.networkingRoomOpened = !state.networkingRoomOpened
@@ -74,7 +80,8 @@ export default {
         demo: [],
         stuff: [],
         socials: [],
-        speakers: []
+        speakers: [],
+        isDefault: true
     },
     getters: {
         meetupFull(state){

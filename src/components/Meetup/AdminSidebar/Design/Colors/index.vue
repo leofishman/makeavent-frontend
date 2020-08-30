@@ -1,8 +1,8 @@
 <template>
   <div>      
-      <primary :isLight="light"/>
-      <dark :isLight="light"/>
-      <light :isLight="light"/>
+      <primary :isLight="light" :defaultValue="primary" />
+      <dark :isLight="light" :defaultValue="dark" />
+      <light :isLight="light" :defaultValue="lightC" @toggle-default-value="$emit('toggle-default-value')" />
   </div>
 </template>
 
@@ -13,7 +13,8 @@ import Primary from './Primary'
 
 export default {
     props: {
-      isLight: Boolean
+      isLight: Boolean,
+      defaultValue: Object
     },
     components: {
       Dark,
@@ -29,6 +30,26 @@ export default {
       return {
         light: this.$props.isLight
       }
+    },
+    computed: {
+      dark() {
+        return {
+          color: this.$props.defaultValue.dark,
+          isActive: this.$props.defaultValue.isActive,
+        } 
+      },
+      lightC() {
+        return {
+          color: this.$props.defaultValue.light,
+          isActive: this.$props.defaultValue.isActive,
+        } 
+      },
+      primary() {
+        return {
+          color: this.$props.defaultValue.primary,
+          isActive: this.$props.defaultValue.isActive,
+        } 
+      },
     }
 }
 </script>

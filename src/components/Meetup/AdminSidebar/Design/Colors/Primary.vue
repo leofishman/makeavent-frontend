@@ -1,6 +1,12 @@
 <template>
   <div class="admin-sidebar-color-item">
-      <color-item @blur="updateColorShema" @input="check" :defaultColor="defaultColor">
+      <color-item 
+        @blur="updateColorShema" 
+        @input="check" 
+        :defaultColor="defaultColor"
+        :defaultValue="$props.defaultValue"
+        @toggle-default-value="$emit('toggle-default-value')"
+      >
         <p slot="name">{{this.$root.content.adminSidebar.items.design.colors.primary}}</p>
       </color-item>
   </div>
@@ -15,7 +21,8 @@ import tinycolor from 'tinycolor2'
 
 export default {
     props: {
-      isLight: Boolean
+      isLight: Boolean,
+      defaultValue: Object
     },
     mounted(){
       this.updateColor(this.$root.meetup.color_schema.primary)

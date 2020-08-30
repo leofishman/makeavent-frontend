@@ -6,12 +6,14 @@
 
 <script>
 export default {
-  props: {},
+  props: {
+    opened: Boolean
+  },
   data() {
     return {
       Accordion: {
         count: 0,
-        active: 0
+        active: this.$props.opened === false ? 1 : 0
       }
     };
   },

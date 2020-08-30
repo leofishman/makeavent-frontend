@@ -1,11 +1,11 @@
 <template>
-  <section>
-            <b-loading 
-                :is-full-page="false" 
-                :active.sync="isLoading" 
-                :can-cancel="false"
-            />
-      <item class="admin-bar__design">
+    <section>
+        <b-loading 
+            :is-full-page="false" 
+            :active.sync="isLoading" 
+            :can-cancel="false"
+        />
+        <item class="admin-bar__design">
             <p class="admin-bar__list-item-header" slot="header">{{content.items.design.title}}</p>
             
             <template slot="inner">
@@ -26,7 +26,7 @@
                         @toggle-default-value="isActiveFalse"
                     />
                 </div>
-                <active-button class="admin-bar__button" @clicked="openScreenSaver" :name="content.items.design.button"/>
+                <active-button :style="{ marginTop: !isActive ? '-35px' : '28px' }" class="admin-bar__button" @clicked="openScreenSaver" :name="content.items.design.button"/>
             </template>
       </item>
   </section>

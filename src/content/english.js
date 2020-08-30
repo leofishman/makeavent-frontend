@@ -105,7 +105,9 @@ export default {
         materials: "Materials",
         readMore: "Read more",
         showLess: "Show less",
-        speakers: "Speakers"
+        speakers: "Speakers",
+        backstage: "Backstage",
+        mainRoom: "Main Room"
     },
 
     DragableJitsi: {
@@ -580,10 +582,10 @@ export default {
         }
     },
     groupdemoPopupForm: {
-        title: 'Please save group documents',
+        title: 'Group documents settings',
     },
     demoPopupForm: {
-        title: 'Please save meetup documents',
+        title: 'Meetup documents settings',
         preview: "Preview",
         labels: {
             document: 'Set your document'
@@ -599,13 +601,13 @@ export default {
         }
     },
     demoPopupFrom: {
-        title: 'Please save meetup demo',
+        title: 'Meetup demo settings',
         labels: {
             demo: 'Set your demo'
         }
     },
     groupDemoPopupFrom: {
-        title: 'Please save group demo',
+        title: 'Group demo settings',
         labels: {
             demo: 'Set your demo'
         }
@@ -623,6 +625,7 @@ export default {
         }
     },
     screenSaverPopupFrom: {
+        title: "Meetup room screensaver settings",
         create: {
             labels: {
                 video: 'URL of video',
@@ -649,7 +652,7 @@ export default {
             design: {
                 title: 'Design',
                 subtitle: 'Colors',
-                button: 'Change Background',
+                button: 'Change Meetup Screensaver',
                 colors: {
                     primary: 'Primary',
                     dark: 'Dark',

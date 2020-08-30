@@ -115,7 +115,6 @@
                 }                
             },
             index(){
-                console.log('this.$props.item');
                 if(this.$props.item) {
                     const socials = this.$store.getters.socials
 

@@ -1,20 +1,20 @@
 <template>
   <div>      
-      <b-loading 
-          :is-full-page="false" 
-          :active.sync="isLoading" 
-          :can-cancel="false"
-      />
-      <switch-component class="admin-bar__switcher" :isSwitched="isActiveLocal" @switchItem="updateActive">  
-        <p v-if="!isActiveLocal" slot="switched-text">{{content.off}}</p>
-        <p v-if="isActiveLocal" slot="switched-text">{{content.active}}</p>
-      </switch-component>
-      <switch-component v-if="isActiveLocal" class="admin-bar__switcher" :isSwitched="!isLightMode" @switchItem="updateMode">  
-        <p v-if="isLightMode" slot="switched-text">{{content.light}}</p>
-        <p v-if="!isLightMode" slot="switched-text">{{content.dark}}</p>
-      </switch-component>
+    <b-loading 
+      :is-full-page="false" 
+      :active.sync="isLoading" 
+      :can-cancel="false"
+    />
+    <switch-component class="admin-bar__switcher" :isSwitched="isActiveLocal" @switchItem="updateActive">  
+      <p v-if="!isActiveLocal" slot="switched-text">{{content.off}}</p>
+      <p v-if="isActiveLocal" slot="switched-text">{{content.active}}</p>
+    </switch-component>
+    <switch-component v-if="isActiveLocal" class="admin-bar__switcher" :isSwitched="!isLightMode" @switchItem="updateMode">  
+      <p v-if="isLightMode" slot="switched-text">{{content.light}}</p>
+      <p v-if="!isLightMode" slot="switched-text">{{content.dark}}</p>
+    </switch-component>
 
-      <b-button @click="resetToDefault" class="is-primary">{{content.resetToDefault}}</b-button>
+    <b-button v-if="isActiveLocal" @click="resetToDefault" class="is-primary">{{content.resetToDefault}}</b-button>
   </div>
 </template>
 

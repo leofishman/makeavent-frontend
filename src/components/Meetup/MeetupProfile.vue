@@ -85,6 +85,7 @@
 						<div class="column">
 							<div v-if="$root.isUserAdmin" class="columns">
 								<div class="column">
+									<h2 class="is-dark-changeable--color">{{content.mainRoom}}</h2>
 									<JitsiStream
 										v-if="$root.meetup.service == 'jitsi'"
 										:meetup="$root.meetup"
@@ -92,6 +93,7 @@
 									/>
 								</div>
 								<div v-if="$root.showBackstage" class="column">
+									<h2 class="is-dark-changeable--color">{{content.backstage}}</h2>
 									<JitsiStream
 										v-if="$root.meetup.service == 'jitsi'"
 										:meetup="$root.meetup"
@@ -143,7 +145,7 @@
 					:checkAccess="'companychat'"
 					type="company"
 					:contacts="$root.meetup.speakers"
-					:name="$root.meetup.name"
+					:name="$root.meetup.company_name"
 					:_id="id" />
 			</div>
 
@@ -174,7 +176,7 @@
 			aria-role="dialog"
 			aria-modal
 		>
-			<DemoModal :demos="$root.meetup.demo" :name="$root.meetup.name"/>
+			<DemoModal :demos="$root.meetup.demo" :name="$root.meetup.company_name"/>
 		</b-modal>
 
 		<AdminSidebar v-if="$root.isUserAdmin" />
@@ -258,12 +260,13 @@
 			})
 
 			return {
+				content: this.$root.content.Meetup,
+
 				expanded: false,
 				classes: "bio-content-collapsed",
 				demoModalActive: false,
 				materialsModalActive: false,
 				self: this,
-				content: this.$root.content.Meetup,
 				commonContent: this.$root.content.common,
 				ready: false,
 				getInTouch: ["Facebook", "Linkedin", "Telegram"],

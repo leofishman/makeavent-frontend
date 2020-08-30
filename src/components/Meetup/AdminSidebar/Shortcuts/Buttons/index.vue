@@ -1,6 +1,6 @@
 <template>
   <div class="admin-bar__shortcuts-list-buttons">
-      <start-recording 
+      <!-- <start-recording 
         v-if="!isRecording"
         @clicked="clickRecording" 
         class="admin-bar__shortcuts-btn"
@@ -19,7 +19,7 @@
         v-if="isStreaming"
         @clicked="clickStreaming" 
         class="admin-bar__shortcuts-btn"
-      />
+      /> -->
       <BackstageControls 
         :Speakers="$root.speakerProfiles"
         :parent="this"

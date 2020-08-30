@@ -42,10 +42,11 @@
                     <div class="preview-item">
                         <div 
                             class="preview-item__logo"
-                            :style="{ backgroundImage: config.server_url+meetup.logo}"
+                            :style="{ backgroundImage: `url(${$root.meetup.image})`,
+                            backgroundRepeat: 'round' }"
                         >
                         </div>
-                        <div class="preview-item__title">{{meetup.name}}</div>
+                        <div class="preview-item__title">{{$root.meetup.company_name}}</div>
                     </div>
                 </div>
             </div> 
@@ -79,7 +80,7 @@ export default {
     components: {
         colorPicker
     },
-    async mounted(){
+    async mounted () {
         this.loader = true
         const obj = {
             id: this.$root.meetup._id
@@ -90,7 +91,7 @@ export default {
         this.defaultColor = this.meetup.screensaverColor
         this.loader = false
     },
-    data(){
+    data () {
         return {
             content: this.$root.content.screenSaverPopupFrom,
             global_content: this.$root.content.globalForms,
@@ -116,7 +117,7 @@ export default {
             this.submitDisabled = true
             this.loader = true
             const id = this.$root.meetup._id
-            if(this.validURL && this.link && id) {
+            if ( this.validURL && this.link && id ) {
                 const obj = {
                     id: id,
                     screensaver: this.link,
@@ -131,12 +132,14 @@ export default {
         },
         checkLink(){
             this.validURL = this.util.validURL(this.link)
-            if( this.validURL && this.link && this.util.getYtbOmb(this.link) ) {
+
+            if ( this.validURL && this.link && this.util.getYtbOmb(this.link) ) {
                 this.iframeMarkup = this.util.getYtbOmb(this.link)
-            } else if (this.validURL && this.link && this.util.validURL(this.link)) {
-                if (new URL(this.link)) {
+            }
+            else if (this.validURL && this.link && this.util.validURL(this.link)) {
+                if ( new URL(this.link) ) {
                     const link = new URL(this.link)
-                    if(link.host === 'vimeo.com') {
+                    if ( link.host === 'vimeo.com' ) {
                         axios
                             .get('https://vimeo.com/api/oembed.json?url='+this.link)
                             .then(res => {

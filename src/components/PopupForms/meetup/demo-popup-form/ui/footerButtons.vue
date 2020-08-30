@@ -18,7 +18,7 @@ export default {
     methods: {
         submit(){
             const updated = this.$props.updated
-            const id = '5f0f049050da105c781d8533'
+            const id = this.$root.meetup._id
             const demosArray = this.$props.demosArray.map(item => {
                 return {                    
                     link: item.link,

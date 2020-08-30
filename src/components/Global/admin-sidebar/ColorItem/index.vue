@@ -57,7 +57,7 @@ export default {
 		defaultValue: {			
 			handler(val){
 				// if(this.$props.defaultValue.isActive) {
-					console.log('this.$props.defaultValue.color',this.$props.defaultValue.color);
+					
 					// this.setColor(this.$props.defaultValue.color)
 				// }
 			},

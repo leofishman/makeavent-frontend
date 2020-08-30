@@ -29,10 +29,10 @@
             <accordion-item :valid="demosItem.validURL && demosItem.iframeMarkup">
                 <template slot="accordion-trigger">
                     <div v-if="demosItem.name">
-                        <h3>{{demosItem.name}}</h3>
+                        <h3>{{demosItem.name}} {{demoPopupForm.preview}}</h3>
                     </div>                 
                     <div v-if="!demosItem.name">
-                        <h3>{{demoPopupForm.preview}} {{index}}</h3>
+                        <h3>{{demoPopupForm.preview}}</h3>
                     </div>                        
                 </template>
                 <template slot="accordion-content" v-if="demosItem.validURL && demosItem.iframeMarkup">
@@ -117,15 +117,13 @@ export default {
                 item.iframeMarkup = false
             }
 
-
-
             this.$emit('submitDisabled', obj) 
         },      
         removeItem(index){
             this.$emit('removeItem', index)
         },
         updateSocial(selectedItem){
-            if(selectedItem){
+            if ( selectedItem ) {
                 const selected = selectedItem.selectedItem
                 const index = selectedItem.index
                 const socials = this.$store.getters.socials

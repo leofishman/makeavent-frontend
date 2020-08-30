@@ -1,14 +1,17 @@
 <template>
-  <div class="stuff-list">
-      <input-row 
-        v-for="(demosItem, index) of demosArray" 
-        :key="index"  
-        :index="index"  
-        :demosItem="demosItem"  
-        @submitDisabled="pushValidArray"
-        @removeItem="removeItem"
-    />
-  </div>
+    <div>
+        <div v-if="demosArray.length" class="stuff-list">
+            <input-row 
+                v-for="(demosItem, index) of demosArray" 
+                :key="index"  
+                :index="index"  
+                :demosItem="demosItem"  
+                @submitDisabled="pushValidArray"
+                @removeItem="removeItem"
+            />
+        </div>
+        <div v-else class="stuff-list"></div>
+    </div>
 </template>
 
 <script>
@@ -24,7 +27,7 @@ export default {
     },
     watch: {
         demosArray(array){
-            if ( this.isAdd ) {
+            if ( this.isAdd && array.length ) {
                 const index = array.length-1
                 const submitDisabled = ! array[index].name.length > 0
 

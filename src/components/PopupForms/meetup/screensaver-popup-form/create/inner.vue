@@ -45,7 +45,7 @@
                             :style="{ backgroundImage: config.server_url+meetup.logo}"
                         >
                         </div>
-                        <div class="preview-item__title">{{meetup.name}}</div>
+                        <div class="preview-item__title">{{meetup.meetup_name}}</div>
                     </div>
                 </div>
             </div> 

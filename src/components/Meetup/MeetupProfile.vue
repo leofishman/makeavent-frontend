@@ -118,7 +118,7 @@
 								<div class="speakers-title is-dark-changeable--color">
 									{{content.speakers}}
 								</div>
-								<div class="column" v-for="(el, index) in $root.speakerProfiles" :key="index">
+								<div class="column" v-for="(el, index) in $root.meetup.speakers" :key="index">
 									<Member :data="el"/>
 								</div>
 							</div>
@@ -233,11 +233,7 @@
 					this.updateColorDark(this.$root.meetup.color_schema.dark)
 					this.updateColorPrimary(this.$root.meetup.color_schema.primary)
 				}
-				this.getSpeakers()
-
-				if (!this.$root.speakerProfiles) {
-					this.getSpeakers()
-				}
+			
 				if (this.$root.cronMeetupSchema)
 					clearInterval(this.$root.cronMeetupSchema)
 
@@ -290,7 +286,7 @@
 		},
 		methods: {
 			defineHowToRender () {
-				if ( this.$root.meetup.speakers.includes(this.$root.profile._id) )
+				if ( this.$root.meetup.speakers.filter(el => el._id == this.$root.profile._id).length )
 					return 'speaker'
 				
 				else
@@ -341,35 +337,26 @@
 				}
 			},
 
-			getSpeakers () {
-				Axios.create({
-					baseURL: MEETUP.getSpeakers + '?id=' + this.id,
-					headers: {
-						authorization: localStorage.auth
-					}
-				})()
-				.then(res => {
-					this.$root.speakerProfiles = res.data
-				})
-			},
-
 			renderRtmpVideo () {
-				try {
-					if (!this.videoReady && flvjs.isSupported() && this.defineHowToRender() == 'basic') {
-						this.videoReady = true
-						var videoElement = document.getElementById('videoElement');
-						var flvPlayer = flvjs.createPlayer({
-							type: 'flv',
-							url: `https://rtmp.makeavent.com/live/${this.id}`
-						});
-						flvPlayer.attachMediaElement(videoElement);
-						flvPlayer.load();
-						flvPlayer.play();
+				let timer = setInterval(() => {
+					if ( document.getElementById('videoElement') ) try {
+						clearInterval(timer)
+						if (!this.videoReady && flvjs.isSupported() && this.defineHowToRender() == 'basic') {
+							this.videoReady = true
+							var videoElement = document.getElementById('videoElement');
+							var flvPlayer = flvjs.createPlayer({
+								type: 'flv',
+								url: `https://rtmp.makeavent.com/live/${this.id}.flv`
+							});
+							flvPlayer.attachMediaElement(videoElement);
+							flvPlayer.load();
+							flvPlayer.play();
+						}
 					}
-				}
-				catch (e) {
-					console.log(e);
-				}
+					catch (e) {
+						console.log(e);
+					}
+				})
 			},
 
 			getMeetup () {

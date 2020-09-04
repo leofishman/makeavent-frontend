@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="id == 'mainroom'" id="mainroom" class="video-stream">
+        <div :id="id" class="video-stream">
             <div class="box">
                 <div class="content-box" v-if="showScreensaver">
                     <div v-if="defaultLoader" class="content">
@@ -21,31 +21,32 @@
                         <source :src="meetup.screensaver" type="video/mp4">
                     </video>
                 </div>
-                <div :id="jitsiTarget" class="card-image"></div>
-            </div>
-        </div>
-    
-        <div v-if="id == 'backstage'" id="backstage" class="video-stream">
-            <div class="box">
-                <div class="content-box" v-if="showScreensaver">
-                    <div v-if="defaultLoader" class="content">
-                        <span>{{content.willStartIn}}</span> {{clock}}
+
+                <div v-if="!showScreensaver && $root.showScreenButtons" class="screen-buttons">
+                    <div class="columns nopadding">
+                        <div v-if="!$root[id].video" class="column">
+                            <div @click="toggleVideo()" class="screen-buttons-image-wrap">
+                                <img src="@/assets/img/VideoStream/camera.svg" alt="">
+                            </div>
+                        </div>
+                        <div v-if="$root[id].video" class="column">
+                            <div @click="toggleVideo()" class="screen-buttons-image-wrap">
+                                <img src="@/assets/img/VideoStream/cameraoff.svg" alt="">
+                            </div>
+                        </div>
+                        <div v-if="!$root[id].mic" class="column">
+                            <div @click="toggleAudio()" class="screen-buttons-image-wrap">
+                                <img src="@/assets/img/VideoStream/mic.svg" alt="">
+                            </div>
+                        </div>
+                        <div v-if="$root[id].mic" class="column">
+                            <div @click="toggleAudio()" class="screen-buttons-image-wrap">
+                                <img src="@/assets/img/VideoStream/micoff.svg" alt="">
+                            </div>
+                        </div>
                     </div>
-                    <div v-else-if="joiningBackstage" class="content">
-                        <span v-html="content.joiningBackstage"></span>
-                    </div>
-                    <div v-else-if="joiningMainroom" class="content">
-                        <span v-html="content.joiningMainroom"></span>
-                    </div>
-                    
-                    <div :style="{
-                        backgroundColor: meetup.screensaverColor,
-                        opacity: meetup.screensaverColor ? 0.6 : 0
-                    }" class="scr-saver-fileld__bg"></div>
-                    <video v-if="meetup.screensaver" class="screensaver" autoplay muted loop>
-                        <source :src="meetup.screensaver" type="video/mp4">
-                    </video>
                 </div>
+
                 <div :id="jitsiTarget" class="card-image"></div>
             </div>
         </div>
@@ -70,16 +71,16 @@ export default {
             
             if ( this.userType != "admin" ) {
                 const isInBackstage  = msg.backstage.participants.includes(this.$root.profile._id)
-                const isInFrontStage = msg.frontstage.participants.includes(this.$root.profile._id)
+                const isInmainroom = msg.mainroom.participants.includes(this.$root.profile._id)
 
                 this.backstage  = msg.backstage
-                this.frontstage = msg.frontstage
+                this.mainroom = msg.mainroom
 
                 if ( isInBackstage ) {
                     this.id = "backstage"
                 }
 
-                if ( isInFrontStage ) {
+                if ( isInmainroom ) {
                     this.id = "mainroom"
                 }
             }
@@ -102,12 +103,13 @@ export default {
             joiningBackstage: false,
             joiningMainroom: false,
 
-            jitsiTarget: `jitsi-modal-target-${this.id}`
+            jitsiTarget: `jitsi-modal-target-${this.id}`,
+            iframe: "",
         }
     },
     methods: {
         defineHowToRender () {
-            if ( this.meetup.speakers.includes(this.$root.profile._id) )
+            if ( this.$root.meetup.speakers.filter(el => el._id == this.$root.profile._id).length )
                 this.userType = 'speaker'
             
             else
@@ -232,18 +234,41 @@ export default {
         startStream () {
             clearInterval(this.timerCheckStream)
 
-            let once = false
-            window.addEventListener('message', (e) => {
+            let once, profileTransfered, avatarPic = false
+            window.addEventListener('message', async (e) => {
                 try {
                     if (JSON.parse(e.data).method == '__ready__') {
                         this.showScreensaver = false;
-                        if (!once) {
-                            if (this.streamApp.type != 'speaker') {
-                                this.streamApp.stream.executeCommand('toggleVideo')
-                                this.streamApp.stream.executeCommand('toggleAudio');
-                                once = true
-                            }
+                        if ( !profileTransfered ) {
+                            this.iframe.contentWindow.postMessage({
+                                type: "parent_app_data:userprofile",
+                                data: this.$root.profile
+                            }, '*');
+                            this.iframe.contentWindow.postMessage({
+                                type: "parent_app_data:meetup",
+                                data: this.$root.meetup
+                            }, '*');
+                            profileTransfered = true
                         }
+                        
+                        setTimeout(async () => {
+                            if (!once) {
+                                if (this.$root[`${this.id}_streamApp`].type != 'speaker') {
+                                    if ( !await this.$root[`${this.id}_streamApp`].stream.isAudioMuted() )
+                                        this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleAudio');
+
+                                    if ( !await this.$root[`${this.id}_streamApp`].stream.isVideoMuted() )
+                                        this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleVideo')
+                                    
+                                    once = true
+                                }
+                            }
+    
+                            if ( !avatarPic ) {
+                                this.$root[`${this.id}_streamApp`].stream.executeCommand('avatarUrl', this.api + this.$root.profile.photo)
+                                avatarPic = true
+                            }
+                        }, 2000)
                     }
                 } catch (e) {}
             })
@@ -258,22 +283,26 @@ export default {
                     meetup.webinarRoom = this.backstage._id
                 }
 
-                this.streamApp = new jitsi({
+                this.$root[`${this.id}_streamApp`] = new jitsi({
                     vueapp: this,
                     parentNode: document.getElementById(this.jitsiTarget),
                     data: this.$root.meetup
                 })
-                this.streamApp.connect()
+                this.$root[`${this.id}_streamApp`].connect()
 
-                this.streamApp.stream.addEventListener('participantJoined', (e) => {
-                    if ( this.streamApp.type == 'speaker' )
-                        this.streamApp.stream.executeCommand('changeRole', {
+                this.$root[this.id].mic = !await this.$root[`${this.id}_streamApp`].stream.isAudioMuted()
+                this.$root[this.id].video = !await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
+
+                this.$root[`${this.id}_streamApp`].stream.addEventListener('participantJoined', (e) => {
+                    if ( this.$root[`${this.id}_streamApp`].type == 'speaker' )
+                        this.$root[`${this.id}_streamApp`].stream.executeCommand('changeRole', {
                             id: e.id,
                             role: 'speaker'
                         })
                 })
 
-                document.getElementById(this.jitsiTarget).children[0].style.height = "450px"
+                this.iframe = document.getElementById(this.jitsiTarget).children[0]
+                this.iframe.style.height = "450px"
             })
         },
 
@@ -285,6 +314,45 @@ export default {
                 clearInterval(this.timerCheckStream)
                 this.countdownForWebinar()
             }, 500)
+        },
+
+        async toggleAudio () {
+            this.$root[this.id].mic = this.$root[this.id].mic ? false : true
+            this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleAudio')
+        },
+        
+        async toggleVideo () {
+            if ( !this.$root[this.id].toggleLoading ) {
+                this.$root[this.id].toggleLoading = true
+                let after;
+                let before = await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
+                this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleVideo')
+
+                setTimeout(async () => {
+                    after = await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
+                    if ( after != before ) {
+                        this.$root[this.id].video = this.$root[this.id].video ? false : true
+                        this.$root[this.id].toggleLoading = false
+                    }
+                }, 1000)
+                
+                // console.log(before, after);
+
+                // else {
+                //     let timer = setInterval(async () => {
+                //         before = await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
+                //         after = await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
+    
+                //         console.log(before, after)
+
+                //         if ( before != after ) {
+                //             clearInterval(timer)
+                //             this.$root[this.id].toggleLoading = false
+                //             this.$root[this.id].video = this.$root[this.id].video ? false : true
+                //         }
+                //     })
+                // }
+            }
         }
     },
     watch: {
@@ -314,10 +382,17 @@ export default {
 
             document.getElementById(this.jitsiTarget).remove()
                 
-            this.jitsiTarget      = `jitsi-modal-target-${this.id}`
-            this.defaultLoader    = false
+            this.jitsiTarget   = `jitsi-modal-target-${this.id}`
+            this.defaultLoader = false
 
             this.createJitsiParent()
+        },
+        '$root.meetup': function () {
+            if ( this.iframe )
+                this.iframe.contentWindow.postMessage({
+                    type: "parent_app_data:meetup",
+                    data: this.$root.meetup
+                }, '*');
         }
     },
     mounted () {
@@ -337,4 +412,33 @@ export default {
 </script>
 <style lang="scss">
 @import "./index.scss";
+
+.screen-buttons {
+    position: absolute;
+    z-index: 10000;
+    width: 100%;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    .screen-buttons-image-wrap {
+        padding: 10px;
+        position: relative;
+        display: block;
+        border: solid 5px #00000080;
+        border-radius: 50%;
+        margin: auto;
+        width: max-content;
+        cursor: pointer;
+        background: #ffffff80;
+        img {
+            width: 100px;
+            height: 100px;
+            opacity: 0.5;
+        }
+        &:hover {
+            background: #ffffffe6;
+        }
+    }
+}
 </style>

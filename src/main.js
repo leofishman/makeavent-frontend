@@ -67,6 +67,7 @@ import store from './store'
 Vue.prototype.util = util
 Vue.prototype._ = lodash
 Vue.prototype.config = config
+Vue.prototype.api = api
 
 const selfhost = self
 
@@ -217,9 +218,24 @@ new Vue({
       showDragableConference: false,
       roomForDragableConference: {},
       activeRooms: [],
-      speakerProfiles: [],
 
-      showBackstage: true
+      showBackstage: true,
+      showScreenButtons: true,
+
+      backstage: {
+        mic: false,
+        video: false,
+        toggleLoading: false
+      },
+      mainroom: {
+        mic: false,
+        video: false,
+        toggleLoading: false
+      },
+
+      backstage_streamApp: {},
+      mainroom_streamApp: {},
+      reload: []
     }
   },
   methods: {

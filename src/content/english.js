@@ -504,10 +504,13 @@ export default {
             date: "Type or select a date..",
         },
         confirmFields: {
+            company_name: "Company Name",
+            company_description: "Company Description",
             name: 'Name',
             massage: 'Description',
             date: "Date",
-            confirm: 'Confirm'
+            confirm: 'Confirm',
+            images: "Images"
         },
         success: "Thank you for creating meetup with <b>Makeavent</b>. <br> It may take several seconds to prepare and it will apear in your profile.",
         error: "Oops, there is unexpected error while creating meetup for you. Please contact team."
@@ -684,14 +687,19 @@ export default {
             },
             shortcuts: {
                 title: 'Shortcuts',
+                open: "Show",
+                close: "Hide",
                 buttons: {
+                    h_backst: "Backstage Window",
                     o_backst: 'Show Backstage Window',
-                    h_backst: 'Hide Backstage Window',
                     o_recording: 'Start Recording',
                     h_recording: 'Stop Recording',
                     o_streaming: 'Start Streaming',
                     h_streaming: 'Stop Recording',
                     manage: 'Manage Backstage'
+                },
+                switchers: {
+                    showScreenButtons: "Video, Microphone buttons on video stream"
                 }
             },
             speakers: {

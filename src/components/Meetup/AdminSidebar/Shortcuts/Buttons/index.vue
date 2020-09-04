@@ -21,22 +21,19 @@
         class="admin-bar__shortcuts-btn"
       /> -->
       <BackstageControls 
-        :Speakers="$root.speakerProfiles"
+        :Speakers="$root.meetup.speakers"
         :parent="this"
       />
-      <show-backstage
+      <!-- <show-backstage
         v-if="isBackstage"
         class="admin-bar__shortcuts-btn"
-        :name="';aallala'"
         @clicked="clickBackstage"
       >
-      </show-backstage>
-      <hide-backstage
+      </show-backstage> -->
+      <BackstageSwitch
         v-if="!isBackstage"
-        class="admin-bar__shortcuts-btn"
-        :name="';aallala'"
-        @clicked="clickBackstage" 
       />
+      <ScreenButtonSwitch />
   </div>
 </template>
 
@@ -47,9 +44,9 @@ import StartStreaming from './StartStreaming'
 import StopRecording from './StopRecording'
 import StopStreaming from './StopStreaming'
 
+import BackstageSwitch from './BackstageSwitch'
 import BackstageControls from '../../BackstageControls'
-import HideBackstage from './HideBackstage'
-import ShowBackstage from './ShowBackstage'
+import ScreenButtonSwitch from './ScreenButtonSwitch'
 
 import {ActiveButton} from '@/components/Global/controll/'
 
@@ -68,20 +65,12 @@ export default {
     clickStreaming() {
       this.isStreaming = !this.isStreaming
     },
-    clickBackstage(){
-      if ( this.$root.showBackstage )
-        this.$root.showBackstage = false
-      else
-        this.$root.showBackstage = true
-
-      this.isBackstage = !this.isBackstage
-    }
   },
   components: {
     StartRecording, StartStreaming,
     StopRecording, StopStreaming,
-    BackstageControls, HideBackstage,
-    ActiveButton, ShowBackstage
+    BackstageControls, BackstageSwitch,
+    ActiveButton, ScreenButtonSwitch
   }
 }
 </script>

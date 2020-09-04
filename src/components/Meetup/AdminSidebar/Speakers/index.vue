@@ -5,7 +5,7 @@
             <template slot="inner">
                 <div class="admin-bar__speakers-list">
                     <BackstageControls 
-                        :Speakers="$root.speakerProfiles"
+                        :Speakers="$root.meetup.speakers"
                         :parent="this"
                     />
                     <template v-if="$store.getters.meetupFull.speakers">

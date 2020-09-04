@@ -33,10 +33,21 @@
 			}
 		},
 		methods: {
+			isWatchUrl (url) {
+				return url.includes('watch?') ? true : false;
+			},
+
 			getThumbnail (url) {
-				return `https://img.youtube.com/vi/${url.split("embed/")[1].split("?")[0]}/0.jpg`
+				if ( this.isWatchUrl(url) )
+					return `https://img.youtube.com/vi/${url.split("watch?v=")[1].split("&")[0]}/0.jpg`
+				else if ( url.includes("embed/") )
+					return `https://img.youtube.com/vi/${url.split("embed/")[1].split("?")[0]}/0.jpg`
 			},
 			openVideoModal (url) {
+				url = this.isWatchUrl(url)
+					? url.replace("watch?v=", 'embed/').split("&")[0] 
+					: url;
+
 				this.$buefy.modal.open({
 					fullScreen: true,
 					hasModalCard: false,

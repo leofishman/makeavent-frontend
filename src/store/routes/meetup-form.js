@@ -54,7 +54,7 @@ export default {
     })    
   },
   toggleMeetupRoom(params){
-    return api().post('/meetup/toggle-meetup-room', params, {
+    return api().post('/meetup/toggle-webinar-status', params, {
       ...opts     
     })    
   },

@@ -326,6 +326,9 @@
     width: 48px;
     height: 48px;
     margin-right: 13px;
+    img {
+        border-radius: 50%;
+    }
 }
 .admin-bar__speaker-name {
     font-weight: 600;

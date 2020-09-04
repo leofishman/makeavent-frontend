@@ -39,15 +39,18 @@ p + p {
 //////////////////////////////////////////
 body {
     background-color: #F3F3F3;
-    min-height: 100vh;
-}
-main {
-}
-
-.meetup-profile, .networking-rooms {
-	min-height: calc(100vh - 5rem);
+	min-height: 100vh;
+	margin-top: 5rem;
 	@extend %noselect;
 }
+// main {
+	
+// }
+
+// .meetup-profile, .networking-rooms {
+// 	min-height: calc(100vh - 5rem);
+	
+// }
 @media screen and (min-width: $desktop) {
 	.container {
 		max-width: 95%;

@@ -4,7 +4,7 @@
 			<div class="container">
 				<div class="navbar-brand">
 					<a class="navbar-item" v-on:click="openPage('home')">
-						<img v-if="$root.project.logo" :src="$root.api + $root.project.logo" height="28">
+						<img v-if="$root.project.logo" :src="api + $root.project.logo" height="28">
 					</a>
 
 					<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -70,7 +70,6 @@
 </template>
 <script>
 import calendly from '@/components/Popups/setCalendly'
-import {api} from '@/env'
 
 export default {
     name: "navbar",
@@ -122,7 +121,6 @@ export default {
     },
     data() {
         return {
-			api: api,
             chatIsOpened: false
         }
     },

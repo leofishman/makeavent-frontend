@@ -190,8 +190,6 @@ new Vue({
       meetup: false,
       meetupExtraData: {},
 
-      api: api,
-
       selectedLanguage: this.selectedLanguage,
       notificationAllowed: "",
       profile: this.profile,

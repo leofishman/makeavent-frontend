@@ -58,6 +58,7 @@ export default {
         let timer = setInterval(function () {
             if (document.getElementById(self.target)) {
                 clearInterval(timer)
+                self.iframe = document.getElementById(self.target)
                 self.join()
             }
 
@@ -74,37 +75,56 @@ export default {
     },
     methods: {
         join () {
-            let once = false
+            let once, profileTransfered = false
             window.addEventListener('message', (e) => {
                 try {
                     if (JSON.parse(e.data).method == '__ready__') {
-                        
-                        this.showScreensaver = false;
-                        document
-                            .getElementsByClassName("hide-jitsi-until-loaded")[0]
-                            .classList
-                            .replace('hide-jitsi-until-loaded', 'hide-jitsi-until-loaded--active')
-
-                        document.getElementById(this.target).children[0].style.height = this.height - 65 + "px"
-
-                        if (!once) {
-                            if (this.streamApp.type != 'speaker') {
-                                this.streamApp.stream.executeCommand('toggleVideo')
-                                this.streamApp.stream.executeCommand('toggleAudio');
-                                once = true
+                        let self = this
+                        if ( this.iframe.children[0].contentWindow ) {
+                            if ( !profileTransfered ) {
+                                this.iframe.children[0].contentWindow.postMessage({
+                                    type: "parent_app_data:userprofile",
+                                    data: this.$root.profile
+                                }, '*');
+                                this.iframe.children[0].contentWindow.postMessage({
+                                    type: "parent_app_data:meetup",
+                                    data: this.$root.meetup
+                                }, '*');
+                                profileTransfered = true
                             }
                         }
+
+                        setTimeout(() => {
+                            if (!once) {
+                                once = true
+                                this.showScreensaver = false;
+    
+                                document
+                                    .getElementsByClassName("hide-jitsi-until-loaded")[0]
+                                    .classList
+                                    .replace('hide-jitsi-until-loaded', 'hide-jitsi-until-loaded--active')
+    
+                                this.iframe.children[0].style.height = this.height - 65 + "px"
+    
+                                if (this.streamApp.type != 'speaker') {
+                                    this.streamApp.stream.executeCommand('toggleVideo')
+                                    this.streamApp.stream.executeCommand('toggleAudio');
+                                }
+                            }
+                        }, 2000)
                     }
                 } catch (e) {}
             })
 
             this.streamApp = new jitsi({
                 vueapp: this,
-                parentNode: document.getElementById(this.target),
+                parentNode: this.iframe,
                 data: {
                     name: "Private call",
                     webinarRoom: this.room._id,
-                    speakers: this.room.participants,
+                    speakers: this.room.participants.map(el => {
+                        return { _id:el }
+                    }),
                     admins: [],
                     type: "networkingroom"
                 }
@@ -121,7 +141,7 @@ export default {
         },
 
         onResize (x, y, width, height) {
-            document.getElementById(this.target).children[0].style.height = height - 65 + "px"
+            this.iframe.children[0].style.height = height - 65 + "px"
         },
 
         destroyModal () {
@@ -138,7 +158,7 @@ export default {
     watch: {
         room: function () {
             try {
-                document.getElementById(this.target).children[0].remove()
+                this.iframe.children[0].remove()
                 this.target = `jitsi-frame-${this.room._id}`
                 this.showScreensaver = true
                 document
@@ -146,7 +166,7 @@ export default {
                     .classList
                     .replace('hide-jitsi-until-loaded--active', 'hide-jitsi-until-loaded')
 
-                document.getElementById(this.target).children[0].style.height = this.height - 65 + "px"
+                this.iframe.children[0].style.height = this.height - 65 + "px"
 
             } catch (e) { console.log(e) }
 
@@ -156,6 +176,7 @@ export default {
                 if (document.getElementById(self.target)) {
                     clearInterval(timer)
                     self.join()
+                    self.iframe = document.getElementById(self.target)
                 }
             })
         }

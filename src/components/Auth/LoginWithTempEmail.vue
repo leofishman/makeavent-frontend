@@ -5,7 +5,7 @@
                 <div class="columns">
                     <div class="column is-half is-offset-one-quarter data-login">
                         <figure class="image">
-                            <img v-if="$root.project.logo" :src="$root.api + $root.project.logo">
+                            <img v-if="$root.project.logo" :src="api + $root.project.logo">
                         </figure>
 
                         <div class="box">
@@ -97,7 +97,6 @@
 </template>
 <script>
 import Axios from 'axios'
-import {self, api} from '@/env'
 import './index.scss'
 
     export default {
@@ -176,7 +175,7 @@ import './index.scss'
         },
         methods: {
             fetchPasswordFromDb () {
-                Axios.post(`${api}/login/passwordForTempAccount`, {
+                Axios.post(`${this.api}/login/passwordForTempAccount`, {
                     access: this.$router.currentRoute.query.access
                 })
                 .then(res => {
@@ -190,7 +189,7 @@ import './index.scss'
             },
 
             login () {
-                Axios.post(`${api}/login`, {
+                Axios.post(`${this.api}/login`, {
                     email: this.email,
                     newemail: this.newemail,
                     password: this.password,

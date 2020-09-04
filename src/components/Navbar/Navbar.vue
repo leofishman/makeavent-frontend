@@ -27,7 +27,7 @@
 						</div>
 						
 						<a class="navbar-item" v-on:click="openPage('/')">
-							<img v-if="$root.project.logo" :src="$root.api + $root.project.logo" height="28">
+							<img v-if="$root.project.logo" :src="api + $root.project.logo" height="28">
 						</a>
 
 						<!-- <a class="navbar-item" v-on:click="$root.joinStage('networkingbooth')">{{content.networkingBooth}}</a> -->
@@ -77,7 +77,6 @@
 <script>
 
 import calendly from '@/components/Popups/setCalendly'
-import {api} from '@/env'
 
 export default {
     name: "navbar",
@@ -149,7 +148,6 @@ export default {
 			content: this.$root.content.Navbar,
 			content_rooms: this.$root.content.Rooms,
 
-			api: api,
 			chatIsOpened: false,
 			sideBarActive: true
         }

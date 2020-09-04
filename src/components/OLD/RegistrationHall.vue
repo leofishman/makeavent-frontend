@@ -5,7 +5,7 @@
                 <div class="columns is-variable is-8">
                     <div class="column data-login">
                         <figure class="image">
-                            <img v-if="$root.project.logo" :src="$root.api + $root.project.logo">
+                            <img v-if="$root.project.logo" :src="api + $root.project.logo">
                         </figure>
                         
                         <div class="box">
@@ -64,7 +64,6 @@
 
 <script>
 import Axios from 'axios'
-import {api} from '@/env'
 import SponsorsCol from '@/components/SponsorsCol'
 
 export default {
@@ -109,7 +108,7 @@ export default {
         },
 
         save () {
-            Axios.post(api + `/login/socials_reg`, {
+            Axios.post(this.api + `/login/socials_reg`, {
                 businessemail: this.email,
                 Linkedin: this.linkedin,
                 Facebook: this.facebook,
@@ -124,7 +123,7 @@ export default {
                     let formData = new FormData();
                     formData.append('userProfilePhoto', this.photo);
     
-                    return Axios.post(`${api}/login/profilephoto`, formData, {
+                    return Axios.post(`${this.api}/login/profilephoto`, formData, {
                         headers: { authorization: localStorage.auth }
                     })
                 }

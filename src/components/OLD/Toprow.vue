@@ -32,7 +32,7 @@
 		<div class="tile is-parent logo help-420">
 			<div class="tile is-child">
 				<figure class="image logo">
-					<img v-if="$root.project.logo" :src="$root.api + $root.project.logo">
+					<img v-if="$root.project.logo" :src="api + $root.project.logo">
 				</figure>
 			</div>
 		</div>
@@ -69,8 +69,6 @@
 </template>
 
 <script>
-import {api} from '@/env'
-
 export default {
 	name: "Toprow",
 	props: {
@@ -79,7 +77,6 @@ export default {
 	data () {
 		return {
 			content: this.$root.content.toprow,
-			api: api
 		}
 	},
 	methods: {

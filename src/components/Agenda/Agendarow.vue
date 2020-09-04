@@ -28,8 +28,6 @@
 </template>
 
 <script>
-import {api} from '@/env'
-
 export default {
 	name: "Agendarow",
 	props: {
@@ -49,7 +47,6 @@ export default {
 
 		return {
             reminder: this.$root.content.reminders[0],
-			api: api,
 			content: this.$root.content.Agendarow
 		}
 	},
@@ -69,7 +66,7 @@ export default {
             if (this.$root.cloo(toUp(this.$root.usertype), toUp('vip|startup|investor|media')))
                 this.$root.showMessageToUpgradeStrict('access to offline materials', 'VIP')
             else {
-                Axios.post(`${api}/offlinecopy`, {
+                Axios.post(`${this.api}/offlinecopy`, {
                     id: id
                 },
                 {

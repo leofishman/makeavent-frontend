@@ -5,7 +5,7 @@
                 <div class="columns">
                     <div class="column is-half is-offset-one-quarter data-login">
                         <figure class="image">
-                            <img v-if="$root.project.logo" :src="$root.api + $root.project.logo">
+                            <img v-if="$root.project.logo" :src="api + $root.project.logo">
                         </figure>
 
                         <div class="box">
@@ -143,7 +143,6 @@
 </template>
 <script>
 import Axios from 'axios'
-import {self, api} from '@/env'
 import SponsorsCol from '@/components/SponsorsCol'
 
 export default {
@@ -218,7 +217,7 @@ export default {
                 //     this.$root.createError(this.$root.content.ErrorMessages[4], 'oops')
                 // }
                 // else {
-                    Axios.post(`${api}/register?r=authorization`, {
+                    Axios.post(`${this.api}/register?r=authorization`, {
                         email: this.email,
                         
                         // companyName: this.companyName,
@@ -257,7 +256,7 @@ export default {
 
         GetTicketPrice () {
             return new Promise(async (resolve, reject) => {
-                Axios.get(api + '/ticket/pricetable').then(res => resolve(res.data[this.type]))
+                Axios.get(this.api + '/ticket/pricetable').then(res => resolve(res.data[this.type]))
             })
         },
 
@@ -280,7 +279,7 @@ export default {
 
         updateSocials () {
             if (this.linkedin || this.telegram || this.facebook) {
-                Axios.post(api + `/login/socials_reg`, {
+                Axios.post(this.api + `/login/socials_reg`, {
                     Linkedin: this.linkedin,
                     Facebook: this.facebook,
                     Telegram: this.telegram,
@@ -297,7 +296,7 @@ export default {
                 let formData = new FormData();
                 formData.append('userProfilePhoto', this.photo);
 
-                return Axios.post(`${api}/login/profilephoto`, formData, {
+                return Axios.post(`${this.api}/login/profilephoto`, formData, {
                     headers: { authorization: localStorage.auth }
                 })
             }

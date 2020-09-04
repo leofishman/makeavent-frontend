@@ -19,7 +19,7 @@
 							<Pagetitle data="Networking Rooms"/>
 							<p v-html="content.intro"></p>
 							
-							<button @click="createNewRoom" :disabled="createNewRoomLoading" class="new-room is-rounded button is-primary is-medium">
+							<button @click="createNewRoom" :disabled="createNewRoomLoading" class="new-room is-rounded button is-primary is-medium is-primary-changeable--bg">
 								<b-loading class="rounded" :is-full-page="false" :active.sync="createNewRoomLoading" :can-cancel="false"></b-loading>
 								{{content.newRoom}}
 							</button>
@@ -112,6 +112,9 @@
 						clearInterval(this.$root.cronAttendeesRooms)
 					}
 				}, 5000)
+			})
+			.catch(e => {
+				console.log(e);
 			})
 
 			return {

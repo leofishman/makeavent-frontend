@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import {api} from '@/env'
 export default {
     name: "Noaccess",
     data() {
@@ -26,7 +25,6 @@ export default {
         })
 
         return {
-            api: api,
             show: this.show,
             followLink: "",
             content: $root.content.Backstage

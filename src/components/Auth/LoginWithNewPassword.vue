@@ -5,7 +5,7 @@
                 <div class="columns">
                     <div class="column is-half is-offset-one-quarter data-login">
                         <figure class="image">
-                            <img v-if="$root.project.logo" :src="$root.api + $root.project.logo">
+                            <img v-if="$root.project.logo" :src="api + $root.project.logo">
                         </figure>
 
                         <div class="box">
@@ -52,7 +52,6 @@
 </template>
 <script>
 import Axios from 'axios'
-import {self, api} from '@/env'
 import './index.scss'
 
 export default {
@@ -64,7 +63,7 @@ export default {
         this.email = ""
 
         if (this.$router.currentRoute.query.token) {
-            Axios.post(api + '/login/approve_reset_pwd', {
+            Axios.post(this.api + '/login/approve_reset_pwd', {
                 token: this.$router.currentRoute.query.token
             })
             .then(res => {

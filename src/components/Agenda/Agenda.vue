@@ -20,7 +20,6 @@
     </div>
 </template>
 <script>
-import {api} from '@/env'
 import Axios from 'axios'
 import Agendarow from './Agendarow'
 
@@ -37,7 +36,6 @@ export default {
 
         return {
             content: this.$root.content.Agenda,
-            api: api,
             ready: this.ready,
         }
     },

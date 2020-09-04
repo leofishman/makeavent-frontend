@@ -7,7 +7,7 @@
 				<div class="columns">
 					<div class="column is-half is-offset-one-quarter data-login">
 						<figure class="image title-logo">
-							<img v-if="$root.project.logo" :src="$root.api + $root.project.logo">
+							<img v-if="$root.project.logo" :src="api + $root.project.logo">
 						</figure>
 						
 						<div class="box">

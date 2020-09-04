@@ -335,23 +335,6 @@ export default {
                         this.$root[this.id].toggleLoading = false
                     }
                 }, 1000)
-                
-                // console.log(before, after);
-
-                // else {
-                //     let timer = setInterval(async () => {
-                //         before = await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
-                //         after = await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
-    
-                //         console.log(before, after)
-
-                //         if ( before != after ) {
-                //             clearInterval(timer)
-                //             this.$root[this.id].toggleLoading = false
-                //             this.$root[this.id].video = this.$root[this.id].video ? false : true
-                //         }
-                //     })
-                // }
             }
         }
     },

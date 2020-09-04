@@ -19,7 +19,7 @@ export default {
             }
         })
         .then(res => {
-            this.$router.push('/profile')
+            window.location.pathname = '/profile'
         })
         return {}
     },

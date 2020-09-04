@@ -43,7 +43,7 @@
             <!-- END Base info -->
             <!-- Logo -->
             <b-step-item step="3" :label="content.stepName.date" :clickable="isStepsClickable" :type="{'is-success': isProfileSuccess}">
-                <h2 class="title">{{content.labels.date}}</h2>                
+                <h2 class="title">{{content.placeholders.date}}</h2>                
                 <b-field class="input-date">
                     <b-datetimepicker
                         :placeholder="content.placeholders.date"
@@ -51,82 +51,116 @@
                         v-model="date"
                         @input="inputDate">
                     </b-datetimepicker>
-                    <p class="date-placeholder">{{content.placeholders.date}}</p>
                 </b-field>
             </b-step-item>
             <!-- Logo -->
             <b-step-item step="4" :label="content.stepName.logo" :clickable="isStepsClickable" disabled>
                 <h2 class="title">{{content.labels.logo}}</h2>
-                 <section class="file-uploader">
-                    <b-field>
-                        <b-upload v-model="file"
-                            :class="[ !fileValid ? 'invalid-file': '']"
-                            drag-drop
-                            @input="updateLogo"
-                            required
-                        >
-                            <section class="section">
-                                <div class="content has-text-centered">
-                                    <p>
-                                        <b-icon
-                                            icon="upload"
-                                            size="is-large">
-                                        </b-icon>
-                                    </p>
-                                    <p>{{$root.content.groupPopupForm.validation.dropFile}}</p>
-                                </div>
-                            </section>
-                        </b-upload>
-                    </b-field>
-                    <div class="tags">
-                        <span class="file-name" v-if="file">
-                            {{ file.name }}
-                        </span>
-                        <span v-if="!fileValid" class="help is-danger">
-                            {{$root.content.groupPopupForm.validation.invalidFileType}}
-                        </span>
+                <div class="columns">
+                    <div class="collumn">
+                        <section class="file-uploader">
+                            <b-field>
+                                <b-upload v-model="file"
+                                    :class="[ !fileValid ? 'invalid-file': '']"
+                                    drag-drop
+                                    @input="updateLogo"
+                                    required
+                                >
+                                    <section class="section">
+                                        <div class="content has-text-centered">
+                                            <p>
+                                                <b-icon
+                                                    icon="upload"
+                                                    size="is-large">
+                                                </b-icon>
+                                            </p>
+                                            <p>{{$root.content.groupPopupForm.validation.dropFile}}</p>
+                                        </div>
+                                    </section>
+                                </b-upload>
+                            </b-field>
+                            <div class="tags">
+                                <span class="file-name" v-if="file">
+                                    {{ file.name }}
+                                </span>
+                                <span v-if="!fileValid" class="help is-danger">
+                                    {{$root.content.groupPopupForm.validation.invalidFileType}}
+                                </span>
+                            </div>
+                        </section>
                     </div>
-                </section>
+                    <div v-if="fileUplodated" class="column">
+                        <div class="confirm-data__col-value confirm-data__col-value--img">
+                            <img style="object-fit:contain" :src="fileUplodated" alt="">
+                        </div>
+                    </div>
+                </div>
             </b-step-item>
             <!-- END Logo -->
             <!-- Preview -->
             <b-step-item step="5" :label="content.stepName.preview" :clickable="isStepsClickable" disabled>
                 <h2 class="title">{{content.labels.preview}}</h2>
-                 <section class="file-uploader file-uploader--video">
-                    <b-field>
-                        <b-upload v-model="previewFile"
-                            :class="[ !previewFileValid ? 'invalid-file': '']"
-                            drag-drop
-                            @input="updatePreview"
-                            required
-                        >
-                            <section class="section">
-                                <div class="content has-text-centered">
-                                    <p>
-                                        <b-icon
-                                            icon="upload"
-                                            size="is-large">
-                                        </b-icon>
-                                    </p>
-                                    <p>{{$root.content.groupPopupForm.validation.dropFile}}</p>
-                                </div>
-                            </section>
-                        </b-upload>
-                    </b-field>
-                    <div class="tags">
-                        <span class="file-name" v-if="previewFile">
-                            {{ previewFile.name }}
-                        </span>
-                        <span v-if="!previewFileValid" class="help is-danger">
-                            {{$root.content.groupPopupForm.validation.invalidFileType}}
-                        </span>
+                <div class="columns">
+                    <div class="column">
+                        <section class="file-uploader file-uploader--video">
+                            <b-field>
+                                <b-upload v-model="previewFile"
+                                    :class="[ !previewFileValid ? 'invalid-file': '']"
+                                    drag-drop
+                                    @input="updatePreview"
+                                    required
+                                >
+                                    <section class="section">
+                                        <div class="content has-text-centered">
+                                            <p>
+                                                <b-icon
+                                                    icon="upload"
+                                                    size="is-large">
+                                                </b-icon>
+                                            </p>
+                                            <p>{{$root.content.groupPopupForm.validation.dropFile}}</p>
+                                        </div>
+                                    </section>
+                                </b-upload>
+                            </b-field>
+                            <div class="tags">
+                                <span class="file-name" v-if="previewFile">
+                                    {{ previewFile.name }}
+                                </span>
+                                <span v-if="!previewFileValid" class="help is-danger">
+                                    {{$root.content.groupPopupForm.validation.invalidFileType}}
+                                </span>
+                            </div>
+                        </section>
                     </div>
-                </section>
+                    <div class="column">
+                        <template v-if="util.isVideo(previewFile.name)">       
+                            <div class="confirm-data__col-value confirm-data__col-value--bg">
+                                <video controls>
+                                    <source :src="PfileUplodated">
+                                </video>
+                            </div>
+                        </template>
+                        <template v-if="util.isImage(previewFile.name)">                            
+                            <div class="confirm-data__col-value confirm-data__col-value--bg">
+                                <img :src="PfileUplodated" alt="">
+                            </div>
+                        </template>
+                    </div>
+                </div>
             </b-step-item>
             <!-- END preview -->
             <b-step-item step="6" :label="content.stepName.confirm" :clickable="isStepsClickable">
                 <h2 class="title last-step">{{content.labels.confirm}}</h2>
                 <div class="confirm-data">
+                    <div class="confirm-data__row">
+                        <div class="confirm-data__col-field">{{content.confirmFields.company_name}}</div>
+                        <div class="confirm-data__col-value">{{company_name}}</div>
+                    </div>
+                    <div class="confirm-data__row confirm-data__row--description">
+                        <div class="confirm-data__col-field">{{content.confirmFields.company_description}}</div>
+                        <div class="confirm-data__col-value">{{company_description}}</div>
+                    </div>
                     <div class="confirm-data__row">
                         <div class="confirm-data__col-field">{{content.confirmFields.name}}</div>
                         <div class="confirm-data__col-value">{{name}}</div>
@@ -140,9 +174,9 @@
                         <div class="confirm-data__col-value">{{formatDate}}</div>
                     </div>
                     <div class="confirm-data__row confirm-data__row--img-bg">
-                        <div class="confirm-data__col-field">Images</div>
+                        <div class="confirm-data__col-field">{{content.confirmFields.images}}</div>
                         <div class="confirm-data__col-value confirm-data__col-value--img">
-                            <img :src="fileUplodated" alt="">
+                            <img style="object-fit:contain" :src="fileUplodated" alt="">
                         </div>
                         <template v-if="util.isVideo(previewFile.name)">       
                             <div class="confirm-data__col-value confirm-data__col-value--bg">
@@ -215,8 +249,13 @@
         components: {
             CompanyStep
         },
-        mounted(){
-            this.hideDatePlaceholder()
+        mounted () {
+            let timer = setInterval(() => {
+                if ( document.querySelector('.date-placeholder') ) {
+                    clearInterval(timer)
+                    this.hideDatePlaceholder()
+                }
+            })
         },
         watch: {
             name(){                                 
@@ -242,6 +281,7 @@
             return {
                 content: this.$root.content.meetupPopupForm,
                 activeStep: 0,
+                loading: false,
 
                 isAnimated: true,
                 isRounded: true,
@@ -399,9 +439,11 @@
                         previewExt: formatPreview,
                         groupName: 'test'
                     }
+                    
                     const res = await MeetupFormRoutes.postAddMeetup(data)
                     this.close()
 
+                    window.location.reload()
                     this.$buefy.dialog.alert(this.content.success)
 
                     this.loading = false

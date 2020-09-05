@@ -346,7 +346,8 @@
 							var videoElement = document.getElementById('videoElement');
 							var flvPlayer = flvjs.createPlayer({
 								type: 'flv',
-								url: `https://rtmp.makeavent.com/live/${this.id}.flv`
+								// url: `https://rtmp.makeavent.com/live/${this.id}.flv`
+								url: `https://rtmp.makeavent.com/live/5f3688efeb366351cc2cfa19.flv`
 							});
 							flvPlayer.attachMediaElement(videoElement);
 							flvPlayer.load();

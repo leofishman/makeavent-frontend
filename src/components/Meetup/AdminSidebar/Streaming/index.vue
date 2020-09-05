@@ -5,11 +5,11 @@
             <template slot="inner">
                 <div class="admin-bar__streaming-list">
                     <buttons/>
-                    <sources/>
-                    <active-button
+                    <!-- <sources/> -->
+                    <!-- <active-button
                         :name="$root.content.adminSidebar.items.streaming.buttons.add"
                         class="admin-bar__shortcuts-btn admin-bar__button">
-                    </active-button>
+                    </active-button> -->
                 </div>
             </template>
       </item>

@@ -1,6 +1,6 @@
 <template>
   <div class="admin-bar__shortcuts-list-buttons">
-      <!-- <start-recording 
+      <start-recording 
         v-if="!isRecording"
         @clicked="clickRecording" 
         class="admin-bar__shortcuts-btn"
@@ -19,7 +19,7 @@
         v-if="isStreaming"
         @clicked="clickStreaming" 
         class="admin-bar__shortcuts-btn"
-      /> -->
+      />
       <BackstageControls 
         :Speakers="$root.meetup.speakers"
         :parent="this"
@@ -39,10 +39,10 @@
 
 <script>
 import StartRecording from './StartRecording'
-import StartStreaming from './StartStreaming'
+import StartStreaming from '../../Streaming/Buttons/StartStreaming'
 
 import StopRecording from './StopRecording'
-import StopStreaming from './StopStreaming'
+import StopStreaming from '../../Streaming/Buttons/StopStreaming'
 
 import BackstageSwitch from './BackstageSwitch'
 import BackstageControls from '../../BackstageControls'

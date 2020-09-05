@@ -256,15 +256,13 @@ export default {
                     this.showScreensaver = false;
 
                     if (!once) {
-                        if (this.$root[`${this.id}_streamApp`].type != 'speaker') {
-                            if ( !await this.$root[`${this.id}_streamApp`].stream.isAudioMuted() )
-                                this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleAudio');
+                        if ( !await this.$root[`${this.id}_streamApp`].stream.isAudioMuted() )
+                            this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleAudio');
 
-                            if ( !await this.$root[`${this.id}_streamApp`].stream.isVideoMuted() )
-                                this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleVideo')
-                            
-                            once = true
-                        }
+                        if ( !await this.$root[`${this.id}_streamApp`].stream.isVideoMuted() )
+                            this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleVideo')
+                        
+                        once = true
                     }
 
                     if ( !avatarPic ) {

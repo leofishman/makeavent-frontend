@@ -15,7 +15,7 @@
                 <transmition/>
                 <information :id="this.$root.meetup._id"/>
                 <speakers/>
-                <!-- <streaming/> -->
+                <streaming/>
                 <share/>
                 <design/>
             </div>

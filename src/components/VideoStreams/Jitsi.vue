@@ -234,44 +234,7 @@ export default {
         startStream () {
             clearInterval(this.timerCheckStream)
 
-            let once, profileTransfered, avatarPic = false
-            window.addEventListener('message', async (e) => {
-                try {
-                    if (JSON.parse(e.data).method == '__ready__') {
-                        this.showScreensaver = false;
-                        if ( !profileTransfered ) {
-                            this.iframe.contentWindow.postMessage({
-                                type: "parent_app_data:userprofile",
-                                data: this.$root.profile
-                            }, '*');
-                            this.iframe.contentWindow.postMessage({
-                                type: "parent_app_data:meetup",
-                                data: this.$root.meetup
-                            }, '*');
-                            profileTransfered = true
-                        }
-                        
-                        setTimeout(async () => {
-                            if (!once) {
-                                if (this.$root[`${this.id}_streamApp`].type != 'speaker') {
-                                    if ( !await this.$root[`${this.id}_streamApp`].stream.isAudioMuted() )
-                                        this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleAudio');
-
-                                    if ( !await this.$root[`${this.id}_streamApp`].stream.isVideoMuted() )
-                                        this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleVideo')
-                                    
-                                    once = true
-                                }
-                            }
-    
-                            if ( !avatarPic ) {
-                                this.$root[`${this.id}_streamApp`].stream.executeCommand('avatarUrl', this.api + this.$root.profile.photo)
-                                avatarPic = true
-                            }
-                        }, 2000)
-                    }
-                } catch (e) {}
-            })
+            let once, avatarPic = false
 
             this.$root.check('meetup')
             .then(async () => {
@@ -288,6 +251,28 @@ export default {
                     parentNode: document.getElementById(this.jitsiTarget),
                     data: this.$root.meetup
                 })
+
+                this.$root[`${this.id}_streamApp`].on('MavModifiers:ready', async () => {
+                    this.showScreensaver = false;
+
+                    if (!once) {
+                        if (this.$root[`${this.id}_streamApp`].type != 'speaker') {
+                            if ( !await this.$root[`${this.id}_streamApp`].stream.isAudioMuted() )
+                                this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleAudio');
+
+                            if ( !await this.$root[`${this.id}_streamApp`].stream.isVideoMuted() )
+                                this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleVideo')
+                            
+                            once = true
+                        }
+                    }
+
+                    if ( !avatarPic ) {
+                        this.$root[`${this.id}_streamApp`].stream.executeCommand('avatarUrl', this.api + this.$root.profile.photo)
+                        avatarPic = true
+                    }
+                })
+
                 this.$root[`${this.id}_streamApp`].connect()
 
                 this.$root[this.id].mic = !await this.$root[`${this.id}_streamApp`].stream.isAudioMuted()
@@ -300,9 +285,8 @@ export default {
                             role: 'speaker'
                         })
                 })
-
+                
                 this.iframe = document.getElementById(this.jitsiTarget).children[0]
-                this.iframe.style.height = "450px"
             })
         },
 

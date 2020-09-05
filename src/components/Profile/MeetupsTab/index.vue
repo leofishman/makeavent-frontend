@@ -79,6 +79,7 @@ export default {
         },
 
         async filterMeetupsOnlyAdminStatus () {
+            this.filteredOnlyAdmin = []
             const promises = this.$root.profile.meetups.map(async meetupId => new Promise(async (resolve, reject) => {
                 const admins = await this.getMeetup(meetupId)
                 if ( admins.includes(this.$root.profile._id) ) {
@@ -100,6 +101,11 @@ export default {
             }
             else
                 return false
+        }
+    },
+    watch: {
+        "$root.profile" : async function () {
+            this.filterMeetupsOnlyAdminStatus()
         }
     },
 }

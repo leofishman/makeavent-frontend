@@ -76,45 +76,6 @@ export default {
     methods: {
         join () {
             let once, profileTransfered = false
-            window.addEventListener('message', (e) => {
-                try {
-                    if (JSON.parse(e.data).method == '__ready__') {
-                        let self = this
-                        if ( this.iframe.children[0].contentWindow ) {
-                            if ( !profileTransfered ) {
-                                this.iframe.children[0].contentWindow.postMessage({
-                                    type: "parent_app_data:userprofile",
-                                    data: this.$root.profile
-                                }, '*');
-                                this.iframe.children[0].contentWindow.postMessage({
-                                    type: "parent_app_data:meetup",
-                                    data: this.$root.meetup
-                                }, '*');
-                                profileTransfered = true
-                            }
-                        }
-
-                        setTimeout(() => {
-                            if (!once) {
-                                once = true
-                                this.showScreensaver = false;
-    
-                                document
-                                    .getElementsByClassName("hide-jitsi-until-loaded")[0]
-                                    .classList
-                                    .replace('hide-jitsi-until-loaded', 'hide-jitsi-until-loaded--active')
-    
-                                this.iframe.children[0].style.height = this.height - 65 + "px"
-    
-                                if (this.streamApp.type != 'speaker') {
-                                    this.streamApp.stream.executeCommand('toggleVideo')
-                                    this.streamApp.stream.executeCommand('toggleAudio');
-                                }
-                            }
-                        }, 2000)
-                    }
-                } catch (e) {}
-            })
 
             this.streamApp = new jitsi({
                 vueapp: this,
@@ -127,6 +88,24 @@ export default {
                     }),
                     admins: [],
                     type: "networkingroom"
+                }
+            })
+            this.streamApp.on('MavModifiers:ready', () => {
+                if (!once) {
+                    once = true
+                    this.showScreensaver = false;
+
+                    document
+                        .getElementsByClassName("hide-jitsi-until-loaded")[0]
+                        .classList
+                        .replace('hide-jitsi-until-loaded', 'hide-jitsi-until-loaded--active')
+
+                    this.iframe.children[0].style.height = this.height - 65 + "px"
+
+                    if (this.streamApp.type != 'speaker') {
+                        this.streamApp.stream.executeCommand('toggleVideo')
+                        this.streamApp.stream.executeCommand('toggleAudio');
+                    }
                 }
             })
             this.streamApp.connect()

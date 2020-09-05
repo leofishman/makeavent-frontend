@@ -234,7 +234,7 @@
 					this.updateColorPrimary(this.$root.meetup.color_schema.primary)
 				}
 			
-				if (this.$root.cronMeetupSchema)
+				if ( this.$root.cronMeetupSchema )
 					clearInterval(this.$root.cronMeetupSchema)
 
 				this.$root.cronMeetupSchema = setInterval(() => {

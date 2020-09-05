@@ -11,6 +11,38 @@ export default class JitsiModal {
     this.webinarRoom = data.webinarRoom
     this.parentNode = parentNode
     this.username = this.app.$root.profile.name
+
+    this._events = {}
+  }
+
+  on(name, listener) {
+    if (!this._events[name]) {
+      this._events[name] = [];
+    }
+
+    this._events[name].push(listener);
+  }
+
+  removeListener(name, listenerToRemove) {
+    if (!this._events[name]) {
+      throw new Error(`Can't remove a listener. Event "${name}" doesn't exits.`);
+    }
+
+    const filterListeners = (listener) => listener !== listenerToRemove;
+
+    this._events[name] = this._events[name].filter(filterListeners);
+  }
+
+  emit(name, data) {
+    if (!this._events[name]) {
+      throw new Error(`Can't emit an event. Event "${name}" doesn't exits.`);
+    }
+
+    const fireCallbacks = (callback) => {
+      callback(data);
+    };
+
+    this._events[name].forEach(fireCallbacks);
   }
 
   defineType () {
@@ -406,6 +438,30 @@ export default class JitsiModal {
       }
     };
     
+    // let once = false
+    window.addEventListener('message', (e) => {
+      
+      if ( e.data.type == 'MavModifiers:ready_to_listen' ) {
+        this.stream._frame.contentWindow.postMessage({
+          type: "parent_app_data:userprofile",
+          data: this.app.$root.profile
+        }, '*');
+        this.stream._frame.contentWindow.postMessage({
+          type: "parent_app_data:meetup",
+          data: this.app.$root.meetup
+        }, '*');
+        this.stream._frame.contentWindow.postMessage({
+          type: "parent_app_data:authorization",
+          data: localStorage.auth
+        }, "*")
+        this.stream._frame.style.height = "450px"
+      }
+
+      if ( e.data.type == "MavModifiers:ready" ) {
+        this.emit('MavModifiers:ready', {})
+      }
+    })
+
     this.stream = new JitsiMeetExternalAPI(domain, options)
 
     return true

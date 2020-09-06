@@ -38,10 +38,10 @@
 									</li>
 								</ul>
 								<div class="company-demo">
-									<button v-if="$root.meetup.demo.length"
-										class="play-demo button is-primary-changeable--bg is-dark-changeable--color"
+									<b-button v-if="$root.meetup.demo.length"
+										class="play-demo is-primary is-primary-changeable--bg invert-color"
 										@click="demoModalActive = true"
-									>{{content.viewDemo}}</button>
+									>{{content.viewDemo}}</b-button>
 								</div>
 							</div>
 
@@ -51,10 +51,10 @@
 								</div>
 
 								<div v-if="expanded && $root.meetup.stuff" class="profile-bio">
-									<button v-if="$root.meetup.stuff.length"
-										class="button is-primary is-primary-changeable--bg is-fullwidth invert-color"
+									<b-button v-if="$root.meetup.stuff.length"
+										class="is-primary is-primary-changeable--bg is-fullwidth invert-color"
 										@click="materialsModalActive = true"
-									>{{content.viewMaterials}}</button>
+									>{{content.viewMaterials}}</b-button>
 								</div>
 
 								<div class="profile-bio">
@@ -62,22 +62,22 @@
 										v-bind:class="classes"
 										class="bio-content is-dark-changeable--color"></p>
 
-									<button v-if="!expanded"
-										class="button is-small is-fullwidth is-dark-changeable--color"
+									<b-button v-if="!expanded"
+										class="is-small is-fullwidth is-dark-changeable--color is-light-changeable--bg invert-color"
 										@click="bioExpand"
-									>{{content.readMore}}</button>
-									<button v-else
-										class="button is-small is-fullwidth is-dark-changeable--color"
+									>{{content.readMore}}</b-button>
+									<b-button v-else
+										class="is-small is-fullwidth is-dark-changeable--color is-light-changeable--bg invert-color"
 										@click="bioCollapse"
-									>{{content.showLess}}</button>
+									>{{content.showLess}}</b-button>
 								</div>
 
 								<div v-if="!expanded && $root.meetup.stuff"
 									class="company-materials">
-									<button v-if="$root.meetup.stuff.length"
-										class="button is-primary is-primary-changeable--bg is-fullwidth invert-color"
+									<b-button v-if="$root.meetup.stuff.length"
+										class="is-primary is-primary-changeable--bg is-fullwidth invert-color"
 										@click="materialsModalActive = true"
-									>{{content.viewMaterials}}</button>
+									>{{content.viewMaterials}}</b-button>
 								</div>
 							</div>
 						</aside>
@@ -226,13 +226,6 @@
 			.then(this.getMeetup)
 			.then(() => {
 				this.ready = true
-
-				if(this.$root.meetup.custom_colors){
-					this.light = this.$root.meetup.color_schema.isLight
-					this.updateColorLight(this.$root.meetup.color_schema.light)
-					this.updateColorDark(this.$root.meetup.color_schema.dark)
-					this.updateColorPrimary(this.$root.meetup.color_schema.primary)
-				}
 			
 				if ( this.$root.cronMeetupSchema )
 					clearInterval(this.$root.cronMeetupSchema)
@@ -346,8 +339,7 @@
 							var videoElement = document.getElementById('videoElement');
 							var flvPlayer = flvjs.createPlayer({
 								type: 'flv',
-								// url: `https://rtmp.makeavent.com/live/${this.id}.flv`
-								url: `https://rtmp.makeavent.com/live/5f3688efeb366351cc2cfa19.flv`
+								url: `https://rtmp.makeavent.com/live/${this.$root.meetup.webinarRoom}.flv`
 							});
 							flvPlayer.attachMediaElement(videoElement);
 							flvPlayer.load();
@@ -421,101 +413,66 @@
 				if(!this.light) {
 					query = `#app .is-light-changeable, #app .is-light-changeable--color, #app .is-light-changeable--bg, #app .is-light-changeable--border-top`
 					Array.from(document.querySelectorAll(query)).map(el => {
-						el.style.backgroundColor = val
+						this.updateColors(el, val, 'light')
 					})
 				} else {
 					Array.from(document.querySelectorAll(query)).map(el => {
-						const classList = Array.from(el.classList)
-				
-						if ( classList.includes('is-dark-changeable--border-top') ) {
-							if ( classList.includes('distinct-color') )
-								el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
-							else
-								el.style.borderTop = `solid 4rem ${val}`
-						}
-						
-						if ( classList.includes('is-dark-changeable--bg') ) {
-							if ( classList.includes('distinct-color') )
-								el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
-							else
-								el.style.backgroundColor = val
-						}
-						
-						if ( classList.includes('is-dark-changeable--color') ) {
-							if ( classList.includes('distinct-color') )
-								el.style.color = pSBC(0.2, val, invertColor(val))
-							else
-								el.style.color = val
-						}
-
-						if ( classList.includes('invert-color') )
-							if ( isRGB(el.style.backgroundColor) ) 
-								el.style.color = pSBC(
-									0.4,
-									invertColor(rgbToHex(el.style.backgroundColor)),
-									tinycolor(invertColor(rgbToHex(el.style.backgroundColor))).isLight()
-										? "#FFFFFF"
-										: "#000000")
-							
-							else if ( isHEX(el.style.backgroundColor) )
-								el.style.color = pSBC(
-									0.4,
-									invertColor(el.style.backgroundColor),
-									tinycolor(invertColor(el.style.backgroundColor)).isLight()
-										? "#FFFFFF"
-										: "#000000")
+						this.updateColors(el, val, 'dark')
 					})
-				}				
+				}
+			},
+
+			updateColors (el, val, type) {
+				const classList = Array.from(el.classList)
+		
+				if ( classList.includes(`is-${type}-changeable--border-top`) ) {
+					if ( classList.includes('distinct-color') )
+						el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
+					else
+						el.style.borderTop = `solid 4rem ${val}`
+				}
+				
+				if ( classList.includes(`is-${type}-changeable--bg`) ) {
+					if ( classList.includes('distinct-color') )
+						el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
+					else
+						el.style.backgroundColor = val
+				}
+				
+				if ( classList.includes(`is-${type}-changeable--color`) ) {
+					if ( classList.includes('distinct-color') )
+						el.style.color = pSBC(0.2, val, invertColor(val))
+					else
+						el.style.color = val
+				}
+				if ( classList.includes('invert-color') )
+					if ( isRGB(el.style.backgroundColor) ) 
+						el.style.color = pSBC(
+							0.4,
+							invertColor(rgbToHex(el.style.backgroundColor)),
+							tinycolor(invertColor(rgbToHex(el.style.backgroundColor))).isLight()
+								? "#FFFFFF"
+								: "#000000")
+					
+					else if ( isHEX(el.style.backgroundColor) )
+						el.style.color = pSBC(
+							0.4,
+							invertColor(el.style.backgroundColor),
+							tinycolor(invertColor(el.style.backgroundColor)).isLight()
+								? "#FFFFFF"
+								: "#000000")
 			},
 
 			updateColorLight(val){
 				let query = `#app .is-light-changeable, #app .is-light-changeable--color, #app .is-light-changeable--bg, #app .is-light-changeable--border-top`
 
 				if(!this.light) {
-					query = `#app .is-dark-changeable--bg, #app .is-dark-changeable--color, #app .is-dark-changeable--border-top`
 					Array.from(document.querySelectorAll(query)).map(el => {
-						el.style.color = val
+						this.updateColors(el, val, 'dark')
 					})
 				} else {
 					Array.from(document.querySelectorAll(query)).map(el => {
-						const classList = Array.from(el.classList)
-				
-						if ( classList.includes('is-light-changeable--border-top') ) {
-							if ( classList.includes('distinct-color') )
-								el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
-							else
-								el.style.borderTop = `solid 4rem ${val}`
-						}
-						
-						if ( classList.includes('is-light-changeable--bg') ) {
-							if ( classList.includes('distinct-color') )
-								el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
-							else
-								el.style.backgroundColor = val
-						}
-						
-						if ( classList.includes('is-light-changeable--color') ) {
-							if ( classList.includes('distinct-color') )
-								el.style.color = pSBC(0.2, val, invertColor(val))
-							else
-								el.style.color = val
-						}
-						if ( classList.includes('invert-color') )
-							if ( isRGB(el.style.backgroundColor) ) 
-								el.style.color = pSBC(
-									0.4,
-									invertColor(rgbToHex(el.style.backgroundColor)),
-									tinycolor(invertColor(rgbToHex(el.style.backgroundColor))).isLight()
-										? "#FFFFFF"
-										: "#000000")
-							
-							else if ( isHEX(el.style.backgroundColor) )
-								el.style.color = pSBC(
-									0.4,
-									invertColor(el.style.backgroundColor),
-									tinycolor(invertColor(el.style.backgroundColor)).isLight()
-										? "#FFFFFF"
-										: "#000000")
+						this.updateColors(el, val, 'light')
 					})
 				}
 			},
@@ -581,6 +538,18 @@
 							reject('NOT_ATTENDEE')
 					})
 				})
+			}
+		},
+		watch: {
+			ready: function () {
+				setTimeout(() => {
+					if ( this.$root.meetup.custom_colors ) {
+						this.light = this.$root.meetup.color_schema.isLight
+						this.updateColorLight(this.$root.meetup.color_schema.light)
+						this.updateColorDark(this.$root.meetup.color_schema.dark)
+						this.updateColorPrimary(this.$root.meetup.color_schema.primary)
+					}
+				}, 1000)
 			}
 		},
 	}

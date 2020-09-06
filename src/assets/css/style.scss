@@ -40,12 +40,12 @@ p + p {
 body {
     background-color: #F3F3F3;
 	min-height: 100vh;
-	margin-top: 5rem;
+	min-height: calc(100vh - 80px);
 	@extend %noselect;
 }
-// main {
-	
-// }
+main {
+	margin-top: 5rem;
+}
 
 // .meetup-profile, .networking-rooms {
 // 	min-height: calc(100vh - 5rem);
@@ -508,7 +508,6 @@ body {
 // LOGIN //
 //////////////////////////////////////////
 #login {
-	margin-top: -5rem;
 	height: 100vh;
 	display: flex;
 	align-items: center;

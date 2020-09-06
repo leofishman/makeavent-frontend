@@ -18,9 +18,7 @@ export default {
     methods: {
         click(){
             this.isLoading = true
-            this.$root.mainroom_streamApp.stream.executeCommand('stopRecording', {
-                mode: "file", //recording mode, either `file` or `stream`.
-            })
+            this.$root.mainroom_streamApp.stream.executeCommand('stopRecording', 'file')
             setTimeout(() => {
                 this.isLoading = false
                 this.$emit('clicked')

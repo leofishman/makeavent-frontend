@@ -29,13 +29,14 @@ export default {
     },
     methods: {
         openDocuments(){
-            this.$buefy.modal.open({
+            let popup = this.$buefy.modal.open({
                 hasModalCard: true,
                 canCancel: true,
                 trapFocus: true,
                 component: EditDocuments,
                 parent: this
             })
+            window.EventBus.$on('MaterialsPopup:close', popup.close)
         },
         editMeetup(){
             let popup = this.$buefy.modal.open({
@@ -51,13 +52,14 @@ export default {
             window.EventBus.$on('EditMeetupForm:close', popup.close)
         },
         openDemos () {
-            this.$buefy.modal.open({
+            let popup = this.$buefy.modal.open({
                 hasModalCard: true,
                 canCancel: true,
                 trapFocus: true,
                 component: EditDemo,
                 parent: this
             })
+            window.EventBus.$on('DemoPopupForm:close', popup.close)
         }
     },
     data(){

@@ -42,4 +42,12 @@ export default {
         ? match[2]
         : null;
     },
+
+    sortArrayBy (array, property) {
+        return array.sort((x,y) => {
+            if(x[property] < y[property]) { return -1; }
+            if(x[property] > y[property]) { return 1; }
+            return 0;
+        })
+    }
 }

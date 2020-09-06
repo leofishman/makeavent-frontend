@@ -4,7 +4,7 @@
 		<p class="chat-with-title">
 			<span class="is-dark-changeable--color">
 				{{content.chatWith}}
-				<strong class="is-capitalized">{{name}}</strong>
+				<strong class="is-capitalized is-dark-changeable--color">{{name}}</strong>
 				 {{common_content.team}}</span>
 
 			<span

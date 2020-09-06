@@ -127,7 +127,7 @@ export default {
                 router.postAddScreensaver(obj)
             }
             this.loader = false
-            this.$parent.close()
+            window.EventBus.$emit('ScreenSaverPopupForm:close')
             this.submitDisabled = false
         },
         checkLink(){

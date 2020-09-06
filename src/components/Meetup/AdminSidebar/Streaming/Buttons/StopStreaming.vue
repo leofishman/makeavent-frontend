@@ -18,9 +18,7 @@ export default {
     methods: {
         click(){
             this.isLoading = true
-            this.$root.mainroom_streamApp.stream.executeCommand('stopRecording', {
-                mode: "stream", //recording mode, either `file` or `stream`.
-            })
+            this.$root.mainroom_streamApp.stream.executeCommand('stopRecording', 'stream')
             setTimeout(() => {
                 this.isLoading = false
                 this.$emit('clicked')
@@ -29,7 +27,3 @@ export default {
     }
 }
 </script>
-
-<style>
-
-</style>

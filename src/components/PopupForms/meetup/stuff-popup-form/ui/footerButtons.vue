@@ -42,6 +42,8 @@ export default {
                 }
                 
                 router.postAddStuff(data)
+
+                window.EventBus.$emit('MaterialsPopup:close')
             }
         }
     }

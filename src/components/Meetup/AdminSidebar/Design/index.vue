@@ -95,12 +95,16 @@ export default {
             this.isLight = val
         },
         openScreenSaver(){
-            this.$buefy.modal.open({
+            let popup = this.$buefy.modal.open({
                 hasModalCard: true,
                 canCancel: true,
                 trapFocus: true,
                 component: editScreenSaver,
                 parent: this
+            })
+
+            window.EventBus.$on('ScreenSaverPopupForm:close', () => {
+                popup.close()
             })
         },
         resetToDefault(){
@@ -129,27 +133,27 @@ export default {
         updateColorShema(val){
             if(val){
                 let opts = [ 'primary', 'dark', 'light' ]
-                opts.map(el => {
-                    let query = `#app .is-${el}-changeable--bg, #app .is-${el}-changeable--color, #app .is-${el}-changeable--border-top`
+                opts.map(type => {
+                    let query = `#app .is-${type}-changeable--bg, #app .is-${type}-changeable--color, #app .is-${type}-changeable--border-top`
                     
                     Array.from(document.querySelectorAll(query)).map(el => {
                         const classList = Array.from(el.classList)
                         // Border top
-                        if ( classList.includes(`is-${el}-changeable--border-top`) ) {
+                        if ( classList.includes(`is-${type}-changeable--border-top`) ) {
                             if ( classList.includes('distinct-color') )
                                 el.style.borderTop = `solid 4rem ${pSBC(0.2, val, invertColor(val))}`
                             else
                                 el.style.borderTop = `solid 4rem ${val}`
                         }
                         // Background
-                        if ( classList.includes(`is-${el}-changeable--bg`) ) {
+                        if ( classList.includes(`is-${type}-changeable--bg`) ) {
                             if ( classList.includes('distinct-color') )
                                 el.style.backgroundColor = pSBC(0.2, val, invertColor(val))
                             else
                                 el.style.backgroundColor = val
                         }
                         // Text color
-                        if ( classList.includes(`is-${el}-changeable--color`) ) {
+                        if ( classList.includes(`is-${type}-changeable--color`) ) {
                             if ( classList.includes('distinct-color') )
                                 el.style.color = pSBC(0.2, val, invertColor(val))
                             else
@@ -180,8 +184,8 @@ export default {
         },
         defaultColorShema(){   
             let opts = [ 'primary', 'dark', 'light' ]
-            opts.map(el => {
-                let query = `#app .is-${el}-changeable--bg, #app .is-${el}-changeable--color, #app .is-${el}-changeable--border-top,  .invert-color`
+            opts.map(type => {
+                let query = `#app .is-${type}-changeable--bg, #app .is-${type}-changeable--color, #app .is-${type}-changeable--border-top,  .invert-color`
                 
                 Array.from(document.querySelectorAll(query)).map(el => {
                     el.style.borderTop = ''

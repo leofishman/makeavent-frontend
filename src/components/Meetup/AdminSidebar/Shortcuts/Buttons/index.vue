@@ -1,6 +1,6 @@
 <template>
   <div class="admin-bar__shortcuts-list-buttons">
-      <start-recording 
+      <!-- <start-recording 
         v-if="!isRecording"
         @clicked="clickRecording" 
         class="admin-bar__shortcuts-btn"
@@ -9,7 +9,7 @@
         v-if="isRecording"
         @clicked="clickRecording" 
         class="admin-bar__shortcuts-btn"
-      />
+      /> -->
       <start-streaming 
         v-if="!isStreaming"
         @clicked="clickStreaming" 

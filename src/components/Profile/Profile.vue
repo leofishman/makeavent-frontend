@@ -169,14 +169,29 @@
 							<h3 class="title">{{content.mbc}}</h3>
 							<b-tabs v-model="activeTab">
 								<b-tab-item :label="$root.content.common.connected">
-									<Businesscardconected
-									v-for="(el, index) in $root.activeBusinessCards"
-									:key="index"
-									:data="el"
-									/>
+									<b-loading
+										v-if="connectedCardsLoading"
+										class="loading-overlay--dark"
+										:is-full-page="false"
+										:active="true"
+										:can-cancel="false"></b-loading>
+									<div v-if="!connectedCardsLoading">
+										<Businesscardconected
+										v-for="(el, index) in $root.activeBusinessCards"
+										:key="index"
+										:data="el"
+										/>
+									</div>
 								</b-tab-item>
 
 								<b-tab-item>
+									<b-loading
+										v-if="pendingCardsLoading"
+										class="loading-overlay--dark"
+										:is-full-page="false"
+										:active="true"
+										:can-cancel="false"></b-loading>
+
 									<template slot="header">
 										<b-icon icon="source-pull"></b-icon>
 										<span> {{$root.content.common.pending}} 
@@ -185,11 +200,13 @@
 											</b-tag> 
 										</span>
 									</template>
-									<Businesscardpending
-									v-for="(el, index) in $root.pendingCards"
-									:key="index"
-									:data="el"
-									/>
+									<div v-if="!pendingCardsLoading">
+										<Businesscardpending
+										v-for="(el, index) in $root.pendingCards"
+										:key="index"
+										:data="el"
+										/>
+									</div>
 								</b-tab-item>
 							</b-tabs>
 						</div>
@@ -237,7 +254,6 @@
 </template>
 
 <script>
-	import {api} from '@/env'
 	import axios from 'axios'
 	import Pagetitle from '@/components/Pagetitle.vue'
 	import Businesscardconected from '@/components/Profile/Businesscardconected.vue'
@@ -280,10 +296,11 @@
 			return {
 				content: this.$root.content.Profile,
 				comm_content: this.$root.content.common,
+				ready: this.ready,
+				pendingCardsLoading: true,
+				connectedCardsLoading: true,
 
 				profileParamsFocus: this.profileParamsFocus,
-				api: api,
-				ready: this.ready,
 				activeTab: 0,
 				activeTabInterview: 0,
 				
@@ -331,7 +348,7 @@
 			},
 
 			updateProfile () {
-				axios.post(api + '/login/socials_reg', {
+				axios.post(this.api + '/login/socials_reg', {
 					role: this.newRole,
 					company: this.newCompany,
 					Linkedin: this.newLinkedin,
@@ -357,7 +374,7 @@
 					let formData = new FormData();
 					formData.append('userProfilePhoto', this.newPhoto);
 
-					axios.post(`${api}/login/profilephoto`, formData, {
+					axios.post(`${this.api}/login/profilephoto`, formData, {
 						headers: { authorization: localStorage.auth }
 					})
 					.then(res => {
@@ -373,6 +390,14 @@
 					return true
 				}
 			}
+		},
+		watch: {
+			"$root.pendingCards": function () {
+				this.pendingCardsLoading = false
+			},
+			"$root.activeBusinessCards": function () {
+				this.connectedCardsLoading = false
+			},
 		},
 	}
 </script>

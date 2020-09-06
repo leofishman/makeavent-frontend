@@ -532,16 +532,6 @@ new Vue({
       return url
     },
 
-    DateComparator (a, b) {
-      if (a.time < b.time) {
-          return -1;
-      } else if (a.time > b.time) {
-          return 1;
-      } else {
-          return 0;
-      }
-    },
-
     getResourses () {
       return new Promise((resolve, reject) => {
         Axios.get(`${api}/resources?names=mediapartners,speakers,sponsors`, {
@@ -558,7 +548,7 @@ new Vue({
 
           if (this.Speakers.length > 1) {
             let flags = {}
-            this.Speakingagenda = this.Speakers.sort(this.DateComparator)
+            this.Speakingagenda = this.util.sortArrayBy(this.Speakers, 'time')
             this.Speakingagenda = this.Speakingagenda.filter(el => {
               if (flags[el.contact.name]) {
                 return false;
@@ -695,12 +685,7 @@ new Vue({
           }
         })
         .then(res => {
-          const decrypted = res.data
-          this.pendingCards = decrypted.sort((x,y) => {
-            if(x.name < y.name) { return -1; }
-            if(x.name > y.name) { return 1; }
-            return 0;
-          })
+          this.pendingCards = this.util.sortArrayBy(res.data, 'name')
           this.pendingCards.map(el => {
             if (!el.photo)
               el.photo = this.tryGetProfilePhoto(el.email)
@@ -722,12 +707,7 @@ new Vue({
           }
         })
         .then(res => {
-          const decrypted = res.data
-          this.activeBusinessCards = decrypted.sort((x,y) => {
-            if(x.name < y.name) { return -1; }
-            if(x.name > y.name) { return 1; }
-            return 0;
-          })
+          this.activeBusinessCards = this.util.sortArrayBy(res.data, 'name')
           this.activeBusinessCards.map(el => {
             if (!el.photo)
               el.photo = this.tryGetProfilePhoto(el.email)

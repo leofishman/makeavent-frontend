@@ -48,6 +48,9 @@
 		.profile-main {
 			.b-tabs {
 				@extend %b-tabs;
+				.tab-content {
+					min-height: 75px;
+				}
 			}
 			.profile-top {
 				margin-bottom: 60px;
@@ -192,6 +195,9 @@
 			}
 			.b-tabs {
 				@extend %b-tabs;
+				.tab-content {
+					min-height: 75px;
+				}
 			}
 			.business-card {
 				margin-bottom: 40px;

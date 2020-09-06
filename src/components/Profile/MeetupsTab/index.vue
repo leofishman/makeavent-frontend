@@ -79,7 +79,10 @@ export default {
         },
 
         async filterMeetupsOnlyAdminStatus () {
+            this.ready             = false
             this.filteredOnlyAdmin = []
+            this.loadedMeetups     = []
+
             const promises = this.$root.profile.meetups.map(async meetupId => new Promise(async (resolve, reject) => {
                 const admins = await this.getMeetup(meetupId)
                 if ( admins.includes(this.$root.profile._id) ) {
@@ -89,6 +92,10 @@ export default {
                 resolve(true)
             }))
             await Promise.all(promises)
+
+            this.filteredOnlyAdmin = this.util.sortArrayBy(this.filteredOnlyAdmin, 'meetup_name')
+            this.loadedMeetups     = this.util.sortArrayBy(this.loadedMeetups, 'meetup_name')
+
             this.ready = true
         },
 
@@ -104,8 +111,9 @@ export default {
         }
     },
     watch: {
-        "$root.profile" : async function () {
-            this.filterMeetupsOnlyAdminStatus()
+        "$root.profile" : async function (_old, _new) {
+            if ( !_old.meetups.equals(_new.meetups) )
+                this.filterMeetupsOnlyAdminStatus()
         }
     },
 }

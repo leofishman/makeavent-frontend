@@ -42,6 +42,8 @@ export default {
                 }
                 
                 router.postAddDemos(data)
+
+                window.EventBus.$emit('DemoPopupForm:close')
             }
         }
     }

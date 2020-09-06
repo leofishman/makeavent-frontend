@@ -15,31 +15,34 @@
                     
                     <div :style="{
                         backgroundColor: meetup.screensaverColor,
-                        opacity: meetup.screensaverColor ? 0.6 : 0
+                        opacity: meetup.screensaverColor ? 0.6 : 1
                     }" class="scr-saver-fileld__bg"></div>
-                    <video v-if="meetup.screensaver" class="screensaver" autoplay muted loop>
+                    <!-- <video v-if="meetup.screensaver" class="screensaver" autoplay muted loop>
                         <source :src="meetup.screensaver" type="video/mp4">
-                    </video>
+                    </video> -->
+                    <!-- <div :id="`${id}_screensaver_video`" class="screensaver"></div> -->
+                    
+                    <iframe class="screensaver" :id="`${id}_screensaver_video`" :src="meetup.screensaver + '?enablejsapi=1&autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&loop=1'" frameborder="0"></iframe>
                 </div>
 
                 <div v-if="!showScreensaver && $root.showScreenButtons" class="screen-buttons">
                     <div class="columns nopadding">
-                        <div v-if="!$root[id].video" class="column">
+                        <div v-if="$root[id].video" class="column">
                             <div @click="toggleVideo()" class="screen-buttons-image-wrap">
                                 <img src="@/assets/img/VideoStream/camera.svg" alt="">
                             </div>
                         </div>
-                        <div v-if="$root[id].video" class="column">
+                        <div v-if="!$root[id].video" class="column">
                             <div @click="toggleVideo()" class="screen-buttons-image-wrap">
                                 <img src="@/assets/img/VideoStream/cameraoff.svg" alt="">
                             </div>
                         </div>
-                        <div v-if="!$root[id].mic" class="column">
+                        <div v-if="$root[id].mic" class="column">
                             <div @click="toggleAudio()" class="screen-buttons-image-wrap">
                                 <img src="@/assets/img/VideoStream/mic.svg" alt="">
                             </div>
                         </div>
-                        <div v-if="$root[id].mic" class="column">
+                        <div v-if="!$root[id].mic" class="column">
                             <div @click="toggleAudio()" class="screen-buttons-image-wrap">
                                 <img src="@/assets/img/VideoStream/micoff.svg" alt="">
                             </div>
@@ -253,17 +256,8 @@ export default {
                 })
 
                 this.$root[`${this.id}_streamApp`].on('MavModifiers:ready', async () => {
-                    this.showScreensaver = false;
-
-                    if (!once) {
-                        if ( !await this.$root[`${this.id}_streamApp`].stream.isAudioMuted() )
-                            this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleAudio');
-
-                        if ( !await this.$root[`${this.id}_streamApp`].stream.isVideoMuted() )
-                            this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleVideo')
-                        
-                        once = true
-                    }
+                    this.$root[this.id].mic = !await this.$root[`${this.id}_streamApp`].stream.isAudioMuted()
+                    this.$root[this.id].video = !await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
 
                     if ( !avatarPic ) {
                         this.$root[`${this.id}_streamApp`].stream.executeCommand('avatarUrl', this.api + this.$root.profile.photo)
@@ -273,10 +267,12 @@ export default {
 
                 this.$root[`${this.id}_streamApp`].connect()
 
-                this.$root[this.id].mic = !await this.$root[`${this.id}_streamApp`].stream.isAudioMuted()
-                this.$root[this.id].video = !await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
-
-                this.$root[`${this.id}_streamApp`].stream.addEventListener('participantJoined', (e) => {
+                this.$root[`${this.id}_streamApp`].stream
+                .addEventListener('videoConferenceJoined', (e) => {
+                    this.showScreensaver = false
+                })
+                this.$root[`${this.id}_streamApp`].stream
+                .addEventListener('participantJoined', (e) => {
                     if ( this.$root[`${this.id}_streamApp`].type == 'speaker' )
                         this.$root[`${this.id}_streamApp`].stream.executeCommand('changeRole', {
                             id: e.id,

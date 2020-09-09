@@ -74,10 +74,10 @@ export default {
             
             if ( this.userType != "admin" ) {
                 const isInBackstage  = msg.backstage.participants.includes(this.$root.profile._id)
-                const isInmainroom = msg.mainroom.participants.includes(this.$root.profile._id)
+                const isInmainroom = msg.frontstage.participants.includes(this.$root.profile._id)
 
                 this.backstage  = msg.backstage
-                this.mainroom = msg.mainroom
+                this.mainroom = msg.frontstage
 
                 if ( isInBackstage ) {
                     this.id = "backstage"
@@ -341,7 +341,8 @@ export default {
                 this.joiningMainroom  = false
             }
 
-            document.getElementById(this.jitsiTarget).remove()
+            try { document.getElementById(this.jitsiTarget).remove() }
+            catch (e) {}
                 
             this.jitsiTarget   = `jitsi-modal-target-${this.id}`
             this.defaultLoader = false
@@ -350,10 +351,11 @@ export default {
         },
         '$root.meetup': function () {
             if ( this.iframe )
-                this.iframe.contentWindow.postMessage({
-                    type: "parent_app_data:meetup",
-                    data: this.$root.meetup
-                }, '*');
+                if ( this.iframe.contentWindow )
+                    this.iframe.contentWindow.postMessage({
+                        type: "parent_app_data:meetup",
+                        data: this.$root.meetup
+                    }, '*');
         }
     },
     mounted () {

@@ -22,10 +22,10 @@
                     </video> -->
                     <!-- <div :id="`${id}_screensaver_video`" class="screensaver"></div> -->
                     
-                    <iframe class="screensaver" :id="`${id}_screensaver_video`" :src="meetup.screensaver + '?enablejsapi=1&autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&loop=1'" frameborder="0"></iframe>
+                    <iframe v-if="$root.meetup.screensaver" class="screensaver" :id="`${id}_screensaver_video`" :src="meetup.screensaver + '?enablejsapi=1&autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&loop=1'" frameborder="0"></iframe>
                 </div>
 
-                <div v-if="!showScreensaver && $root.showScreenButtons" class="screen-buttons">
+                <!-- <div v-if="!showScreensaver && $root.showScreenButtons" class="screen-buttons">
                     <div class="columns nopadding">
                         <div v-if="$root[id].video" class="column">
                             <div @click="toggleVideo()" class="screen-buttons-image-wrap">
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div :id="jitsiTarget" class="card-image"></div>
             </div>
@@ -256,8 +256,8 @@ export default {
                 })
 
                 this.$root[`${this.id}_streamApp`].on('MavModifiers:ready', async () => {
-                    this.$root[this.id].mic = !await this.$root[`${this.id}_streamApp`].stream.isAudioMuted()
-                    this.$root[this.id].video = !await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
+                    // this.$root[this.id].mic = !await this.$root[`${this.id}_streamApp`].stream.isAudioMuted()
+                    // this.$root[this.id].video = !await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
 
                     if ( !avatarPic ) {
                         this.$root[`${this.id}_streamApp`].stream.executeCommand('avatarUrl', this.api + this.$root.profile.photo)
@@ -294,27 +294,27 @@ export default {
             }, 500)
         },
 
-        async toggleAudio () {
-            this.$root[this.id].mic = this.$root[this.id].mic ? false : true
-            this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleAudio')
-        },
+        // async toggleAudio () {
+        //     this.$root[this.id].mic = this.$root[this.id].mic ? false : true
+        //     this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleAudio')
+        // },
         
-        async toggleVideo () {
-            if ( !this.$root[this.id].toggleLoading ) {
-                this.$root[this.id].toggleLoading = true
-                let after;
-                let before = await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
-                this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleVideo')
+        // async toggleVideo () {
+        //     if ( !this.$root[this.id].toggleLoading ) {
+        //         this.$root[this.id].toggleLoading = true
+        //         let after;
+        //         let before = await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
+        //         this.$root[`${this.id}_streamApp`].stream.executeCommand('toggleVideo')
 
-                setTimeout(async () => {
-                    after = await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
-                    if ( after != before ) {
-                        this.$root[this.id].video = this.$root[this.id].video ? false : true
-                        this.$root[this.id].toggleLoading = false
-                    }
-                }, 1000)
-            }
-        }
+        //         setTimeout(async () => {
+        //             after = await this.$root[`${this.id}_streamApp`].stream.isVideoMuted()
+        //             if ( after != before ) {
+        //                 this.$root[this.id].video = this.$root[this.id].video ? false : true
+        //                 this.$root[this.id].toggleLoading = false
+        //             }
+        //         }, 1000)
+        //     }
+        // }
     },
     watch: {
         '$root.meetup.status': function () {

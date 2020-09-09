@@ -108,7 +108,23 @@
 									:meetup="$root.meetup"
 									_id="mainroom"
 								/>
-								<video v-else id="videoElement" autoplay="true" muted="muted"></video>
+								<div v-else class="video-stream ">
+									<div v-if="!videoReady" class="box">
+										<div class="content-box">
+											<div class="content">
+												<span>{{content.willStartIn}}</span> {{clock}}
+											</div>
+											
+											<div :style="{
+												backgroundColor: $root.meetup.screensaverColor,
+												opacity: $root.meetup.screensaverColor ? 0.6 : 1
+											}" class="scr-saver-fileld__bg"></div>
+											
+											<iframe v-if="$root.meetup.screensaver" class="screensaver" :id="`${id}_screensaver_video`" :src="$root.meetup.screensaver + '?enablejsapi=1&autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&loop=1'" frameborder="0"></iframe>
+										</div>
+									</div>
+									<video preload="none" id="videoElement" style="height:0px" allowfullscreen></video>
+								</div>
 							</div>
 
 							<h1 class="meetup-title is-dark-changeable--color" v-html="$root.meetup.meetup_name"></h1>
@@ -221,11 +237,14 @@
 		},
 		data () {			
 			/* wait until token and sponsors ready*/
+
 			this.$root.check('usertype')
 			.then(this.isMeetupParticipant)
 			.then(this.getMeetup)
 			.then(() => {
 				this.ready = true
+
+        		this.countdown(this.$root.meetup.startDate)
 			
 				if ( this.$root.cronMeetupSchema )
 					clearInterval(this.$root.cronMeetupSchema)
@@ -274,10 +293,55 @@
 				speakers: [],
 
 				videoReady: false,
+				renderVideoOnce: false,
 				light: false,
+				clock: this.clock,
+				dotsGoingUp: true
 			}
 		},
 		methods: {
+			countdown (time) {
+				const self = this
+				const countDownDate = new Date(time).getTime();
+
+				const x = setInterval(function() {
+					const now = new Date().getTime();
+					const distance = countDownDate - now;
+
+					const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+					const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+					const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+					self.clock = days + "D " + hours + "H "
+					+ minutes + "M " + seconds + "S ";
+
+					// If the count down is finished, write some text
+					if (distance < 0) {
+						clearInterval(x);
+						self.content.willStartIn = 'Starting'
+						self.clock = ''
+						self.dotdot()
+					}
+				}, 1000);
+			},
+
+			dotdot () {
+				const self = this
+				var dots = window.setInterval( function() {
+					if ( self.dotsGoingUp ) 
+						self.clock += ".";
+					else {
+						self.clock = ""
+						if ( self.clock === "")
+							self.dotsGoingUp = true;
+					}
+					if ( self.clock.length > 2 )
+						self.dotsGoingUp = false;
+
+				}, 1000);
+			},
+			
 			defineHowToRender () {
 				if ( this.$root.meetup.speakers.filter(el => el._id == this.$root.profile._id).length )
 					return 'speaker'
@@ -331,25 +395,27 @@
 			},
 
 			renderRtmpVideo () {
-				let timer = setInterval(() => {
-					if ( document.getElementById('videoElement') ) try {
-						clearInterval(timer)
+				setTimeout(() => {
+					const videoElement = document.getElementById('videoElement');
+					if ( videoElement ) try {
 						if (!this.videoReady && flvjs.isSupported() && this.defineHowToRender() == 'basic') {
-							this.videoReady = true
-							var videoElement = document.getElementById('videoElement');
 							var flvPlayer = flvjs.createPlayer({
 								type: 'flv',
 								url: `https://rtmp.makeavent.com/live/${this.$root.meetup.webinarRoom}.flv`
 							});
-							flvPlayer.attachMediaElement(videoElement);
-							flvPlayer.load();
-							flvPlayer.play();
+
+							flvPlayer.attachMediaElement(videoElement)
+							flvPlayer.load()
+							flvPlayer.play().then(() => {
+								this.videoReady = true
+								videoElement.style.height = 'auto'
+							})
 						}
 					}
 					catch (e) {
 						console.log(e);
 					}
-				})
+				}, 1000)
 			},
 
 			getMeetup () {
@@ -363,7 +429,10 @@
 					.then(res => {
 						this.$root.meetup = res.data.meetup
 
-						this.renderRtmpVideo()
+						if ( !this.renderVideoOnce ) {
+							this.renderVideoOnce = true
+							this.renderRtmpVideo()
+						}
 
 						if (!window.io.query.project) {
 							window.io = VueSocketIO(socket, {

@@ -61,10 +61,12 @@ const sponsorbooth = {
 const meetup = {
     speaker: [
         'fullscreen', 'sharedvideo',
-        'microphone', 'camera', 'desktop'
-        // , 'tileview'
+        'microphone', 'camera', 'desktop',
+        'tileview'
     ],
-    moderator: [],
+    moderator: ['fullscreen', 'sharedvideo',
+        'microphone', 'camera', 'desktop',
+        'tileview', 'settings' ],
     basic: [
         'raisehand'
     ]
@@ -75,9 +77,7 @@ const networkingroom = {
         'fullscreen', 'microphone', 'camera', 'desktop', 'tileview', 'sharedvideo'
     ],
     moderator: [
-        'mute-everyone', 'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
-        'fodeviceselection', 'hangup', 'profile', 'settings', 'recording',
-        'raisehand', 'videoquality', 'invite', 'stats', 'e2ee', 'security'
+        'fullscreen', 'microphone', 'camera', 'desktop', 'tileview', 'sharedvideo'
     ],
     basic: [
         'raisehand'

@@ -107,7 +107,8 @@ export default {
         showLess: "Show less",
         speakers: "Speakers",
         backstage: "Backstage",
-        mainRoom: "Main Room"
+        mainRoom: "Main Room",
+        willStartIn: "Meetup will start in ",
     },
 
     DragableJitsi: {

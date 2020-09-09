@@ -14,7 +14,9 @@
 			<div class="search-container">
 				<b-input :placeholder="content.searchPlaceholder" v-model="speakerSearch" type="text"></b-input>
 			</div>
-			<div v-if="speakersListReady()" class="speakers-container attendees-list">
+
+			{{speakerListReadyness}}
+			<div v-if="speakerListReadyness" class="speakers-container attendees-list">
 				<SpeakersListEm v-for="(el, index) in speakersToShow"
 					:key="index"
 					:user="el"
@@ -44,13 +46,15 @@ export default {
 		this.filterSpeakerSearch()
 		this.getBackstage()
 		this.getFrontstage()
+
 		return {
 			content: this.$root.content.BackstageControlsModal,
 			isLoading: true,
 			speakersToShow: this.Speakers,
 			speakerSearch: "",
 			backstage: {},
-			frontstage: {}
+			frontstage: {},
+			speakerListReadyness: false,
 		}
 	},
 	methods: {
@@ -58,10 +62,10 @@ export default {
 			if ( Object.keys(this.backstage).length
 				&& Object.keys(this.frontstage).length 
 				&& this.speakersToShow.length)
-					return true
+					this.speakerListReadyness = true
 					
 			else
-				return false
+				this.speakerListReadyness = false
 		},
 		getBackstage () {
 			Axios.create({
@@ -102,6 +106,14 @@ export default {
 	watch: {
 		'speakerSearch': function () {
 			this.filterSpeakerSearch()
+		},
+		'frontstage': function () {
+			console.log(this.frontstage);
+			this.speakersListReady()
+		},
+		'backstage': function () {
+			console.log(this.backstage);
+			this.speakersListReady()
 		}
 	},
 }

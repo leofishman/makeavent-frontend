@@ -40,7 +40,6 @@ p + p {
 body {
     background-color: #F3F3F3;
 	min-height: 100vh;
-	min-height: calc(100vh - 80px);
 	@extend %noselect;
 }
 main {

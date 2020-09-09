@@ -42,7 +42,7 @@ export default {
     return {
       transmition: this.$root.content.adminSidebar.items.transmition,
 
-      isSwitched: this.$root.meetup.meetupRoomOpened,
+      isSwitched: this.$root.meetup.status == 'ongoing' ? true : false,
       isLoading: false
     }
   }

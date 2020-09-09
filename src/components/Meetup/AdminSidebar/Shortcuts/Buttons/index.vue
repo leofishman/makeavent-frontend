@@ -33,7 +33,7 @@
       <BackstageSwitch
         v-if="!isBackstage"
       />
-      <ScreenButtonSwitch />
+      <!-- <ScreenButtonSwitch /> -->
   </div>
 </template>
 

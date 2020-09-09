@@ -855,7 +855,7 @@ new Vue({
       let note2 = this.content.acceptLaterNote(`${selfhost}/profile`)
 
       this.$buefy.snackbar.open({
-        duration: 1000000,
+        duration: 5000,
         message: `
           <div>
             <div style="">

@@ -7,7 +7,7 @@
 			position:'relative',
 			width: getMainFrameWidth(),
 			left: $root.openMeetupSettings
-				? '300px'
+				? '380px'
 				: '0px'
 		}" :class="$root.openMeetupSettings ? 'squeezed-container' : ''"
 		>

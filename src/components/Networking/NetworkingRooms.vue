@@ -64,7 +64,7 @@
 			</div>
 		</div>
 
-		<AdminSidebar v-if="$root.meetup" />
+		<AdminSidebar v-if="$root.isUserAdmin" />
 	</div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-	<div :style="{ height: calcHeight() }">
+	<div>
 		<nav class="navbar" role="navigation" aria-label="main navigation">
 			<div class="container is-fluid">
 				<div class="navbar-brand">
@@ -142,14 +142,6 @@ export default {
 			else
 				return 'absolute-sub-nav'
 		},
-
-		calcHeight () {
-			if ( this.$root.actionsLord.SHOW_BACK_TO_MEETUP_HALL() ) 
-				return '50px'
-
-			else
-				return ''
-		}
     },
     data() {
         return {

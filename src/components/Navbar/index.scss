@@ -38,12 +38,11 @@
 }
 .absolute-sub-nav {
 	width: 100%;
-	padding: 20px;
-	color: $white;
-	line-height: 36px;
-	position: fixed;
-	top: 6rem;
-	z-index: 30;
+	padding: 35px 0px 30px 50px;
+    color: #fff;
+    line-height: 36px;
+    position: relative;
+    z-index: 30;
 	button {
 		margin-left: 10px;
 	}

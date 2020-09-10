@@ -1,16 +1,16 @@
 <template>
-	<div>
+	<div :style="{ height: calcHeight() }">
 		<nav class="navbar" role="navigation" aria-label="main navigation">
 			<div class="container is-fluid">
 				<div class="navbar-brand">
-					<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+					<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar">
 						<span aria-hidden="true"></span>
 						<span aria-hidden="true"></span>
 						<span aria-hidden="true"></span>
 					</a>
 				</div>
 
-				<div id="navbarBasicExample" class="navbar-menu">
+				<div id="navbar" class="navbar-menu">
 					<div class="navbar-start">
 						<div v-if="$root.actionsLord.SHOW_MEETUP_SETTINGS_BUTTON()" class="navbar-item settings-button">
 							<div class="buttons">
@@ -141,6 +141,14 @@ export default {
 				return 'absolute-sub-nav--squeezed-for-left-meetup-admin-sidebar'
 			else
 				return 'absolute-sub-nav'
+		},
+
+		calcHeight () {
+			if ( this.$root.actionsLord.SHOW_BACK_TO_MEETUP_HALL() ) 
+				return '50px'
+
+			else
+				return ''
 		}
     },
     data() {

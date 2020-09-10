@@ -112,7 +112,7 @@ export default {
     },
 
     DragableJitsi: {
-        room: "Room",
+        networkingRoom: "Networking Room",
         loading: "Connecting you to the room, please wait."
     },
 

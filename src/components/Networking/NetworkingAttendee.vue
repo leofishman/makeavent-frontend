@@ -9,7 +9,7 @@
 				<div class="attendee-name" v-html="user.name"></div>
 				<div class="attendee-company" v-html="user.role + ' ' + user.company"></div>
 				
-				<small v-if="roomIdUserIn" class="attendee-room has-text-success">{{content.atRoom}} {{roomIdUserIn}} {{content.join}}</small>
+				<small v-if="roomIdUserIn" class="attendee-room has-text-success">{{content.atRoom}} {{roomIdUserIn}}</small>
 				<small v-else class="attendee-room has-text-danger">{{content.notInRoom}}</small>
 			</div>
 		</div>

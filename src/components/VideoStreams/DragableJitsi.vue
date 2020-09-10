@@ -3,7 +3,7 @@
         <b-modal :active="modalActive" has-modal-card :can-cancel="true">
             <div class="modal-card">
                 <header class="modal-card-head">
-                    <p class="modal-card-title">{{content.room}} {{room._id}}</p>
+                    <p class="modal-card-title">{{content.networkingRoom}}</p>
                     <img class="click webinar-close-icon" src="@/assets/icon/icon-close-black.svg" @click="destroyModal" />
                 </header>
                 <section id="jitsi-frame-parent" class="modal-card-body">
@@ -100,7 +100,7 @@ export default {
                         .classList
                         .replace('hide-jitsi-until-loaded', 'hide-jitsi-until-loaded--active')
 
-                    this.iframe.children[0].style.height = this.height - 65 + "px"
+                    setTimeout(() => { this.onResize(0,0, 600, 400) }, 1000)
 
                     if (this.streamApp.type != 'speaker') {
                         this.streamApp.stream.executeCommand('toggleVideo')
@@ -145,7 +145,8 @@ export default {
                     .classList
                     .replace('hide-jitsi-until-loaded--active', 'hide-jitsi-until-loaded')
 
-                this.iframe.children[0].style.height = this.height - 65 + "px"
+                // this.iframe.children[0].style.height = this.height - 65 + "px"
+                setTimeout(() => { this.onResize(0,0, 600, 400) }, 1000)
 
             } catch (e) { console.log(e) }
 

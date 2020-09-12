@@ -26,7 +26,6 @@
 </template>
 <script>
 import Axios from 'axios'
-import {api} from '@/env'
 export default {
     data() {
         this.allInterviews = []
@@ -36,7 +35,7 @@ export default {
     },
     methods: {
         getInterviews () {
-            Axios.get(`${api}/interviews/user`, {
+            Axios.get(`${this.api}/interviews/user`, {
                 headers: {
                     authorization: localStorage.auth
                 }

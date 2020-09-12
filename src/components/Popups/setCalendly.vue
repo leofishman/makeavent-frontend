@@ -16,7 +16,6 @@
     </div>
 </template>
 <script>
-import {api} from '@/env'
 import Axios from 'axios'
 
 export default {
@@ -34,7 +33,7 @@ export default {
     },
     methods: {
         send () {
-            Axios.post(api + `/login/socials_reg`, {
+            Axios.post(this.api + `/login/socials_reg`, {
                 calendly: this.calendly
             }, {
                 headers: {

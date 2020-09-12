@@ -43,7 +43,6 @@
 </template>
 
 <script>
-	import {api} from '@/env'
 	import Axios from 'axios'
 	import {MEETUP} from '@/api/endpoints'
 
@@ -61,7 +60,6 @@
 			})
 
 			return {
-				api: api,
 				canCall: this.canCall,
 				content: this.$root.content.Member
 			}

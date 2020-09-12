@@ -12,35 +12,33 @@
 </template>
 
 <script>
-	import axios from 'axios'
-	import {api} from '@/env'
-	
-	export default {
-		name: "NetworkingPreview",
-		props: {
-			room: Object,
-			roomId: Number
-		},
-		data () {
-			return {
-				api: api,
-				content: this.$root.content.NetworkingRooms,
+import axios from 'axios'
 
-				networkingPreviewLoading: false
-			}
-		},
-		methods: {
-			joinRoom () {
-				if (!this.networkingPreviewLoading) {
-					this.networkingPreviewLoading = true
-					this.$root.joinRoom(this.room)
-					setTimeout(() => {
-						this.networkingPreviewLoading = false
-					}, 4000)
-				}
+export default {
+	name: "NetworkingPreview",
+	props: {
+		room: Object,
+		roomId: Number
+	},
+	data () {
+		return {
+			content: this.$root.content.NetworkingRooms,
+
+			networkingPreviewLoading: false
+		}
+	},
+	methods: {
+		joinRoom () {
+			if (!this.networkingPreviewLoading) {
+				this.networkingPreviewLoading = true
+				this.$root.joinRoom(this.room)
+				setTimeout(() => {
+					this.networkingPreviewLoading = false
+				}, 4000)
 			}
 		}
 	}
+}
 </script>
 <style lang="scss">
 	@import "./index.scss";

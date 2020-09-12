@@ -30,8 +30,6 @@
 </template>
 
 <script>
-    import {api} from '@/env'
-
     export default {
         name: "SpeakingTitle",
         props: {
@@ -63,7 +61,6 @@
 
             return {
                 companyLogo: this.companyLogo,
-                api: api
             }
         },
         methods: {

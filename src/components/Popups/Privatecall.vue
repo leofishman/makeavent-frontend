@@ -18,7 +18,6 @@
     </div>
 </template>
 <script>
-import {api} from '@/env'
 import Axios from 'axios'
 
 export default {

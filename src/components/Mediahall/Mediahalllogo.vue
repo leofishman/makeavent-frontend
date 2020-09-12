@@ -11,8 +11,6 @@
 </template>
 
 <script>
-import {api} from '@/env'
-
 export default {
 	name: "Mediahalllogo",
 	props: {
@@ -27,7 +25,6 @@ export default {
 		
 		return {
 			ready: this.ready,
-			api: api,
 			
 			content: this.$root.content.Mediahall
 		}

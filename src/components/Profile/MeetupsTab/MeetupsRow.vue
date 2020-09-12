@@ -27,7 +27,6 @@
 </template>
 <script>
 import {MEETUP} from '@/api/endpoints'
-import {api} from '@/env'
 import Axios from 'axios'
 import EditForm from '@/components/PopupForms/meetup/edit-form/'
 
@@ -39,7 +38,6 @@ export default {
     },
     data() {
         return {
-            api: api,
             content: this.$root.content.ProfileMeetupsTabs.MeetupsRow,
             global_content: this.$root.content.common,
 

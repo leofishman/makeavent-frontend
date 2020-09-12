@@ -23,7 +23,6 @@
 
 <script>
 import Axios from 'axios'
-import {api} from '@/env'
 
 export default {
 	name: "Newstory",

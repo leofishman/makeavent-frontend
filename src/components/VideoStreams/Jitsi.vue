@@ -60,7 +60,6 @@ import Axios       from 'axios'
 import VueSocketIO from 'socket.io-client'
 import {MEETUP}    from '@/api/endpoints'
 import jitsi       from '@/api/jitsi'
-import {api, STAGES_MANAGER_HOST, STAGES_MANAGER_PATH} from '@/env'
 
 export default {
     name: "JitsiStream",

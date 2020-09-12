@@ -12,15 +12,9 @@
 </template>
 
 <script>
-import {api} from '@/env'
 import './index.scss'
 export default {
     name: "Noaccess",
-    data() {
-        return {
-            api: api
-        }
-    },
 }
 </script>
 <style lang="scss">

@@ -31,7 +31,6 @@
 </template>
 <script>
 import Axios from 'axios'
-import {api} from '@/env'
 import {MEETUP} from '@/api/endpoints'
 import SpeakersListEm from './components/SpeakersListEm.vue'
 export default {

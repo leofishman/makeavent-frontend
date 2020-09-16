@@ -25,18 +25,6 @@
 									<img :src="$root.meetup.image">
 								</figure>
 
-								<ul class="list-network">
-									<li v-if="$root.meetup.website" v-on:click="openAndTrack($root.meetup.website)">
-										<span>
-											<img src="@/assets/img/socials/website.svg" :alt="commonContent.Website">
-										</span>
-									</li>
-									<li v-for="(el, index) in $root.meetup.socials" :key="index" v-on:click="openAndTrack(el.link)">
-										<span v-if="el">
-											<img :src="`@/assets/icon/icon-${el.name.toLowerCase()}.svg`">
-										</span>
-									</li>
-								</ul>
 								<div class="company-demo">
 									<b-button v-if="$root.meetup.demo.length"
 										class="play-demo is-primary is-primary-changeable--bg invert-color"
@@ -128,7 +116,54 @@
 							</div>
 
 							<h1 class="meetup-title is-dark-changeable--color" v-html="$root.meetup.meetup_name"></h1>
-							<div class="meetup-description is-dark-changeable--color" v-html="$root.meetup.meetup_topic"></div>
+							<!-- <div class="meetup-description is-dark-changeable--color" v-html="$root.meetup.meetup_topic"> -->
+							<div class="meetup-description is-dark-changeable--color">
+								<div class="columns">
+									<div class="column">
+										<div class="fas-meetup-img-wrapper--fas">
+											<img src="@/assets/FAS_MEETUP/fas.png" alt="" class="fas-meetup-img--fas">
+										</div>
+										<ul class="list-network">
+											<li v-on:click="openAndTrack($root.meetup.website)">
+												<span>
+													<img src="@/assets/img/socials/website.svg" :alt="commonContent.Website">
+												</span>
+											</li>
+											<li v-for="(el, index) in fas_socials" :key="index" v-on:click="openAndTrack(el.link)">
+												<span v-if="el">
+													<img :src="ln">
+												</span>
+											</li>
+										</ul>
+										<div style="margin-top:20px">
+											FAS offers a full scale of advisory and venture building services for SMBs with in-depth knowledge of Asian, European, and North American markets and understanding of Blockchain and Fintech technologies.<br>
+											FAS also bridges the gap in the VC field by helping promising tech startups to find a product-market fit, access investments and required resources. 
+										</div>
+									</div>
+									<div class="column">
+										<div class="fas-meetup-img-wrapper--futureblock">
+											<img src="@/assets/FAS_MEETUP/futureblock.png" class="fas-meetup-img" alt="">
+										</div>
+										<ul class="list-network">
+											<li v-on:click="openAndTrack($root.meetup.website)">
+												<span>
+													<img src="@/assets/img/socials/website.svg" :alt="commonContent.Website">
+												</span>
+											</li>
+											<li v-for="(el, index) in future_socials" :key="index" v-on:click="openAndTrack(el.link)">
+												<span v-if="el">
+													<img :src="ln">
+												</span>
+											</li>
+										</ul>
+										<div style="margin-top:20px">
+											FutureBlock incubates and invests in Blockchain startups with proven business models. <br>
+											FutureBlock provides deep operational support to its startups and helps them build market-leading Blockchain companies.<br>
+											The company builds Blockchain companies by making early-stage investments, running unique acceleration programs for each startup, and ensuring startups’ growth strategy.
+										</div>
+									</div>
+								</div>
+							</div>
 
 							<div class="speakers-container columns is-multiline member-clasic">
 								<div class="speakers-title is-dark-changeable--color">
@@ -296,7 +331,18 @@
 				renderVideoOnce: false,
 				light: false,
 				clock: this.clock,
-				dotsGoingUp: true
+				dotsGoingUp: true,
+
+				fas_socials: [{
+					name: "instagram",
+					link: "https://www.linkedin.com/company/fintech-advisory/"
+				}],
+				future_socials: [{
+					name: "Linkedin",
+					link: "https://www.linkedin.com/company/futureblock/"
+				}],
+
+				ln: require('../../assets/icon/icon-linkedin.svg')
 			}
 		},
 		methods: {
@@ -626,4 +672,39 @@
 </script>
 <style lang="scss">
 @import "./index.scss";
+.fas-meetup-img-wrapper {
+	display: block;
+	margin: auto;
+	margin-bottom: auto;
+	margin-bottom: 20px;
+	padding: 30px;
+	border-radius: 50%;
+	height: 150px;
+	width: 150px;
+
+	&--futureblock {
+		@extend .fas-meetup-img-wrapper;
+		background: #353535;
+	}
+
+	&--fas {
+		@extend .fas-meetup-img-wrapper;
+		padding: 0px;
+	}
+
+	.fas-meetup-img {
+		position: relative;
+		transform: translate(-50%, -50%);
+		top: 50%;
+		left: 50%;
+
+		&--fas {
+			@extend .fas-meetup-img;
+			object-fit: cover;
+			border-radius: 50%;
+			width: 150px;
+			height: 150px;
+		}
+	}
+}
 </style>

@@ -5,6 +5,9 @@
 
 #networking-rooms {
 	margin-top: 5rem;
+	.navbar {
+		position: fixed !important;
+	}
 	.section-networking-rooms {
 		padding: 0px 1.5rem;
 	}

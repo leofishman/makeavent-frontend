@@ -164,7 +164,7 @@
 									</div>
 								</div>
 							</div>
-							<div v-else class="meetup-description is-dark-changeable--color" v-html="$root.meetup.meetup_description"></div>
+							<div v-else class="meetup-description is-dark-changeable--color" v-html="$root.meetup.meetup_topic"></div>
 
 							<div class="speakers-container columns is-multiline member-clasic">
 								<div class="speakers-title is-dark-changeable--color">

@@ -395,9 +395,10 @@
 			},
 
 			renderRtmpVideo () {
-				setTimeout(() => {
+				let rtmpTimer = setInterval(() => {
 					const videoElement = document.getElementById('videoElement');
-					if ( videoElement ) try {
+					if ( videoElement && flvjs) try {
+						clearInterval(rtmpTimer)
 						if (!this.videoReady && flvjs.isSupported() && this.defineHowToRender() == 'basic') {
 							var flvPlayer = flvjs.createPlayer({
 								type: 'flv',
@@ -415,7 +416,7 @@
 					catch (e) {
 						console.log(e);
 					}
-				}, 1000)
+				}, 100)
 			},
 
 			getMeetup () {

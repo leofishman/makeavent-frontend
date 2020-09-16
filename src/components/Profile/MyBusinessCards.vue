@@ -72,7 +72,6 @@
 </template>
 <script>
 import Axios from 'axios'
-import {api} from '@/env'
 export default {
     data() {
         window.EventBus.$on('close-overlay-by-id', (id) => {
@@ -81,7 +80,6 @@ export default {
 
         return {
             overlays: [],
-            api: api
         }
     },
     methods: {

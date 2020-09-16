@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import {api} from '@/env' 
 export default {
 	name: "Mediapartnerrow",
 	props: {
@@ -28,7 +27,6 @@ export default {
 	data () {
 		return {
 			content: this.$root.content.common,
-			api: api
 		}
 	}
 }

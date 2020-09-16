@@ -22,7 +22,6 @@
 </template>
 <script>
 import Axios from 'axios'
-import {api} from '@/env'
 import WebinarSponsors from '@/components/Modals/WebinarSponsors'
 import SpeakingTitleCompanySpeaker from '@/components/Modals/SpeakingTitleCompanySpeaker'
 
@@ -81,7 +80,7 @@ export default {
                     password: this.data.password
                 }
 
-                Axios.get(`${api}/webinars/connectionjs`, {
+                Axios.get(`${this.api}/webinars/connectionjs`, {
                     params,
                     headers: {
                         authorization: localStorage.auth

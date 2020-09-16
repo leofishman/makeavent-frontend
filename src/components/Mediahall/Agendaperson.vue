@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import {api} from '@/env'
 export default {
 	name: "Agendaperson",
 	props: {
@@ -38,7 +37,6 @@ export default {
         })
 
 		return {
-			api: api,
 			companyLogo: this.companyLogo
 		}
 	},

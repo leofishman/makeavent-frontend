@@ -20,7 +20,6 @@
 <script>
 import Agendarow from '@/components/Mediahall/Agendarow.vue'
 import Axios from 'axios'
-import {api} from '@/env'
 
 export default {
 	name: "OngoinInterviews",
@@ -44,7 +43,7 @@ export default {
 	},
 	methods: {
 		getOngoinInterviews () {
-			Axios.get(`${api}/interviews/getByType?type=interview&status=ongoing`).then(res => {
+			Axios.get(`${this.api}/interviews/getByType?type=interview&status=ongoing`).then(res => {
 				const decrypted = res.data
 				if (decrypted.length) {
 					this.interviews = decrypted

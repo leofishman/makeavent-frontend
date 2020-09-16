@@ -20,7 +20,6 @@
 <script>
 import Interviewrow from '@/components/Mediahall/Interviewrow.vue'
 import Axios from 'axios'
-import {api} from '@/env'
 
 export default {
 	name: "UpcommingInterviews",
@@ -44,7 +43,7 @@ export default {
 	},
 	methods: {
 		getUpcommingInterviews () {
-			Axios.get(`${api}/interviews/getByType?type=webinar&status=upcomming`).then(res => {
+			Axios.get(`${this.api}/interviews/getByType?type=webinar&status=upcomming`).then(res => {
 				const decrypted = res.data
 				if (decrypted.length) {
 					this.interviews = decrypted

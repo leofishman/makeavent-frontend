@@ -75,7 +75,6 @@
 	import Pagetitle from '@/components/Pagetitle.vue';
 	import Mediapartnerrow from '@/components/Mediapartnerbooth/Mediapartnerrow.vue'
 
-	import {api} from '@/env'
 	import Axios from 'axios'
 
 	export default {
@@ -106,7 +105,7 @@
 				this.website = this.mediaCompany.website
 				this.socials = this.mediaCompany.socials
 				this.contacts = this.mediaCompany.contacts
-				this.logo = api + this.mediaCompany.logo
+				this.logo = this.api + this.mediaCompany.logo
 
 				this.ready = true
 
@@ -139,7 +138,7 @@
 		methods: {
 			getInterviewByMedia () {
 				return new Promise((resolve, reject) => {
-					Axios.get(`${api}/webinars?name=interviewbooth${this.name.toLowerCase()}`)
+					Axios.get(`${this.api}/webinars?name=interviewbooth${this.name.toLowerCase()}`)
 					.then(res => {
 						const decrypted = res.data
 						this.interview = decrypted

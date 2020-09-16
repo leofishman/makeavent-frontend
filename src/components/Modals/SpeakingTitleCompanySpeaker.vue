@@ -15,64 +15,61 @@
 </template>
 
 <script>
-    import {api} from '@/env'
+export default {
+    name: "SpeakingTitleCompanySpeaker",
+    props: {
+        webinarName: String,
+        company: Object,
+        speakingData: Object
+    },
+    data () {
+        this.type = ""
+        this.haveBooth = ""
+        let self = this
+        this.companyLogo = ""
 
-    export default {
-        name: "SpeakingTitleCompanySpeaker",
-        props: {
-            webinarName: String,
-            company: Object,
-            speakingData: Object
-        },
-        data () {
-            this.type = ""
-            this.haveBooth = ""
-            let self = this
-            this.companyLogo = ""
+        let timer = setInterval(() => {
+            if (self.company) {
+                self.$root.tryGetCompanyLogo(self.company.name).then(el => {
+                    self.companyLogo = el
+                })
+                clearInterval(timer)
+                self.$root.defineBoothType(toUp(self.company.name))
+                .then(type => {
+                    if (type) {
+                        self.haveBooth = true
+                        self.type = type
+                    }
+                })
+            }
+        }, 100)
 
-            let timer = setInterval(() => {
-                if (self.company) {
-                    self.$root.tryGetCompanyLogo(self.company.name).then(el => {
-                        self.companyLogo = el
-                    })
-                    clearInterval(timer)
-                    self.$root.defineBoothType(toUp(self.company.name))
-                    .then(type => {
-                        if (type) {
-                            self.haveBooth = true
-                            self.type = type
-                        }
-                    })
-                }
-            }, 100)
-
-            return {
-                companyLogo: this.companyLogo,
-                api: api
+        return {
+            companyLogo: this.companyLogo,
+        }
+    },
+    methods: {
+        navToPage () {
+            this.$root.openPage(this.type, toUp(this.company.name))
+        }
+    },
+    watch: {
+        company: function () {
+            if (this.company) {
+                this.$root.tryGetCompanyLogo(this.company.name).then(el => {
+                    this.companyLogo = el
+                })
+                this.$root.defineBoothType(toUp(this.company.name))
+                .then(type => {
+                    if (type) {
+                        this.haveBooth = true
+                        this.type = type
+                    }
+                })
             }
-        },
-        methods: {
-            navToPage () {
-                this.$root.openPage(this.type, toUp(this.company.name))
-            }
-        },
-        watch: {
-            company: function () {
-                if (this.company) {
-                    this.$root.tryGetCompanyLogo(this.company.name).then(el => {
-                        this.companyLogo = el
-                    })
-                    this.$root.defineBoothType(toUp(this.company.name))
-                    .then(type => {
-                        if (type) {
-                            this.haveBooth = true
-                            this.type = type
-                        }
-                    })
-                }
-            }
-        },
-    }
+        }
+    },
+}
 </script>
 <style lang="scss">
 

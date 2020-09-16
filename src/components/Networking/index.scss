@@ -4,8 +4,10 @@
 @import "@/assets/css/attendee-profile.scss";
 
 #networking-rooms {
-	position: relative;
 	margin-top: 5rem;
+	.section-networking-rooms {
+		padding: 0px 1.5rem;
+	}
 	.title-page {
 		margin-top: 0;
 	}

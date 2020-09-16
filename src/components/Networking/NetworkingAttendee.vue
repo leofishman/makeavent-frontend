@@ -30,7 +30,6 @@
 
 <script>
 	import axios from 'axios'
-	import {api} from '@/env'
 	
 	export default {
 		name: "NetworkingAttendee",
@@ -40,7 +39,6 @@
 		},
 		data () {
 			return {
-				api: api,
 				content: this.$root.content.NetworkingRooms,
 
 				roomIdUserIn: 0,

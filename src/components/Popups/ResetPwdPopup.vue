@@ -16,7 +16,6 @@
     </div>
 </template>
 <script>
-import {api} from '@/env'
 import Axios from 'axios'
 
 export default {
@@ -54,7 +53,7 @@ export default {
     },
     methods: {
         sendReset () {
-            Axios.post(api + `/login/resetuserpwd`, {
+            Axios.post(this.api + `/login/resetuserpwd`, {
                 email: this.email
             })
             .then(res => {

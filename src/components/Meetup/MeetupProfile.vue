@@ -239,7 +239,7 @@
 <script>
 	import VueSocketIO from 'socket.io-client'
 	import Axios from 'axios'
-	import {api, socket} from '@/env'
+	import {socket} from '@/env'
 	import {MEETUP} from '@/api/endpoints'
 	import Storycreate from '@/components/Stories/StoryCreate.vue'
 	import socialLogos from '@/assets/img/socials'
@@ -323,7 +323,6 @@
 				quotedMessage: '',
 				quotedName: '',
 				quoteId: '',
-				api: api,
 				chat: "",
 				chatAvailable: this.chatAvailable,
 				speakers: [],

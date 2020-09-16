@@ -35,7 +35,6 @@
 <script>
 import jitsi from '@/api/jitsi'
 import Axios from 'axios'
-import {api, communitySrv} from '@/env'
 import {MEETUP} from '@/api/endpoints'
 
 export default {

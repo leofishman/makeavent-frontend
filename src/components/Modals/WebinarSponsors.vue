@@ -14,22 +14,20 @@
 </template>
 
 <script>
-    import {api} from '@/env'
-    export default {
-        name: "WebinarSponsors",
-        
-        props: {
-            data: Object,
-            showSponsor: {
-                type: Boolean,
-                default: true
-            }
-        },
-        data () {
-            return {
-                api: api,
-                content: this.$root.content.WebinarSponsors
-            }
+export default {
+    name: "WebinarSponsors",
+    
+    props: {
+        data: Object,
+        showSponsor: {
+            type: Boolean,
+            default: true
+        }
+    },
+    data () {
+        return {
+            content: this.$root.content.WebinarSponsors
         }
     }
+}
 </script>

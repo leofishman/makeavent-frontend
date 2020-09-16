@@ -197,7 +197,7 @@ new Vue({
       content: Content[this.selectedLanguage],
 
       openGlobalChat: false,
-      openMeetupSettings: true, // by default should be true
+      openMeetupSettings: false,
       isUserAdmin: false,
 
       modals: [],

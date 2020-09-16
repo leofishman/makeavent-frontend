@@ -33,7 +33,6 @@
 
 <script>
 import Axios from 'axios'
-import {api} from '@/env'
 import {MEETUP} from '@/api/endpoints'
 export default {
 	name: "SpeakersListEm",
@@ -44,7 +43,6 @@ export default {
 	},
 	data () {
 		return {
-			api: api,
 			content: this.$root.content.BackstageControlsModal,
 		}
 	},

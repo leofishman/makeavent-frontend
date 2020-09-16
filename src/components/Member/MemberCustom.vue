@@ -6,17 +6,10 @@
 </template>
 
 <script>
-	import {api} from '@/env'
-
-	export default {
-		name: "MemberCustom",
-		props: {
-			data: Object
-		},
-		data () {
-			return {
-				api: api
-			}
-		}
-	}
+export default {
+	name: "MemberCustom",
+	props: {
+		data: Object
+	},
+}
 </script>

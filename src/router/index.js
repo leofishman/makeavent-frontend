@@ -194,6 +194,14 @@ function isMeetupWithId (to) {
 }
 
 router.beforeEach((to, from, next) => {
+    if (to.query.id == "5f53a682c810aa9f7a8150bc" && to.path == "/meetup") {
+        window.location.href = '/fas_futureblock?id=5f53a682c810aa9f7a8150bc'
+    }
+
+    if (to.query.id == "5f53a682c810aa9f7a8150bc" && to.path == "/networking") {
+        window.location.href = '/fas_futureblock_networking?id=5f53a682c810aa9f7a8150bc'
+    }
+    
     if (to.meta.requiresAuth) {
         if (localStorage.auth) {
             axios.get(api + `/auth/checkAccess?path=${toUp(to.name)}`, {

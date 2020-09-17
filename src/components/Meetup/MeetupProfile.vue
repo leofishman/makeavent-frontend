@@ -124,7 +124,7 @@
 											<img src="@/assets/FAS_MEETUP/fas.png" alt="" class="fas-meetup-img--fas">
 										</div>
 										<ul class="list-network">
-											<li v-on:click="openAndTrack($root.meetup.website)">
+											<li v-on:click="openAndTrack(fas_website)">
 												<span>
 													<img src="@/assets/img/socials/website.svg" :alt="commonContent.Website">
 												</span>
@@ -145,7 +145,7 @@
 											<img src="@/assets/FAS_MEETUP/futureblock.png" class="fas-meetup-img" alt="">
 										</div>
 										<ul class="list-network">
-											<li v-on:click="openAndTrack($root.meetup.website)">
+											<li v-on:click="openAndTrack(future_website)">
 												<span>
 													<img src="@/assets/img/socials/website.svg" :alt="commonContent.Website">
 												</span>
@@ -341,6 +341,8 @@
 					name: "Linkedin",
 					link: "https://www.linkedin.com/company/futureblock/"
 				}],
+				fas_website: "https://fintech-advisory.com",
+				future_website: "https://futureblockhub.com/",
 
 				ln: require('../../assets/icon/icon-linkedin.svg')
 			}

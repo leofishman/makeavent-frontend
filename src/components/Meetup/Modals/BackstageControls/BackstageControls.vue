@@ -48,7 +48,7 @@ export default {
 		return {
 			content: this.$root.content.BackstageControlsModal,
 			isLoading: true,
-			speakersToShow: this.Speakers,
+			speakersToShow: this.$store.state.meetupForm.speakers,
 			speakerSearch: "",
 			backstage: {},
 			frontstage: {},
@@ -91,14 +91,14 @@ export default {
 		},
 		filterSpeakerSearch () {
 			if (this.speakerSearch)
-				this.speakersToShow = this.Speakers.filter(el => {
+				this.speakersToShow = this.$store.state.meetupForm.speakers.filter(el => {
 					let up = toUp(el.name)
 					let up2 = toUp(el.company)
 
 					return up.includes(toUp(this.speakerSearch)) ? el : up2.includes(toUp(this.speakerSearch)) ? el : undefined;
 				})
 			else
-				this.speakersToShow = this.Speakers
+				this.speakersToShow = this.$store.state.meetupForm.speakers
 		}
 	},
 	watch: {
@@ -106,11 +106,9 @@ export default {
 			this.filterSpeakerSearch()
 		},
 		'frontstage': function () {
-			console.log(this.frontstage);
 			this.speakersListReady()
 		},
 		'backstage': function () {
-			console.log(this.backstage);
 			this.speakersListReady()
 		}
 	},

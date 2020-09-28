@@ -6,7 +6,7 @@
 <script>
 export default {
     data () {
-        this.$router.push('/')
+        this.$router.push('/').catch(e => {})
 
         return {
 

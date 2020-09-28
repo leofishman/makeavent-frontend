@@ -80,7 +80,7 @@ export default {
     },
     methods: {
         navToReg () {
-            this.$router.push('/register')
+            this.$router.push('/register').catch(e => {})
         },
 
         login () {
@@ -107,7 +107,7 @@ export default {
                         !this.$root.profile.Telegram &&
                         !this.$root.profile.photo
                     ) {
-                        this.$router.push('/reghall')
+                        this.$router.push('/reghall').catch(e => {})
                     }
                     else                    
                     this.$router.push(`/`)

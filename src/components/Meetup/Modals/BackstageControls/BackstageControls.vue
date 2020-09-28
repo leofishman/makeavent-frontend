@@ -15,7 +15,6 @@
 				<b-input :placeholder="content.searchPlaceholder" v-model="speakerSearch" type="text"></b-input>
 			</div>
 
-			{{speakerListReadyness}}
 			<div v-if="speakerListReadyness" class="speakers-container attendees-list">
 				<SpeakersListEm v-for="(el, index) in speakersToShow"
 					:key="index"

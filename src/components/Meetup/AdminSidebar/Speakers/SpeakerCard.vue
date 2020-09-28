@@ -21,7 +21,7 @@
 <script>
 import {MEETUP} from '@/api/endpoints'
 import Axios from 'axios'
-import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   props: {
@@ -33,6 +33,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getMeetupById']),
     removeItem () {
       this.isLoading = true
       Axios.post(MEETUP.removeSpeakerFromMeetup, {
@@ -44,8 +45,8 @@ export default {
         }
       })
       .then(async res => {
-        await this.getMeetupById()
         this.isLoading = false
+        this.getMeetupById({id: this.$root.meetup._id})
       })
       .catch(res => {
         this.isLoading = false

@@ -6,7 +6,7 @@ export default {
         // getMeetupById
         async getMeetupById(ctx, meetupIdObj) {
             const meetup = await MeetupController.getMeetupById(meetupIdObj)
-            ctx.commit('updateMeetup', meetup)                 
+            ctx.commit('updateMeetup', meetup)
         },
         async toggleMeetupNetworkingRoom(ctx, meetupIdObj){
             await MeetupRouter.toggleNetworkingRoom(meetupIdObj)
@@ -15,7 +15,7 @@ export default {
         async toggleMeetupRoom(ctx, meetupIdObj){
             await MeetupRouter.toggleMeetupRoom(meetupIdObj)
             ctx.commit('toggleRoom')  
-        }
+        },
     },
     mutations: {
         // update Meetup

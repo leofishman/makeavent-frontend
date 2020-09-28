@@ -115,7 +115,7 @@ import './index.scss'
             this.disable_name = false
 
             if (!this.$root.profile) {
-                this.$router.push('/login')
+                this.$router.push('/login').catch(e => {})
             }
             else {
                 this.email = this.$root.profile.email
@@ -184,7 +184,7 @@ import './index.scss'
                     this.email = res.data.email
                 })
                 .catch(e => {
-                    this.$router.push('/login')
+                    this.$router.push('/login').catch(e => {})
                 })
             },
 

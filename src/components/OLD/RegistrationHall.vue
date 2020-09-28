@@ -132,12 +132,12 @@ export default {
                 }
             })
             .then(() => {
-                this.$router.push(`/`)
+                this.$router.push(`/`).catch(e => {})
             })
         },
 
         skip () {
-            this.$router.push('/')
+            this.$router.push('/').catch(e => {})
         }
     },
 }

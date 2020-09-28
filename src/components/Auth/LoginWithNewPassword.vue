@@ -86,7 +86,7 @@ export default {
             })
         }
         else {
-            this.$router.push('/login')
+            this.$router.push('/login').catch(e => {})
         }
 
         return {

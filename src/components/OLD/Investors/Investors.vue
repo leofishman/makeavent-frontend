@@ -49,7 +49,7 @@ export default {
                 }).catch(e => console.log(`${e} inaccessible`))
             }
             else {
-                this.$router.push('/')
+                this.$router.push('/').catch(e => {})
             }
         })
 

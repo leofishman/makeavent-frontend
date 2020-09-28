@@ -117,7 +117,7 @@
 
 							<h1 class="meetup-title is-dark-changeable--color" v-html="$root.meetup.meetup_name"></h1>
 							<!-- <div class="meetup-description is-dark-changeable--color" v-html="$root.meetup.meetup_topic"> -->
-							<div v-if="id=='5f53a682c810aa9f7a8150bc'" class="meetup-description is-dark-changeable--color">
+							<!-- <div v-if="id=='5f53a682c810aa9f7a8150bc'" class="meetup-description is-dark-changeable--color">
 								<div class="columns">
 									<div class="column">
 										<div class="fas-meetup-img-wrapper--fas">
@@ -163,14 +163,14 @@
 										</div>
 									</div>
 								</div>
-							</div>
-							<div v-else class="meetup-description is-dark-changeable--color" v-html="$root.meetup.meetup_topic"></div>
+							</div> -->
+							<div class="meetup-description is-dark-changeable--color" v-html="$root.meetup.meetup_topic"></div>
 
 							<div class="speakers-container columns is-multiline member-clasic">
 								<div class="speakers-title is-dark-changeable--color">
 									{{content.speakers}}
 								</div>
-								<div class="column" v-for="(el, index) in $root.meetup.speakers" :key="index">
+								<div class="column" v-for="(el, index) in $store.state.meetupForm.speakers" :key="index">
 									<Member :data="el"/>
 								</div>
 							</div>

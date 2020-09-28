@@ -36,6 +36,7 @@ import Axios from 'axios'
 
 import CreateNewButton from './CreateNewButton'
 import MeetupsRow from './MeetupsRow'
+import LoginWithNewPasswordVue from '../../Auth/LoginWithNewPassword.vue'
 
 export default {
     name: "Meetups",
@@ -74,6 +75,7 @@ export default {
                 })
                 .catch(err => {
                     this.$root.profile.meetups = this.$root.profile.meetups.filter(el => el != id)
+                    resolve(false)
                 })
             })
         },
@@ -85,9 +87,10 @@ export default {
 
             const promises = this.$root.profile.meetups.map(async meetupId => new Promise(async (resolve, reject) => {
                 const admins = await this.getMeetup(meetupId)
-                if ( admins.includes(this.$root.profile._id) ) {
-                    this.filteredOnlyAdmin.push(this.loadedMeetups.filter(el => el._id == meetupId)[0])
-                }
+                if (admins)
+                    if ( admins.includes(this.$root.profile._id) ) {
+                        this.filteredOnlyAdmin.push(this.loadedMeetups.filter(el => el._id == meetupId)[0])
+                    }
 
                 resolve(true)
             }))

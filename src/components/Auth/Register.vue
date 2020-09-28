@@ -132,7 +132,7 @@ export default {
     },
     methods: {
         navToLogin () {
-            this.$router.push('/login')
+            this.$router.push('/login').catch(e => {})
         },
 
         handleFileUpload () {
@@ -156,7 +156,7 @@ export default {
                 this.$root.profile = data.profile
                 localStorage.auth = res.headers.authorization
 
-                this.$router.push('/')
+                this.$router.push('/').catch(e => {})
             })
             .catch(e => {
                 this.isGlobalLoaderOpen = false

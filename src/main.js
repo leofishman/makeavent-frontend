@@ -87,6 +87,14 @@ Vue.component('Pagetitle', Pagetitle)
 Vue.component('ResetPwd', ResetPwd)
 Vue.component('vue-draggable-resizable', VueDraggableResizable)
 
+Vue.prototype.subscribeMutation = function(someMutation, someFunction) {
+  this.$store.subscribe((mutation, state) => {
+      if(mutation === someMutation){
+          someFunction(state)
+      }
+  })
+}
+
 new Vue({
   router,
   store,
@@ -171,7 +179,7 @@ new Vue({
   
     })
     .catch(e => {
-      this.$router.push('/login')
+      this.$router.push('/login').catch(e => {})
     })
 
     window.EventBus.$on('request_contact_confirmed', (data) => {
@@ -518,7 +526,7 @@ new Vue({
         })
         .catch(e => {
           if (compare(e.response.data ,"NO ACCESS"))
-            this.$router.push('/login')
+            this.$router.push('/login').catch(e => {})
         })
       })
     },
@@ -564,7 +572,7 @@ new Vue({
         })
         .catch(e => {
           if (!localStorage.auth || localStorage.auth == "undefined") {
-            this.$router.push('/login')
+            this.$router.push('/login').catch(e => {})
           }
         })
       })

@@ -201,7 +201,7 @@ export default {
     },
     methods: {
         navToLogin () {
-            this.$router.push('/login')
+            this.$router.push('/login').catch(e => {})
         },
 
         handleFileUpload () {
@@ -241,7 +241,7 @@ export default {
                         // this.updateSocials()
                         // this.updateProfilePhoto()
     
-                        this.$router.push('/')
+                        this.$router.push('/').catch(e => {})
                     })
                     .catch(e => {
                         console.log(e)

@@ -8,10 +8,11 @@
                         :Speakers="$root.meetup.speakers"
                         :parent="this"
                     />
-                    <template v-if="$store.getters.meetupFull.speakers">
+
+                    <template v-if="speakers">
                         <div class="admin-bar__speakers-cards">
                             <speaker-card 
-                                v-for="(item, index) of $store.getters.meetupFull.speakers"
+                                v-for="(item, index) of speakers"
                                 :key="index"
                                 :speaker="item"
                             />
@@ -30,13 +31,17 @@ import {ActiveButton} from '@/components/Global/controll/'
 
 import BackstageControls from '@/components/Meetup/AdminSidebar/BackstageControls'
 import InviteForm from '@/components/PopupForms/meetup/invite-popup-form/'
-
 import SpeakerCard from './SpeakerCard'
 
 export default {
     components: {
         ActiveButton, Item,
         SpeakerCard, InviteForm, BackstageControls
+    },
+    computed: {
+        speakers () {
+            return this.$store.state.meetupForm.speakers
+        }
     },
     methods: {
         openAddFrom(){

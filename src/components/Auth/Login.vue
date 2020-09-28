@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         navToReg () {
-            this.$router.push('/register')
+            this.$router.push('/register').catch(e => {})
         },
 
         login () {

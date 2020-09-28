@@ -116,7 +116,7 @@ export default {
 		
 		logout () {
 			localStorage.auth = ""
-			this.$router.push('/login')
+			this.$router.push('/login').catch(e => {})
 		}
     },
     data() {

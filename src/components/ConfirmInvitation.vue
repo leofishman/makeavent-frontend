@@ -19,7 +19,7 @@ export default {
             }
         })
         .then(res => {
-            window.location.pathname = '/profile'
+            this.$router.push(`/meetup?id=${res.data.id}`)
         })
         return {}
     },

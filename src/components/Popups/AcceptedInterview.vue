@@ -11,7 +11,7 @@
             <b class="media-name">{{$root.capitalizeFirstLetter(mediaName)}}</b> was notified. 
             Please click confirm to go to <b class="media-name">{{$root.capitalizeFirstLetter(mediaName)}}</b> booth.
         </div>
-         <footer class="modal-card-foot">
+        <footer class="modal-card-foot">
             <b-button type="is-primary" v-on:click="openPage()">Confirm</b-button>
         </footer>
     </div>

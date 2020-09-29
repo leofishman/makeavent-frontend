@@ -13,6 +13,12 @@ export default {
       params
     })
   },
+  getMeetupStreamingSources (params) {
+    return api().get('/meetup/get-streaming-sources', {
+      ...opts,
+      params
+    })
+  },
   postAddMeetup (params) {
     return api().post('/meetup/add-meetup', params, {
       ...opts     
@@ -58,6 +64,16 @@ export default {
       ...opts     
     })    
   },
+  addStreamingSource(params) {
+    return api().post('/meetup/add-streaming-source', params, {
+      ...opts
+    })
+  },
+  deleteStreamingSource(params) {
+    return api().post('/meetup/delete-streaming-source', params, {
+      ...opts
+    })
+  }
 }
 
 // export default function postAddPreview (params) {

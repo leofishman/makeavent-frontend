@@ -63,7 +63,7 @@ export default {
                         message: this.content.emailSent,
                         cancelText: '',
                         canCancel: false,
-                        confirmText: 'Ok',
+                        confirmText: this.$root.content.common.ok,
                         onConfirm: () => {
                             this.$parent.close()
                         }

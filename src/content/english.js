@@ -132,8 +132,8 @@ export default {
         startChat: "Start a Chat",
         join: "Join",
         searchAttendee: "Search attendee",
-        tip1: `This is the Networking room, grab a drink, turn on your camera and connect with other attendees! Remember that networking is always better if others can see your face. <strong> Don’t be shy, turn on your camera!</strong>`,
-        tip2: `Below you can request business cards from the meetup attendees and join the video chat to have a live networking with the person from the list`,
+        tip1: "This is the Networking room, grab a drink, turn on your camera and connect with other attendees! Remember that networking is always better if others can see your face. <strong> Don’t be shy, turn on your camera!</strong>",
+        tip2: 'Below you can request business cards from the meetup attendees and join the video chat to have a live networking with the person from the list',
         joinRoom: "Join Room",
         room: "Room",
         networkingRoom: "Networking Room"
@@ -349,6 +349,7 @@ export default {
         noAccount: "Don't have account? Register!",
         haveAccount: "Already have account? Login!",
         cancel: 'Cancel',
+        confirm: 'Confirm',
         save: "save",
         company: "Company",
         companyName: "Company Name",
@@ -409,7 +410,8 @@ export default {
         7: `We apologize, but this company is not a part of <b>${window.capitalizeFirstLetter(process.env.VUE_APP_APP_NAME)}</b>. <br><br>We suggest requesting business card and asking for a company website.`,
         8: 'No user with such email',
         9: 'We apologize, but meetup organizator has not opened <b>Networking Room</b> yet',
-        10: "We apologize, but this Meetup is available only after registration for it."
+        10: "We apologize, but this Meetup is available only after registration for it.",
+        11: "We apologize, but there was an error while saving streaming source."
     },
 
     VipMeetingRoom: {
@@ -475,6 +477,7 @@ export default {
             copy: "Copied"
         }
     },
+
     meetupPopupForm: {
         title: 'Create Meetup',
         stepName: {
@@ -516,6 +519,7 @@ export default {
         success: "Thank you for creating meetup with <b>Makeavent</b>. <br> It may take several seconds to prepare and it will apear in your profile.",
         error: "Oops, there is unexpected error while creating meetup for you. Please contact team."
     },
+
     groupEditPopupForm: {
         title: 'Edit Meetup',
         labels: {
@@ -542,6 +546,7 @@ export default {
             sizes: 'Recomendations px, max size, etc.'
         }
     },
+
     groupPopupForm: {
         stepName: {
             location: 'Location',
@@ -585,9 +590,11 @@ export default {
             subInterest: 'Sub interest',
         }
     },
+
     groupdemoPopupForm: {
         title: 'Group documents settings',
     },
+
     demoPopupForm: {
         title: 'Meetup documents settings',
         preview: "Preview",
@@ -604,30 +611,35 @@ export default {
             invalidLink: "Invalid Link"
         }
     },
+
     demoPopupFrom: {
         title: 'Meetup demo settings',
         labels: {
             demo: 'Set your demo'
         }
     },
+
     groupDemoPopupFrom: {
         title: 'Group demo settings',
         labels: {
             demo: 'Set your demo'
         }
     },
+
     socialsPopupFrom: {
         title: 'Please add group socials',
         labels: {
             title: 'Set your socials',
         }
     },
+
     meetupSocialsPopupFrom: {
         title: 'Please add meetup socials',
         labels: {
             title: 'Set your socials',
         }
     },
+
     screenSaverPopupFrom: {
         title: "Meetup room screensaver settings",
         create: {
@@ -642,6 +654,7 @@ export default {
         invalidLink: "Invalid Link",
         backdrop: "Backdrop"
     },
+
     inviteSpeaker: {
         title: 'Invite Speaker',
         labels: {
@@ -649,7 +662,6 @@ export default {
         }
     }, 
 
-    
     adminSidebar: {
         items: {
             title: 'Options',
@@ -716,6 +728,27 @@ export default {
                     start: 'Start Streaming',
                     stop: 'Stop Streaming',
                     add: 'Add New Source',
+                    edit: 'Edit Streaming Sources',
+                    limit: "Limit of 5 sources reached"
+                },
+                current: "Current Sources",
+                addNew: "Click Add New Source to add streaming sources.",
+                hint: "Click to view url",
+                closeHint: "Click to close",
+                addNewModal: {
+                    title: "Add new streaming source",
+                    namePlaceholder: "Enter name for streaming source, i.e. Facebook",
+                    urlPlaceholder: "Enter streaming url: rtmp://domain/your_profile",
+                    warn: "Attention!",
+                    warnDetails: "Provided url doesn't have rtmp:// schema. If given url is incorrect stream wont start.",
+                    urlLabel: "Source url",
+                    nameLabel: "Source name",
+                    nameCheckFailed: "You already have streaming source with that name",
+                    successMessage: "Streaming source successfully added"
+                },
+                editModal: {
+                    title: "Edit Streaming Sources",
+                    
                 }
             },
             transmition: {

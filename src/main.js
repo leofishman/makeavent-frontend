@@ -7,6 +7,8 @@ import Notifications from 'vue-notification'
 import Axios from 'axios'
 import Buefy from 'buefy'
 import VueDraggableResizable from 'vue-draggable-resizable'
+import InlineSvg from 'vue-inline-svg'
+
 window.EventBus = new Vue();
 
 import '@/assets/css/style.scss'
@@ -86,6 +88,7 @@ Vue.component('desktop', Desktop)
 Vue.component('Pagetitle', Pagetitle)
 Vue.component('ResetPwd', ResetPwd)
 Vue.component('vue-draggable-resizable', VueDraggableResizable)
+Vue.component('inline-svg', InlineSvg)
 
 Vue.prototype.subscribeMutation = function(someMutation, someFunction) {
   this.$store.subscribe((mutation, state) => {

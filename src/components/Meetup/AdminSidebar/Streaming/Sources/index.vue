@@ -1,25 +1,32 @@
 <template>
     <div class="admin-bar__streaming-sources">
-        <p>Current Sources</p>
-        <div class="admin-bar__streaming-sources-list">
-            <youtube/>
-            <twitch/>
-            <facebook/>
+        <p v-if="sources.length">{{content.current}}</p>
+        <p v-else>{{content.addNew}}</p>
+
+        <div>
+            <div v-for="(el, index) in sources" :key="index" class="admin-bar__streaming-source-cards">
+                <SourceCard :source="el" :showDeleteButton="false" />
+            </div>
         </div>
-    </div>  
+    </div>
 </template>
 
 <script>
-import Facebook from './Facebook'
-import Twitch from './Twitch'
-import Youtube from './Youtube'
+import SourceCard from './SourceCard'
 
 export default {
+    name: "StreamingSources",
     components: {
-        Facebook,
-        Twitch,
-        Youtube
-    }
+       SourceCard
+    },
+    computed: {
+        sources () {
+            return this.$store.state.meetupForm.streamingSources
+        },
+        content () {
+            return this.$root.content.adminSidebar.items.streaming
+        }
+    },
 }
 </script>
 

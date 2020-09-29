@@ -5,16 +5,44 @@ export default {
     actions: {
         // getMeetupById
         async getMeetupById(ctx, meetupIdObj) {
-            const meetup = await MeetupController.getMeetupById(meetupIdObj)
-            ctx.commit('updateMeetup', meetup)
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const meetup = await MeetupController.getMeetupById(meetupIdObj)
+                    ctx.commit('updateMeetup', meetup)
+                    resolve(true)
+                }
+                catch (e) { console.log(e) }
+            })
+        },
+        async getStreamingSources (ctx, meetupIdObj) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const sources = await MeetupController.getMeetupStreamingSources(meetupIdObj)
+                    ctx.commit('updateMeetupStreamSources', sources)
+                    resolve(true)
+                }
+                catch (e) { console.log(e) }
+            })
         },
         async toggleMeetupNetworkingRoom(ctx, meetupIdObj){
-            await MeetupRouter.toggleNetworkingRoom(meetupIdObj)
-            ctx.commit('toggleNetworkingRoom')  
+            return new Promise(async (resolve, reject) => {
+                try {
+                    await MeetupRouter.toggleNetworkingRoom(meetupIdObj)
+                    ctx.commit('toggleNetworkingRoom')  
+                    resolve(true)
+                }
+                catch (e) { console.log(e) }
+            })
         },
         async toggleMeetupRoom(ctx, meetupIdObj){
-            await MeetupRouter.toggleMeetupRoom(meetupIdObj)
-            ctx.commit('toggleRoom')  
+            return new Promise(async (resolve, reject) => {
+                try {
+                    await MeetupRouter.toggleMeetupRoom(meetupIdObj)
+                    ctx.commit('toggleRoom')  
+                    resolve(true)
+                }
+                catch (e) { console.log(e) }
+            })
         },
     },
     mutations: {
@@ -37,6 +65,10 @@ export default {
             state.screensaver = meetup.screensaver
             state.custom_colors = meetup.custom_colors
             state.color_schema = meetup.color_schema
+            state.streamingSources = []
+        },
+        updateMeetupStreamSources (state, streamingSources) {
+            state.streamingSources = streamingSources
         },
         updateCustomColor(state, val){
             state.custom_colors = val

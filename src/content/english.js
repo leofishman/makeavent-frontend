@@ -109,6 +109,7 @@ export default {
         backstage: "Backstage",
         mainRoom: "Main Room",
         willStartIn: "Meetup will start in ",
+        pressToStart: "Press to join Live Stream"
     },
 
     DragableJitsi: {

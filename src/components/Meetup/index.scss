@@ -48,6 +48,34 @@
 	background-attachment: fixed;
 	min-height: 100vh;
 
+	.video-stream {
+		min-height: 400px;
+	}
+
+	.play-overlay {
+		background: #d0d0d0;
+		border-radius: 5px;
+		height: 400px;
+		position: relative;
+		img {
+			display: block;
+			position: absolute;
+			transform: translate(-50%, -50%);
+			top: 50%;
+			left: 50%;
+			width: 200px;
+		}
+		p {
+			display: block;
+			position: absolute;
+			-webkit-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+			top: 80%;
+			left: 50%;
+			font-size: 20px;
+		}
+	}
+
 	.default-meetup-container--squeezed-for-left-meetup-admin-sidebar {
 		.meetup-title {
 			font-size: 42px;

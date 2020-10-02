@@ -96,7 +96,7 @@
 									:meetup="$root.meetup"
 									_id="mainroom"
 								/>
-								<div v-else class="video-stream ">
+								<div v-else class="video-stream">
 									<div v-if="!videoReady" class="box">
 										<div class="content-box">
 											<div class="content">
@@ -110,6 +110,13 @@
 											
 											<iframe v-if="$root.meetup.screensaver" class="screensaver" :id="`${id}_screensaver_video`" :src="$root.meetup.screensaver + '?enablejsapi=1&autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&loop=1'" frameborder="0"></iframe>
 										</div>
+									</div>
+									<div @click="renderRtmpVideo" class="play-overlay click" v-if="videoReady && showOverlay">
+										<img src="@/assets/play.svg" alt="">
+										<p>{{content.pressToStart}}</p>
+									</div>
+									<div class="play-overlay click" v-if="videoReady && videoLoader">
+										<b-loading class="loading-overlay--dark" style="margin:15px" :is-full-page="false" :active.sync="videoLoader" :can-cancel="false"></b-loading>
 									</div>
 									<video preload="none" id="videoElement" style="height:0px" allowfullscreen></video>
 								</div>
@@ -344,7 +351,9 @@
 				fas_website: "https://fintech-advisory.com",
 				future_website: "https://futureblockhub.com/",
 
-				ln: require('../../assets/icon/icon-linkedin.svg')
+				ln: require('../../assets/icon/icon-linkedin.svg'),
+				showOverlay: true,
+				videoLoader: false
 			}
 		},
 		methods: {
@@ -443,11 +452,14 @@
 			},
 
 			renderRtmpVideo () {
+				this.showOverlay = false
+				this.videoLoader = true
+
 				let rtmpTimer = setInterval(() => {
 					const videoElement = document.getElementById('videoElement');
 					if ( videoElement && flvjs) try {
 						clearInterval(rtmpTimer)
-						if (!this.videoReady && flvjs.isSupported() && this.defineHowToRender() == 'basic') {
+						if (flvjs.isSupported() && this.defineHowToRender() == 'basic') {
 							var flvPlayer = flvjs.createPlayer({
 								type: 'flv',
 								url: `https://rtmp.makeavent.com/live/${this.$root.meetup.webinarRoom}.flv`
@@ -456,7 +468,7 @@
 							flvPlayer.attachMediaElement(videoElement)
 							flvPlayer.load()
 							flvPlayer.play().then(() => {
-								this.videoReady = true
+								this.videoLoader = false
 								videoElement.style.height = 'auto'
 							})
 						}
@@ -480,7 +492,6 @@
 
 						if ( !this.renderVideoOnce ) {
 							this.renderVideoOnce = true
-							this.renderRtmpVideo()
 						}
 
 						if (!window.io.query.project) {
@@ -668,6 +679,12 @@
 						this.updateColorPrimary(this.$root.meetup.color_schema.primary)
 					}
 				}, 1000)
+			},
+			"$root.meetup": function () {
+				if ( this.$root.meetup.status == 'ongoing' )
+					this.videoReady = true
+				else
+					this.videoReady = false
 			}
 		},
 	}

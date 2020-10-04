@@ -6,5 +6,5 @@ module.exports = {
   devServer:{
     disableHostCheck:true
   },
-  outputDir: '/home/makeavent/frontend/builds/fas'
+  outputDir: '/home/makeavent/frontend/builds/master'
 }

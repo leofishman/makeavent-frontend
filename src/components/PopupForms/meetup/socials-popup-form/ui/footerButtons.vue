@@ -18,7 +18,7 @@ export default {
     methods: {
         submit(){
             const updated = this.$props.updated
-            const id = '5f0f6ddf769bc8055cb2b945'
+            const id = this.$root.meetup._id
             const socialsArray = this.$props.socialsArray.map(item => {
                 return {                    
                     link: item.link,
@@ -42,8 +42,15 @@ export default {
                 }
                 
                 router.postAddSocials(data)
+
+                this.close()
+                this.loading = false
+                return false
             }
-        }
+        },
+        close () {
+			window.EventBus.$emit('SocialsPopupForm:close')
+		}
     }
 }
 </script>

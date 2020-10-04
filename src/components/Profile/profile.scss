@@ -30,6 +30,7 @@
 				margin: auto;
 				img {
 					opacity: 0.5;
+					width: 1.1rem;
 				}
 			}
 		}
@@ -138,8 +139,7 @@
 					margin-bottom: 2rem;
 				}
 			}
-			.profile-bottom {
-				
+			.profile-bottom {				
 				@media screen and (min-width: $fullhd) {
 					display: flex;
 					align-items: center;

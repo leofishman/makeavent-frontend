@@ -28,6 +28,19 @@
                 </b-field>
             </div>
 
+			<div class="edit-field">
+				<h2 class="title">{{meetupPopupForm.labels.website}}</h2>         
+				<b-field>
+					<b-input 
+						:placeholder="meetupPopupForm.placeholders.website"
+						v-model="website"
+						:validation-message="meetupPopupForm.validation.name"
+						required 
+					>
+					</b-input>
+				</b-field>
+            </div>
+
             <div class="edit-field">
 				<h2 class="title">{{meetupPopupForm.labels.title}}</h2>         
 				<b-field>
@@ -202,6 +215,7 @@ export default {
 			previewFile: {},  
 			previewUplodated: false,
 			saveDisabled: false,
+			website: "",
 
 			logo: '',
 			background: '',
@@ -225,6 +239,9 @@ export default {
 		date() {
 			this.сheckAllFields()
 		},
+		website () {
+			this.сheckAllFields()
+		}
  	},
 	async mounted(){
 		const obj = {
@@ -236,6 +253,7 @@ export default {
 		this.company_name = this.$store.state.meetupForm.company_name;
 		this.company_description = this.$store.state.meetupForm.company_description
 		this.message = this.$store.state.meetupForm.message;
+		this.website = this.$store.state.meetupForm.website;
 		const date = new Date(Date.parse(this.$store.state.meetupForm.date));
 
 		this.logo = this.$store.state.meetupForm.logo;
@@ -298,13 +316,14 @@ export default {
 		},
 			
 		сheckAllFields(){
-			const name = this.name;
-			const message = this.message;
-			const company_name = this.company_name;
+			const name                = this.name;
+			const message             = this.message;
+			const company_name        = this.company_name;
 			const company_description = this.company_description;
-			const logo = this.$store.state.meetupForm.logo;   
+			const logo                = this.$store.state.meetupForm.logo;   
+			const website             = this.website
 			// if(validLocation && name && message && logo && interest && subInterest ){
-			if(name && message && logo && company_name && company_description){
+			if(name && message && logo && company_name && company_description && website){
 				this.saveDisabled = false
 				return true
 			} else {
@@ -316,11 +335,12 @@ export default {
     	async submit() {
 			this.loading = true
 
-			const name = this.name;
-			const description = this.message;
-			const company_name = this.company_name;
+			const name                = this.name;
+			const description         = this.message;
+			const company_name        = this.company_name;
 			const company_description = this.company_description;
-			const date = this.date;
+			const date                = this.date;
+			const website             = this.website
 
 			let file =  '', 
 				fileName =  '',
@@ -347,6 +367,7 @@ export default {
 				description: description,
 				company_name: company_name,
 				company_description: company_description,
+				website: website,
 				date: date,
 				image: file,
 				preview: filePreview,

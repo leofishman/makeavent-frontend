@@ -1,7 +1,7 @@
 <template>
-  <wrap v-if="show">      
+  <wrap>      
     <template slot="title">{{$root.content.meetupSocialsPopupFrom.title}}</template>
-    <inner slot="inner-from" @submitForm="close" />
+    <inner slot="inner-from" />
   </wrap>
 </template>
 
@@ -12,16 +12,6 @@ import inner from './inner'
 export default {
   components: {
     inner, wrap
-  },
-  data(){
-    return {
-      show: true,
-    }
-  },
-  methods: {
-    close(){
-      this.show = false
-    }
   }
 }
 </script>

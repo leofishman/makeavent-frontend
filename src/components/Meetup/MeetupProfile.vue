@@ -38,6 +38,20 @@
 									{{$root.meetup.company_name}}
 								</div>
 
+								<!-- Company contacts -->
+								<ul class="list-network">
+									<li v-if="website" v-on:click="openAndTrack(website)">
+										<span>
+											<inline-svg :src="require('@/assets/img/socials/website.svg')"></inline-svg>
+										</span>
+									</li>
+									<li v-for="(el, index) in socials" :key="index" v-on:click="openAndTrack(el.link)">
+										<span v-if="el">
+											<inline-svg :src="require(`@/assets/img/socials/${el.name.toLowerCase()}.svg`)"></inline-svg>
+										</span>
+									</li>
+								</ul>
+
 								<div v-if="expanded && $root.meetup.stuff" class="profile-bio">
 									<b-button v-if="$root.meetup.stuff.length"
 										class="is-primary is-primary-changeable--bg is-fullwidth invert-color"
@@ -177,7 +191,7 @@
 								<div class="speakers-title is-dark-changeable--color">
 									{{content.speakers}}
 								</div>
-								<div class="column" v-for="(el, index) in $store.state.meetupForm.speakers" :key="index">
+								<div class="column" v-for="(el, index) in $root.meetup.speakers" :key="index">
 									<Member :data="el"/>
 								</div>
 							</div>
@@ -332,24 +346,12 @@
 				quoteId: '',
 				chat: "",
 				chatAvailable: this.chatAvailable,
-				speakers: [],
 
 				videoReady: false,
 				renderVideoOnce: false,
 				light: false,
 				clock: this.clock,
 				dotsGoingUp: true,
-
-				fas_socials: [{
-					name: "instagram",
-					link: "https://www.linkedin.com/company/fintech-advisory/"
-				}],
-				future_socials: [{
-					name: "Linkedin",
-					link: "https://www.linkedin.com/company/futureblock/"
-				}],
-				fas_website: "https://fintech-advisory.com",
-				future_website: "https://futureblockhub.com/",
 
 				ln: require('../../assets/icon/icon-linkedin.svg'),
 				showOverlay: true,
@@ -701,6 +703,14 @@
 					this.videoReady = true
 				else
 					this.videoReady = false
+			}
+		},
+		computed: {
+			socials () {
+				return this.$root.meetup.socials
+			},
+			website () {
+				return this.$root.meetup.website
 			}
 		},
 	}

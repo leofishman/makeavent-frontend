@@ -8,7 +8,7 @@ const opts = {
 
 export default {
   getSocials () {
-    return api().get('/group/get-all-socials', {
+    return api().get('/meetup/get-all-socials', {
       ...opts,      
     })
   }, 

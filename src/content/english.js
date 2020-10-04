@@ -495,7 +495,8 @@ export default {
             date: "Date",
             logo: "Upload Meetup logo",
             background: "Upload Meetup background",
-            confirm: "Confirm your data"
+            confirm: "Confirm your data",
+            website: "Website"
         },
         validation: {
             name: "This field is required",
@@ -507,6 +508,7 @@ export default {
             massage: "Meetup Topic",
             company_description: "Company description",
             date: "Type or select a date..",
+            website: "Company website"
         },
         confirmFields: {
             company_name: "Company Name",
@@ -635,7 +637,7 @@ export default {
     },
 
     meetupSocialsPopupFrom: {
-        title: 'Please add meetup socials',
+        title: 'Meetup socials media settings',
         labels: {
             title: 'Set your socials',
         }
@@ -689,7 +691,8 @@ export default {
                     meetup: 'Edit Meetup Info',
                     company: 'Edit Company Info',
                     documents: 'Edit Documents',
-                    demos: 'Edit Demo Videos'
+                    demos: 'Edit Demo Videos',
+                    socials: "Edit Social Media"
                 }
             },
             share: {

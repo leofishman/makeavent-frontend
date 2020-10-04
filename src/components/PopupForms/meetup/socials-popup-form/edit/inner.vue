@@ -18,7 +18,7 @@
                 <p 
                     class="valid-url help is-danger first"
                     v-if="!socialsItem.validURL"
-                >Invalid link</p>
+                >{{$root.content.demoPopupForm.validation.invalidLink}}</p>
             </b-field>
             <b-field class="socials-edit__buttons">
                 <b-button

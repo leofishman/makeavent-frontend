@@ -221,7 +221,7 @@
 					.then(res => {
 						this.$root.meetup = res.data.meetup
 
-						if (!window.io.query.project) {
+						const updateSocket = () => {
 							window.io = VueSocketIO(socket, {
 								query: {
 									token: localStorage.auth,
@@ -230,7 +230,23 @@
 							})
 							this.$root.reloadSocketListeners()
 						}
-
+						
+						try {
+							if (!window.io)
+								updateSocket()
+							else {
+								if (!window.io.query) 
+									updateSocket()
+	
+								else {
+									if (!window.io.query.project)
+										updateSocket()
+								}
+							}
+							
+						}
+						catch (e) { }
+						
 						this.getExternalCss()
 
 						if ( this.$root.isAdmin(this.$root.meetup.admins) ) {

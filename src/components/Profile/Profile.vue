@@ -277,7 +277,7 @@
 		props: {
 			data: String
 		},
-		data() {
+		async mounted() {
 			this.ready = false
 			this.profileParamsFocus = {
 				name: false
@@ -292,6 +292,14 @@
 				this.newCalendly = this.$root.profile.calendly
 				this.ready = true
 			}).catch(e => console.log(`${e} inaccessible`))
+			
+			await this.$root.getActiveBusinessCards()
+			await this.$root.getPengingCards()
+
+			this.pendingCardsLoading = false
+			this.connectedCardsLoading = false
+		},
+		data() {
 
 			return {
 				content: this.$root.content.Profile,
@@ -390,15 +398,7 @@
 					return true
 				}
 			}
-		},
-		watch: {
-			"$root.pendingCards": function () {
-				this.pendingCardsLoading = false
-			},
-			"$root.activeBusinessCards": function () {
-				this.connectedCardsLoading = false
-			},
-		},
+		}
 	}
 </script>
 

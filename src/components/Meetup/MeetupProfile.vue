@@ -34,7 +34,7 @@
 							</div>
 
 							<div class="profile-bottom">
-								<div class="speakers-title--top is-dark-changeable--color">
+								<div class="company-name is-dark-changeable--color">
 									{{$root.meetup.company_name}}
 								</div>
 
@@ -493,8 +493,8 @@
 						if ( !this.renderVideoOnce ) {
 							this.renderVideoOnce = true
 						}
-
-						if (!window.io.query.project) {
+						
+						const updateSocket = () => {
 							window.io = VueSocketIO(socket, {
 								query: {
 									token: localStorage.auth,
@@ -503,6 +503,22 @@
 							})
 							this.$root.reloadSocketListeners()
 						}
+						
+						try {
+							if (!window.io)
+								updateSocket()
+							else {
+								if (!window.io.query) 
+									updateSocket()
+	
+								else {
+									if (!window.io.query.project)
+										updateSocket()
+								}
+							}
+							
+						}
+						catch (e) { }
 
 						this.getExternalCss()
 

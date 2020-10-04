@@ -89,7 +89,8 @@ const router = new Router({
             component: Login,
             meta: {
                 requiresAuth: false
-            }
+            },
+            props: (route) => ({ data: route.query.f })
         },
         {
             path: '/register',
@@ -97,7 +98,8 @@ const router = new Router({
             component: Register,
             meta: {
                 requiresAuth: false
-            }
+            },
+            props: (route) => ({ data: route.query.f })
         },
         {
             path: '/loginrtp',
@@ -194,13 +196,29 @@ function isMeetupWithId (to) {
 }
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth) {
+    if (to.name == "ConfirmInvitation") {
         if (localStorage.auth) {
-            axios.get(api + `/auth/checkAccess?path=${toUp(to.name)}`, {
-                headers: {
-                    authorization: localStorage.auth
+            next()
+        }
+        else {
+            axios.get(api + `/auth/checkAccess?path=${toUp(to.name)}`, { headers: { authorization: localStorage.auth } })
+            .then(res => {
+                next()
+            })
+            .catch(e => {
+                if (e.response.data == "NO ACCESS") {
+                    next(`/login?f=${to.fullPath}`)
+                }
+                else {
+                    console.log('router 279')
                 }
             })
+        }
+    }
+
+    else if (to.meta.requiresAuth) {
+        if (localStorage.auth) {
+            axios.get(api + `/auth/checkAccess?path=${toUp(to.name)}`, { headers: { authorization: localStorage.auth } })
             .then(res => {
                 if (to.path == '/')
                     next('/profile')

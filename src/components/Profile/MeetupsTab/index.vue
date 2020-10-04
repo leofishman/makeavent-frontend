@@ -1,6 +1,13 @@
 <template>
     <div >
-        <h3 class="title">{{content.title}}</h3>
+        <div class="columns create-meetup-column">
+            <div class="column">
+                <h3 class="title">{{content.title}}</h3>
+            </div>
+            <div class="column">
+                <CreateNewButton />
+            </div>
+        </div>
         <b-tabs v-model="activeTab">
             <b-tab-item :label="content.my">
                 <b-loading v-if="isJoinedMeetup()" class="loading-overlay--dark" :is-full-page="false" :active="!ready" :can-cancel="false"></b-loading>
@@ -16,7 +23,6 @@
             </b-tab-item>
 
             <b-tab-item :label="content.created">
-                <CreateNewButton />
                 <b-loading v-if="isJoinedMeetup()" class="loading-overlay--dark" :is-full-page="false" :active="!ready" :can-cancel="false"></b-loading>
                 <div class="meetups-card-container" v-if="ready && isJoinedMeetup()">
                     <MeetupsRow

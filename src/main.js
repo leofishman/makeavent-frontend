@@ -705,6 +705,7 @@ new Vue({
           resolve(true)
         })
         .catch(err => {
+          resolve(true)
           console.log(err)
         })
       })
@@ -727,6 +728,7 @@ new Vue({
           resolve(true)
         })
         .catch(err => {
+          resolve(true)
           console.log(err)
         })
       })

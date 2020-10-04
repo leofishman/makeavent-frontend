@@ -49,22 +49,10 @@ import {AUTH} from '@/api/endpoints'
 import './index.scss'
 
 export default {
-    data() {
-        this.email = ''
-        this.password = ''
-
-        this.inputsReady = false
-
-        return {
-            isGlobalLoaderOpen: false,
-            content: this.$root.content.Login,
-
-            email: this.email,
-            password: this.password,
-            inputsReady: this.inputsReady
-        }
+    props: {
+        data: String
     },
-    mounted () {
+    async mounted () {
         let input = document.getElementById("login-password-input")
         let self = this
         input.addEventListener('keyup', function (event) {
@@ -75,28 +63,56 @@ export default {
                 }
             }
         })
+        
+        this.email = ''
+        this.password = ''
+        this.inputsReady = false
+    },
+    data() {
+        this.forwardPath = this.data
+
+        return {
+            isGlobalLoaderOpen: false,
+            content: this.$root.content.Login,
+
+            email: this.email,
+            password: this.password,
+            inputsReady: this.inputsReady
+        }
     },
     methods: {
         navToReg () {
-            this.$router.push('/register').catch(e => {})
+            if ( this.forwardPath )
+               this.$router.push(`/register?f=${this.forwardPath}`).catch(e => {})
+            else
+                this.$router.push('/register')
         },
 
         login () {
             this.isGlobalLoaderOpen = true
+
             axios.post(AUTH.LOGIN, {
                 email: this.email,
                 password: this.password
             })
             .then(res => {
-                const data = res.data
+                const response = res.data
+
+                if (this.forwardPath.includes('confirm_invitation')) {
+                    this.$root.usertype = response.type
+                    this.$root.profile = response.profile
+                    localStorage.auth = res.headers.authorization
+                    
+                    this.$router.push(this.forwardPath)
+                }
                 
-                if (data.redirect) {
-                    this.$root.usertype = data.type
-                    this.$root.profile = data.profile
+                else if (response.redirect) {
+                    this.$root.usertype = response.type
+                    this.$root.profile = response.profile
                     this.$router.push(`/loginrtp`)
                 }
                 else {
-                    this.$root.usertype = data.type
+                    this.$root.usertype = response.type
                     this.$root.profile = data.profile
                     localStorage.auth = res.headers.authorization
                     

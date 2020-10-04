@@ -760,8 +760,8 @@ export default {
                     time: 'Schedule Opening Time'
                 },
                 placeholders: {
-                    close: 'Close',
-                    opened: "Open",
+                    close: 'Opened, click to close',
+                    opened: "Closed, click to open",
                     time: 'Select'
                 }
             },

@@ -8,7 +8,7 @@
                     <div class="column is-half is-offset-one-quarter data-login">
                         <figure class="image title-logo">
                             <img v-if="$root.project.logo" :src="api + $root.project.logo">
-                        </figure>/
+                        </figure>
 
                         <div class="box">
                             <p style="margin:10px 0px;">{{$root.content.googleHint}}</p>
@@ -69,7 +69,12 @@ import Axios from 'axios'
 import './index.scss'
 
 export default {
+    props: {
+        data: String
+    },
     data() {
+        this.forwardPath = this.data
+
         this.buttonready = false
 
         this.email = ""
@@ -132,7 +137,10 @@ export default {
     },
     methods: {
         navToLogin () {
-            this.$router.push('/login').catch(e => {})
+            if ( this.forwardPath )
+               this.$router.push(`/login?f=${this.forwardPath}`).catch(e => {})
+            else
+                this.$router.push('/login')
         },
 
         handleFileUpload () {
@@ -151,12 +159,21 @@ export default {
                 shouldResetPwd: false,
             })
             .then(async res => {
-                const data = res.data
-                this.$root.usertype = data.type
-                this.$root.profile = data.profile
+                const response = res.data
+                this.$root.usertype = response.type
+                this.$root.profile = response.profile
                 localStorage.auth = res.headers.authorization
 
-                this.$router.push('/').catch(e => {})
+                if (this.forwardPath.includes('confirm_invitation')) {
+                    this.$root.usertype = response.type
+                    this.$root.profile = response.profile
+                    localStorage.auth = res.headers.authorization
+                    
+                    this.$router.push(this.forwardPath)
+                }
+                else
+                    this.$router.push('/').catch(e => {})
+
             })
             .catch(e => {
                 this.isGlobalLoaderOpen = false

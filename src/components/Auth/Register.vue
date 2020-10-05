@@ -164,13 +164,16 @@ export default {
                 this.$root.profile = response.profile
                 localStorage.auth = res.headers.authorization
 
-                if (this.forwardPath.includes('confirm_invitation')) {
-                    this.$root.usertype = response.type
-                    this.$root.profile = response.profile
-                    localStorage.auth = res.headers.authorization
-                    
-                    this.$router.push(this.forwardPath)
-                }
+                if (this.forwardPath)
+                    if (this.forwardPath.includes('confirm_invitation')) {
+                        this.$root.usertype = response.type
+                        this.$root.profile = response.profile
+                        localStorage.auth = res.headers.authorization
+                        
+                        this.$router.push(this.forwardPath)
+                    }
+                    else
+                        this.$router.push('/').catch(e => {})
                 else
                     this.$router.push('/').catch(e => {})
 

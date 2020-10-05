@@ -98,26 +98,30 @@ export default {
             .then(res => {
                 const response = res.data
 
-                if (this.forwardPath.includes('confirm_invitation')) {
-                    this.$root.usertype = response.type
-                    this.$root.profile = response.profile
-                    localStorage.auth = res.headers.authorization
-                    
-                    this.$router.push(this.forwardPath)
-                }
-                
-                else if (response.redirect) {
-                    this.$root.usertype = response.type
-                    this.$root.profile = response.profile
-                    this.$router.push(`/loginrtp`)
+                if (this.forwardPath) {
+                    if (this.forwardPath.includes('confirm_invitation')) {
+                        this.$root.usertype = response.type
+                        this.$root.profile = response.profile
+                        localStorage.auth = res.headers.authorization
+                        
+                        this.$router.push(this.forwardPath)
+                    }
                 }
                 else {
-                    this.$root.usertype = response.type
-                    this.$root.profile = data.profile
-                    localStorage.auth = res.headers.authorization
-                    
-                    this.$router.push(`/`)
+                    if (response.redirect) {
+                        this.$root.usertype = response.type
+                        this.$root.profile = response.profile
+                        this.$router.push(`/loginrtp`)
+                    }
+                    else {
+                        this.$root.usertype = response.type
+                        this.$root.profile = response.profile
+                        localStorage.auth = res.headers.authorization
+                        
+                        this.$router.push(`/`)
+                    }
                 }
+                
             })
             .catch(e => {
                 console.log(e)

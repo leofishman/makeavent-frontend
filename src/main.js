@@ -342,15 +342,15 @@ new Vue({
           break;
           
         default : {
-          let sponsor = this.Sponsors.filter(el => compare(el.name, name))[0]
-          if (sponsor)
-            this.$router.push({
-              path: `/company`,
-              query: {
-                name: name.toLowerCase()
-              }
-            })
-          else
+          // let sponsor = this.Sponsors.filter(el => compare(el.name, name))[0]
+          // if (sponsor)
+          //   this.$router.push({
+          //     path: `/company`,
+          //     query: {
+          //       name: name.toLowerCase()
+          //     }
+          //   })
+          // else
 				    this.$buefy.dialog.alert(this.content.ErrorMessages[7], 'oops')
         }
       }
@@ -387,10 +387,10 @@ new Vue({
         let type = ''
         this.check('Sponsors MediaPartners Speakers')
         .then(async () => {
-          let sponsor = this.Sponsors.filter(el => compare(el.name, name))[0]
-          if (sponsor) {
-            type = 'sponsor'
-          }
+          // let sponsor = this.Sponsors.filter(el => compare(el.name, name))[0]
+          // if (sponsor) {
+          //   type = 'sponsor'
+          // }
   
           if (!this.haveBooth) {
             let media = this.MediaPartners.filter(el => compare(el.name, name))[0]
@@ -400,10 +400,10 @@ new Vue({
           }
   
           if (!this.haveBooth) {
-            let speker = this.Speakers.filter(el => compare(el.name, name))[0]
-            if (speker) {
-              type = 'speaker'
-            }
+            // let speker = this.Speakers.filter(el => compare(el.name, name))[0]
+            // if (speker) {
+            //   type = 'speaker'
+            // }
           }
 
           resolve(type)
@@ -776,16 +776,16 @@ new Vue({
     tryGetProfilePhoto (email) {
       let image;
      
-      let haveContacts = this.Sponsors.filter(el => el.contacts !== undefined)
-      haveContacts.map(el => {
-        el.contacts.map((contact, index) => {
-          if (compare(contact.email, email)) {
-            image = contact.photo
-          }
-        })
-      })
+      // let haveContacts = this.Sponsors.filter(el => el.contacts !== undefined)
+      // haveContacts.map(el => {
+      //   el.contacts.map((contact, index) => {
+      //     if (compare(contact.email, email)) {
+      //       image = contact.photo
+      //     }
+      //   })
+      // })
 
-      if (!image)
+      if (this.Speakers && !image)
         this.Speakers.map(speaker => {
           if (compare(speaker.email, email)) {
             image = speaker.photo

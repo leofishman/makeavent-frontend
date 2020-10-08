@@ -5,7 +5,7 @@
         </div>
         <div class="soc__row">
             <div class="soc__icon" @click="updateItem(index)">
-                <img :src="require(`@/assets/img/socials/${socialsItem.name}.svg`)" alt="">
+                <inline-svg :src="require(`@/assets/img/socials/${socialsItem.name}.svg`)" />
             </div>
             <input  @click="updateItem(index)" class="soc__link" type="text" readonly="readonly" :value="socialsItem.link">
             <div class="close-icon" @click="removeItem(index)">

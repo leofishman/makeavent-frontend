@@ -8,14 +8,16 @@
     display: flex;
 }
 .stuff-item .soc__icon {
-    img {
-        width: 36.46px;
-        height: 40px;
-        object-fit: cover;        
+    svg {
+        width: 36px;
+        object-fit: cover;
+        path {
+            fill: #000000;
+            opacity: 0.5;
+        }
     }
     margin-right: 13px;
-    width: 36.46px;
-    height: 40px;
+    width: 36px;
     display: flex;
     align-items: center;
     justify-content: center;

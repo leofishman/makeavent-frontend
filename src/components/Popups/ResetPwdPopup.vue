@@ -7,7 +7,7 @@
         </div>
         <div class="modal-card-body">
             <b-field :label="globContent.email">
-                <b-input id="reset-pwd-email-input" type="email" v-model="email"></b-input>
+                <b-input autocomplete="on" id="reset-pwd-email-input" type="email" v-model="email"></b-input>
             </b-field>
         </div>
          <footer class="modal-card-foot">

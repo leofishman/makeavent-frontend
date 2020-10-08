@@ -105,34 +105,41 @@
 							</div>
 
 							<div v-else>
-								<JitsiStream
-									v-if="$root.meetup.service == 'jitsi' && defineHowToRender() == 'speaker'"
-									:meetup="$root.meetup"
-									_id="mainroom"
-								/>
-								<div v-else class="video-stream">
-									<div v-if="!videoReady" class="box">
-										<div class="content-box">
-											<div class="content">
-												<span>{{content.willStartIn}}</span> {{clock}}
+								<div v-if="$root.meetup.status != 'finished'">
+									<JitsiStream
+										v-if="$root.meetup.service == 'jitsi' && defineHowToRender() == 'speaker'"
+										:meetup="$root.meetup"
+										_id="mainroom"
+									/>
+									<div v-else class="video-stream">
+										<div v-if="!videoReady" class="box">
+											<div class="content-box">
+												<div class="content">
+													<span>{{content.willStartIn}}</span> {{clock}}
+												</div>
+												
+												<div :style="{
+													backgroundColor: $root.meetup.screensaverColor,
+													opacity: $root.meetup.screensaverColor ? 0.6 : 1
+												}" class="scr-saver-fileld__bg"></div>
+												
+												<iframe v-if="$root.meetup.screensaver" class="screensaver" :id="`${id}_screensaver_video`" :src="$root.meetup.screensaver + '?enablejsapi=1&autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&loop=1'" frameborder="0"></iframe>
 											</div>
-											
-											<div :style="{
-												backgroundColor: $root.meetup.screensaverColor,
-												opacity: $root.meetup.screensaverColor ? 0.6 : 1
-											}" class="scr-saver-fileld__bg"></div>
-											
-											<iframe v-if="$root.meetup.screensaver" class="screensaver" :id="`${id}_screensaver_video`" :src="$root.meetup.screensaver + '?enablejsapi=1&autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&loop=1'" frameborder="0"></iframe>
 										</div>
+										<!-- play button -->
+										<div @click="renderRtmpVideo" class="play-overlay click" v-if="videoReady && showOverlay">
+											<img src="@/assets/play.svg" alt="">
+											<p>{{content.pressToStart}}</p>
+										</div>
+										<!-- loading when video ready -->
+										<div class="play-overlay click" v-if="videoReady && videoLoader">
+											<b-loading class="loading-overlay--dark" style="margin:15px" :is-full-page="false" :active.sync="videoLoader" :can-cancel="false"></b-loading>
+										</div>
+										<!-- video player -->
+										<video preload="none" id="videoElement" style="height:0px" allowfullscreen></video>
 									</div>
-									<div @click="renderRtmpVideo" class="play-overlay click" v-if="videoReady && showOverlay">
-										<img src="@/assets/play.svg" alt="">
-										<p>{{content.pressToStart}}</p>
-									</div>
-									<div class="play-overlay click" v-if="videoReady && videoLoader">
-										<b-loading class="loading-overlay--dark" style="margin:15px" :is-full-page="false" :active.sync="videoLoader" :can-cancel="false"></b-loading>
-									</div>
-									<video preload="none" id="videoElement" style="height:0px" allowfullscreen></video>
+								</div>
+								<div v-else class="meetup-finished" v-html="content.meetupFinished">
 								</div>
 							</div>
 

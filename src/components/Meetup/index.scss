@@ -320,6 +320,12 @@
 			}
 		}
 	}
+
+	.meetup-finished {
+		font-size: 48px;
+		color: $danger;
+		text-align: center;
+	}
 }
 
 .default-meetup-container {

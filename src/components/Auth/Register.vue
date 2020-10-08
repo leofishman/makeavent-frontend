@@ -19,7 +19,7 @@
                                 </b-field>
 
                                 <b-field :label="$root.content.email">
-                                    <b-input id="register-email" type="email" :placeholder="content.email_place" v-model="email" ></b-input>
+                                    <b-input autocomplete="on" id="register-email" type="email" :placeholder="content.email_place" v-model="email" ></b-input>
                                 </b-field>
 
                                 <div class="columns only-bot-margin">

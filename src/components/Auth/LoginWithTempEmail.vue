@@ -35,7 +35,7 @@
                                         <b-field
                                             :label="$root.content.new + $root.content.email"
                                             >
-                                            <b-input type="text" v-model="newemail" :placeholder="$root.content.pleaseEnter + $root.content.new.toLowerCase() + $root.content.email"></b-input>
+                                            <b-input type="text" autocomplete="on" v-model="newemail" :placeholder="$root.content.pleaseEnter + $root.content.new.toLowerCase() + $root.content.email"></b-input>
                                         </b-field>
                                     </div>
                                 </div>

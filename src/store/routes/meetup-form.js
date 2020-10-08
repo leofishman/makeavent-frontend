@@ -64,6 +64,11 @@ export default {
       ...opts     
     })    
   },
+  closeMeetup (params) {
+    return api().post('/meetup/set-meetup-finished', params, {
+      ...opts
+    })
+  },
   addStreamingSource(params) {
     return api().post('/meetup/add-streaming-source', params, {
       ...opts

@@ -109,7 +109,8 @@ export default {
         backstage: "Backstage",
         mainRoom: "Main Room",
         willStartIn: "Meetup will start in ",
-        pressToStart: "Press to join Live Stream"
+        pressToStart: "Press to join Live Stream",
+        meetupFinished: "Meetup Finished.<br>Thank you for attending!"
     },
 
     DragableJitsi: {
@@ -752,15 +753,16 @@ export default {
                 },
                 editModal: {
                     title: "Edit Streaming Sources",
-                    
-                }
+                },
             },
             transmition: {
                 title: 'Transmition',
                 labels: {
                     meetup: 'Meetup Room',
                     networking: 'Networking Room',
-                    time: 'Schedule Opening Time'
+                    time: 'Schedule Opening Time',
+                    close: 'Finish meetup',
+                    open: 'Reopen meetup'
                 },
                 placeholders: {
                     close: 'Opened, click to close',

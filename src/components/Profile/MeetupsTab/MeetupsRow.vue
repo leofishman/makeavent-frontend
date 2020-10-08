@@ -6,7 +6,7 @@
             <div v-if="ready" class="columns only-bot-margin no-border" style="width:100%">
                 <div class="column nopadding is-2">
                     <figure class="attendee-avatar">
-                        <img v-if="data.photo" :src="api + data.photo">
+                        <img v-if="data.image" :src="data.image">
                         <img v-else :src="`${api}/static/img/brand-default.png`">
                     </figure>
                 </div>

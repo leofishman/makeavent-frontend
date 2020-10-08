@@ -66,6 +66,7 @@ export default {
             state.custom_colors = meetup.custom_colors
             state.color_schema = meetup.color_schema
             state.streamingSources = []
+            state.website = meetup.website
         },
         updateMeetupStreamSources (state, streamingSources) {
             state.streamingSources = streamingSources

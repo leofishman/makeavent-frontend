@@ -18,7 +18,7 @@ import './domchange.js'
 import './global_functions.js'
 
 import App from './App.vue'
-import {api, socket, self, logo, app, type} from './env'
+import {api, socket, self, logo, app, type, communitySrv} from './env'
 import {MEETUP} from '@/api/endpoints'
 
 import util from '@/util'
@@ -70,6 +70,7 @@ Vue.prototype.util = util
 Vue.prototype._ = lodash
 Vue.prototype.config = config
 Vue.prototype.api = api
+Vue.prototype.communitySrv = communitySrv
 
 const selfhost = self
 

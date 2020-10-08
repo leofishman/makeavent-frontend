@@ -13,7 +13,7 @@ export default {
         }
         return false
     },
-    isImage(fileName){    
+    isImage(fileName){  
         if(fileName) {
             const validImages = validFormats.image
 

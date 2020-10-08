@@ -79,6 +79,7 @@
             <div class="edit-field logo-field">
                 <h2 class="title">{{meetupPopupForm.labels.logo}}</h2>
                 <section class="file-uploader">
+					<!-- upload section -->
                     <b-field>
                         <b-upload v-model="file"
                             drag-drop
@@ -98,24 +99,25 @@
                             </section>
                         </b-upload>
                     </b-field>
-                    <!-- <div class="tags">
-                        <span class="file-name" v-if="file">
-                            {{ file.name }}
-                        </span>
-                    </div> -->
                     <div class="preview-image" v-if="!fileUplodated">
                         <img :src="logo" alt="">
                     </div>
                     <div class="preview-image" v-if="fileUplodated">
                         <img :src="fileUplodated" alt="">
                     </div>
+					<!-- delete section -->
+					<template v-if="showImage">
+						<div class="close-icon" @click="deleteImage">
+							<span>x</span>
+						</div>
+					</template>
                 </section>
-            
             </div>
 
             <div class="edit-field interets-field">
                 <h2 class="title">{{meetupPopupForm.labels.background}}</h2>
                 <section class="file-uploader">
+					<!-- upload bg -->
                     <b-field>
                         <b-upload v-model="previewFile"
                             drag-drop
@@ -134,40 +136,35 @@
                                 </div>
                             </section>
                         </b-upload>
-                    </b-field>                
-                    <!-- <div class="preview-image" v-if="util.isImage(previewFile.name)">
-                        <img :src="previewUplodated" alt="">
-                    </div>
-                    <div class="preview-image" v-if="util.isVideo(previewFile.name)">
-                        <video controls>
-                            <source :src="previewUplodated">
-                        </video>
-                    </div> -->
-                    <template v-if="_.isEmpty(previewFile)">
-                        <div class="preview-image" v-if="util.isImage(previewUplodated)">
-                            <img :src="previewUplodated" alt="">
+                    </b-field>
+					<!-- preview test 1 -->
+                    <template v-if="showBg">
+                        <div class="preview-image" v-if="util.isImage(background)">
+                            <img :src="background" alt="">
                         </div>
-                        <div class="preview-image" v-if="util.isVideo(previewUplodated)">
+                        <div class="preview-image" v-if="util.isVideo(background)">
                             <video controls>
-                                <source :src="previewUplodated">
+                                <source :src="background">
                             </video>
                         </div>
                     </template>
-                    <template v-if="previewFile.name">
-                        <div class="preview-image" v-if="util.isImage(previewFile.name)">
-                            <img :src="previewUplodated" alt="">
-                        </div>
-                        <div class="preview-image" v-if="util.isVideo(previewFile.name)">
-                            <video controls>
-                                <source :src="previewUplodated">
-                            </video>
-                        </div>
-                    </template>
-                    <!-- <div class="tags">
-                        <span class="file-name" v-if="previewFile">
-                            {{ previewFile.name }}
-                        </span>
-                    </div> -->
+					<!-- preview test 2 -->
+					<template v-if="previewFile.name">
+						<div class="preview-image" v-if="util.isImage(previewFile.name)">
+							<img :src="previewUplodated" >
+						</div>
+						<div class="preview-image" v-if="util.isVideo(previewFile.name)">
+							<video controls>
+								<source :src="previewUplodated" >
+							</video>
+						</div>
+					</template>
+					<!-- delete file -->
+					<template v-if="showBg">
+						<div class="close-icon" @click="deleteBg">
+							<span>x</span>
+						</div>
+					</template>
                 </section>
             </div>
         </div>
@@ -220,7 +217,26 @@ export default {
 			logo: '',
 			background: '',
 			previewToup: false,
-			loading: false
+			loading: true
+		}
+	},
+	computed: {
+		showImage () {
+			if (!this.loading) {
+				if (this.logo.split(this.communitySrv)[1] || this.fileUplodated)
+					return true
+				else
+					return false
+			}
+		},
+
+		showBg () {
+			if (!this.loading) {
+				if (this.background.split(this.communitySrv)[1] || this.previewUplodated)
+					return true
+				else
+					return false
+			}
 		}
 	},
 	watch: {
@@ -258,9 +274,9 @@ export default {
 
 		this.logo = this.$store.state.meetupForm.logo;
 		this.background = this.$store.state.meetupForm.preview;
-		this.previewUplodated = this.$store.state.meetupForm.preview;
 		this.updateLogo()
 		this.updatePreview()
+		this.loading = false
 	},
 	methods: {      
 		...mapActions(['getMeetupById']),
@@ -342,25 +358,27 @@ export default {
 			const date                = this.date;
 			const website             = this.website
 
-			let file =  '', 
+			let file = this.logoDeleted ? '' : 'no_update', 
 				fileName =  '',
 				format =  '',
-				filePreview =  '',
+				filePreview =  this.bgDeleted ? '' : 'no_update',
 				formatPreview =  '',
 				fileNamePreview = ''
 
-			if(this.file.name) {
-				file = this.fileUplodated
-				fileName = this.file.name
-				format = fileName.slice(fileName.lastIndexOf('.'), fileName.length)
-			}
+			if ( this.file )
+				if(this.file.name) {
+					file = this.fileUplodated
+					fileName = this.file.name
+					format = fileName.slice(fileName.lastIndexOf('.'), fileName.length)
+				}
 
-			if(this.previewFile.name) {
-				filePreview = this.previewToup
-				fileNamePreview = this.previewFile.name
-				formatPreview = fileNamePreview.slice(fileNamePreview.lastIndexOf('.'), fileNamePreview.length)
-			}
-        
+			if ( this.previewFile )
+				if(this.previewFile.name) {
+					filePreview = this.previewToup
+					fileNamePreview = this.previewFile.name
+					formatPreview = fileNamePreview.slice(fileNamePreview.lastIndexOf('.'), fileNamePreview.length)
+				}
+		
 			const data = {    
 				id: this.id,
 				name: name,
@@ -380,6 +398,21 @@ export default {
 			this.close()
 			this.loading = false
 			return false
+		},
+
+		deleteImage () {
+			this.logoDeleted = true
+			this.file = ""
+			this.logo = ""
+			this.fileUplodated = ""
+		},
+
+		deleteBg () {
+			this.bgDeleted = true
+			this.filePreview = ""
+			this.previewFile = ""
+			this.previewUplodated = ""
+			this.background = ""
 		},
 		
 		close () {

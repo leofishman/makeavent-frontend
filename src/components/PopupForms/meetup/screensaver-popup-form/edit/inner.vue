@@ -55,7 +55,8 @@
             </div>
             <div class="column">
                 <h2 class="title">{{content.create.labels.preview}}</h2>
-                <template v-if="showBg">
+
+                <template v-if="showBg()">
                     <template v-if="util.isVideo(screensaver)">       
                         <div class="confirm-data__col-value confirm-data__col-value--bg--square" style="position: relative;">
                             <video controls>
@@ -81,6 +82,7 @@
                         </div>
                     </template>
                 </template>
+
                 <div v-if="previewFile.name">
                     <!-- preview if video -->
                     <template v-if="util.isVideo(previewFile.name)">       
@@ -198,9 +200,11 @@ export default {
             submitDisabled: false,
             loader: true,
 
-            previewFile: {},  
+            previewFile: {},
             PfileUplodated: false,
             previewFileValid: true,
+            previewUplodated: "",
+            previewToup: ""
         }
     },
     watch: {
@@ -212,18 +216,21 @@ export default {
                 this.defaultColor = ""
         }
     },
-    computed: {
+    methods: {
+        ...mapActions(['getMeetupById']),
+
         showBg () {
-			if (!this.loader) {
-				if (this.screensaver.split(this.communitySrv)[1] || this.previewUplodated)
+            if (!this.loader) {
+                // console.log(219, this.screensaver.split(this.communitySrv)[1], this.previewUplodated);
+				if (this.screensaver.split(this.communitySrv)[1])
 					return true
 				else
 					return false
-			}
-		}
-    },
-    methods: {
-        ...mapActions(['getMeetupById']),
+            }
+            else
+                return false
+		},
+
         updatePreview (e) {
             try {
 				if ( this.previewFile ) {
@@ -260,9 +267,10 @@ export default {
 
         deleteBg () {
 			this.filePreview = ""
-			this.previewFile = ""
+			this.previewFile = {}
 			this.previewUplodated = ""
-			this.screensaver = ""
+            this.screensaver = ""
+            this.previewToup = ""
         },
         
         submit(){

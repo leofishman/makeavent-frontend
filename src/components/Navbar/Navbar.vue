@@ -43,10 +43,10 @@
 									{{content.profile}}
 									<span class="tag is-info" v-if="$root.pendingCards.length" variant="light">{{$root.pendingCards.length}}</span>
 								</a>
-								<a v-on:click="$root.switchOpen()" class="button">
+								<!-- <a v-on:click="$root.switchOpen()" class="button">
 									<img src="@/assets/img/Navbar/chat.svg" alt="">
 									{{content.openChat}}
-								</a>
+								</a> -->
 								<a v-on:click="logout()" class="button">{{content.logout}}</a>
 							</div>
 						</div>

@@ -260,14 +260,14 @@
         watch: {
             name(){                                 
                 const validDate = this.name.length && this.message.length
-                if(validDate) this.nextDisabled = false
-                else this.nextDisabled = true
+                // if(validDate) this.nextDisabled = false
+                // else this.nextDisabled = true
                 return this.name
             },
             message(){               
                 const validDate = this.name.length && this.message.length
-                if(validDate) this.nextDisabled = false
-                else this.nextDisabled = true
+                // if(validDate) this.nextDisabled = false
+                // else this.nextDisabled = true
                 return this.message
             },
             date(){
@@ -306,7 +306,7 @@
                 PfileUplodated: false,
                 previewFileValid: true,
                 currentDate: new Date(),
-                nextDisabled: true,
+                nextDisabled: false,
             }
         },
         methods: {
@@ -317,7 +317,8 @@
             updateCompany(obj){
                 this.company_name = obj.company_name
                 this.company_description = obj.company_description
-                this.nextDisabled = !obj.valid
+                // this.nextDisabled = !obj.valid
+                this.nextDisabled = false
             },
             changeStep() {                
                 const currentStep = this.activeStep+1
@@ -325,12 +326,12 @@
                 const validStep = Boolean(this.name.length && this.company_description.length)
                 const validDate = this.date.getTime() !== this.currentDate.getTime()
 
-                if(currentStep === 1 && validCompany) this.nextDisabled = false
-                else if(currentStep === 2 && validStep) this.nextDisabled = false
-                else if(currentStep === 3 && validDate) this.nextDisabled = false
-                else if(currentStep === 4 && this.fileUplodated) this.nextDisabled = false
-                else if(currentStep === 5 && this.PfileUplodated) this.nextDisabled = false
-                else this.nextDisabled = true                
+                // if(currentStep === 1 && validCompany) this.nextDisabled = false
+                // if(currentStep === 2 && validStep) this.nextDisabled = false
+                // if(currentStep === 3 && validDate) this.nextDisabled = false
+                // else if(currentStep === 4 && this.fileUplodated) this.nextDisabled = false
+                // else if(currentStep === 5 && this.PfileUplodated) this.nextDisabled = false
+                // else if (currentStep !== 1 && currentStep !== 2 && currentStep !== 4) this.nextDisabled = true                
             },
             // End steps checkers
             hideDatePlaceholder(){
@@ -406,11 +407,17 @@
 
                 const date = this.date;
 
-                const fileName = this.file.name
-                const format = fileName.slice(fileName.lastIndexOf('.'), fileName.length)
+                let fileName, format;
+                if (this.file.name) {
+                    fileName = this.file.name
+                    format = fileName.slice(fileName.lastIndexOf('.'), fileName.length)
+                }
 
-                const fileNamePreview = this.previewFile.name
-                const formatPreview = fileNamePreview.slice(fileNamePreview.lastIndexOf('.'), fileNamePreview.length)
+                let fileNamePreview, formatPreview;
+                if (this.previewFile.name) {
+                    fileNamePreview = this.previewFile.name
+                    formatPreview = fileNamePreview.slice(fileNamePreview.lastIndexOf('.'), fileNamePreview.length)
+                }
 
                 let PfileUplodated = '';
                 if ( typeof this.PfileUplodated === 'string' ) PfileUplodated = this.PfileUplodated 

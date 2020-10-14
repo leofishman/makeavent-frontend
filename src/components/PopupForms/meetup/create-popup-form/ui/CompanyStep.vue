@@ -6,7 +6,6 @@
                 :placeholder="$root.content.meetupPopupForm.placeholders.company_name"
                 v-model="company_name"
                 :validation-message="$root.content.meetupPopupForm.validation.name"
-                required 
             >
             </b-input>
         </b-field>
@@ -17,7 +16,6 @@
                 maxlength="200" 
                 type="textarea"
                 :validation-message="$root.content.meetupPopupForm.validation.massage"
-                required
             >
             </b-input>
         </b-field>
@@ -44,7 +42,7 @@ export default {
         validFields(){
             const validStep = Boolean(this.company_name.length && this.company_description.length)
             const obj = {
-                valid: validStep,
+                valid: true,
                 company_name: this.company_name,
                 company_description: this.company_description
             }

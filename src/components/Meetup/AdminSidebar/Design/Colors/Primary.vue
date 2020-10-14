@@ -41,7 +41,9 @@ export default {
           const obj = {
             id: this.$root.meetup._id,
             color_schema: this.$store.getters.meetupFull.color_schema,
-            custom_colors: this.$store.getters.meetupFull.custom_colors
+            custom_colors: this.$store.getters.meetupFull.custom_colors,
+            preview: 'no_update',
+            image: 'no_update'
           }
           await routes.postUpdate(obj)
         },

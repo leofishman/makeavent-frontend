@@ -52,7 +52,7 @@ export default {
             state.message = meetup.meetup_topic
             state.company_name = meetup.company_name
             state.company_description = meetup.company_description
-            state.date = meetup.date
+            state.date = meetup.startDate
             state.logo = meetup.image
             state.preview = meetup.preview
             state.demo = meetup.demo

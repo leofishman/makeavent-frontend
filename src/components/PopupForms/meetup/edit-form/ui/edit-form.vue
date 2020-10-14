@@ -270,7 +270,7 @@ export default {
 		this.company_description = this.$store.state.meetupForm.company_description
 		this.message = this.$store.state.meetupForm.message;
 		this.website = this.$store.state.meetupForm.website;
-		const date = new Date(Date.parse(this.$store.state.meetupForm.date));
+		this.date = new Date(Date.parse(this.$store.state.meetupForm.date));
 
 		this.logo = this.$store.state.meetupForm.logo;
 		this.background = this.$store.state.meetupForm.preview;
@@ -339,13 +339,13 @@ export default {
 			const logo                = this.$store.state.meetupForm.logo;   
 			const website             = this.website
 			// if(validLocation && name && message && logo && interest && subInterest ){
-			if(name && message && logo && company_name && company_description && website){
+			// if(name && message && logo && company_name && company_description && website){
 				this.saveDisabled = false
 				return true
-			} else {
-				this.saveDisabled = true
-				return false
-			}
+			// } else {
+			// 	this.saveDisabled = true
+			// 	return false
+			// }
 		},
 	 
     	async submit() {
@@ -391,6 +391,7 @@ export default {
 				preview: filePreview,
 				ext: format,                      
 				previewExt: formatPreview,
+				custom_colors: 'no_update'
 			}
 
 			const res = await MeetupFormRoutes.postUpdate(data)

@@ -196,6 +196,7 @@ function isMeetupWithId (to) {
 }
 
 router.beforeEach((to, from, next) => {
+    console.log(to);
     if (to.name == "ConfirmInvitation") {
         if (localStorage.auth) {
             next()
@@ -206,8 +207,9 @@ router.beforeEach((to, from, next) => {
                 next()
             })
             .catch(e => {
+                console.log(e.response.data, to.fullPath);
                 if (e.response.data == "NO ACCESS") {
-                    next(`/login?f=${to.fullPath}`)
+                    window.location.href = `/login?f=${to.fullPath}`
                 }
                 else {
                     console.log('router 279')

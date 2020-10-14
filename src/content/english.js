@@ -646,9 +646,10 @@ export default {
 
     screenSaverPopupFrom: {
         title: "Meetup room screensaver settings",
+        description: "Screensaver can be relaxing video or just company logo. Screensaver will be shown to the meetup attendees until meetup starts",
         create: {
             labels: {
-                video: 'URL of video',
+                video: 'Upload video file or image',
                 preview: 'Preview'
             }
         },

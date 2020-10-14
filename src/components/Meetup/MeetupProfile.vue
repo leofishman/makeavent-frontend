@@ -123,7 +123,12 @@
 													opacity: $root.meetup.screensaverColor ? 0.6 : 1
 												}" class="scr-saver-fileld__bg"></div>
 												
-												<iframe v-if="$root.meetup.screensaver" class="screensaver" :id="`${id}_screensaver_video`" :src="$root.meetup.screensaver + '?enablejsapi=1&autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&loop=1'" frameborder="0"></iframe>
+												<video class="scr-saver-video" autoplay loop v-if="util.isVideo($root.meetup.screensaver)">
+													<source :src="$root.meetup.screensaver">
+												</video>
+												<img class="scr-saver-image" v-if="util.isImage($root.meetup.screensaver)" :src="$root.meetup.screensaver" alt="">
+												
+												<!-- <iframe v-if="" class="screensaver" :id="`${id}_screensaver_video`" :src="$root.meetup.screensaver + '?enablejsapi=1&autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&loop=1'" frameborder="0"></iframe> -->
 											</div>
 										</div>
 										<!-- play button -->
@@ -425,7 +430,7 @@
 			},
 
 			goNetworking () {
-				if (this.$root.meetup.networkingRoomOpened)
+				if (this.$root.meetup.networkingRoomOpened || this.$root.isUserAdmin)
 					this.$router.push({
 						name: "NetworkingRoom",
 						query: {

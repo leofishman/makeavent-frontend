@@ -134,13 +134,6 @@
                         </section>
                     </div>
                     <div class="column">
-                        <template v-if="util.isVideo(previewFile.name)">       
-                            <div class="confirm-data__col-value confirm-data__col-value--bg">
-                                <video controls>
-                                    <source :src="PfileUplodated">
-                                </video>
-                            </div>
-                        </template>
                         <template v-if="util.isImage(previewFile.name)">                            
                             <div class="confirm-data__col-value confirm-data__col-value--bg">
                                 <img :src="PfileUplodated" alt="">
@@ -380,12 +373,6 @@
                             this.PfileUplodated = e.target.result
                         }                    
                         
-                        this.previewFileValid = true
-                        this.nextDisabled = false
-                    } else if ( this.previewFile && this.util.isVideo(fileName) ) {
-                        const video = this.previewFile
-                        this.PfileUplodated = URL.createObjectURL(video)
-    
                         this.previewFileValid = true
                         this.nextDisabled = false
                     } else {

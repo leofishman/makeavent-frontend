@@ -22,7 +22,6 @@
 					:backstage="backstage"
 					:frontstage="frontstage"
 					/>
-
 			</div>
 
 		</section>
@@ -50,17 +49,15 @@ export default {
 			isLoading: true,
 			speakersToShow: this.$store.state.meetupForm.speakers,
 			speakerSearch: "",
-			backstage: {},
-			frontstage: {},
+			backstage: false,
+			frontstage: false,
 			speakerListReadyness: false,
 		}
 	},
 	methods: {
 		speakersListReady () {
-			if ( Object.keys(this.backstage).length
-				&& Object.keys(this.frontstage).length 
-				&& this.speakersToShow.length)
-					this.speakerListReadyness = true
+			if ( (typeof this.backstage == 'object' && typeof this.frontstage == 'object') && this.speakersToShow.length)
+				this.speakerListReadyness = true
 					
 			else
 				this.speakerListReadyness = false

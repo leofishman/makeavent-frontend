@@ -39,12 +39,12 @@ p + p {
 //////////////////////////////////////////
 body {
     background-color: #F3F3F3;
-	min-height: 100vh;
-	@extend %noselect;
+    min-height: 100vh;
+    @extend %noselect;
 }
 main {
-	margin-top: 5rem;
-	min-height: calc(100vh - 90px);
+    margin-top: 5rem;
+    min-height: calc(100vh - 90px);
 }
 
 // .meetup-profile, .networking-rooms {

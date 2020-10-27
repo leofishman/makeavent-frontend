@@ -757,7 +757,7 @@ export default {
                 },
             },
             transmition: {
-                title: 'Transmition',
+                title: 'Rooms',
                 labels: {
                     meetup: 'Meetup Room',
                     networking: 'Networking Room',

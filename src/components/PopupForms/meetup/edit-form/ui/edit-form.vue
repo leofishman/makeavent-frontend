@@ -332,12 +332,12 @@ export default {
 		},
 			
 		сheckAllFields(){
-			const name                = this.name;
-			const message             = this.message;
-			const company_name        = this.company_name;
-			const company_description = this.company_description;
-			const logo                = this.$store.state.meetupForm.logo;   
-			const website             = this.website
+			const name                = this.name ? this.name : 'no_update';
+			const message             = this.message ? this.message : 'no_update';
+			const company_name        = this.company_name ? this.company_name : 'no_update';
+			const company_description = this.company_description ? this.company_description : 'no_update';
+			const logo                = this.$store.state.meetupForm.logo ? this.$store.state.meetupForm.logo : 'no_update';
+			const website             = this.website ? this.website : 'no_update';
 			// if(validLocation && name && message && logo && interest && subInterest ){
 			// if(name && message && logo && company_name && company_description && website){
 				this.saveDisabled = false
@@ -351,11 +351,11 @@ export default {
     	async submit() {
 			this.loading = true
 
-			const name                = this.name;
-			const description         = this.message;
-			const company_name        = this.company_name;
-			const company_description = this.company_description;
-			const date                = this.date;
+			const name                = this.name
+			const description         = this.message
+			const company_name        = this.company_name
+			const company_description = this.company_description
+			const date                = this.date
 			const website             = this.website
 
 			let file = this.logoDeleted ? '' : 'no_update', 
@@ -381,7 +381,7 @@ export default {
 		
 			const data = {    
 				id: this.id,
-				name: name,
+				meetup_name: name,
 				description: description,
 				company_name: company_name,
 				company_description: company_description,
@@ -391,7 +391,8 @@ export default {
 				preview: filePreview,
 				ext: format,                      
 				previewExt: formatPreview,
-				custom_colors: 'no_update'
+				custom_colors: 'no_update',
+				color_schema: 'no_update'
 			}
 
 			const res = await MeetupFormRoutes.postUpdate(data)

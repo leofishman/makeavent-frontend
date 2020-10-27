@@ -43,7 +43,13 @@ export default {
             color_schema: this.$store.getters.meetupFull.color_schema,
             custom_colors: this.$store.getters.meetupFull.custom_colors,
             preview: 'no_update',
-            image: 'no_update'
+            image: 'no_update',
+            meetup_name: "no_update",
+            description: "no_update",
+            company_name: "no_update",
+            company_description: "no_update",
+            date: "no_update",
+            website: "no_update",
           }
           await routes.postUpdate(obj)
         },

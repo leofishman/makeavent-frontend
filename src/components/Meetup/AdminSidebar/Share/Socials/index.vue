@@ -1,12 +1,11 @@
 <template>
     <div>    
-            <p class="admin-bar__share-social-list-par">Post in social media</p>
-            <div class="admin-bar__share-social-list">
-                <facebook/>
-                <twitter/>
-                <linkedin/>
-            </div>
-            <ActiveButton class="admin-bar__share-social-list-btn admin-bar__button" :name="'Add New Source'"/>
+        <p class="admin-bar__share-social-list-par">{{content}}</p>
+        <div class="admin-bar__share-social-list">
+            <facebook/>
+            <twitter/>
+            <linkedin/>
+        </div>
     </div>
 </template>
 
@@ -20,7 +19,12 @@ import {ActiveButton} from '@/components/Global/controll/'
 export default {
     components: {
         Facebook, Linkedin, Twitter, ActiveButton
-    }
+    },
+    computed: {
+        content( ) {
+            return this.$root.content.adminSidebar.items.share.socials
+        }
+    },
 }
 </script>
 

@@ -237,10 +237,7 @@
     justify-content: center;
     
     border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    background-color: #C4C4C4;
-    color: #000000;
+    
     text-align: center;
     margin-right: 20px;
 
@@ -250,6 +247,14 @@
     letter-spacing: -0.015em;
     &:last-child {
         margin-right: 0;
+    }
+    svg {
+        width: 32px;
+        height: 32px;
+        path {
+            fill: black;
+            opacity: 0.5;
+        }
     }
 }
 .admin-bar__share-social-list-par {
@@ -318,8 +323,11 @@
     width: 48px;
     height: 48px;
     margin-right: 13px;
-    img {
+    svg {
         border-radius: 50%;
+        path {
+            opacity: 0.5;
+        }
     }
 }
 .admin-bar__streaming-source-name {

@@ -6,7 +6,7 @@
             <in-active-button @clicked="copy" class="admin-bar__button" :name="content.buttons.clipboard"/>
             <!-- <in-active-button class="admin-bar__button" :name="content.buttons.invitations"/> -->
             <input :value="link" class="input-disabled__inner" type="text">
-            <!-- <socials/> -->
+            <socials/>
         </template>
       </item>
   </section>

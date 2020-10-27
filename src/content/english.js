@@ -699,6 +699,7 @@ export default {
             },
             share: {
                 title: 'Share',
+                socials: "Share in social media",
                 buttons: {
                     clipboard: 'Copy link to Clipboard',
                     invitations: 'Send Email Invitations',

@@ -8,7 +8,7 @@
             :can-cancel="false">
             </b-loading>
         <div class="admin-bar__streaming-source-image">
-            <img :src="img" />
+            <inline-svg :src="require(`@/assets/img/socials/${this.source.name.toLowerCase()}.svg`)" />
         </div>
         <div class="admin-bar__streaming-source-col">
             <div class="admin-bar__streaming-source-name"><span>{{source.name}}</span></div>
@@ -49,12 +49,12 @@ export default {
         showDeleteButton: Boolean
     },
     mounted() {
-        try {
-            this.img = require(`@/assets/img/socials/${this.source.name.toLowerCase()}.svg`)
-        }
-        catch (e) {
-            console.log('no such icon: ' + this.source.name.toLowerCase());
-        }
+        // try {
+        //     this.img = 
+        // }
+        // catch (e) {
+        //     console.log('no such icon: ' + this.source.name.toLowerCase());
+        // }
     },
     data() {
         return {

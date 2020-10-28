@@ -78,6 +78,7 @@
 
             <div class="edit-field logo-field">
                 <h2 class="title">{{meetupPopupForm.labels.logo}}</h2>
+				<p class="warn">{{$root.content.common.filesizelimit}}</p>
                 <section class="file-uploader">
 					<!-- upload section -->
                     <b-field>
@@ -116,6 +117,7 @@
 
             <div class="edit-field interets-field">
                 <h2 class="title">{{meetupPopupForm.labels.background}}</h2>
+				<p class="warn">{{$root.content.common.filesizelimit}}</p>
                 <section class="file-uploader">
 					<!-- upload bg -->
                     <b-field>
@@ -137,6 +139,7 @@
                             </section>
                         </b-upload>
                     </b-field>
+
 					<!-- preview test 1 -->
                     <template v-if="showBg">
                         <div class="preview-image" v-if="util.isImage(background)">
@@ -283,50 +286,61 @@ export default {
 			
 		updateLogo(e){
 			try {
-				if ( this.file ) {
-					const image = this.file
-	
-					const reader = new FileReader()
-					reader.readAsDataURL(image)
-					reader.onload = e => {
-						this.fileUplodated = e.target.result
-					}
-					
-					this.saveDisabled = false
+				if ( this.file.size > 1000000 ) {
+					this.$root.createError(this.$root.content.ErrorMessages[12], 'oops')
 				}
-				else this.saveDisabled = true
+				else {
+					if ( this.file ) {
+						const image = this.file
+		
+						const reader = new FileReader()
+						reader.readAsDataURL(image)
+						reader.onload = e => {
+							this.fileUplodated = e.target.result
+						}
+						
+						this.saveDisabled = false
+					}
+					else this.saveDisabled = true
+				}
 			}
 			catch (e) {}
 		},
 			
 		updatePreview(e){
 			try {
-				if ( this.previewFile ) {
-					const name = this.previewFile.name
-					if(this.util.isImage(name)){
-						const image = this.previewFile
-						const reader = new FileReader()
-	
-						reader.readAsDataURL(image)
-						reader.onload = e => {
-							this.previewUplodated = e.target.result
-							this.previewToup = e.target.result
-						}
-					} else if ( this.util.isVideo(name) ){
-						const video = this.previewFile
-						const reader = new FileReader()
-						reader.readAsDataURL(video)
-						this.previewUplodated = URL.createObjectURL(video)
-						reader.onload = e => {
-							this.previewToup = e.target.result
-						}
-						this.previewFileValid = true
-						this.nextDisabled = false
-					}
-						
-					this.saveDisabled = false
+				if ( this.previewFile.size > 1000000 ) {
+					this.$root.createError(this.$root.content.ErrorMessages[12], 'oops')
 				}
-				else this.saveDisabled = true
+				else {
+					if ( this.previewFile ) {
+						const name = this.previewFile.name
+	
+						if(this.util.isImage(name)){
+							const image = this.previewFile
+							const reader = new FileReader()
+		
+							reader.readAsDataURL(image)
+							reader.onload = e => {
+								this.previewUplodated = e.target.result
+								this.previewToup = e.target.result
+							}
+						} else if ( this.util.isVideo(name) ){
+							const video = this.previewFile
+							const reader = new FileReader()
+							reader.readAsDataURL(video)
+							this.previewUplodated = URL.createObjectURL(video)
+							reader.onload = e => {
+								this.previewToup = e.target.result
+							}
+							this.previewFileValid = true
+							this.nextDisabled = false
+						}
+							
+						this.saveDisabled = false
+					}
+					else this.saveDisabled = true
+				}
 			}
 			catch (e) {}
 		},

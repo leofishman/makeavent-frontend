@@ -56,6 +56,7 @@
             <!-- Logo -->
             <b-step-item step="4" :label="content.stepName.logo" :clickable="isStepsClickable" disabled>
                 <h2 class="title">{{content.labels.logo}}</h2>
+                <p class="warn">{{$root.content.common.filesizelimit}}</p>
                 <div class="columns">
                     <div class="collumn">
                         <section class="file-uploader">
@@ -100,6 +101,7 @@
             <!-- Preview -->
             <b-step-item step="5" :label="content.stepName.preview" :clickable="isStepsClickable" disabled>
                 <h2 class="title">{{content.labels.preview}}</h2>
+                <p class="warn">{{$root.content.common.filesizelimit}}</p>
                 <div class="columns">
                     <div class="column">
                         <section class="file-uploader file-uploader--video">
@@ -342,21 +344,26 @@
             updateLogo (e) {
                 try {
                     const fileName = this.file.name
-                    
-                    if ( this.file && this.util.isImage(fileName) ) {
-                        const image = this.file
-                        const reader = new FileReader()
-                        reader.readAsDataURL(image)
-                        reader.onload = e => {
-                            this.fileUplodated = e.target.result
-                        }
-                        
-                        this.fileValid = true
-                        this.nextDisabled = false
+
+                    if ( this.file.size > 1000000 ) {
+                        this.$root.createError(this.$root.content.ErrorMessages[12], 'oops')
                     }
                     else {
-                        this.fileValid = false
-                        this.nextDisabled = true
+                        if ( this.file && this.util.isImage(fileName) ) {
+                            const image = this.file
+                            const reader = new FileReader()
+                            reader.readAsDataURL(image)
+                            reader.onload = e => {
+                                this.fileUplodated = e.target.result
+                            }
+                            
+                            this.fileValid = true
+                            this.nextDisabled = false
+                        }
+                        else {
+                            this.fileValid = false
+                            this.nextDisabled = true
+                        }
                     }
                 }
                 catch (e) {}
@@ -364,20 +371,25 @@
             updatePreview (e) {
                 try {
                     const fileName = this.previewFile.name
-                    // && (this.util.isImage(fileName) || this.util.isVideo(fileName) )
-                    if ( this.previewFile && this.util.isImage(fileName) ) {
-                        const image = this.previewFile
-                        const reader = new FileReader()
-                        reader.readAsDataURL(image)
-                        reader.onload = e => {
-                            this.PfileUplodated = e.target.result
-                        }                    
-                        
-                        this.previewFileValid = true
-                        this.nextDisabled = false
-                    } else {
-                        this.previewFileValid = false
-                        this.nextDisabled = true
+
+                    if ( this.previewFile.size > 1000000 ) {
+                        this.$root.createError(this.$root.content.ErrorMessages[12], 'oops')
+                    }
+                    else {
+                        if ( this.previewFile && this.util.isImage(fileName) ) {
+                            const image = this.previewFile
+                            const reader = new FileReader()
+                            reader.readAsDataURL(image)
+                            reader.onload = e => {
+                                this.PfileUplodated = e.target.result
+                            }                    
+                            
+                            this.previewFileValid = true
+                            this.nextDisabled = false
+                        } else {
+                            this.previewFileValid = false
+                            this.nextDisabled = true
+                        }
                     }
                 }
                 catch (e) {}

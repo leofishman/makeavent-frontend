@@ -46,6 +46,7 @@
 
             <b-step-item step="3" :label="content.groupPopupForm.stepName.logo" :clickable="isStepsClickable" disabled>
                 <h2 class="title">{{$root.content.groupPopupForm.labels.logo}}</h2>
+                <p class="warn">{{$root.content.common.filesizelimit}}</p>
                  <section class="file-uploader">
                     <b-field>
                         <b-upload v-model="file"
@@ -258,23 +259,28 @@
             updateLogo(e){
                 try {
                     const fileName = this.file.name
-                    
-                    if ( this.file && this.util.isImage(fileName) ) {
-                        const image = this.file
-                        const reader = new FileReader()
-                        reader.readAsDataURL(image)
-                        reader.onload = e => {
-                            this.setLogo(e.target.result)
-                            this.fileUplodated = e.target.result
-                        }
-                        
-                        // this.setLogo(formData);
-                        this.fileValid = true
-                        this.nextDisabled = false
+
+                    if ( this.file.size > 1000000 ) {
+                        this.$root.createError(this.$root.content.ErrorMessages[12], 'oops')
                     }
                     else {
-                        this.fileValid = false
-                        this.nextDisabled = true
+                        if ( this.file && this.util.isImage(fileName) ) {
+                            const image = this.file
+                            const reader = new FileReader()
+                            reader.readAsDataURL(image)
+                            reader.onload = e => {
+                                this.setLogo(e.target.result)
+                                this.fileUplodated = e.target.result
+                            }
+                            
+                            // this.setLogo(formData);
+                            this.fileValid = true
+                            this.nextDisabled = false
+                        }
+                        else {
+                            this.fileValid = false
+                            this.nextDisabled = true
+                        }
                     }
                 }
                 catch (e) {}

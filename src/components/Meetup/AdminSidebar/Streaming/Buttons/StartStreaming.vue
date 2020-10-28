@@ -9,26 +9,59 @@
 </template>
 
 <script>
+import MeetupFormRoutes from '@/store/routes/meetup-form'
+import {mapActions} from 'vuex'
+
 export default {
     data() {
         return {
+            link: '',
             isLoading: false
         }
     },
+    async mounted(){
+        const obj = {
+            role: 'speaker',
+            userId: this.$root.profile._id,
+            id: this.$root.meetup._id
+        }
+        const res = await MeetupFormRoutes.postCreateInviteLink(obj);
+        this.link = res.data
+    },
     methods: {
-        click(){
-            this.isLoading = true
-            this.$root.mainroom_streamApp.stream.executeCommand('startRecording', {
-                mode: "stream", //recording mode, either `file` or `stream`.
-                dropboxToken: "", //dropbox oauth2 token.
-                shouldShare: false, //whether the recording should be shared with the participants or not. Only applies to certain jitsi meet deploys.
-                youtubeStreamKey: this.$root.meetup._id, //the youtube stream key.
-                youtubeBroadcastID: this.$root.meetup._id //the youtube broacast ID.
-            })
-            setTimeout(() => {
-                this.isLoading = false
-                this.$emit('clicked')
-            }, 10000)
+        ...mapActions(['toggleMeetupRoom']),
+        async click () {
+            if ( !this.$store.state.meetupForm.speakers.length ) {
+                this.$buefy.dialog.confirm({
+                    title: this.$root.content.common.attention,
+                    message: this.$root.content.adminSidebar.items.streaming.warningNospeaker,
+                    confirmText: 'Add me as a speaker',
+                    cancelText: 'Cancel',
+                    canCancel: true,
+                    onConfirm: async () => {
+                        window.location.href = this.link
+                    }
+                })
+            }
+            else {
+                this.isLoading = true
+                const obj = {
+                    id: this.$root.meetup._id
+                }
+                await this.toggleMeetupRoom(obj)
+
+                this.$root.mainroom_streamApp.stream.executeCommand('startRecording', {
+                    mode: "stream", //recording mode, either `file` or `stream`.
+                    dropboxToken: "", //dropbox oauth2 token.
+                    shouldShare: false, //whether the recording should be shared with the participants or not. Only applies to certain jitsi meet deploys.
+                    youtubeStreamKey: this.$root.meetup._id, //the youtube stream key.
+                    youtubeBroadcastID: this.$root.meetup._id //the youtube broacast ID.
+                })
+                setTimeout(() => {
+                    this.isLoading = false
+                    this.$emit('clicked')
+                }, 10000)
+            }
         }
     }
 }

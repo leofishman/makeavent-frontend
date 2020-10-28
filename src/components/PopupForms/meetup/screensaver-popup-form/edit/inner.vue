@@ -22,6 +22,7 @@
         <div class="columns">
             <div class="column">
                 <h2 class="title">{{content.create.labels.video}}</h2>
+                <p class="warn">{{$root.content.common.filesizelimit}}</p>
                 <section class="file-uploader file-uploader--video">
                     <b-field>
                         <b-upload v-model="previewFile"
@@ -233,32 +234,37 @@ export default {
 
         updatePreview (e) {
             try {
-				if ( this.previewFile ) {
-                    const name = this.previewFile.name
-					if(this.util.isImage(name)){
-						const image = this.previewFile
-						const reader = new FileReader()
-	
-						reader.readAsDataURL(image)
-						reader.onload = e => {
-							this.previewUplodated = e.target.result
-							this.previewToup = e.target.result
-						}
+                if ( this.previewFile.size > 1000000 ) {
+					this.$root.createError(this.$root.content.ErrorMessages[12], 'oops')
+				}
+				else {
+                    if ( this.previewFile ) {
+                        const name = this.previewFile.name
+                        if(this.util.isImage(name)){
+                            const image = this.previewFile
+                            const reader = new FileReader()
+        
+                            reader.readAsDataURL(image)
+                            reader.onload = e => {
+                                this.previewUplodated = e.target.result
+                                this.previewToup = e.target.result
+                            }
+                        }
+                        
+                        else if ( this.util.isVideo(name) ) {
+                            const video = this.previewFile
+                            const reader = new FileReader()
+                            reader.readAsDataURL(video)
+                            this.previewUplodated = URL.createObjectURL(video)
+                            reader.onload = e => {
+                                this.previewToup = e.target.result
+                            }
+                            this.previewFileValid = true
+                        }
                     }
                     
-                    else if ( this.util.isVideo(name) ) {
-						const video = this.previewFile
-						const reader = new FileReader()
-						reader.readAsDataURL(video)
-						this.previewUplodated = URL.createObjectURL(video)
-						reader.onload = e => {
-							this.previewToup = e.target.result
-						}
-						this.previewFileValid = true
-					}
+                    this.loader = false
                 }
-                
-                this.loader = false
 			}
 			catch (e) {
                 console.log(e);

@@ -359,6 +359,8 @@ export default {
         yourRole: "Your Role",
         pwd_place: "123456",
         team: "team",
+        filesizelimit: "Maximum file size is 1mb",
+        attention: "Attention"
     },
 
     StartupsDemoDay: {
@@ -413,7 +415,8 @@ export default {
         8: 'No user with such email',
         9: 'We apologize, but meetup organizator has not opened <b>Networking Room</b> yet',
         10: "We apologize, but this Meetup is available only after registration for it.",
-        11: "We apologize, but there was an error while saving streaming source."
+        11: "We apologize, but there was an error while saving streaming source.",
+        12: "File size is too big, please try smaller one"
     },
 
     VipMeetingRoom: {
@@ -714,7 +717,7 @@ export default {
                     o_backst: 'Show Backstage Window',
                     o_recording: 'Start Recording',
                     h_recording: 'Stop Recording',
-                    o_streaming: 'Start Streaming',
+                    o_streaming: 'Start Broadcasting',
                     h_streaming: 'Stop Recording',
                     manage: 'Manage Backstage'
                 },
@@ -732,7 +735,7 @@ export default {
             streaming: {
                 title: 'Streaming',
                 buttons: {
-                    start: 'Start Streaming',
+                    start: 'Start Broadcasting',
                     stop: 'Stop Streaming',
                     add: 'Add New Source',
                     edit: 'Edit Streaming Sources',
@@ -756,6 +759,7 @@ export default {
                 editModal: {
                     title: "Edit Streaming Sources",
                 },
+                warningNospeaker: 'Please make sure you have added at least one speaker. If you want to add yourself as speaker please click the button below'
             },
             transmition: {
                 title: 'Rooms',

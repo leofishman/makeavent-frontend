@@ -38,6 +38,7 @@
 
         <div class="edit-field logo-field">
             <h2 class="title">{{$root.content.groupEditPopupForm.labels.logo}}</h2>
+            <p class="warn">{{$root.content.common.filesizelimit}}</p>
             <b-field class="file">
                 <b-upload 
                     v-model="file"
@@ -209,12 +210,17 @@
             },
             updateLogo(e){
                 try {
-                    if ( this.file ) {
-                        const image = this.file
-                        const reader = new FileReader()
-                        reader.readAsDataURL(image)
-                        reader.onload = e => {
-                            this.setLogo(e.target.result)
+                    if ( this.file.size > 1000000 ) {
+                        this.$root.createError(this.$root.content.ErrorMessages[12], 'oops')
+                    }
+                    else {
+                        if ( this.file ) {
+                            const image = this.file
+                            const reader = new FileReader()
+                            reader.readAsDataURL(image)
+                            reader.onload = e => {
+                                this.setLogo(e.target.result)
+                            }
                         }
                     }
                 }

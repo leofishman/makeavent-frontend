@@ -406,7 +406,7 @@ export default {
     ErrorMessages: {
         0: 'This will be available <b>25 of May</b>',
         1: 'We updating webinar host, sorry for the inconvinience',
-        2: 'We apologize, but there is a error adding reminder for you.<br>Please contact <b>support@makeavent.com</b>',
+        2: 'We apologize, but there is an error adding reminder for you.<br>Please contact <b>support@makeavent.com</b>',
         3: 'We apologize, but <b>Startups Demo Day</b> available only for <b>Investors, Startups and Media Partners</b>',
         4: 'Please provide at least 1 social network or photo. This is necessary so that your business contacts can identify you',
         5: 'We apologize, but <b>Startups Demo Day Pitching e-Booth</b> is available only for <b>Investors</b>',
@@ -416,7 +416,8 @@ export default {
         9: 'We apologize, but meetup organizator has not opened <b>Networking Room</b> yet',
         10: "We apologize, but this Meetup is available only after registration for it.",
         11: "We apologize, but there was an error while saving streaming source.",
-        12: "File size is too big, please try smaller one"
+        12: "File size is too big, please try smaller one",
+        13: "We apologize, but there is an error inviting speakers by emails."
     },
 
     VipMeetingRoom: {
@@ -667,8 +668,13 @@ export default {
         title: 'Invite Speaker',
         labels: {
             invite: 'Invite by link',
-        }
-    }, 
+            inviteByEmail: 'Invite by email(s)',
+            addEmail: 'Add email'
+        },
+        hintByLink: "In order to add new speaker just send the link above. Right after that person followed that link and login in his/her Makeavent account, he/she will be confirmed as a speaker",
+        pressEnter: 'Press "enter" to submit email and add new.',
+        successMessage: "Invitation emails been successfully sent."
+    },
 
     adminSidebar: {
         items: {

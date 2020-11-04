@@ -192,16 +192,16 @@ export default {
                 return true
 
             else if ( this.userType == "speaker" ) {
-                if ( this.id == "backstage" )
+                // if ( this.id == "backstage" )
                     return true
 
-                else if ( this.id == "mainroom" ) {
-                    if (this.$root.meetup.status == "ongoing")
-                        return true
+                // else if ( this.id == "mainroom" ) {
+                //     if (this.$root.meetup.status == "ongoing")
+                //         return true
 
-                    else
-                        return false
-                }
+                //     else
+                //         return false
+                // }
             }
 
             else if ( this.userType == "basic" ) {
@@ -215,7 +215,7 @@ export default {
         },
 
         getBackstage () {
-            if ( this.userType == 'admin' )
+            // if ( this.userType == 'admin' )
                 return new Promise((resolve, reject) => {
                     Axios.create({
                         baseURL: MEETUP.getMeetupBackstage + '?id=' + this.$root.meetup._id,
@@ -229,8 +229,8 @@ export default {
                     })
                     .catch(reject)
                 })
-            else
-                return
+            // else
+            //     return
 		},
 
         startStream () {

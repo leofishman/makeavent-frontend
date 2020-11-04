@@ -78,6 +78,11 @@ export default {
     return api().post('/meetup/delete-streaming-source', params, {
       ...opts
     })
+  },
+  postInviteByEmail (params) {
+    return api().post('/meetup/invite-email', params, {
+      ...opts
+    })
   }
 }
 

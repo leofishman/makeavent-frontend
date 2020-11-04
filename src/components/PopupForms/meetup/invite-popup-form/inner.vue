@@ -1,16 +1,44 @@
 <template>
     <section class="group-steps stuff-popup-form">
-        <h2 class="title">{{$root.content.inviteSpeaker.labels.invite}}</h2>
-        <b-field class="stuff-field__link">
-            <div class="input-disabled">
-                <input class="input-disabled__inner" :value="link" readonly>
-                <div class="input-disabled__copt-btn-wrap">
-                    <b-tooltip :label="$root.content.globalForms.labels.copy" type="is-black" position="is-top" :class="isActive ? 'is-active': ''">
-                        <button class="input-disabled__copt-btn" @click="copy">{{$root.content.globalForms.buttons.copy}}</button>
-                    </b-tooltip>
+        <div v-if="isLoading">
+            <b-loading style="margin:15px" class="loading-overlay--dark" :is-full-page="false" :active="true" :can-cancel="false"></b-loading>
+        </div>
+        <div v-else>
+            <h2 class="title">{{content.labels.invite}}</h2>
+            <b-field class="stuff-field__link">
+                <div class="input-disabled">
+                    <input class="input-disabled__inner" :value="link" readonly>
+                    <div class="input-disabled__copt-btn-wrap">
+                        <b-tooltip :label="$root.content.globalForms.labels.copy" type="is-black" position="is-top" :class="isActive ? 'is-active': ''">
+                            <button class="input-disabled__copt-btn" @click="copy">{{$root.content.globalForms.buttons.copy}}</button>
+                        </b-tooltip>
+                    </div>
+                </div> 
+            </b-field>
+            <p>{{content.hintByLink}}</p>
+
+            <section style="margin-top:20px">
+                <h2 class="title">{{content.labels.inviteByEmail}}</h2>
+                <b-field>
+                    <b-taginput
+                        v-model="tags"
+                        autocomplete
+                        :allow-new="allowNew"
+                        :open-on-focus="openOnFocus"
+                        field="user.email"
+                        icon="label"
+                        :placeholder="content.labels.addEmail"
+                        >
+                    </b-taginput>
+                </b-field>
+                <span>{{content.pressEnter}}</span>
+            </section>
+            <div v-if="tags.length" class="columns" style="margin-top:10px">
+                <div class="column is-3">
+                    <b-button class="button is-success is-outlined submit-button" @click="submit">{{$root.content.common.submit}}</b-button>
                 </div>
-            </div> 
-        </b-field>
+            </div>
+        </div>
     </section>
 </template>
 
@@ -21,7 +49,17 @@ export default {
     data(){
         return {
             link: '',
-            isActive: false
+            isActive: false,
+            isSelectOnly: false,
+            tags: [],
+            allowNew: true,
+            openOnFocus: false,
+            isLoading: false
+        }
+    },
+    computed: {
+        content () {
+            return this.$root.content.inviteSpeaker
         }
     },
     async mounted(){
@@ -43,6 +81,30 @@ export default {
             document.execCommand("copy");
             this.isActive = true
             setTimeout(() => this.isActive = false, 1000)
+        },
+        async submit () {
+            this.isLoading = true
+            const data = {
+                emails: this.tags,
+                role: 'speaker',
+                id: this.$root.meetup._id
+            }
+            try {
+                await MeetupFormRoutes.postInviteByEmail(data)
+                this.isLoading = false
+                this.tags = []
+                this.$buefy.dialog.confirm({
+                    title: this.$root.content.common.success,
+                    message: this.content.successMessage,
+                    cancelText: '',
+                    canCancel: false,
+                })
+            }
+            catch (e) {
+                this.isLoading = false
+                this.tags = []
+                this.$root.createError(this.content.ErrorMessages[13], 'oops')
+            }
         }
     }
 }

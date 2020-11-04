@@ -109,7 +109,7 @@
 									<JitsiStream
 										v-if="$root.meetup.service == 'jitsi' && defineHowToRender() == 'speaker'"
 										:meetup="$root.meetup"
-										_id="mainroom"
+										_id="backstage"
 									/>
 									<div v-else class="video-stream">
 										<div v-if="!videoReady" class="box">

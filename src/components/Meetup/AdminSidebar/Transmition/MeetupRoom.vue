@@ -7,8 +7,8 @@
       :can-cancel="false"
     />
     <b-field :label="transmition.labels.meetup">  
-      <b-switch v-model="isSwitched">
-        <p v-if="isSwitched">{{transmition.placeholders.close}}</p>
+      <b-switch v-model="openStatus">
+        <p v-if="openStatus">{{transmition.placeholders.close}}</p>
         <p v-else>{{transmition.placeholders.opened}}</p>
       </b-switch>
     </b-field>
@@ -18,7 +18,7 @@
 <script>
 import {SwitchComponent} from '@/components/Global/controll/'
 
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   components: {
@@ -27,22 +27,30 @@ export default {
   methods: {
     ...mapActions(['toggleMeetupRoom']),
   },
-  watch: {
-    isSwitched: async function () {
-      const obj = {
-        id: this.$root.meetup._id
-      }
+  computed: {
+    ...mapGetters({
+      meetupRoomOpened: 'meetupRoomOpened'
+    }),
+    openStatus: {
+      get(){
+        return this.meetupRoomOpened
+      },
+      async set(){
+        const obj = {
+          id: this.$root.meetup._id
+        }
 
-      this.isLoading = true
-      await this.toggleMeetupRoom(obj)
-      this.isLoading = false   
+        this.isLoading = true
+        await this.toggleMeetupRoom(obj)
+        this.isLoading = false 
+      } 
     }
   },
   data(){
     return {
       transmition: this.$root.content.adminSidebar.items.transmition,
 
-      isSwitched: this.$root.meetup.status == 'ongoing' ? true : false,
+      switcher: this.$store.state.meetupForm.meetupRoomOpened,
       isLoading: false
     }
   }

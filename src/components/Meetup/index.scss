@@ -6,6 +6,7 @@
 @import "@/components/Chats/index.scss";
 
 #meetup-admin-sidebar {
+	position: absolute;
 	.sidebar-content {
 		width: 300px;
 		display: block;
@@ -77,14 +78,14 @@
 	}
 
 	.default-meetup-container--squeezed-for-left-meetup-admin-sidebar {
-		.meetup-title {
-			font-size: 42px;
-			margin: 10px 15px;
-		}
-		.meetup-description {
-			font-size: 18px;
-			margin: 10px 15px;
-		}
+		// .meetup-title {
+		// 	font-size: 42px;
+		// 	margin: 10px 15px;
+		// }
+		// .meetup-description {
+		// 	font-size: 18px;
+		// 	margin: 10px 15px;
+		// }
 	}
 
 	.meetup-title {
@@ -335,19 +336,23 @@
 	left: "0px";
 
 	&--squeezed-for-left-meetup-admin-sidebar {
-		@extend .default-meetup-container;
 		z-index: 2;
 		position: relative;
-		// width: calc(100% - 600px);
-		// margin-left: 300px;
-		width: calc(100% - 680px);
-		margin-left: 380px;
-		.container-edit {
-			margin-left: 0px;
-		}
-		.columns {
-			margin-left: 0.25rem;
-			margin-right: 0.25rem;
-		}
+		width: 100%;
+		left: "0px";
+	// 	@extend .default-meetup-container;
+	// 	z-index: 2;
+	// 	position: relative;
+	// 	width: calc(100% - 600px);
+	// 	margin-left: 300px;
+	// 	width: calc(100% - 680px);
+	// 	margin-left: 380px;
+	// 	.container-edit {
+	// 		margin-left: 0px;
+	// 	}
+	// 	.columns {
+	// 		margin-left: 0.25rem;
+	// 		margin-right: 0.25rem;
+	// 	}
 	}
 }

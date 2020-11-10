@@ -125,6 +125,9 @@ export default {
         },
         meetupSocials(state){
             return state.socials
+        },
+        meetupRoomOpened (state) {
+            return state.meetupRoomOpened
         }
     }
 }

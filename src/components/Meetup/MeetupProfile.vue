@@ -19,7 +19,8 @@
 			<div class="container container-edit">
 				<section class="section section-profile-company">
 					<div class="columns is-desktop">
-						<aside v-if="!$root.openMeetupSettings" class="column is-full-mobile is-half-widescreen is-one-third-fullhd">
+						<!-- v-if="!$root.openMeetupSettings"  -->
+						<aside class="column is-full-mobile is-half-widescreen is-one-third-fullhd">
 							<div class="profile-top">
 								<figure class="company-logo">
 									<img :src="$root.meetup.image">
@@ -52,7 +53,8 @@
 									</li>
 								</ul>
 
-								<div v-if="expanded && $root.meetup.stuff" class="profile-bio">
+								<!-- expanded &&  -->
+								<div v-if="$root.meetup.stuff" class="profile-bio">
 									<b-button v-if="$root.meetup.stuff.length"
 										class="is-primary is-primary-changeable--bg is-fullwidth invert-color"
 										@click="materialsModalActive = true"
@@ -64,23 +66,23 @@
 										v-bind:class="classes"
 										class="bio-content is-dark-changeable--color"></p>
 
-									<b-button v-if="!expanded"
+									<!-- <b-button v-if="!expanded"
 										class="is-small is-fullwidth is-dark-changeable--color is-light-changeable--bg invert-color"
 										@click="bioExpand"
 									>{{content.readMore}}</b-button>
 									<b-button v-else
 										class="is-small is-fullwidth is-dark-changeable--color is-light-changeable--bg invert-color"
 										@click="bioCollapse"
-									>{{content.showLess}}</b-button>
+									>{{content.showLess}}</b-button> -->
 								</div>
 
-								<div v-if="!expanded && $root.meetup.stuff"
+								<!-- <div v-if="!expanded && $root.meetup.stuff"
 									class="company-materials">
 									<b-button v-if="$root.meetup.stuff.length"
 										class="is-primary is-primary-changeable--bg is-fullwidth invert-color"
 										@click="materialsModalActive = true"
 									>{{content.viewMaterials}}</b-button>
-								</div>
+								</div> -->
 							</div>
 						</aside>
 
@@ -340,7 +342,7 @@
 				content: this.$root.content.Meetup,
 
 				expanded: false,
-				classes: "bio-content-collapsed",
+				classes: "bio-content-expand",
 				demoModalActive: false,
 				materialsModalActive: false,
 				self: this,
@@ -443,15 +445,15 @@
 					this.$root.createError(this.$root.content.ErrorMessages[9], 'oops')
 			},
 
-			bioExpand: function() {
-				this.classes="bio-content-expand";
-				this.expanded=true;
-			},
+			// bioExpand: function() {
+			// 	this.classes="bio-content-expand";
+			// 	this.expanded=true;
+			// },
 
-			bioCollapse: function() {
-				this.classes="bio-content-collapsed";
-				this.expanded=false;
-			},
+			// bioCollapse: function() {
+			// 	this.classes="bio-content-collapsed";
+			// 	this.expanded=false;
+			// },
 
 			getExternalCss () {
 				if (this.$root.meetup.cssClass) {

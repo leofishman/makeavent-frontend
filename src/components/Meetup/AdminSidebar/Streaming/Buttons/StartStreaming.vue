@@ -11,6 +11,8 @@
 <script>
 import MeetupFormRoutes from '@/store/routes/meetup-form'
 import {mapActions} from 'vuex'
+import Axios from 'axios'
+import {MEETUP} from '@/api/endpoints'
 
 export default {
     data() {
@@ -60,6 +62,7 @@ export default {
                 setTimeout(() => {
                     this.isLoading = false
                     this.$emit('clicked')
+                    this.$forceUpdate()
                 }, 10000)
             }
         }

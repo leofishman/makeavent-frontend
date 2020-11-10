@@ -1,9 +1,9 @@
 <template>
 	<div v-if="ready" class="meetup-profile is-light-changeable--bg" :style="isBgImage()">
-		<div v-if="util.isImage($root.meetup.preview)" class="scr-saver-fileld__bg" :style="isBgImageBackdrop()"></div>
+		<div v-if="util.isImage(preview)" class="scr-saver-fileld__bg" :style="isBgImageBackdrop()"></div>
 
-		<video v-if="util.isVideo($root.meetup.preview)" :poster="$root.meetup.screensaverColor" class="bg-video" autoplay muted loop>
-			<source :src="$root.meetup.preview" type="video/mp4">
+		<video v-if="util.isVideo(preview)" :poster="$root.meetup.screensaverColor" class="bg-video" autoplay muted loop>
+			<source :src="preview" type="video/mp4">
 		</video>
 
 		<navbar></navbar>
@@ -23,7 +23,7 @@
 						<aside class="column is-full-mobile is-half-widescreen is-one-third-fullhd">
 							<div class="profile-top">
 								<figure class="company-logo">
-									<img :src="$root.meetup.image">
+									<img :src="image">
 								</figure>
 
 								<div class="company-demo">
@@ -36,7 +36,7 @@
 
 							<div class="profile-bottom">
 								<div class="company-name is-dark-changeable--color">
-									{{$root.meetup.company_name}}
+									{{company_name}}
 								</div>
 
 								<!-- Company contacts -->
@@ -54,15 +54,15 @@
 								</ul>
 
 								<!-- expanded &&  -->
-								<div v-if="$root.meetup.stuff" class="profile-bio">
-									<b-button v-if="$root.meetup.stuff.length"
+								<div v-if="stuff" class="profile-bio">
+									<b-button v-if="stuff.length"
 										class="is-primary is-primary-changeable--bg is-fullwidth invert-color"
 										@click="materialsModalActive = true"
 									>{{content.viewMaterials}}</b-button>
 								</div>
 
 								<div class="profile-bio">
-									<p v-html="$root.meetup.company_description"
+									<p v-html="company_description"
 										v-bind:class="classes"
 										class="bio-content is-dark-changeable--color"></p>
 
@@ -76,9 +76,9 @@
 									>{{content.showLess}}</b-button> -->
 								</div>
 
-								<!-- <div v-if="!expanded && $root.meetup.stuff"
+								<!-- <div v-if="!expanded && stuff"
 									class="company-materials">
-									<b-button v-if="$root.meetup.stuff.length"
+									<b-button v-if="stuff.length"
 										class="is-primary is-primary-changeable--bg is-fullwidth invert-color"
 										@click="materialsModalActive = true"
 									>{{content.viewMaterials}}</b-button>
@@ -150,8 +150,8 @@
 								</div>
 							</div>
 
-							<h1 class="meetup-title is-dark-changeable--color" v-html="$root.meetup.meetup_name"></h1>
-							<!-- <div class="meetup-description is-dark-changeable--color" v-html="$root.meetup.meetup_topic"> -->
+							<h1 class="meetup-title is-dark-changeable--color" v-html="meetup_name"></h1>
+							<!-- <div class="meetup-description is-dark-changeable--color" v-html="meetup_topic"> -->
 							<!-- <div v-if="id=='5f53a682c810aa9f7a8150bc'" class="meetup-description is-dark-changeable--color">
 								<div class="columns">
 									<div class="column">
@@ -199,13 +199,13 @@
 									</div>
 								</div>
 							</div> -->
-							<div class="meetup-description is-dark-changeable--color" v-html="$root.meetup.meetup_topic"></div>
+							<div class="meetup-description is-dark-changeable--color" v-html="meetup_topic"></div>
 
 							<div class="speakers-container columns is-multiline member-clasic">
 								<div class="speakers-title is-dark-changeable--color">
 									{{content.speakers}}
 								</div>
-								<div class="column" v-for="(el, index) in $root.meetup.speakers" :key="index">
+								<div class="column" v-for="(el, index) in speakers" :key="index">
 									<Member :data="el"/>
 								</div>
 							</div>
@@ -725,7 +725,31 @@
 			},
 			website () {
 				return this.$root.meetup.website
-			}
+			},
+			company_description () {
+				return this.$store.state.meetupForm.company_description
+			},
+			company_name () {
+				return this.$store.state.meetupForm.company_name
+			},
+			preview () {
+				return this.$store.state.meetupForm.preview
+			},
+			image () {
+				return this.$store.state.meetupForm.logo
+			},
+			stuff () {
+				return this.$store.state.meetupForm.stuff
+			},
+			meetup_name () {
+				return this.$store.state.meetupForm.name
+			},
+			meetup_topic () {
+				return this.$store.state.meetupForm.message
+			},
+			speakers () {
+				return this.$store.state.meetupForm.speakers
+			},
 		},
 	}
 </script>

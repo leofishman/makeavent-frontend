@@ -287,6 +287,7 @@
 	import JitsiStream from '@/components/VideoStreams/Jitsi'
 	import AdminSidebar from '@/components/Meetup/AdminSidebar/index'
 	import tinycolor from 'tinycolor2'
+	import {mapActions} from 'vuex'
 	
 	export default {
 		props: {
@@ -305,6 +306,9 @@
 			PitchDeck,
 			JitsiStream,
 			AdminSidebar
+		},
+		async mounted() {
+			await this.getMeetupById({ id: this.id })
 		},
 		data () {			
 			/* wait until token and sponsors ready*/
@@ -373,6 +377,7 @@
 			}
 		},
 		methods: {
+			...mapActions(['getMeetupById']),
 			countdown (time) {
 				const self = this
 				const countDownDate = new Date(time).getTime();

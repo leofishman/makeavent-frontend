@@ -12,16 +12,18 @@
 
 <script>
 import router from '@/store/routes/meetup-form'
+import {mapActions} from 'vuex'
 
 export default {
     props:['demosArray','updated', 'submitDisabled'],
     methods: {
-        submit(){
+        ...mapActions(['getMeetupById']),
+        async submit(){
             const updated = this.$props.updated
             const id = this.$root.meetup._id
             const demosArray = this.$props.demosArray.map(item => {
                 return {                    
-                    link: item.link,
+                    link: this.util.formYoutubeVideoToEmbed(item.link),
                     name: item.name,
                 }
             })        
@@ -41,7 +43,9 @@ export default {
                     }
                 }
                 
-                router.postAddDemos(data)
+                await router.postAddDemos(data)
+
+                await this.getMeetupById({ id: id })
 
                 window.EventBus.$emit('DemoPopupForm:close')
             }

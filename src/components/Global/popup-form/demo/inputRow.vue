@@ -21,9 +21,12 @@
                     v-if="!demosItem.validURL"
                 >{{demoPopupForm.validation.invalidLink}}</p>
             </b-field>
-            <span v-if="showFisrt" class="close-icon" @click="removeItem(index)">
+            <span class="close-icon" @click="removeItem(index)">
                 <span class="inner-icon">x</span>                
             </span>
+            <!-- <span class="close-icon" v-if="showFisrt" @click="removeItem(index)">
+                <span class="inner-icon">x</span>                
+            </span> -->
         </div>
         <accordion v-if="demosItem.validURL && demosItem.iframeMarkup && demosItem.link.length">
             <accordion-item :valid="demosItem.validURL && demosItem.iframeMarkup">

@@ -279,7 +279,7 @@ export default {
             this.previewToup = ""
         },
         
-        submit(){
+        async submit(){
             this.submitDisabled = true
             this.loader = true
             const id = this.$root.meetup._id
@@ -302,7 +302,9 @@ export default {
                 screensaverColor: this.defaultColor,
                 update: true
             }
-            router.postAddScreensaver(obj)
+            await router.postAddScreensaver(obj)
+
+            await this.getMeetupById({ id: id })
         
             this.loader = false
             window.EventBus.$emit('ScreenSaverPopupForm:close')

@@ -44,6 +44,7 @@
 
 <script>
 import MeetupFormRoutes from '@/store/routes/meetup-form'
+import {mapActions} from 'vuex'
 
 export default {
     data(){
@@ -72,6 +73,7 @@ export default {
         this.link = res.data
     },
     methods: {
+        ...mapActions(['getMeetupById']),
         copy() {
             var copyText = document.querySelector('.stuff-field__link .input-disabled__inner')
             /* Select the text field */
@@ -91,6 +93,9 @@ export default {
             }
             try {
                 await MeetupFormRoutes.postInviteByEmail(data)
+
+                await this.getMeetupById({ id: this.$root.meetup._id })
+
                 this.isLoading = false
                 this.tags = []
                 this.$buefy.dialog.confirm({

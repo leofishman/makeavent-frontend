@@ -43,6 +43,13 @@ export default {
         : null;
     },
 
+    formYoutubeVideoToEmbed (url) {
+        if (url.includes('watch?')) {
+            const id = url.split('watch?v=')[1]
+            return `https://www.youtube.com/embed/${id}`
+        }
+    },
+
     sortArrayBy (array, property) {
         return array.sort((x,y) => {
             if(x[property] < y[property]) { return -1; }

@@ -12,11 +12,13 @@
 
 <script>
 import router from '@/store/routes/meetup-form'
+import {mapActions} from 'vuex'
 
 export default {
     props:['stuffArray','updated', 'submitDisabled'],
     methods: {
-        submit(){
+        ...mapActions(['getMeetupById']),
+        async submit(){
             const updated = this.$props.updated
             const id = this.$root.meetup._id
             const stuffArray = this.$props.stuffArray.map(item => {
@@ -41,7 +43,9 @@ export default {
                     }
                 }
                 
-                router.postAddStuff(data)
+                await router.postAddStuff(data)
+
+                await this.getMeetupById({ id:id })
 
                 window.EventBus.$emit('MaterialsPopup:close')
             }

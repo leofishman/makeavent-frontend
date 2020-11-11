@@ -498,8 +498,8 @@ export default {
             company: 'Company Details',
             title: "Meetup Details",
             date: "Date",
-            logo: "Upload Meetup logo",
-            background: "Upload Meetup background",
+            logo: "Upload Meetup Logo",
+            background: "Upload Meetup Background",
             confirm: "Confirm your data",
             website: "Website"
         },

@@ -44,6 +44,16 @@ export default {
                 catch (e) { console.log(e) }
             })
         },
+        async getStreamStats (ctx, meetupIdObj) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const streamStats = await MeetupRouter.getStreamStats(meetupIdObj)
+                    ctx.commit('updateStreamStats', streamStats)
+                    resolve(true)
+                }
+                catch (e) { console.log(e) }
+            })
+        }
     },
     mutations: {
         // update Meetup
@@ -71,6 +81,9 @@ export default {
         },
         updateMeetupStreamSources (state, streamingSources) {
             state.streamingSources = streamingSources
+        },
+        updateStreamStats (state, streamStats) {
+            state.streamStats = streamStats.data
         },
         updateCustomColor(state, val){
             state.custom_colors = val
@@ -116,7 +129,8 @@ export default {
         stuff: [],
         socials: [],
         speakers: [],
-        isDefault: true
+        isDefault: true,
+        streamStats: {}
     },
     getters: {
         meetupFull(state){

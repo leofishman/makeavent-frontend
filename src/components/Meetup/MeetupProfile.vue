@@ -89,7 +89,14 @@
 						<div class="column">
 							<div v-if="$root.isUserAdmin" class="columns">
 								<div class="column">
-									<h2 class="is-dark-changeable--color">{{content.mainRoom}}</h2>
+									<div class="columns is-gapless">
+										<div class="column" style="margin-bottom:0px;">
+											<h2 class="is-dark-changeable--color">{{content.mainRoom}}</h2>
+										</div>
+										<div class="column">
+											<h5 v-bind:class="statsClass">{{content.currentlyOnline}} {{streamStats}}</h5>
+										</div>
+									</div>
 									<JitsiStream
 										v-if="$root.meetup.service == 'jitsi'"
 										:meetup="$root.meetup"
@@ -309,6 +316,10 @@
 		},
 		async mounted() {
 			await this.getMeetupById({ id: this.id })
+			
+			setInterval(async () => {
+				await this.getStreamStats({ id: this.id })
+			}, 5000)
 		},
 		data () {			
 			/* wait until token and sponsors ready*/
@@ -377,7 +388,7 @@
 			}
 		},
 		methods: {
-			...mapActions(['getMeetupById']),
+			...mapActions(['getMeetupById', 'getStreamStats']),
 			countdown (time) {
 				const self = this
 				const countDownDate = new Date(time).getTime();
@@ -755,6 +766,20 @@
 			speakers () {
 				return this.$store.state.meetupForm.speakers
 			},
+			streamStats () {
+				try {
+					return this.$store.state.meetupForm.streamStats.live[this.$root.meetup.webinarRoom].subscribers.length - 1
+				}
+				catch (e) {
+					return 0
+				}
+			},
+			statsClass () {
+				if (this.streamStats)
+					return 'online-stats--active'
+				else
+					return 'online-stats'
+			}
 		},
 	}
 </script>

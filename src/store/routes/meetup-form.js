@@ -19,6 +19,12 @@ export default {
       params
     })
   },
+  getStreamStats (params) {
+    return api().get('/meetup/get-stream-stats', {
+      ...opts,
+      params
+    })
+  },
   postAddMeetup (params) {
     return api().post('/meetup/add-meetup', params, {
       ...opts     

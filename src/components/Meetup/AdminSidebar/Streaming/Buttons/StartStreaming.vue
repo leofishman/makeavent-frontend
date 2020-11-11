@@ -48,7 +48,8 @@ export default {
             else {
                 this.isLoading = true
                 const obj = {
-                    id: this.$root.meetup._id
+                    id: this.$root.meetup._id,
+                    newStatus: 'ongoing'
                 }
                 await this.toggleMeetupRoom(obj)
 

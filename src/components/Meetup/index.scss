@@ -327,6 +327,18 @@
 		color: $danger;
 		text-align: center;
 	}
+
+	.online-stats {
+		display: block;
+		position: relative;
+		transform: translate(0px, 50%);
+		text-align: right;
+		color: #ff3860;
+		&--active {
+			@extend .online-stats;
+			color: $secondary;	
+		}
+	}
 }
 
 .default-meetup-container {

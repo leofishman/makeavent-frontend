@@ -47,6 +47,21 @@ class MeetupForm {
             }
         })
     }
+
+    static async getStreamStats (meetupIdObj) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await Services.getStreamStats(meetupIdObj)
+                if (res) {
+                    resolve(res.data)
+                }
+                resolve(false)
+            }
+            catch (e) {
+                reject(e)
+            }
+        })
+    }
 }
 
 export default MeetupForm

@@ -89,8 +89,8 @@
 						<div class="column">
 							<div v-if="$root.isUserAdmin" class="columns">
 								<div class="column">
-									<div class="columns is-gapless">
-										<div class="column" style="margin-bottom:0px;">
+									<div class="columns is-gapless" style="margin-bottom:0px">
+										<div class="column">
 											<h2 class="is-dark-changeable--color">{{content.mainRoom}}</h2>
 										</div>
 										<div class="column">

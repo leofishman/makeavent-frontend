@@ -33,7 +33,7 @@ export default {
     }),
     openStatus: {
       get(){
-        return this.meetupRoomOpened
+        return this.meetupRoomOpened == "ongoing" ? true : false
       },
       async set(){
         const obj = {

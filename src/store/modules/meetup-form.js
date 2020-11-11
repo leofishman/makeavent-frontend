@@ -67,6 +67,7 @@ export default {
             state.color_schema = meetup.color_schema
             state.streamingSources = []
             state.website = meetup.website
+            state.status = meetup.status
         },
         updateMeetupStreamSources (state, streamingSources) {
             state.streamingSources = streamingSources
@@ -110,6 +111,7 @@ export default {
         },
         networkingRoomOpened: false,
         meetupRoomOpened: false,
+        status: '',
         demo: [],
         stuff: [],
         socials: [],
@@ -127,7 +129,7 @@ export default {
             return state.socials
         },
         meetupRoomOpened (state) {
-            return state.meetupRoomOpened
+            return state.status
         }
     }
 }

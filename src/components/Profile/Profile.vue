@@ -170,10 +170,9 @@
 							<b-tabs v-model="activeTab">
 								<b-tab-item :label="$root.content.common.connected">
 									<b-loading
-										v-if="connectedCardsLoading"
+										:active.sync="connectedCardsLoading"
 										class="loading-overlay--dark"
 										:is-full-page="false"
-										:active="true"
 										:can-cancel="false"></b-loading>
 									<div v-if="!connectedCardsLoading">
 										<Businesscardconected
@@ -186,10 +185,9 @@
 
 								<b-tab-item>
 									<b-loading
-										v-if="pendingCardsLoading"
+										:active.sync="pendingCardsLoading"
 										class="loading-overlay--dark"
 										:is-full-page="false"
-										:active="true"
 										:can-cancel="false"></b-loading>
 
 									<template slot="header">
@@ -283,6 +281,9 @@
 				name: false
 			}
 
+			this.pendingCardsLoading = true
+			this.connectedCardsLoading = true
+
 			this.$root.check('profile').then(() => {
 				this.newRole = this.$root.profile.role
 				this.newCompany = this.$root.profile.company
@@ -296,6 +297,7 @@
 			await this.$root.getActiveBusinessCards()
 			await this.$root.getPengingCards()
 
+			this.ready = true
 			this.pendingCardsLoading = false
 			this.connectedCardsLoading = false
 		},
@@ -305,8 +307,8 @@
 				content: this.$root.content.Profile,
 				comm_content: this.$root.content.common,
 				ready: this.ready,
-				pendingCardsLoading: true,
-				connectedCardsLoading: true,
+				pendingCardsLoading: false,
+				connectedCardsLoading: false,
 
 				profileParamsFocus: this.profileParamsFocus,
 				activeTab: 0,

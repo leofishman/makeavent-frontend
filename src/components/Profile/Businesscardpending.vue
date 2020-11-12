@@ -1,6 +1,6 @@
 <template>
 	<div class="businesscardpending">
-		<b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="false"></b-loading>
+		<!-- <b-loading :is-full-page="false" :active.sync="isLoading" :can-cancel="false"></b-loading> -->
 		<p>
 			<strong>{{data.name}}</strong>
 			<span class="has-text-grey">{{data.role}} {{common.at}} {{data.company}}</span>
@@ -23,6 +23,7 @@
 		},
 		data () {
 			window.EventBus.$on('close-overlay-by-id', (id) => {
+				console.log(this.data._id, id);
 				if (compare(this.data._id, id))
 					this.isLoading = false
 			})

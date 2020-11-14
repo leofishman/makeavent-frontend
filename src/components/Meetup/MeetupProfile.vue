@@ -150,7 +150,12 @@
 											<b-loading class="loading-overlay--dark" style="margin:15px" :is-full-page="false" :active.sync="videoLoader" :can-cancel="false"></b-loading>
 										</div>
 										<!-- video player -->
-										<video preload="none" id="videoElement" style="height:0px" allowfullscreen></video>
+										<video v-if="!isFullScreenStream" preload="none" id="videoElement" style="height:0px" allowfullscreen></video>
+										
+										<!-- full screen mode button -->
+										<div class="toggleFullScreenStream" @click="toggleFullScreenVideoStream">
+											{{content.toggleFullScr}}
+										</div>
 									</div>
 								</div>
 								<div v-else class="meetup-finished" v-html="content.meetupFinished">
@@ -275,6 +280,43 @@
 
 		<AdminSidebar v-if="$root.isUserAdmin" />
 
+		<b-modal
+		:active.sync="isFullScreenStream"
+		has-modal-card
+		trap-focus
+		:destroy-on-hide="false"
+		aria-role="dialog"
+		aria-modal
+		:full-screen="true"
+		:on-cancel="toggleFullScreenVideoStream"
+		custom-class="fullScreen-modal"
+		>
+			<div class="modal-background" style="display:none"></div>
+
+			<div class="fullScreenMode">
+				<div @click="renderRtmpVideo" class="play-overlay click" v-if="videoReady && showOverlay">
+					<img src="@/assets/play.svg" alt="">
+					<p>{{content.pressToStart}}</p>
+				</div>
+				<!-- loading when video ready -->
+				<div class="play-overlay click" v-if="videoReady && videoLoader">
+					<b-loading class="loading-overlay--dark" style="margin:15px" :is-full-page="false" :active.sync="videoLoader" :can-cancel="false"></b-loading>
+				</div>
+				<!-- video player -->
+				<video preload="none" id="videoElement" style="height:0px" allowfullscreen></video>
+			</div>
+
+			<div class="chat-company-profile is-light-changeable--bg">
+				<Chat
+					v-bind:key="id"
+					v-if="ready"
+					:checkAccess="'companychat'"
+					type="company"
+					:contacts="$root.meetup.speakers"
+					:name="$root.meetup.company_name"
+					:_id="id" />
+			</div>			
+		</b-modal>
 	</div>
 </template>
 
@@ -384,7 +426,9 @@
 
 				ln: require('../../assets/icon/icon-linkedin.svg'),
 				showOverlay: true,
-				videoLoader: false
+				videoLoader: false,
+
+				isFullScreenStream: false
 			}
 		},
 		methods: {
@@ -487,19 +531,24 @@
 				this.showOverlay = false
 				this.videoLoader = true
 
+				try {
+					this.flvPlayer.destroy()
+				}
+				catch (e) { }
+
 				let rtmpTimer = setInterval(() => {
 					const videoElement = document.getElementById('videoElement');
 					if ( videoElement && flvjs) try {
 						clearInterval(rtmpTimer)
 						if (flvjs.isSupported() && this.defineHowToRender() == 'basic') {
-							var flvPlayer = flvjs.createPlayer({
+							this.flvPlayer = flvjs.createPlayer({
 								type: 'flv',
 								url: `https://rtmp.makeavent.com/live/${this.$root.meetup.webinarRoom}.flv`
 							});
 
-							flvPlayer.attachMediaElement(videoElement)
-							flvPlayer.load()
-							flvPlayer.play().then(() => {
+							this.flvPlayer.attachMediaElement(videoElement)
+							this.flvPlayer.load()
+							this.flvPlayer.play().then(() => {
 								this.videoLoader = false
 								videoElement.style.height = 'auto'
 							})
@@ -715,6 +764,15 @@
 							reject('NOT_ATTENDEE')
 					})
 				})
+			},
+
+			toggleFullScreenVideoStream () {
+				this.isFullScreenStream = !this.isFullScreenStream
+				this.renderRtmpVideo()
+
+				this.updateColorLight(this.$root.meetup.color_schema.light)
+				this.updateColorDark(this.$root.meetup.color_schema.dark)
+				this.updateColorPrimary(this.$root.meetup.color_schema.primary)
 			}
 		},
 		watch: {
@@ -779,7 +837,7 @@
 					return 'online-stats--active'
 				else
 					return 'online-stats'
-			}
+			},
 		},
 	}
 </script>

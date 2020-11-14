@@ -110,7 +110,9 @@ export default {
         mainRoom: "Main Room",
         willStartIn: "Meetup will start in ",
         pressToStart: "Press to join Live Stream",
-        meetupFinished: "Meetup Finished.<br>Thank you for attending!"
+        meetupFinished: "Meetup Finished.<br>Thank you for attending!",
+        toggleFullScr: "Full screen",
+        exitFullScreenMode: "Press Esc to exit full screen mode"
     },
 
     DragableJitsi: {

@@ -339,6 +339,46 @@
 			color: $secondary;	
 		}
 	}
+
+	.toggleFullScreenStream {
+		text-align: right;
+		font-weight: 600;
+		color: #0088ff;
+		cursor: pointer;
+		&:hover {
+			color: #004582;
+		}
+	}
+
+	.fullScreen-modal {
+		.modal-background {
+			display: none;
+		}
+		.chat-company-profile {
+			height: 100vh;
+			top: 0px;
+			.chat-wrapper {
+				.chat-bubble {
+					height: calc(100vh - 149px);
+				}
+
+			}
+		}
+	}
+
+	.fullScreenMode {
+		.play-overlay {
+			background: #d0d0d0;
+			border-radius: 5px;
+			height: 100vh;
+			position: relative;
+			width: calc(100vw - 300px);
+		}
+		#videoElement {
+			width: calc(100vw - 300px);
+			height: 100vh !important;
+		}
+	}
 }
 
 .default-meetup-container {

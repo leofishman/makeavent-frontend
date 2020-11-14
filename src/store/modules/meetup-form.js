@@ -105,7 +105,7 @@ export default {
         },
         toggleRoom(state){
             state.meetupRoomOpened = !state.meetupRoomOpened
-        }
+        },
     },
     state: {
         name: '',
@@ -130,7 +130,7 @@ export default {
         socials: [],
         speakers: [],
         isDefault: true,
-        streamStats: {}
+        streamStats: {},
     },
     getters: {
         meetupFull(state){
@@ -144,6 +144,6 @@ export default {
         },
         meetupRoomOpened (state) {
             return state.status
-        }
+        },
     }
 }

@@ -33,6 +33,7 @@ export default {
     }),
     openStatus: {
       get(){
+        console.log(this.meetupRoomOpened)
         return this.meetupRoomOpened == "ongoing" ? true : false
       },
       async set(){

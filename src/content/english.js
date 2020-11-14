@@ -78,6 +78,11 @@ export default {
         },
         MeetupsRow: {
             edit: "Edit"
+        },
+        delete: "Delete",
+        dialog: {
+            confirm: "Please confirm your action",
+            message: (name) => { return `Are you sure you want to delete <b>${name}</b> meetup?<br><br>This action is irreversible, all attendees, speakers and You will lose access to it.` }
         }
     },
 
@@ -112,7 +117,8 @@ export default {
         pressToStart: "Press to join Live Stream",
         meetupFinished: "Meetup Finished.<br>Thank you for attending!",
         toggleFullScr: "Full screen",
-        exitFullScreenMode: "Press Esc to exit full screen mode"
+        exitFullScreenMode: "Press Esc to exit full screen mode",
+        delete: "Delete"
     },
 
     DragableJitsi: {

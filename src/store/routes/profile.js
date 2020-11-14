@@ -7,8 +7,8 @@ const opts = {
 }
 
 export default {
-  getSocials () {
-    return api().get('/meetup/get-all-socials', {
+  deleteMeetup (params) {
+    return api().post('/meetup/delete-meetup-by-id', params, {
       ...opts,      
     })
   }, 

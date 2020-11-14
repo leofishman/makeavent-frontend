@@ -43,6 +43,7 @@ import Axios from 'axios'
 import CreateNewButton from './CreateNewButton'
 import MeetupsRow from './MeetupsRow'
 import LoginWithNewPasswordVue from '../../Auth/LoginWithNewPassword.vue'
+import { mapGetters } from 'vuex'
 
 export default {
     name: "Meetups",
@@ -51,63 +52,22 @@ export default {
         MeetupsRow
     },
     data() {
-        this.isJoinedMeetup()
-            ? this.filterMeetupsOnlyAdminStatus()
-            : null;
-
         return {
             content: this.$root.content.ProfileMeetupsTabs,
             global_content: this.$root.content.common,
 
             activeTab: 0,
-            filteredOnlyAdmin: [],
-            loadedMeetups: [],
-
-            ready: false,
         }
     },
-    methods: {
-        getMeetup (id) {
-            return new Promise(async (resolve, reject) => {
-                await Axios.get(MEETUP.getById + "?id=" + id, {
-                    headers: {
-                        authorization: localStorage.auth
-                    }
-                })
-                .then(res => {
-                    this.loadedMeetups.push(res.data.meetup)
-                    window.EventBus.$emit(`MeetupsRow:cachedChanged`)
-                    resolve(res.data.meetup.admins)
-                })
-                .catch(err => {
-                    this.$root.profile.meetups = this.$root.profile.meetups.filter(el => el != id)
-                    resolve(false)
-                })
+    async mounted() {
+        this.isJoinedMeetup()
+        ? this.filterMeetupsOnlyAdminStatus().then(func => {
+                func(this.$root.profile)
             })
-        },
-
-        async filterMeetupsOnlyAdminStatus () {
-            this.ready             = false
-            this.filteredOnlyAdmin = []
-            this.loadedMeetups     = []
-
-            const promises = this.$root.profile.meetups.map(async meetupId => new Promise(async (resolve, reject) => {
-                const admins = await this.getMeetup(meetupId)
-                if (admins)
-                    if ( admins.includes(this.$root.profile._id) ) {
-                        this.filteredOnlyAdmin.push(this.loadedMeetups.filter(el => el._id == meetupId)[0])
-                    }
-
-                resolve(true)
-            }))
-            await Promise.all(promises)
-
-            this.filteredOnlyAdmin = this.util.sortArrayBy(this.filteredOnlyAdmin, 'meetup_name')
-            this.loadedMeetups     = this.util.sortArrayBy(this.loadedMeetups, 'meetup_name')
-
-            this.ready = true
-        },
-
+        : null  
+    },
+    methods: {
+        ...mapGetters(['filterMeetupsOnlyAdminStatus']),
         isJoinedMeetup () {
             if ( this.$root.profile.meetups ) {
                 if ( this.$root.profile.meetups.length )
@@ -119,10 +79,23 @@ export default {
                 return false
         }
     },
+    computed: {
+        filteredOnlyAdmin () {
+            return this.$store.state.profile.filteredOnlyAdmin
+        },
+        loadedMeetups () {
+            return this.$store.state.profile.loadedMeetups
+        },
+        ready () {
+            return this.$store.state.profile.meetupTabsReady
+        }
+    },
     watch: {
         "$root.profile" : async function (_old, _new) {
             if ( !_old.meetups.equals(_new.meetups) )
-                this.filterMeetupsOnlyAdminStatus()
+                this.filterMeetupsOnlyAdminStatus().then(func => {
+                    func(this.$root.profile)
+                })
         }
     },
 }

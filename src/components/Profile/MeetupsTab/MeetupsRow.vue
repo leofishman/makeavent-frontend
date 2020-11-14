@@ -10,16 +10,19 @@
                         <img v-else :src="`${api}/static/img/brand-default.png`">
                     </figure>
                 </div>
-                <div :class="`column nopadding ${!isEdit ? `is-10` : `is-8`}`">
+                <div :class="`column nopadding ${!isEdit ? `is-10` : `is-6`}`">
                     <div class="attendee-text">
                         <div @click="goToMeetup" class="click attendee-name" v-html="data.meetup_name"></div>
                         <div class="meetup-topic" v-html="data.meetup_topic"></div>
                     </div>
                 </div>
                 <div v-if="isEdit" class="column nopadding is-2">
-                    <b-button @click="edit" type="is-primary" class="centrify-content">
+                    <b-button @click="edit" type="is-primary" class="centrify-content" style="font-size:12px">
                         {{content.edit}}
                     </b-button>
+                </div>
+                <div v-if="isEdit" class="column nopadding is-2">
+                    <DeleteButton :meetup="data"/>
                 </div>
             </div>
         </div>
@@ -29,9 +32,13 @@
 import {MEETUP} from '@/api/endpoints'
 import Axios from 'axios'
 import EditForm from '@/components/PopupForms/meetup/edit-form/'
+import DeleteButton from './DeleteButton'
 
 export default {
     name: "MeetupsRow",
+    components: {
+        DeleteButton
+    },
     props: {
         data: Object,
         isEdit: Boolean

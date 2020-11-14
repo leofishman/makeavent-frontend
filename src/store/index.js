@@ -5,6 +5,7 @@ import groupForm from './modules/group-form'
 import meetupForm from './modules/meetup-form'
 import socialsForm from './modules/socials-form'
 import country from './modules/country'
+import profile from './modules/profile'
 
 Vue.use(Vuex)
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     groupForm,
     meetupForm,
     socialsForm,
-    country
+    country,
+    profile
   }
 })

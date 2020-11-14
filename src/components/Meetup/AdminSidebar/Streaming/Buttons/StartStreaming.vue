@@ -38,7 +38,7 @@ export default {
                     title: this.$root.content.common.attention,
                     message: this.$root.content.adminSidebar.items.streaming.warningNospeaker,
                     confirmText: 'Add me as a speaker',
-                    cancelText: 'Cancel',
+                    cancelText: this.$root.content.common.cancel,
                     canCancel: true,
                     onConfirm: async () => {
                         window.location.href = this.link

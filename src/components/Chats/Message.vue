@@ -2,9 +2,9 @@
     <article :class="messageClass()">
         <div>
             
-            <h3 class="click is-dark-changeable--color"
-            v-on:click="$root.tryBusinessCard(data.from, index)"
-            >{{data.from.name.split(" ")[0]}}</h3>
+            <span v-on:click="$root.tryBusinessCard(data.from, index)" class="click is-dark-changeable--color">
+                {{data.from.name.split(" ")[0]}}
+            </span>
 
             <b-tooltip
                 :label="$root.content.common.replyHint"
@@ -20,7 +20,12 @@
                     v-on:click="showReplyButton(data.from, index)"
                     v-html="data.html">
                 </p>
+                <a class="message-time is-dark-changeable--color" v-if="data.time">
+                    {{new Date(data.time).getHours()}}:{{new Date(data.time).getMinutes()}}:{{new Date(data.time).getSeconds()}}
+                </a>
             </b-tooltip>
+
+
         </div>
     </article>
 </template>
@@ -100,6 +105,7 @@
                     quotedMessage: this.quotedMessage,
                     quotedName: this.quotedName,
                     quoteId: this.quoteId,
+                    time: new Date()
                 }
             })
         },

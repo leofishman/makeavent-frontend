@@ -199,7 +199,8 @@
 								${this.userTextMessage}
 							`,
 							id: id(),
-							message: this.userTextMessage
+							message: this.userTextMessage,
+							time: new Date()
 						})
 					}
 					else {

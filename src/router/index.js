@@ -34,6 +34,8 @@ import NetworkingRoom from '@/components/Networking/NetworkingRooms'
 import Backstage from '@/components/Backstage'
 import ConfirmInvitation from '@/components/ConfirmInvitation'
 
+import Recordings from '@/pages/Recordings'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -171,6 +173,15 @@ const router = new Router({
             path: '/fullscreenRoom',
             name: "NetworkingRoom",
             component: NetworkingRoom,
+            meta: {
+                requiresAuth: true
+            },
+            props: (route) => ({ id: route.query.id }),
+        },
+        {
+            path: '/recordings',
+            name: "Recordings",
+            component: Recordings,
             meta: {
                 requiresAuth: true
             },

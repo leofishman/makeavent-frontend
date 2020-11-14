@@ -18,6 +18,7 @@
                 <streaming/>
                 <share/>
                 <design/>
+                <recording/>
             </div>
         </div>
     </b-sidebar>
@@ -33,6 +34,7 @@ import Share from './Share/'
 import Streaming from './Streaming/'
 import Shortcuts from './Shortcuts/'
 import Speakers from './Speakers/'
+import Recording from './Recordings/'
 
 import {mapActions} from 'vuex'
 
@@ -40,7 +42,7 @@ export default {
     name: 'AdminSidebarWrap',
     components: {
         BackstageControls, Transmition, Information, Design,
-        Share, Streaming, Shortcuts, Speakers
+        Share, Streaming, Shortcuts, Speakers, Recording
     },
     async mounted() {
         const obj = {

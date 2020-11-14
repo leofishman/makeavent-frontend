@@ -790,6 +790,9 @@ export default {
                     time: 'Select'
                 }
             },
+            recording: {
+                title: "Recordings"
+            }
         }
     },
     
@@ -797,5 +800,12 @@ export default {
         bcAccepted: (data) => {
             return `${data.name} ${data.role ? data.role + " at " + data.company : ''} accepted your business card request`
         }
+    },
+
+    Recordings: {
+        title: "Recordings",
+        available: "Avaialable for download",
+        noRecordings: "Unfortunately you have no recordings yet.",
+        download: "Download"
     }
 }

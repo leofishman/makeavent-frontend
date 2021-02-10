@@ -6,8 +6,8 @@
             <div v-if="ready" class="columns only-bot-margin no-border" style="width:100%">
                 <div class="column nopadding is-2">
                     <figure class="attendee-avatar">
-                        <img v-if="data.image" :src="data.image">
-                        <img v-else :src="`${api}/static/img/brand-default.png`">
+                        <img v-if="data.image.length > 50" :src="data.image">
+                        <img v-else :src="`${api}/static/img/brand-default.png`"> 
                     </figure>
                 </div>
                 <div :class="`column nopadding ${!isEdit ? `is-10` : `is-6`}`">
@@ -51,6 +51,7 @@ export default {
             activeTab: 1,
             ready: true
         }
+        console.log(111,this.$root.content.ProfileMeetupsTabs.MeetupsRow)
     },
     methods: {
         edit () {

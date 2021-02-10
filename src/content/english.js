@@ -68,13 +68,13 @@ export default {
     },
 
     ProfileMeetupsTabs: {
-        title: "Meetups",
-        my: "My meetups",
+        title: "Vents",
+        my: "My Vents",
         created: "Created",
         noMeetups: "Unfortunatelly, you didn't join any meetups yet.",
         noMeetupsCreate: "You didn't create any meetup yet.<br>Please, click the button above to create first.",
         CreateNewButton: {
-            create: "Create New Meetup"
+            create: "Create New Vent"
         },
         MeetupsRow: {
             edit: "Edit"

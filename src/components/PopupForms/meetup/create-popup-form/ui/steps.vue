@@ -141,6 +141,9 @@
                                 <img :src="PfileUplodated" alt="">
                             </div>
                         </template>
+                        <template v-else class="attendee-avatar">
+                            <img :src="`${api}/static/img/brand-default.png`">
+                        </template>                          
                     </div>
                 </div>
             </b-step-item>
@@ -185,6 +188,9 @@
                                 <img :src="PfileUplodated" alt="">
                             </div>
                         </template>
+                        <template v-else class="attendee-avatar">
+                            <img :src="`${api}/static/img/brand-default.png`">
+                        </template>                             
                     </div>
                 </div>
             </b-step-item>
@@ -275,7 +281,7 @@
         data() {
             return {
                 content: this.$root.content.meetupPopupForm,
-                activeStep: 0,
+                activeStep: 5,
                 loading: false,
 
                 isAnimated: true,
@@ -289,12 +295,12 @@
                 labelPosition: 'bottom',
                 mobileMode: 'minimalist',
 
-                name: '',
-                message: '',
-                company_name: '',
-                company_description: '',
+                name: 'My vent',
+                message: 'My great vent',
+                company_name: this.$root.profile.company,
+                company_description: 'Company Description',
                 date: new Date(),
-                file: {},  
+                file: {}, //{'src': api + $root.profile.photo},  
                 fileUplodated: false,
                 fileValid: true,
                 previewFile: {},  
@@ -419,7 +425,11 @@
                 }
 
                 let PfileUplodated = '';
-                if ( typeof this.PfileUplodated === 'string' ) PfileUplodated = this.PfileUplodated 
+                if ( typeof this.PfileUplodated === 'string' ) {
+                    PfileUplodated = this.PfileUplodated 
+                    console.log(430, PfileUplodated, 22)
+                }
+                
                 else {
                     try {
                         const video = this.previewFile
@@ -433,19 +443,19 @@
                 }
 
                 if(this.lastStep){
-                    const data = {      
+                    const data = {    
                         name: name,
                         description: description,
                         company_name: company_name,
                         company_description: company_description,
                         date: date,
-                        image: this.fileUplodated,
-                        preview: PfileUplodated,
+                        image: '',//this.fileUplodated,
+                        preview: '',//PfileUplodated,
                         ext: format,                      
                         previewExt: formatPreview,
                         groupName: 'test'
                     }
-                    
+                    console.log(458, PfileUplodated, 22)
                     const res = await MeetupFormRoutes.postAddMeetup(data)
                     this.close()
 
@@ -469,8 +479,9 @@
             formatDate(){
                 let formatDate = ''
                 formatDate += this.date.getDate()
-                formatDate += '/' + this.date.getMonth()
-                formatDate += '/' + this.date.getFullYear()
+                // Change date.getMonth() to date.toLocalString to fix month number base 0 error
+                formatDate += ' / ' + this.date.toLocaleString("en-us", { month: "short" })
+                formatDate += ' / ' + this.date.getFullYear()
                 return formatDate
             },
             previewIsVideo(){                

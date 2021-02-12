@@ -51,7 +51,6 @@ export default {
             activeTab: 1,
             ready: true
         }
-        console.log(111,this.$root.content.ProfileMeetupsTabs.MeetupsRow)
     },
     methods: {
         edit () {

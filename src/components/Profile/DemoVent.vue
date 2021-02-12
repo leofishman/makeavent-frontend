@@ -284,7 +284,6 @@
 
 			this.pendingCardsLoading = true
 			this.connectedCardsLoading = true
-console.log(286,this.$store.state.profile.loadedMeetups, this.$store.state.profile)
 			this.$root.check('profile').then(() => {
 				this.newRole = this.$root.profile.role
 				this.newCompany = this.$root.profile.company
@@ -293,38 +292,34 @@ console.log(286,this.$store.state.profile.loadedMeetups, this.$store.state.profi
 				this.newTelegram = this.$root.profile.Telegram
 				this.newCalendly = this.$root.profile.calendly
 				this.ready = true
-				console.log(295,this.$store.state.profile.loadedMeetups, this.$store.state.profile)
 			}).catch(e => console.log(`${e} inaccessible`))
-			console.log(297,this.$store.state.profile.loadedMeetups, this.$store.state.profile)
 			await this.$root.getActiveBusinessCards()
-			console.log(299,this.$store.state.profile.loadedMeetups, this.$store.state.profile)
-			await this.$root.getPengingCards()
-console.log(301,this.$store.state.profile.loadedMeetups, this.$store.state.profile)
+            await this.$root.getPengingCards()
+            console.log(298,this.$store.state.profile.loadedMeetups  )
+            // why this if hide the meets in profie??
+            if (this.$store.state.profile.loadedMeetups = 0) {
+                const vent_data = {    
+                            name: 'vent-' + new Date(),
+                            description: 'My awesome vent!! ' + new Date(),
+                            company_name: '',
+                            company_description: '',
+    /*                        date: new Date(),
+                            image: this.fileUplodated,
+                            preview: PfileUplodated,
+                            ext: format,                      
+                            previewExt: formatPreview,
+                            groupName: 'test'
+    */                    }
+                        console.log('create vent')
+                const res = await MeetupFormRoutes.postAddMeetup(vent_data)
+            }
 			this.ready = true
 			this.pendingCardsLoading = false
-			this.connectedCardsLoading = false
-			console.log(303,this.$store.state.profile.loadedMeetups.length, this.$store.state.profile.loadedMeetups, this.$store.state.profile )
-const vent_data = {    
-                        name: 'vent-' + new Date(),
-                        description: 'My awesome vent!!',
-                        company_name: '',
-                        company_description: '',
-/*                        date: new Date(),
-                        image: this.fileUplodated,
-                        preview: PfileUplodated,
-                        ext: format,                      
-                        previewExt: formatPreview,
-                        groupName: 'test'
-*/                    }
-                    
-                    const res = await MeetupFormRoutes.postAddMeetup(vent_data)
-                    console.log(324,vent_data, res)
-		},
+            this.connectedCardsLoading = false
+            console.log(317,this.$store.state.profile.loadedMeetups)
+            },
+
 		data() {
-
-                    
-
-		
 			return {
 				content: this.$root.content.Profile,
 				comm_content: this.$root.content.common,

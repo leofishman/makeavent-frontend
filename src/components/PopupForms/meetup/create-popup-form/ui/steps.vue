@@ -153,19 +153,36 @@
                 <div class="confirm-data">
                     <div class="confirm-data__row">
                         <div class="confirm-data__col-field">{{content.confirmFields.company_name}}</div>
-                        <div class="confirm-data__col-value">{{company_name}}</div>
+                        <div contenteditable class="confirm-data__col-value" id="company_name" v-html="company_name"
+                            @blur="onEdit"
+                            @keydown.enter="endEdit" >{{company_name}}
+                        </div>
+    
+    
                     </div>
                     <div class="confirm-data__row confirm-data__row--description">
                         <div class="confirm-data__col-field">{{content.confirmFields.company_description}}</div>
-                        <div class="confirm-data__col-value">{{company_description}}</div>
+                        <div contenteditable class="confirm-data__col-value" id="company_description" v-html="company_description"
+                            @blur="onEdit"
+                            @keydown.enter="endEdit"> 
+                            {{company_description}}
+                        </div>
                     </div>
                     <div class="confirm-data__row">
                         <div class="confirm-data__col-field">{{content.confirmFields.name}}</div>
-                        <div class="confirm-data__col-value">{{name}}</div>
+                        <div contenteditable class="confirm-data__col-value" id="name" v-html="name"
+                            @blur="onEdit"
+                            @keydown.enter="endEdit">
+                            {{name}}
+                        </div>
                     </div>
                     <div class="confirm-data__row confirm-data__row--description">
                         <div class="confirm-data__col-field">{{content.confirmFields.massage}}</div>
-                        <div class="confirm-data__col-value">{{message}}</div>
+                        <div contenteditable class="confirm-data__col-value" id="message" v-html="message"
+                            @blur="onEdit"
+                            @keydown.enter="endEdit">
+                            {{message}}
+                        </div>
                     </div>
                     <div class="confirm-data__row">
                         <div class="confirm-data__col-field">{{content.confirmFields.date}}</div>
@@ -427,7 +444,6 @@
                 let PfileUplodated = '';
                 if ( typeof this.PfileUplodated === 'string' ) {
                     PfileUplodated = this.PfileUplodated 
-                    console.log(430, PfileUplodated, 22)
                 }
                 
                 else {
@@ -449,13 +465,13 @@
                         company_name: company_name,
                         company_description: company_description,
                         date: date,
-                        image: '',//this.fileUplodated,
-                        preview: '',//PfileUplodated,
+                        image: this.fileUplodated,
+                        preview: PfileUplodated,
                         ext: format,                      
                         previewExt: formatPreview,
                         groupName: 'test'
                     }
-                    console.log(458, PfileUplodated, 22)
+                    
                     const res = await MeetupFormRoutes.postAddMeetup(data)
                     this.close()
 
@@ -466,6 +482,26 @@
                     return false
                 }
             },
+            onEdit(evt){
+             var src = evt.target.innerHTML
+
+             switch(evt.srcElement.id) {
+                case 'name':
+                  this.name = src
+                  break;
+                case 'company_name':
+                    this.company_name = src;
+                    break;
+                case 'company_description':
+                    this.company_description = src;
+                    break;
+                case 'message':
+                    this.message = src;
+             }
+            },
+            endEdit(){
+                this.$el.querySelector('.editme').blur()
+            }
         },
         computed: {
             lastStep(){

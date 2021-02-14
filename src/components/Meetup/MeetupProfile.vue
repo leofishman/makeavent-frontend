@@ -23,7 +23,8 @@
 						<aside class="column is-full-mobile is-half-widescreen is-one-third-fullhd">
 							<div class="profile-top">
 								<figure class="company-logo">
-									<img :src="image">
+									<img v-if="util.isImage(image)" :src="image">
+									<img v-else :src="`${api}/static/img/brand-default.png`">
 								</figure>
 
 								<div class="company-demo">
@@ -228,7 +229,7 @@
 
 			<!-- Profile Chat -->
 			<div class="chat-company-profile is-light-changeable--bg">
-				<div class="chat-top">
+				<div v-if="showNetworkingRoom" class="chat-top">
 					<article class="is-light-changeable--bg">
 						<h3 class="is-dark-changeable--color">{{content.networkingRoom}}</h3>
 						<img src="@/assets/img/join-chat.png" />

@@ -295,28 +295,8 @@
 			}).catch(e => console.log(`${e} inaccessible`))
 			await this.$root.getActiveBusinessCards()
             await this.$root.getPengingCards()
-            console.log(298,this.$store.state.profile.loadedMeetups  )
-            // why this if hide the meets in profie??
-            if (this.$store.state.profile.loadedMeetups = 0) {
-                const vent_data = {    
-                            name: 'vent-' + new Date(),
-                            description: 'My awesome vent!! ' + new Date(),
-                            company_name: '',
-                            company_description: '',
-    /*                        date: new Date(),
-                            image: this.fileUplodated,
-                            preview: PfileUplodated,
-                            ext: format,                      
-                            previewExt: formatPreview,
-                            groupName: 'test'
-    */                    }
-                        console.log('create vent')
-                const res = await MeetupFormRoutes.postAddMeetup(vent_data)
-            }
 			this.ready = true
-			this.pendingCardsLoading = false
-            this.connectedCardsLoading = false
-            console.log(317,this.$store.state.profile.loadedMeetups)
+            this.pendingCardsLoading = false
             },
 
 		data() {
@@ -344,7 +324,41 @@
 				newCalendly: "",
 				newPhoto: ""
 			}
-		},
+        },
+        computed: {
+            async loadedMeetupsId () {
+                if (this.ready) {
+                    if (this.$store.state.profile.loadedMeetups[0]) {
+                                    this.$router.push({
+                                        name: "Meetup", 
+                                        query: {id: this.$store.state.profile.loadedMeetups[0]._id}
+                                        })
+                                        return this.$store.state.profile.loadedMeetups[0]._id
+                                } else {
+                                        const today = new Date();
+                                        const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+                                        const vent_data = {    
+                                                    name: 'demo vent',
+                                                    description: 'My awesome vent created on ' + date,
+                                                    company_name: 'Here go my company name',
+                                                    company_description: 'What my company does?',
+                                                    date: date,
+                            /*                       image: this.fileUplodated,
+                                                    preview: PfileUplodated,
+                                                    ext: format,                      
+                                                    previewExt: formatPreview,
+                                                    groupName: 'test'
+                            */                    }
+                                                console.log('create vent')
+                                        const res = await MeetupFormRoutes.postAddMeetup(vent_data)
+                                }
+                } else {
+                    return 0
+                }
+             
+                
+            },
+        },        
 		methods: {
 			isDemoUser () {
 				console.log(333,)

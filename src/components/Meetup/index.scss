@@ -46,8 +46,11 @@
 	background-position: top;
 	background-repeat: no-repeat;
 	background-size: 100%;
-	background-attachment: fixed;
+	//background-attachment: fixed;
 	min-height: 100vh;
+
+	background-image: url("../../assets/img/odeyaloblue3.png");
+    background-size: cover;
 
 	.video-stream {
 		min-height: 400px;

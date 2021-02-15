@@ -429,7 +429,8 @@
 				showOverlay: true,
 				videoLoader: false,
 
-				isFullScreenStream: false
+				isFullScreenStream: false,
+				showNetworkingRoom: false
 			}
 		},
 		methods: {

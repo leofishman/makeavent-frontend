@@ -1,5 +1,5 @@
 <template>
-	<div v-if="ready" class="meetup-profile is-light-changeable--bg" :style="isBgImage()">
+	<div v-if="ready" id="meetup-profile" class="meetup-profile is-light-changeable--bg" :style="isBgImage()">
 		<div v-if="util.isImage(preview)" class="scr-saver-fileld__bg" :style="isBgImageBackdrop()"></div>
 
 		<video v-if="util.isVideo(preview)" :poster="$root.meetup.screensaverColor" class="bg-video" autoplay muted loop>
@@ -40,15 +40,16 @@
 									@mouseover="hover = true"
 									@mouseleave="hover = false"
 									>
-								<div class="company-name-text"><i  v-if="hover" class="far fa-edit"></i>
-									<div contenteditable class="company-name is-dark-changeable--color"
-									id="company_name" v-html="company_name"
+								<div class="company-name-base">
+									<div contenteditable class="company-name is-dark-changeable--color editme"
+									   id="company_name"
+									   v-html="company_name"
 										@blur="onEdit"
 										@keydown.enter="endEdit" 
-										>
+									>
 										{{company_name}}
 									</div>
-									
+									<i  v-if="hover" class="far fa-edit company-name-edit-icon"></i>
 								</div>
 								</span>
 								<!-- Company contacts -->
@@ -256,7 +257,7 @@
 					:checkAccess="'companychat'"
 					type="company"
 					:contacts="$root.meetup.speakers"
-					:name="$root.meetup.company_name"
+					:name="company_name"
 					:_id="id" />
 			</div>
 
@@ -796,6 +797,8 @@ console.log(793, src, evt, this.$store.state)
                   this.name = src
                   break;
                 case 'company_name':
+					console.log(799, src)
+					   
                     this.$store.state.meetupForm.company_name = src;
                     break;
                 case 'company_description':

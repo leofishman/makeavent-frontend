@@ -284,6 +284,17 @@
 		}
 	}
 
+	.company-name-base {
+		position:relative;
+	}
+
+	.company-name-edit-icon {
+		position: relative;
+		left: 130px;
+		top: -65px;
+		z-index: 100;
+	}
+
 	.company-name {
 		text-align: center;
 		font-size: 1.3rem;

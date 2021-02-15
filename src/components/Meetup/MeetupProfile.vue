@@ -36,10 +36,21 @@
 							</div>
 
 							<div class="profile-bottom">
-								<div class="company-name is-dark-changeable--color">
-									{{company_name}}
+								<span
+									@mouseover="hover = true"
+									@mouseleave="hover = false"
+									>
+								<div class="company-name-text"><i  v-if="hover" class="far fa-edit"></i>
+									<div contenteditable class="company-name is-dark-changeable--color"
+									id="company_name" v-html="company_name"
+										@blur="onEdit"
+										@keydown.enter="endEdit" 
+										>
+										{{company_name}}
+									</div>
+									
 								</div>
-
+								</span>
 								<!-- Company contacts -->
 								<ul class="list-network">
 									<li v-if="website" v-on:click="openAndTrack(website)">
@@ -430,7 +441,8 @@
 				videoLoader: false,
 
 				isFullScreenStream: false,
-				showNetworkingRoom: false
+				showNetworkingRoom: false,
+				hover: false,
 			}
 		},
 		methods: {
@@ -775,7 +787,27 @@
 				this.updateColorLight(this.$root.meetup.color_schema.light)
 				this.updateColorDark(this.$root.meetup.color_schema.dark)
 				this.updateColorPrimary(this.$root.meetup.color_schema.primary)
-			}
+			},
+            onEdit(evt){
+             var src = evt.target.innerHTML
+console.log(793, src, evt, this.$store.state)
+             switch(evt.srcElement.id) {
+                case 'name':
+                  this.name = src
+                  break;
+                case 'company_name':
+                    this.$store.state.meetupForm.company_name = src;
+                    break;
+                case 'company_description':
+                    this.company_description = src;
+                    break;
+                case 'message':
+                    this.message = src;
+             }
+            },
+            endEdit(){
+                this.$el.querySelector('.editme').blur()
+            }
 		},
 		watch: {
 			ready: function () {

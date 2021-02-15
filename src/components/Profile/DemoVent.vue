@@ -3,7 +3,7 @@
 		<navbar></navbar>
 
 		<div class="container is-fluid" v-if="ready">
-
+			{{loadedMeetupsId}}
 			<section class="section section-profile">
 				<div class="columns is-variable is-8">
 					<div class="column is-one-third profile-main">
@@ -328,6 +328,7 @@
         computed: {
             async loadedMeetupsId () {
                 if (this.ready) {
+					console.log(331, 'this.ready')
                     if (this.$store.state.profile.loadedMeetups[0]) {
                                     this.$router.push({
                                         name: "Meetup", 
@@ -335,6 +336,7 @@
                                         })
                                         return this.$store.state.profile.loadedMeetups[0]._id
                                 } else {
+										console.log(339, 'create vent on empty vents')
                                         const today = new Date();
                                         const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
                                         const vent_data = {    
@@ -349,10 +351,11 @@
                                                     previewExt: formatPreview,
                                                     groupName: 'test'
                             */                    }
-                                                console.log('create vent')
+                                                
                                         const res = await MeetupFormRoutes.postAddMeetup(vent_data)
                                 }
                 } else {
+					console.log(358, 'this.ready false')
                     return 0
                 }
              

@@ -42,6 +42,7 @@
 									>
 								<div class="company-name-base">
 									<div contenteditable class="company-name is-dark-changeable--color editme"
+										v-if="$root.isUserAdmin"
 									   id="company_name"
 									   v-html="company_name"
 										@blur="onEdit"
@@ -49,7 +50,8 @@
 									>
 										{{company_name}}
 									</div>
-									<i  v-if="hover" class="far fa-edit company-name-edit-icon"></i>
+									<div v-else class="company-name is-dark-changeable--color editme">{{company_name}}</div>
+									<i  v-if="hover && $root.isUserAdmin"  class="far fa-edit company-name-edit-icon"></i>
 								</div>
 								</span>
 								<!-- Company contacts -->

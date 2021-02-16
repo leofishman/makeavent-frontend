@@ -246,7 +246,7 @@
 						</div> -->
 					</div>
 				</div>
-				<div v-show="!newVent">{{loadedMeetupsId}}</div>
+				<div v-show="!newVent">{{filteredOnlyAdmin}}</div>
 			</section>
 		</div>
 	</div>
@@ -298,7 +298,7 @@
             await this.$root.getPengingCards()
 			this.ready = true
 			this.pendingCardsLoading = false
-			this.newVent = true
+			this.newVent = false
             },
 
 		data() {
@@ -329,17 +329,17 @@
 			}
         },
         computed: {
-            async loadedMeetupsId () {
-                if (this.ready) {
-                    if (this.$store.state.profile.loadedMeetups[0]) {
+            async filteredOnlyAdmin () {console.log(332, this.ready)
+                if (this.ready) {console.log(333, this.newVent,this.$store.state.profile.filteredOnlyAdmin )
+                    if (this.$store.state.profile.filteredOnlyAdmin[0]) {
                                     this.$router.push({
                                         name: "Meetup", 
-                                        query: {id: this.$store.state.profile.loadedMeetups[0]._id}
+                                        query: {id: this.$store.state.profile.filteredOnlyAdmin[0]._id}
                                         })
-                                        return this.$store.state.profile.loadedMeetups[0]._id
+                                        return this.$store.state.profile.filteredOnlyAdmin[0]._id
                                 } else {
-										if (this.newVent) {
-											this.newVent = false;
+										if (!this.newVent) {
+											this.newVent = true;
 											const today = new Date();
 											const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
 											const vent_data = {    
@@ -364,7 +364,7 @@
                 }
              
                 
-            },
+			},
         },        
 		methods: {
 			isDemoUser () {

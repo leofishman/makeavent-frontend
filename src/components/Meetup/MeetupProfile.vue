@@ -22,10 +22,22 @@
 						<!-- v-if="!$root.openMeetupSettings"  -->
 						<aside class="column is-full-mobile is-half-widescreen is-one-third-fullhd">
 							<div class="profile-top">
-								<figure class="company-logo">
+								<span 
+									@click="ChangeLogo = true"
+									@mouseover="hover = true"
+									@mouseleave="hover = false; ChangeLogo = false"
+								>
+								<figure v-if="!ChangeLogo || 1 === 1" class="company-logo">
 									<img v-if="util.isImage(image)" :src="image">
 									<img v-else :src="`${api}/static/img/brand-default.png`">
 								</figure>
+
+								
+								<i v-show="hover && $root.isUserAdmin && 1 === 2" @click="ChangeLogo = true" class="far fa-edit edit-file-icon"></i>
+								<UploadLogo v-if="ChangeLogo && $root.isUserAdmin && hover && 1 === 2" />
+							
+								</span>
+								
 
 								<div class="company-demo">
 									<b-button v-if="$root.meetup.demo.length"
@@ -51,7 +63,7 @@
 										{{company_name}}
 									</div>
 									<div v-else class="company-name is-dark-changeable--color editme">{{company_name}}</div>
-                  <i v-show="hover && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
+									<i v-show="hover && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
 								</div>
 								</span>
 								<!-- Company contacts -->
@@ -308,6 +320,11 @@
 						<!-- <p class="has-text-success">{{content.currentlyOnline}}: ##</p> -->
 					</article>
 				</div>
+				<div v-if="showShareOptions" class="chat-top">
+					<Share />
+				
+				</div>
+
 				<Chat
 					v-bind:key="id"
 					v-if="ready"
@@ -405,6 +422,8 @@
 	import PitchDeck from '@/components/CompanyComponents/Pitchdeck'
 	import JitsiStream from '@/components/VideoStreams/Jitsi'
 	import AdminSidebar from '@/components/Meetup/AdminSidebar/index'
+	import UploadLogo from '@/components/Meetup/UploadLogo'
+	import Share from './Share/'
 	import tinycolor from 'tinycolor2'
 	import {mapActions} from 'vuex'
 	
@@ -424,7 +443,9 @@
 			Chat,
 			PitchDeck,
 			JitsiStream,
-			AdminSidebar
+			AdminSidebar,
+			UploadLogo,
+			Share
 		},
 		async mounted() {
 			await this.getMeetupById({ id: this.id })
@@ -500,7 +521,9 @@
 
 				isFullScreenStream: false,
 				showNetworkingRoom: false,
+				showShareOptions: true,
 				hover: false,
+				ChangeLogo: false,
 			}
 		},
 		methods: {

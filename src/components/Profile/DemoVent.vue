@@ -331,7 +331,7 @@
         },
         computed: {
             async filteredOnlyAdmin () {
-				if (this.ready && !this.pendingCardsLoading) {console.log(334,this.pendingCardsLoading, this.$store.state.profile.filteredOnlyAdmin.length)
+				if (this.ready && !this.pendingCardsLoading) {
 					if (this.$store.state.profile.filteredOnlyAdmin.length == 0) {
 						if (!this.newVent) {
 							this.newVent = true;

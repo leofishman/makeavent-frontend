@@ -284,15 +284,21 @@
 		}
 	}
 
-	.company-name-base {
+	.company-name-base, .company-description-base, .meetup-name-base, .meetup-description {
 		position:relative;
 	}
 
-	.company-name-edit-icon {
-		position: relative;
-		left: 130px;
-		top: -65px;
+	.meetup-name-base .edit-icon, .meetup-description .edit-icon  {
+		left: 0;
+		top: 0;
+	}
+	.edit-icon {
+		position: absolute;
+		left: 200px;
+		top: -25px;
 		z-index: 100;
+		-webkit-transition: .5s ease;
+		transition: .5s ease;
 	}
 
 	.company-name {

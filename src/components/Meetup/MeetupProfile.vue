@@ -51,7 +51,7 @@
 										{{company_name}}
 									</div>
 									<div v-else class="company-name is-dark-changeable--color editme">{{company_name}}</div>
-									<i  v-if="hover && $root.isUserAdmin"  class="far fa-edit company-name-edit-icon"></i>
+                  <i v-show="hover && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
 								</div>
 								</span>
 								<!-- Company contacts -->
@@ -77,9 +77,29 @@
 								</div>
 
 								<div class="profile-bio">
-									<p v-html="company_description"
+
+								<span
+                    @mouseover="hover = true"
+                    @mouseleave="hover = false"
+                >
+								<div class="company-description-base">
+									<div contenteditable class="company_description is-dark-changeable--color editme"
+                       v-if="$root.isUserAdmin"
+                       id="company_description"
+                       v-html="company_description"
+                       @blur="onEdit"
+                       @keydown.enter="endEdit"
+                  >
+										{{company_description}}
+									</div>
+									<div v-else class="company_description is-dark-changeable--color editme">{{company_description}}</div>
+                  <i v-show="hover && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
+								</div>
+								</span>
+
+									<!--p v-html="company_description"
 										v-bind:class="classes"
-										class="bio-content is-dark-changeable--color"></p>
+										class="bio-content is-dark-changeable--color"></p-->
 
 									<!-- <b-button v-if="!expanded"
 										class="is-small is-fullwidth is-dark-changeable--color is-light-changeable--bg invert-color"
@@ -176,8 +196,25 @@
 								<div v-else class="meetup-finished" v-html="content.meetupFinished">
 								</div>
 							</div>
+              <span
+                  @mouseover="hover = true"
+                  @mouseleave="hover = false"
+              >
+								<div class="meetup-name-base">
+									<div contenteditable class="meetup-title is-dark-changeable--color editme"
+                       v-if="$root.isUserAdmin"
+                       id="meetup_name"
+                       v-html="meetup_name"
+                       @blur="onEdit"
+                       @keydown.enter="endEdit"
+                  >
+										{{meetup_name}}
+									</div>
+                  <h1 v-else class="meetup-title is-dark-changeable--color" v-html="meetup_name"></h1>
+                  <i v-show="hover && $root.isUserAdmin"   class="far fa-edit edit-icon"></i>
+								</div>
+              </span>
 
-							<h1 class="meetup-title is-dark-changeable--color" v-html="meetup_name"></h1>
 							<!-- <div class="meetup-description is-dark-changeable--color" v-html="meetup_topic"> -->
 							<!-- <div v-if="id=='5f53a682c810aa9f7a8150bc'" class="meetup-description is-dark-changeable--color">
 								<div class="columns">
@@ -226,7 +263,25 @@
 									</div>
 								</div>
 							</div> -->
-							<div class="meetup-description is-dark-changeable--color" v-html="meetup_topic"></div>
+							<!--div class="meetup-description is-dark-changeable--color" v-html="meetup_topic"></div-->
+              <span
+                  @mouseover="hover = true"
+                  @mouseleave="hover = false"
+              >
+								<div class="meetup-description">
+									<div contenteditable class="meetup-description is-dark-changeable--color editme"
+                       v-if="$root.isUserAdmin"
+                       id="meetup_topic"
+                       v-html="meetup_topic"
+                       @blur="onEdit"
+                       @keydown.enter="endEdit"
+                  >
+										{{meetup_topic}}
+									</div>
+                  <h1 v-else class="meetup-title is-dark-changeable--color" v-html="meetup_topic"></h1>
+                  <i v-show="hover && $root.isUserAdmin"   class="far fa-edit edit-icon"></i>
+								</div>
+              </span>
 
 							<div class="speakers-container columns is-multiline member-clasic">
 								<div class="speakers-title is-dark-changeable--color">
@@ -791,28 +846,36 @@
 				this.updateColorDark(this.$root.meetup.color_schema.dark)
 				this.updateColorPrimary(this.$root.meetup.color_schema.primary)
 			},
-            onEdit(evt){
-             var src = evt.target.innerHTML
-console.log(793, src, evt, this.$store.state)
-             switch(evt.srcElement.id) {
-                case 'name':
-                  this.name = src
-                  break;
-                case 'company_name':
-					console.log(799, src)
-					   
-                    this.$store.state.meetupForm.company_name = src;
-                    break;
-                case 'company_description':
-                    this.company_description = src;
-                    break;
-                case 'message':
-                    this.message = src;
-             }
-            },
-            endEdit(){
-                this.$el.querySelector('.editme').blur()
+      onEdit(evt) {
+        var src = evt.target.innerHTML
+        switch (evt.srcElement.id) {
+          case 'name':
+            this.name = src
+            break;
+          case 'company_name':
+            this.$store.state.meetupForm.company_name = src;
+           // this.company_name = src
+            break;
+          case 'meetup_name':
+            this.$store.state.meetupForm.name = src;
+            //this.meetup_name = src;
+              console.log(src);
+            break
+          case 'meetup_topic':
+            this.$store.state.meetupForm.meetup_topic = src;
+            //this.meetup_name = src;
+            console.log(867,this.$store.state.meetupForm, src);
+            break
+          case 'company_description':
+            this.$store.state.meetupForm.company_description = src;
+            break;
+          case 'message':
+            this.message = src;
             }
+        },
+        endEdit(evt){
+            this.$el.querySelector('#' + evt.path[0].id).blur()
+        }
 		},
 		watch: {
 			ready: function () {

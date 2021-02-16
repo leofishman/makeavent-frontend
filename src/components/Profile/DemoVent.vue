@@ -246,7 +246,7 @@
 						</div> -->
 					</div>
 				</div>
-				<div v-show="!newVent">{{filteredOnlyAdmin}}</div>
+				<div v-show="newVent">{{filteredOnlyAdmin}}</div>
 			</section>
 		</div>
 	</div>
@@ -279,6 +279,7 @@
 		},
 		async mounted() {
 			this.ready = false
+			this.newVent = false
 			this.profileParamsFocus = {
 				name: false
 			}
@@ -296,9 +297,9 @@
 			}).catch(e => console.log(`${e} inaccessible`))
 			await this.$root.getActiveBusinessCards()
             await this.$root.getPengingCards()
-			this.ready = true
+			
 			this.pendingCardsLoading = false
-			this.newVent = false
+			this.ready = true
             },
 
 		data() {
@@ -329,40 +330,39 @@
 			}
         },
         computed: {
-            async filteredOnlyAdmin () {console.log(332, this.ready)
-                if (this.ready) {console.log(333, this.newVent,this.$store.state.profile.filteredOnlyAdmin )
-                    if (this.$store.state.profile.filteredOnlyAdmin[0]) {
-                                    this.$router.push({
-                                        name: "Meetup", 
-                                        query: {id: this.$store.state.profile.filteredOnlyAdmin[0]._id}
-                                        })
-                                        return this.$store.state.profile.filteredOnlyAdmin[0]._id
-                                } else {
-										if (!this.newVent) {
-											this.newVent = true;
-											const today = new Date();
-											const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
-											const vent_data = {    
-														name: 'demo vent',
-														description: 'My awesome vent created on ' + date,
-														company_name: 'Me',
-														company_description: 'What my company does?',
-														date: date,
-								/*                       image: this.fileUplodated,
-														preview: PfileUplodated,
-														ext: format,                      
-														previewExt: formatPreview,
-														groupName: 'test'
-								*/                    }
-													
-											const res = await MeetupFormRoutes.postAddMeetup(vent_data)
-										} 
-										
-                                }
-                } else {
-                    return 0
-                }
-             
+            async filteredOnlyAdmin () {
+				if (this.ready && !this.pendingCardsLoading) {console.log(334,this.pendingCardsLoading, this.$store.state.profile.filteredOnlyAdmin.length)
+					if (this.$store.state.profile.filteredOnlyAdmin.length == 0) {
+						if (!this.newVent) {
+							this.newVent = true;
+							const today = new Date();
+							const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+							const vent_data = {    
+								name: 'demo vent',
+								description: 'My awesome vent created on ' + date,
+								company_name: 'Me',
+								company_description: 'What my company does?',
+								date: date,
+		/*                       image: this.fileUplodated,
+								preview: PfileUplodated,
+								ext: format,                      
+								previewExt: formatPreview,
+								groupName: 'test'
+		*/                    }
+							const res = await MeetupFormRoutes.postAddMeetup(vent_data)
+
+						} 
+							
+					}else {
+							this.$router.push({
+								name: "Meetup", 
+								query: {id: this.$store.state.profile.filteredOnlyAdmin[0]._id}
+							})
+							return this.$store.state.profile.filteredOnlyAdmin[0]._id		
+					} 
+				} else {
+					return 0
+				}
                 
 			},
         },        

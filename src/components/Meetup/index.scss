@@ -209,22 +209,31 @@
 		padding-top: 3rem;
 		.profile-top {
 			margin-bottom: 2rem;
-			.company-logo {
-				img {
-					margin-left: auto;
-					margin-right: auto;
-					margin-bottom: 1rem;
-					width: 200px;
-					height: 200px;
-					background-color: $white;
-					border-radius: 10rem;
-					box-shadow: $shadow-2;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					max-width: 100%;
+			.company-logo-base {
+				position: relative;
+				.company-logo {
+					position: relative;
+					img {
+						margin-left: auto;
+						margin-right: auto;
+						margin-bottom: 1rem;
+						width: 200px;
+						height: 200px;
+						background-color: $white;
+						border-radius: 10rem;
+						box-shadow: $shadow-2;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						max-width: 100%;
+					}
 				}
+				.company-logo-upload {
+					position:relative;
+				}				
 			}
+
+
 		}
 		.company-demo {
 			.play-demo {

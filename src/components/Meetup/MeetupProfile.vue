@@ -26,15 +26,16 @@
 									@click="ChangeLogo = true"
 									@mouseover="hover = true"
 									@mouseleave="hover = false; ChangeLogo = false"
+									class="company-logo-base"
 								>
 								<figure v-if="!ChangeLogo || 1 === 1" class="company-logo">
-									<img v-if="util.isImage(image)" :src="image">
-									<img v-else :src="`${api}/static/img/brand-default.png`">
+									11<img v-if="util.isImage(image)" :src="image">
+									<img v-else :src="`${api}/static/img/brand-default.png`">22
 								</figure>
 
 								
-								<i v-show="hover && $root.isUserAdmin && 1 === 2" @click="ChangeLogo = true" class="far fa-edit edit-file-icon"></i>
-								<UploadLogo v-if="ChangeLogo && $root.isUserAdmin && hover && 1 === 2" />
+								<i v-show="hover && $root.isUserAdmin" @click="ChangeLogo = true" class="far fa-edit edit-file-icon"></i>
+								<UploadLogo v-if="ChangeLogo && $root.isUserAdmin && hover || 1 === 1" class="company-logo-upload" />
 							
 								</span>
 								
@@ -208,24 +209,24 @@
 								<div v-else class="meetup-finished" v-html="content.meetupFinished">
 								</div>
 							</div>
-              <span
-                  @mouseover="hover = true"
-                  @mouseleave="hover = false"
-              >
+							<span
+								@mouseover="hover = true"
+								@mouseleave="hover = false"
+							>
 								<div class="meetup-name-base">
 									<div contenteditable class="meetup-title is-dark-changeable--color editme"
-                       v-if="$root.isUserAdmin"
-                       id="meetup_name"
-                       v-html="meetup_name"
-                       @blur="onEdit"
-                       @keydown.enter="endEdit"
-                  >
+										v-if="$root.isUserAdmin"
+										id="meetup_name"
+										v-html="meetup_name"
+										@blur="onEdit"
+										@keydown.enter="endEdit"
+									>
 										{{meetup_name}}
 									</div>
-                  <h1 v-else class="meetup-title is-dark-changeable--color" v-html="meetup_name"></h1>
-                  <i v-show="hover && $root.isUserAdmin"   class="far fa-edit edit-icon"></i>
+									<h1 v-else class="meetup-title is-dark-changeable--color" v-html="meetup_name"></h1>
+									<i v-show="hover && $root.isUserAdmin"   class="far fa-edit edit-icon"></i>
 								</div>
-              </span>
+							</span>
 
 							<!-- <div class="meetup-description is-dark-changeable--color" v-html="meetup_topic"> -->
 							<!-- <div v-if="id=='5f53a682c810aa9f7a8150bc'" class="meetup-description is-dark-changeable--color">

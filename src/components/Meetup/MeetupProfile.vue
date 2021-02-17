@@ -29,8 +29,8 @@
 									class="company-logo-base"
 								>
 								<figure v-if="!ChangeLogo || 1 === 1" class="company-logo">
-									11<img v-if="util.isImage(image)" :src="image">
-									<img v-else :src="`${api}/static/img/brand-default.png`">22
+									<img v-if="util.isImage(image)" :src="image">
+									<img v-else :src="`${api}/static/img/brand-default.png`">
 								</figure>
 
 								

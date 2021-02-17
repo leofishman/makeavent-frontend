@@ -31,8 +31,8 @@ export default {
             id: this.$root.meetup._id
         }
         const res = await MeetupFormRoutes.postCreateInviteLink(obj);
-        console.log(34,res.data)
-        this.link = res.data
+
+        this.link = res.data.replace('https://app.makeavent.com/', 'https://demo.makeavent.com/')
     },
     data () {
         return {

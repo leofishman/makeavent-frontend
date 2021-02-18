@@ -25,17 +25,21 @@
 								<span 
 									@click="ChangeLogo = true"
 									@mouseover="hover = true"
-									@mouseleave="hover = false; ChangeLogo = false"
+									@mouseleave="hover = false; ChangeLogo = false" 
 									class="company-logo-base"
 								>
-								<figure v-if="!ChangeLogo || 1 === 1" class="company-logo">
+								<figure v-if="ChangeLogo" class="company-logo">
+									<img :src="`${api}/static/img/trans.png`">
+								</figure>
+								<figure v-if="!ChangeLogo" class="company-logo">
 									<img v-if="util.isImage(image)" :src="image">
 									<img v-else :src="`${api}/static/img/brand-default.png`">
 								</figure>
+																
 
 								
 								<i v-show="hover && $root.isUserAdmin" @click="ChangeLogo = true" class="far fa-edit edit-file-icon"></i>
-								<UploadLogo v-if="ChangeLogo && $root.isUserAdmin && hover || 1 === 1" class="company-logo-upload" />
+									<UploadLogo v-if="ChangeLogo && $root.isUserAdmin && hover" class="company-logo-upload" />
 							
 								</span>
 								

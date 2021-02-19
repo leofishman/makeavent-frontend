@@ -1,5 +1,5 @@
 <template>
-	<div v-if="ready" id="meetup-profile" class="meetup-profile is-light-changeable--bg" :style="isBgImage()">
+	<div v-if="ready" id="meetup-profile" class="meetup-profile is-light-changeable--bg" :style="isBgImage()" @click="hover=false; ChangeLogo=false">
 		<div v-if="util.isImage(preview)" class="scr-saver-fileld__bg" :style="isBgImageBackdrop()"></div>
 
 		<video v-if="util.isVideo(preview)" :poster="$root.meetup.screensaverColor" class="bg-video" autoplay muted loop>
@@ -23,23 +23,60 @@
 						<aside class="column is-full-mobile is-half-widescreen is-one-third-fullhd">
 							<div class="profile-top">
 								<span 
-									@click="ChangeLogo = true"
+									@click.stop="ChangeLogo=true"
 									@mouseover="hover = true"
 									@mouseleave="hover = false; " 
 									class="company-logo-base"
 								>
-									<figure v-if="ChangeLogo" class="company-logo">
-										<img :src="`${api}/static/img/trans.png`">
-									</figure>
 									<figure v-if="!ChangeLogo" class="company-logo">
-										<img v-if="util.isImage(image)" :src="image">
-										<img v-else :src="`${api}/static/img/brand-default.png`">
+										<img v-if="ChangeLogo" :src="`${api}/static/img/trans.png`">
 									</figure>
-																	
+									<figure class="company-logo">
+										<span  v-if="!ChangeLogo">
+											<img v-if="util.isImage(image)" :src="image">
+											<img v-else :src="`${api}/static/img/brand-default.png`">
+										</span>
+										<span v-if="ChangeLogo">
+											<img :src="`${api}/static/img/trans.png`">
+											<!-- upload section -->
+											<b-field class="company-logo-upload">
+												<b-upload v-model="file"
+													drag-drop
+													@input="updateLogo"
+													required
+												>
+													<div>
+														<div class="$root.content has-text-centered">
+															<p>
+																<b-icon
+																	icon="upload"
+																	size="is-large">
+																</b-icon>
+															</p>
+															<p>{{$root.content.groupPopupForm.validation.dropFile}}</p>
+														</div>
+													</div>
+												</b-upload>
+												<div></div>
+													<div class="tags">
+														<div v-if="fileUplodated" class="column">
+															<div class="confirm-data__col-value confirm-data__col-value--img">
+																<img style="object-fit:contain" :src="fileUplodated" alt="">
+															</div>
+														</div>				
 
+														<span v-if="!fileValid && fileUplodated" class="help is-danger">
+															{{$root.content.groupPopupForm.validation.invalidFileType}}
+														</span>
+													</div>
+											</b-field>
+
+											<!--UploadLogo v-if="ChangeLogo && $root.isUserAdmin" class="company-logo-upload" @click="hover=false"  :value="value" @update="onChildUpdate"/-->
+										</span>
+										<i v-show="hover && $root.isUserAdmin" @click="ChangeLogo = true" class="far fa-edit edit-file-icon"></i>
+									</figure>
 									
-									<i v-show="hover && $root.isUserAdmin" @click="ChangeLogo = true" class="far fa-edit edit-file-icon"></i>
-									<UploadLogo v-if="ChangeLogo && $root.isUserAdmin" class="company-logo-upload" />
+									
 							
 								</span>
 								
@@ -427,10 +464,11 @@
 	import PitchDeck from '@/components/CompanyComponents/Pitchdeck'
 	import JitsiStream from '@/components/VideoStreams/Jitsi'
 	import AdminSidebar from '@/components/Meetup/AdminSidebar/index'
-	import UploadLogo from '@/components/Meetup/UploadLogo'
+//	import UploadLogo from '@/components/Meetup/UploadLogo'
 	import Share from './Share/'
 	import tinycolor from 'tinycolor2'
 	import {mapActions} from 'vuex'
+	import MeetupFormRoutes from '@/store/routes/meetup-form'
 	
 	export default {
 		props: {
@@ -449,7 +487,7 @@
 			PitchDeck,
 			JitsiStream,
 			AdminSidebar,
-			UploadLogo,
+//			UploadLogo,
 			Share
 		},
 		async mounted() {
@@ -461,7 +499,7 @@
 		},
 		data () {			
 			/* wait until token and sponsors ready*/
-
+			value: 10
 			this.$root.check('usertype')
 			.then(this.isMeetupParticipant)
 			.then(this.getMeetup)
@@ -529,10 +567,15 @@
 				showShareOptions: true,
 				hover: false,
 				ChangeLogo: false,
+				file: {}, 
+				fileUplodated: false,
+				previewFile: {},  
+				previewUplodated: false,
+				fileValid: true,  				
 			}
 		},
 		methods: {
-			...mapActions(['getMeetupById', 'getStreamStats']),
+			...mapActions(['getMeetupById', 'getStreamStats', 'setLogo']),
 			countdown (time) {
 				const self = this
 				const countDownDate = new Date(time).getTime();
@@ -874,36 +917,116 @@
 				this.updateColorDark(this.$root.meetup.color_schema.dark)
 				this.updateColorPrimary(this.$root.meetup.color_schema.primary)
 			},
-      onEdit(evt) {
-        var src = evt.target.innerHTML
-        switch (evt.srcElement.id) {
-          case 'name':
-            this.name = src
-            break;
-          case 'company_name':
-            this.$store.state.meetupForm.company_name = src;
-           // this.company_name = src
-            break;
-          case 'meetup_name':
-            this.$store.state.meetupForm.name = src;
-            //this.meetup_name = src;
-              console.log(src);
-            break
-          case 'meetup_topic':
-            this.$store.state.meetupForm.meetup_topic = src;
-            //this.meetup_name = src;
-            console.log(867,this.$store.state.meetupForm, src);
-            break
-          case 'company_description':
-            this.$store.state.meetupForm.company_description = src;
-            break;
-          case 'message':
-            this.message = src;
-            }
-        },
-        endEdit(evt){
-            this.$el.querySelector('#' + evt.path[0].id).blur()
-        }
+			onEdit(evt) {
+				var src = evt.target.innerHTML
+				switch (evt.srcElement.id) {
+				case 'name':
+					this.name = src
+					break;
+				case 'company_name':
+					this.$store.state.meetupForm.company_name = src;
+				// this.company_name = src
+					break;
+				case 'meetup_name':
+					this.$store.state.meetupForm.name = src;
+					//this.meetup_name = src;
+					console.log(src);
+					break
+				case 'meetup_topic':
+					this.$store.state.meetupForm.meetup_topic = src;
+					//this.meetup_name = src;
+					console.log(867,this.$store.state.meetupForm, src);
+					break
+				case 'company_description':
+					this.$store.state.meetupForm.company_description = src;
+					break;
+				case 'message':
+					this.message = src;
+					}
+				},
+			endEdit(evt){
+				this.$el.querySelector('#' + evt.path[0].id).blur()
+			},
+			updateLogo(e){
+					try {
+						if ( this.file.size > 1000000 ) {
+							this.$root.createError(this.$root.content.ErrorMessages[12], 'oops')
+						}
+						else {
+							if ( this.file ) {
+								const image = this.file
+				
+								const reader = new FileReader()
+								reader.readAsDataURL(image)
+								reader.onload = e => {
+									this.setLogo(e.target.result)
+									this.fileUplodated = e.target.result
+									//this.image = e.target.result
+									console.log(70, this.image)
+									this.updateVentInfo()
+								}
+								this.fileValid = true
+								this.saveDisabled = false
+								
+							}
+							else {
+								this.fileValid = false
+								this.saveDisabled = true
+							}
+							
+						}
+					}
+					catch (e) {}
+				},
+				
+			async updateVentInfo() {
+				console.log( 982, this.id)
+				    			const name                = this.name
+				const description         = this.message
+				const company_name        = this.company_name
+				const company_description = this.company_description
+				const date                = this.date
+				const website             = this.website
+
+				let file = this.log ? '' : 'no_update', 
+					fileName =  '',
+					format =  '',
+					filePreview =  this.bgDeleted ? '' : 'no_update',
+					formatPreview =  '',
+					fileNamePreview = ''
+
+				if ( this.file )
+					if(this.file.name) {
+						file = this.fileUplodated
+						fileName = this.file.name
+						format = fileName.slice(fileName.lastIndexOf('.'), fileName.length)
+					}
+
+				if ( this.previewFile )
+					if(this.previewFile.name) {
+						filePreview = this.previewToup
+						fileNamePreview = this.previewFile.name
+						formatPreview = fileNamePreview.slice(fileNamePreview.lastIndexOf('.'), fileNamePreview.length)
+					}
+			
+				const data = {    
+					id: this.id,
+					meetup_name: company_name,
+					description: description,
+					company_name: company_name,
+					company_description: company_description,
+					website: website,
+					date: date,
+					image: file,
+					preview: filePreview,
+					ext: format,                      
+					previewExt: formatPreview,
+					custom_colors: 'no_update',
+					color_schema: 'no_update'
+					}
+					const res = await MeetupFormRoutes.postUpdate(data)
+				},
+
 		},
 		watch: {
 			ready: function () {
@@ -967,7 +1090,7 @@
 					return 'online-stats--active'
 				else
 					return 'online-stats'
-			},
+			}
 		},
 	}
 </script>

@@ -110,7 +110,7 @@ export default {
         materials: "Materials",
         readMore: "Read more",
         showLess: "Show less",
-        speakers: "Participans",
+        speakers: "Participants",
         backstage: "Backstage",
         mainRoom: "Main Room",
         willStartIn: "Meetup will start in ",

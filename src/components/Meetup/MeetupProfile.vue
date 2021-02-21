@@ -98,7 +98,7 @@
 									@mouseleave="hover = false"
 									>
 								<div class="company-name-base">
-									<div contenteditable class="company-name is-dark-changeable--color editme"
+									<div contenteditable class="company-name is-dark-changeable--color editable editme"
 										v-if="$root.isUserAdmin"
 									   id="company_name"
 									   v-html="company_name"
@@ -140,7 +140,7 @@
                     @mouseleave="hover = false"
                 >
 								<div class="company-description-base">
-									<div contenteditable class="company_description is-dark-changeable--color editme"
+									<div contenteditable class="company_description is-dark-changeable--color editable editme"
                        v-if="$root.isUserAdmin"
                        id="company_description"
                        v-html="company_description"
@@ -258,7 +258,7 @@
 								@mouseleave="hover = false"
 							>
 								<div class="meetup-name-base">
-									<div contenteditable class="meetup-title is-dark-changeable--color editme"
+									<div contenteditable class="meetup-title is-dark-changeable--color editable editme"
 										v-if="$root.isUserAdmin"
 										id="meetup_name"
 										v-html="meetup_name"
@@ -326,7 +326,7 @@
                   @mouseleave="hover = false"
               >
 								<div class="meetup-description">
-									<div contenteditable class="meetup-description is-dark-changeable--color editme"
+									<div contenteditable class="meetup-description is-dark-changeable--color editable editme"
                        v-if="$root.isUserAdmin"
                        id="meetup_topic"
                        v-html="meetup_topic"

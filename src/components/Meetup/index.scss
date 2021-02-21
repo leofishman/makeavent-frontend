@@ -44,7 +44,11 @@
 
 #meetup-profile {
 	background-image: url("../../assets/img/odeyaloblue3.png");
-    background-size: cover;
+	background-size: cover;	
+	.editable[contenteditable]:focus {
+		border: 3px solid red;
+}
+	
 }
 
 .meetup-profile {
@@ -210,6 +214,7 @@
 		padding-top: 3rem;
 		.profile-top {
 			margin-bottom: 2rem;
+
 			.company-logo-base {
 				.company-logo {
 
@@ -355,6 +360,7 @@
 		width: fit-content;
 		margin-left: auto;
 		margin-right: auto;
+ 
 	}
 
 	.list-network {

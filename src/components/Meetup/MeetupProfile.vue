@@ -1,5 +1,5 @@
 <template>
-	<div v-if="ready" id="meetup-profile" class="meetup-profile is-light-changeable--bg" :style="isBgImage()" @click="hover=false; ChangeLogo=false">
+	<div v-if="ready" id="meetup-profile" class="meetup-profile is-light-changeable--bg" :style="isBgImage()" @click="hover=false; ChangeLogo=false;">
 		<div v-if="util.isImage(preview)" class="scr-saver-fileld__bg" :style="isBgImageBackdrop()"></div>
 
 		<video v-if="util.isVideo(preview)" :poster="$root.meetup.screensaverColor" class="bg-video" autoplay muted loop>
@@ -23,7 +23,7 @@
 						<aside class="column is-full-mobile is-half-widescreen is-one-third-fullhd">
 							<div class="profile-top">
 								<span 
-									@click.stop="ChangeLogo=true"
+									@click.stop="ChangeLogo=true;"
 									@mouseover="hover = true"
 									@mouseleave="hover = false; " 
 									class="company-logo-base"
@@ -32,9 +32,12 @@
 										<img v-if="ChangeLogo" :src="`${api}/static/img/trans.png`">
 									</figure>
 									<figure class="company-logo">
-										<span  v-if="!ChangeLogo">
+										<span  v-if="!ChangeLogo && !fileUplodated">
 											<img v-if="util.isImage(image)" :src="image">
 											<img v-else :src="`${api}/static/img/brand-default.png`">
+										</span>
+										<span  v-if="!ChangeLogo && fileUplodated">											
+											<img :src="fileUplodated">
 										</span>
 										<span v-if="ChangeLogo">
 											<img :src="`${api}/static/img/trans.png`">
@@ -930,12 +933,12 @@
 				case 'meetup_name':
 					this.$store.state.meetupForm.name = src;
 					//this.meetup_name = src;
-					console.log(src);
+					//console.log(src);
 					break
 				case 'meetup_topic':
 					this.$store.state.meetupForm.meetup_topic = src;
 					//this.meetup_name = src;
-					console.log(867,this.$store.state.meetupForm, src);
+					//console.log(867,this.$store.state.meetupForm, src);
 					break
 				case 'company_description':
 					this.$store.state.meetupForm.company_description = src;
@@ -943,7 +946,7 @@
 				case 'message':
 					this.message = src;
 					}
-				},
+			},
 			endEdit(evt){
 				this.$el.querySelector('#' + evt.path[0].id).blur()
 			},
@@ -959,11 +962,10 @@
 								const reader = new FileReader()
 								reader.readAsDataURL(image)
 								reader.onload = e => {
-									this.setLogo(e.target.result)
 									this.fileUplodated = e.target.result
 									//this.image = e.target.result
-									console.log(70, this.image)
-									this.updateVentInfo()
+									this.updateVentInfo('image')
+									
 								}
 								this.fileValid = true
 								this.saveDisabled = false
@@ -977,11 +979,11 @@
 						}
 					}
 					catch (e) {}
-				},
+			},
 				
-			async updateVentInfo() {
-				console.log( 982, this.id)
-				    			const name                = this.name
+			async updateVentInfo(updated) {
+
+    			const name                = this.name
 				const description         = this.message
 				const company_name        = this.company_name
 				const company_description = this.company_description
@@ -1008,7 +1010,7 @@
 						fileNamePreview = this.previewFile.name
 						formatPreview = fileNamePreview.slice(fileNamePreview.lastIndexOf('.'), fileNamePreview.length)
 					}
-			
+
 				const data = {    
 					id: this.id,
 					meetup_name: company_name,
@@ -1024,7 +1026,14 @@
 					custom_colors: 'no_update',
 					color_schema: 'no_update'
 					}
+
+					if (updated === 'image') {
+						data.image = this.fileUplodated
+						await this.setLogo(this.fileUploadated)
+					}
+
 					const res = await MeetupFormRoutes.postUpdate(data)
+					
 				},
 
 		},
@@ -1063,7 +1072,12 @@
 				return this.$store.state.meetupForm.preview
 			},
 			image () {
-				return this.$store.state.meetupForm.logo
+				if (this.fileUplodated) {
+					return this.fileUplodated
+				} else {
+					return this.$store.state.meetupForm.logo
+				}
+				
 			},
 			stuff () {
 				return this.$store.state.meetupForm.stuff

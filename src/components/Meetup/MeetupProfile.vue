@@ -111,6 +111,7 @@
 									<i v-show="hover && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
 								</div>
 								</span>
+								<meetup-room class="admin-bar__switcher" />
 								<!-- Company contacts -->
 								<ul class="list-network">
 									<li v-if="website" v-on:click="openAndTrack(website)">
@@ -472,6 +473,7 @@
 	import tinycolor from 'tinycolor2'
 	import {mapActions} from 'vuex'
 	import MeetupFormRoutes from '@/store/routes/meetup-form'
+	import MeetupRoom from './AdminSidebar/Transmition/MeetupRoom'
 	
 	export default {
 		props: {
@@ -491,7 +493,8 @@
 			JitsiStream,
 			AdminSidebar,
 //			UploadLogo,
-			Share
+			Share,
+			MeetupRoom
 		},
 		async mounted() {
 			await this.getMeetupById({ id: this.id })
@@ -1025,7 +1028,8 @@
 					ext: format,                      
 					previewExt: formatPreview,
 					custom_colors: 'no_update',
-					color_schema: 'no_update'
+					color_schema: 'no_update',
+					meetupRoomOpened: true
 					}
 
 					if (updated === 'image') {

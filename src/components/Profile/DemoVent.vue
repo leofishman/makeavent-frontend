@@ -342,7 +342,7 @@
 								description: 'My awesome vent created on ' + date,
 								company_name: 'Me',
 								company_description: 'What my company does?',
-								date: date,
+								date: today,
 		/*                       image: this.fileUplodated,
 								preview: PfileUplodated,
 								ext: format,                      

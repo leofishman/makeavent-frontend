@@ -936,7 +936,7 @@
 					//console.log(src);
 					break
 				case 'meetup_topic':
-					this.$store.state.meetupForm.meetup_topic = src;
+					this.$store.state.meetupForm.message = src;
 					//this.meetup_name = src;
 					//console.log(867,this.$store.state.meetupForm, src);
 					break
@@ -946,6 +946,7 @@
 				case 'message':
 					this.message = src;
 					}
+				this.updateVentInfo();
 			},
 			endEdit(evt){
 				this.$el.querySelector('#' + evt.path[0].id).blur()
@@ -984,7 +985,7 @@
 			async updateVentInfo(updated) {
 
     			const name                = this.name
-				const description         = this.message
+				const description         = this.meetup_topic
 				const company_name        = this.company_name
 				const company_description = this.company_description
 				const date                = this.date

@@ -343,14 +343,15 @@
 								company_name: 'Company Name',
 								company_description: 'What my company does?',
 								date: today,
+								
+								groupName: 'test'
 		/*                       image: this.fileUplodated,
 								preview: PfileUplodated,
-								ext: format,                      
+								 ext: format,                     
 								previewExt: formatPreview,
-								groupName: 'test'
+								
 		*/                    }
 							const res = await MeetupFormRoutes.postAddMeetup(vent_data)
-
 						} 
 							
 					}else {

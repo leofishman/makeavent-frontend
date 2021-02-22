@@ -340,7 +340,7 @@
 							const vent_data = {    
 								name: 'demo vent',
 								description: 'My awesome vent created on ' + date,
-								company_name: 'Me',
+								company_name: 'Company Name',
 								company_description: 'What my company does?',
 								date: today,
 		/*                       image: this.fileUplodated,

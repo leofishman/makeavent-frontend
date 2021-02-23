@@ -70,7 +70,8 @@ export default {
             id: this.$root.meetup._id
         }
         const res = await MeetupFormRoutes.postCreateInviteLink(obj);
-        this.link = res.data
+        //this.link = res.data
+        this.link = res.data.replace('https://app.makeavent.com/', 'https://demo.makeavent.com/')
     },
     methods: {
         ...mapActions(['getMeetupById']),

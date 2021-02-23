@@ -111,7 +111,7 @@
 									<i v-show="hover && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
 								</div>
 								</span>
-								<!--meetup-room v-if="$root.isUserAdmin" class="admin-bar__switcher" /-->
+
 								<!-- Company contacts -->
 								<ul class="list-network">
 									<li v-if="website" v-on:click="openAndTrack(website)">
@@ -177,6 +177,10 @@
 									>{{content.viewMaterials}}</b-button>
 								</div> -->
 							</div>
+							<div>
+								<!--meetup-room v-if="$root.isUserAdmin" class="admin-bar__switcher" /-->
+								
+							</div>								
 						</aside>
 
 						<div class="column">
@@ -367,7 +371,8 @@
 					</article>
 				</div>
 				<div v-if="showShareOptions" class="chat-top">
-					<Share />
+					<!--Share /-->
+					<speakers v-if="$root.isUserAdmin" />
 				
 				</div>
 
@@ -473,7 +478,8 @@
 	import tinycolor from 'tinycolor2'
 	import {mapActions} from 'vuex'
 	import MeetupFormRoutes from '@/store/routes/meetup-form'
-	import MeetupRoom from './AdminSidebar/Transmition/MeetupRoom'
+//	import MeetupRoom from './AdminSidebar/Transmition/MeetupRoom'
+	import Speakers from './AdminSidebar/Speakers/'
 	
 	export default {
 		props: {
@@ -494,7 +500,8 @@
 			AdminSidebar,
 //			UploadLogo,
 			Share,
-			MeetupRoom
+//			MeetupRoom,
+			Speakers,
 		},
 		async mounted() {
 			await this.getMeetupById({ id: this.id })

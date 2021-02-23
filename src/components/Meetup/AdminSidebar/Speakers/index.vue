@@ -1,12 +1,13 @@
 <template>
   <section>
-      <item class="admin-bar__speakers">
+      <item :opened="true" class="admin-bar__speakers">
             <p class="admin-bar__list-item-header" slot="header">{{$root.content.adminSidebar.items.speakers.title}}</p>
             <template slot="inner">
                 <div class="admin-bar__speakers-list">
                     <BackstageControls 
                         :Speakers="$root.meetup.speakers"
                         :parent="this"
+                        
                     />
 
                     <template v-if="speakers">
@@ -18,7 +19,7 @@
                             />
                         </div>
                     </template>
-                    <active-button @clicked="openAddFrom" class="admin-bar__button" :name="$root.content.adminSidebar.items.speakers.buttons.add"/>
+                   <active-button @clicked="openAddFrom" class="admin-bar__button" :name="$root.content.adminSidebar.items.speakers.buttons.add"/>
                 </div>
             </template>
       </item>

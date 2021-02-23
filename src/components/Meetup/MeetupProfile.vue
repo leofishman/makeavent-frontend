@@ -111,7 +111,7 @@
 									<i v-show="hover && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
 								</div>
 								</span>
-								<meetup-room v-if="$root.isUserAdmin" class="admin-bar__switcher" />
+								<!--meetup-room v-if="$root.isUserAdmin" class="admin-bar__switcher" /-->
 								<!-- Company contacts -->
 								<ul class="list-network">
 									<li v-if="website" v-on:click="openAndTrack(website)">

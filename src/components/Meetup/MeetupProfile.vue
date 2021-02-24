@@ -185,7 +185,7 @@
 
 						<div class="column">
 							<div v-if="$root.isUserAdmin" class="columns">
-								<div class="column">
+								<div class="column" v-if="1 === 2">
 									<div class="columns is-gapless" style="margin-bottom:0px">
 										<div class="column">
 											<h2 class="is-dark-changeable--color">{{content.mainRoom}}</h2>
@@ -201,7 +201,7 @@
 									/>
 								</div>
 								<div v-if="$root.showBackstage" class="column">
-									<h2 class="is-dark-changeable--color">{{content.backstage}}</h2>
+									<h2 v-show="false" class="is-dark-changeable--color">{{content.backstage}}</h2>
 									<JitsiStream
 										v-if="$root.meetup.service == 'jitsi'"
 										:meetup="$root.meetup"
@@ -1049,41 +1049,6 @@
 					
 			},
 
-		// Only for demo porpouse, send speakers (participants) to frontstage
-			sendToMainstage () {console.log(1059,localStorage.auth, MEETUP.sendToMainstage)
-				Axios.post(MEETUP.sendToMainstage, {
-					id: this.id,
-					speaker: this.speakers[0]._id
-				},
-				{
-					headers: {
-						authorization: localStorage.auth
-					}
-				})
-				.then(res => {console.log(1067, res)
-					this.backstage = res.data.backstage
-					this.frontstage = res.data.frontstage
-					this.isLoading = false
-				})
-				.catch(err => {
-					console.log(1075,err)
-				})
-			},
-			isInBackstage () {		console.log(1077, this)	
-				/*	if (this.backstage.participants.includes(this.user._id))
-						return true
-					else
-						return false
-						*/
-			},
-			checkUserRoom() {console.log(1085, 'checkUserRoom')
-			console.log(1087, this.speakers[0]._id, this.speakers)
-				if (this.isInBackstage()) {console.log(1084)
-					this.sendToMainstage ()	
-				}
-				this.sendToMainstage ()	
-			}			
-
 		},
 		watch: {
 			ready: function () {
@@ -1094,7 +1059,6 @@
 						this.updateColorDark(this.$root.meetup.color_schema.dark)
 						this.updateColorPrimary(this.$root.meetup.color_schema.primary)
 					}
-					setTimeout( this.checkUserRoom(), 1000)
 				}, 1000)
 			},
 			"$root.meetup": function () {

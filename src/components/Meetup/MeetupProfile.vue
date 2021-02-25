@@ -23,7 +23,7 @@
 						<aside class="column is-full-mobile is-half-widescreen is-one-third-fullhd">
 							<div class="profile-top">
 								<span 
-									@click.stop="ChangeLogo=true;"
+									@click.stop="ChangeLogoTrue"
 									@mouseover="hover = true"
 									@mouseleave="hover = false; " 
 									class="company-logo-base"
@@ -39,7 +39,7 @@
 										<span  v-if="!ChangeLogo && fileUplodated">											
 											<img :src="fileUplodated">
 										</span>
-										<span v-if="ChangeLogo">
+										<span v-if="ChangeLogo && $root.isUserAdmin">
 											<img :src="`${api}/static/img/trans.png`">
 											<!-- upload section -->
 											<b-field class="company-logo-upload">
@@ -961,6 +961,11 @@
 			},
 			endEdit(evt){
 				this.$el.querySelector('#' + evt.path[0].id).blur()
+			},
+			ChangeLogoTrue () {
+				if ( this.$root.isUserAdmin) {
+					this.ChangeLogo = true
+				}
 			},
 			updateLogo(e){
 					try {

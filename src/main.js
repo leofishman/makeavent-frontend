@@ -209,7 +209,7 @@ new Vue({
       content: Content[this.selectedLanguage],
 
       openGlobalChat: false,
-      openMeetupSettings: false,
+      openMeetupSettings: true,
       isUserAdmin: false,
 
       modals: [],

@@ -5,7 +5,7 @@
             :active.sync="isLoading" 
             :can-cancel="false"
         />
-        <item class="admin-bar__design">
+        <item class="admin-bar__design" :opened="true">
             <p class="admin-bar__list-item-header" slot="header">{{content.items.design.title}}</p>
             
             <template slot="inner">
@@ -14,7 +14,7 @@
                         @updateMode="updateMode"
                         @updateActive="updateActive" 
                         @resetToDefault="resetToDefault"
-                        :isActive="isActive"
+                        :isActive="true"
                         :isLight="isLight"
                     />
                 </div>

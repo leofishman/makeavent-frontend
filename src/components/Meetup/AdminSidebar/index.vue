@@ -11,13 +11,14 @@
         <div class="content">
             <div class="admin-sidebar-wrap">
                 <h3 class="admin-sidebar-wrap-header">{{content.options}}</h3>
-                <shortcuts/>
+                <!--shortcuts/>
                 <transmition/>
                 <information :id="this.$root.meetup._id"/>
                 <speakers/>
                 <streaming/>
-                <share/>
-                <design/>
+                <share/-->
+                <information :id="this.$root.meetup._id"/>
+                <design :opened="true" />
                 <recording/>
             </div>
         </div>

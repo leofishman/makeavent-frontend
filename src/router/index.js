@@ -26,6 +26,7 @@ import NoAccess from '@/components/Auth/NoAccess'
 
 import Profile from '@/components/Profile/Profile'
 import DemoVent from '@/components/Profile/DemoVent'
+import postLogin from '@/components/Profile/postLogin'
 import MyInterviews from '@/components/Profile/MyInterviews'
 import MyBusinessCards from '@/components/Profile/MyBusinessCards'
 import AcceptInterview from '@/components/AcceptInterview'
@@ -200,8 +201,16 @@ const router = new Router({
         },
         {
             path: '/demovent',
-            name: 'Demo Vent',
+            name: 'DemoVent',
             component: DemoVent,
+            meta: {
+                requiresAuth: true
+            }
+        },        
+        {
+            path: '/postlogin',
+            name: 'PostLogin',
+            component: postLogin,
             meta: {
                 requiresAuth: true
             }
@@ -244,7 +253,7 @@ router.beforeEach((to, from, next) => {
             axios.get(api + `/auth/checkAccess?path=${toUp(to.name)}`, { headers: { authorization: localStorage.auth } })
             .then(res => {
                 if (to.path == '/')
-                    next('demovent')
+                    next('postlogin')
                 //    next('/profile')
 
                 else

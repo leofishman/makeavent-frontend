@@ -25,6 +25,7 @@ import LoginWithNewPassword from '@/components/Auth/LoginWithNewPassword'
 import NoAccess from '@/components/Auth/NoAccess'
 
 import Profile from '@/components/Profile/Profile'
+import DemoVent from '@/components/Profile/DemoVent'
 import MyInterviews from '@/components/Profile/MyInterviews'
 import MyBusinessCards from '@/components/Profile/MyBusinessCards'
 import AcceptInterview from '@/components/AcceptInterview'
@@ -35,6 +36,7 @@ import Backstage from '@/components/Backstage'
 import ConfirmInvitation from '@/components/ConfirmInvitation'
 
 import Recordings from '@/pages/Recordings'
+import { BIconExclamationTriangle } from 'bootstrap-vue'
 
 Vue.use(Router)
 
@@ -195,7 +197,15 @@ const router = new Router({
                 requiresAuth: false
             },
             props: (route) => ({ link:route.query.link  })
-        }
+        },
+        {
+            path: '/demovent',
+            name: 'Demo Vent',
+            component: DemoVent,
+            meta: {
+                requiresAuth: true
+            }
+        },
     ]
 })
 
@@ -234,7 +244,8 @@ router.beforeEach((to, from, next) => {
             axios.get(api + `/auth/checkAccess?path=${toUp(to.name)}`, { headers: { authorization: localStorage.auth } })
             .then(res => {
                 if (to.path == '/')
-                    next('/profile')
+                    next('demovent')
+                //    next('/profile')
 
                 else
                     next()

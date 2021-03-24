@@ -1,5 +1,5 @@
 <template>   
-	<div id="networking-rooms" class="networking-rooms">
+	<div v-if="showNetworkingRomm" id="networking-rooms" class="networking-rooms">
 		<navbar></navbar>
 
 		<div :style="{

@@ -141,6 +141,9 @@
                                 <img :src="PfileUplodated" alt="">
                             </div>
                         </template>
+                        <template v-else class="attendee-avatar">
+                            <img :src="`${api}/static/img/brand-default.png`">
+                        </template>                          
                     </div>
                 </div>
             </b-step-item>
@@ -150,19 +153,36 @@
                 <div class="confirm-data">
                     <div class="confirm-data__row">
                         <div class="confirm-data__col-field">{{content.confirmFields.company_name}}</div>
-                        <div class="confirm-data__col-value">{{company_name}}</div>
+                        <div contenteditable class="confirm-data__col-value" id="company_name" v-html="company_name"
+                            @blur="onEdit"
+                            @keydown.enter="endEdit" >{{company_name}}
+                        </div>
+    
+    
                     </div>
                     <div class="confirm-data__row confirm-data__row--description">
                         <div class="confirm-data__col-field">{{content.confirmFields.company_description}}</div>
-                        <div class="confirm-data__col-value">{{company_description}}</div>
+                        <div contenteditable class="confirm-data__col-value" id="company_description" v-html="company_description"
+                            @blur="onEdit"
+                            @keydown.enter="endEdit"> 
+                            {{company_description}}
+                        </div>
                     </div>
                     <div class="confirm-data__row">
                         <div class="confirm-data__col-field">{{content.confirmFields.name}}</div>
-                        <div class="confirm-data__col-value">{{name}}</div>
+                        <div contenteditable class="confirm-data__col-value" id="name" v-html="name"
+                            @blur="onEdit"
+                            @keydown.enter="endEdit">
+                            {{name}}
+                        </div>
                     </div>
                     <div class="confirm-data__row confirm-data__row--description">
                         <div class="confirm-data__col-field">{{content.confirmFields.massage}}</div>
-                        <div class="confirm-data__col-value">{{message}}</div>
+                        <div contenteditable class="confirm-data__col-value" id="message" v-html="message"
+                            @blur="onEdit"
+                            @keydown.enter="endEdit">
+                            {{message}}
+                        </div>
                     </div>
                     <div class="confirm-data__row">
                         <div class="confirm-data__col-field">{{content.confirmFields.date}}</div>
@@ -185,6 +205,9 @@
                                 <img :src="PfileUplodated" alt="">
                             </div>
                         </template>
+                        <template v-else class="attendee-avatar">
+                            <img :src="`${api}/static/img/brand-default.png`">
+                        </template>                             
                     </div>
                 </div>
             </b-step-item>
@@ -275,7 +298,7 @@
         data() {
             return {
                 content: this.$root.content.meetupPopupForm,
-                activeStep: 0,
+                activeStep: 5,
                 loading: false,
 
                 isAnimated: true,
@@ -289,12 +312,12 @@
                 labelPosition: 'bottom',
                 mobileMode: 'minimalist',
 
-                name: '',
-                message: '',
-                company_name: '',
-                company_description: '',
+                name: 'My vent',
+                message: 'My great vent',
+                company_name: this.$root.profile.company,
+                company_description: 'Company Description',
                 date: new Date(),
-                file: {},  
+                file: {}, //{'src': api + $root.profile.photo},  
                 fileUplodated: false,
                 fileValid: true,
                 previewFile: {},  
@@ -419,7 +442,10 @@
                 }
 
                 let PfileUplodated = '';
-                if ( typeof this.PfileUplodated === 'string' ) PfileUplodated = this.PfileUplodated 
+                if ( typeof this.PfileUplodated === 'string' ) {
+                    PfileUplodated = this.PfileUplodated 
+                }
+                
                 else {
                     try {
                         const video = this.previewFile
@@ -433,7 +459,7 @@
                 }
 
                 if(this.lastStep){
-                    const data = {      
+                    const data = {    
                         name: name,
                         description: description,
                         company_name: company_name,
@@ -456,6 +482,26 @@
                     return false
                 }
             },
+            onEdit(evt){
+             var src = evt.target.innerHTML
+
+             switch(evt.srcElement.id) {
+                case 'name':
+                  this.name = src
+                  break;
+                case 'company_name':
+                    this.company_name = src;
+                    break;
+                case 'company_description':
+                    this.company_description = src;
+                    break;
+                case 'message':
+                    this.message = src;
+             }
+            },
+            endEdit(){
+                this.$el.querySelector('.editme').blur()
+            }
         },
         computed: {
             lastStep(){
@@ -469,8 +515,9 @@
             formatDate(){
                 let formatDate = ''
                 formatDate += this.date.getDate()
-                formatDate += '/' + this.date.getMonth()
-                formatDate += '/' + this.date.getFullYear()
+                // Change date.getMonth() to date.toLocalString to fix month number base 0 error
+                formatDate += ' / ' + this.date.toLocaleString("en-us", { month: "short" })
+                formatDate += ' / ' + this.date.getFullYear()
                 return formatDate
             },
             previewIsVideo(){                

@@ -68,13 +68,13 @@ export default {
     },
 
     ProfileMeetupsTabs: {
-        title: "Meetups",
-        my: "My meetups",
+        title: "Vents",
+        my: "My Vents",
         created: "Created",
         noMeetups: "Unfortunatelly, you didn't join any meetups yet.",
         noMeetupsCreate: "You didn't create any meetup yet.<br>Please, click the button above to create first.",
         CreateNewButton: {
-            create: "Create New Meetup"
+            create: "Create New Vent"
         },
         MeetupsRow: {
             edit: "Edit"
@@ -110,7 +110,7 @@ export default {
         materials: "Materials",
         readMore: "Read more",
         showLess: "Show less",
-        speakers: "Speakers",
+        speakers: "Participants",
         backstage: "Backstage",
         mainRoom: "Main Room",
         willStartIn: "Meetup will start in ",

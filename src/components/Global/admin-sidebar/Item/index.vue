@@ -1,6 +1,6 @@
 <template>
   <div class="admin-sidebar__list-item">
-      <accordion :opened="false">
+      <accordion :opened="opened">
         <accordion-item>            
             <template slot="accordion-trigger">
                 <slot name="header"></slot>
@@ -28,6 +28,9 @@ export default {
     components: {
         Accordion, AccordionItem
     },
+    props: {
+      opened: Boolean
+    }
 }
 </script>
 

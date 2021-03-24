@@ -1,5 +1,5 @@
 <template>
-	<div v-if="ready" class="meetup-profile is-light-changeable--bg" :style="isBgImage()">
+	<div v-if="ready" id="meetup-profile" class="meetup-profile is-light-changeable--bg" :style="isBgImage()" @click="hover=false; ChangeLogo=false;">
 		<div v-if="util.isImage(preview)" class="scr-saver-fileld__bg" :style="isBgImageBackdrop()"></div>
 
 		<video v-if="util.isVideo(preview)" :poster="$root.meetup.screensaverColor" class="bg-video" autoplay muted loop>
@@ -22,9 +22,67 @@
 						<!-- v-if="!$root.openMeetupSettings"  -->
 						<aside class="column is-full-mobile is-half-widescreen is-one-third-fullhd">
 							<div class="profile-top">
-								<figure class="company-logo">
-									<img :src="image">
-								</figure>
+								<span 
+									@click.stop="ChangeLogo=true;"
+									@mouseover="hover = true"
+									@mouseleave="hover = false; " 
+									class="company-logo-base"
+								>
+									<figure v-if="!ChangeLogo" class="company-logo">
+										<img v-if="ChangeLogo" :src="`${api}/static/img/trans.png`">
+									</figure>
+									<figure class="company-logo">
+										<span  v-if="!ChangeLogo && !fileUplodated">
+											<img v-if="util.isImage(image)" :src="image">
+											<img v-else :src="`${api}/static/img/brand-default.png`">
+										</span>
+										<span  v-if="!ChangeLogo && fileUplodated">											
+											<img :src="fileUplodated">
+										</span>
+										<span v-if="ChangeLogo">
+											<img :src="`${api}/static/img/trans.png`">
+											<!-- upload section -->
+											<b-field class="company-logo-upload">
+												<b-upload v-model="file"
+													drag-drop
+													@input="updateLogo"
+													required
+												>
+													<div>
+														<div class="$root.content has-text-centered">
+															<p>
+																<b-icon
+																	icon="upload"
+																	size="is-large">
+																</b-icon>
+															</p>
+															<p>{{$root.content.groupPopupForm.validation.dropFile}}</p>
+														</div>
+													</div>
+												</b-upload>
+												<div></div>
+													<div class="tags">
+														<div v-if="fileUplodated" class="column">
+															<div class="confirm-data__col-value confirm-data__col-value--img">
+																<img style="object-fit:contain" :src="fileUplodated" alt="">
+															</div>
+														</div>				
+
+														<span v-if="!fileValid && fileUplodated" class="help is-danger">
+															{{$root.content.groupPopupForm.validation.invalidFileType}}
+														</span>
+													</div>
+											</b-field>
+
+											<!--UploadLogo v-if="ChangeLogo && $root.isUserAdmin" class="company-logo-upload" @click="hover=false"  :value="value" @update="onChildUpdate"/-->
+										</span>
+										<i v-show="hover && $root.isUserAdmin" @click="ChangeLogo = true" class="far fa-edit edit-file-icon"></i>
+									</figure>
+									
+									
+							
+								</span>
+								
 
 								<div class="company-demo">
 									<b-button v-if="$root.meetup.demo.length"
@@ -35,10 +93,25 @@
 							</div>
 
 							<div class="profile-bottom">
-								<div class="company-name is-dark-changeable--color">
-									{{company_name}}
+								<span
+									@mouseover="hover = true"
+									@mouseleave="hover = false"
+									>
+								<div class="company-name-base">
+									<div contenteditable class="company-name is-dark-changeable--color editable editme"
+										v-if="$root.isUserAdmin"
+									   id="company_name"
+									   v-html="company_name"
+										@blur="onEdit"
+										@keydown.enter="endEdit" 
+									>
+										{{company_name}}
+									</div>
+									<div v-else class="company-name is-dark-changeable--color editme">{{company_name}}</div>
+									<i v-show="hover && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
 								</div>
-
+								</span>
+								<meetup-room v-if="$root.isUserAdmin" class="admin-bar__switcher" />
 								<!-- Company contacts -->
 								<ul class="list-network">
 									<li v-if="website" v-on:click="openAndTrack(website)">
@@ -62,9 +135,29 @@
 								</div>
 
 								<div class="profile-bio">
-									<p v-html="company_description"
+
+								<span
+                    @mouseover="hover = true"
+                    @mouseleave="hover = false"
+                >
+								<div class="company-description-base">
+									<div contenteditable class="company_description is-dark-changeable--color editable editme"
+                       v-if="$root.isUserAdmin"
+                       id="company_description"
+                       v-html="company_description"
+                       @blur="onEdit"
+                       @keydown.enter="endEdit"
+                  >
+										{{company_description}}
+									</div>
+									<div v-else class="company_description is-dark-changeable--color editme">{{company_description}}</div>
+                  <i v-show="hover && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
+								</div>
+								</span>
+
+									<!--p v-html="company_description"
 										v-bind:class="classes"
-										class="bio-content is-dark-changeable--color"></p>
+										class="bio-content is-dark-changeable--color"></p-->
 
 									<!-- <b-button v-if="!expanded"
 										class="is-small is-fullwidth is-dark-changeable--color is-light-changeable--bg invert-color"
@@ -161,8 +254,25 @@
 								<div v-else class="meetup-finished" v-html="content.meetupFinished">
 								</div>
 							</div>
+							<span
+								@mouseover="hover = true"
+								@mouseleave="hover = false"
+							>
+								<div class="meetup-name-base">
+									<div contenteditable class="meetup-title is-dark-changeable--color editable editme"
+										v-if="$root.isUserAdmin"
+										id="meetup_name"
+										v-html="meetup_name"
+										@blur="onEdit"
+										@keydown.enter="endEdit"
+									>
+										{{meetup_name}}
+									</div>
+									<h1 v-else class="meetup-title is-dark-changeable--color" v-html="meetup_name"></h1>
+									<i v-show="hover && $root.isUserAdmin"   class="far fa-edit edit-icon"></i>
+								</div>
+							</span>
 
-							<h1 class="meetup-title is-dark-changeable--color" v-html="meetup_name"></h1>
 							<!-- <div class="meetup-description is-dark-changeable--color" v-html="meetup_topic"> -->
 							<!-- <div v-if="id=='5f53a682c810aa9f7a8150bc'" class="meetup-description is-dark-changeable--color">
 								<div class="columns">
@@ -211,7 +321,25 @@
 									</div>
 								</div>
 							</div> -->
-							<div class="meetup-description is-dark-changeable--color" v-html="meetup_topic"></div>
+							<!--div class="meetup-description is-dark-changeable--color" v-html="meetup_topic"></div-->
+              <span
+                  @mouseover="hover = true"
+                  @mouseleave="hover = false"
+              >
+								<div class="meetup-description">
+									<div contenteditable class="meetup-description is-dark-changeable--color editable editme"
+                       v-if="$root.isUserAdmin"
+                       id="meetup_topic"
+                       v-html="meetup_topic"
+                       @blur="onEdit"
+                       @keydown.enter="endEdit"
+                  >
+										{{meetup_topic}}
+									</div>
+                  <h1 v-else class="meetup-title is-dark-changeable--color" v-html="meetup_topic"></h1>
+                  <i v-show="hover && $root.isUserAdmin"   class="far fa-edit edit-icon"></i>
+								</div>
+              </span>
 
 							<div class="speakers-container columns is-multiline member-clasic">
 								<div class="speakers-title is-dark-changeable--color">
@@ -228,7 +356,7 @@
 
 			<!-- Profile Chat -->
 			<div class="chat-company-profile is-light-changeable--bg">
-				<div class="chat-top">
+				<div v-if="showNetworkingRoom" class="chat-top">
 					<article class="is-light-changeable--bg">
 						<h3 class="is-dark-changeable--color">{{content.networkingRoom}}</h3>
 						<img src="@/assets/img/join-chat.png" />
@@ -238,13 +366,18 @@
 						<!-- <p class="has-text-success">{{content.currentlyOnline}}: ##</p> -->
 					</article>
 				</div>
+				<div v-if="showShareOptions" class="chat-top">
+					<Share />
+				
+				</div>
+
 				<Chat
 					v-bind:key="id"
 					v-if="ready"
 					:checkAccess="'companychat'"
 					type="company"
 					:contacts="$root.meetup.speakers"
-					:name="$root.meetup.company_name"
+					:name="company_name"
 					:_id="id" />
 			</div>
 
@@ -335,8 +468,12 @@
 	import PitchDeck from '@/components/CompanyComponents/Pitchdeck'
 	import JitsiStream from '@/components/VideoStreams/Jitsi'
 	import AdminSidebar from '@/components/Meetup/AdminSidebar/index'
+//	import UploadLogo from '@/components/Meetup/UploadLogo'
+	import Share from './Share/'
 	import tinycolor from 'tinycolor2'
 	import {mapActions} from 'vuex'
+	import MeetupFormRoutes from '@/store/routes/meetup-form'
+	import MeetupRoom from './AdminSidebar/Transmition/MeetupRoom'
 	
 	export default {
 		props: {
@@ -354,7 +491,10 @@
 			Chat,
 			PitchDeck,
 			JitsiStream,
-			AdminSidebar
+			AdminSidebar,
+//			UploadLogo,
+			Share,
+			MeetupRoom
 		},
 		async mounted() {
 			await this.getMeetupById({ id: this.id })
@@ -365,7 +505,7 @@
 		},
 		data () {			
 			/* wait until token and sponsors ready*/
-
+			value: 10
 			this.$root.check('usertype')
 			.then(this.isMeetupParticipant)
 			.then(this.getMeetup)
@@ -428,11 +568,20 @@
 				showOverlay: true,
 				videoLoader: false,
 
-				isFullScreenStream: false
+				isFullScreenStream: false,
+				showNetworkingRoom: false,
+				showShareOptions: true,
+				hover: false,
+				ChangeLogo: false,
+				file: {}, 
+				fileUplodated: false,
+				previewFile: {},  
+				previewUplodated: false,
+				fileValid: true,  				
 			}
 		},
 		methods: {
-			...mapActions(['getMeetupById', 'getStreamStats']),
+			...mapActions(['getMeetupById', 'getStreamStats', 'setLogo']),
 			countdown (time) {
 				const self = this
 				const countDownDate = new Date(time).getTime();
@@ -773,7 +922,125 @@
 				this.updateColorLight(this.$root.meetup.color_schema.light)
 				this.updateColorDark(this.$root.meetup.color_schema.dark)
 				this.updateColorPrimary(this.$root.meetup.color_schema.primary)
-			}
+			},
+			onEdit(evt) {
+				var src = evt.target.innerHTML
+				switch (evt.srcElement.id) {
+				case 'name':
+					this.name = src
+					break;
+				case 'company_name':
+					this.$store.state.meetupForm.company_name = src;
+				// this.company_name = src
+					break;
+				case 'meetup_name':
+					this.$store.state.meetupForm.name = src;
+					//this.meetup_name = src;
+					//console.log(src);
+					break
+				case 'meetup_topic':
+					this.$store.state.meetupForm.message = src;
+					//this.meetup_name = src;
+					//console.log(867,this.$store.state.meetupForm, src);
+					break
+				case 'company_description':
+					this.$store.state.meetupForm.company_description = src;
+					break;
+				case 'message':
+					this.message = src;
+					}
+				this.updateVentInfo();
+			},
+			endEdit(evt){
+				this.$el.querySelector('#' + evt.path[0].id).blur()
+			},
+			updateLogo(e){
+					try {
+						if ( this.file.size > 1000000 ) {
+							this.$root.createError(this.$root.content.ErrorMessages[12], 'oops')
+						}
+						else {
+							if ( this.file ) {
+								const image = this.file
+				
+								const reader = new FileReader()
+								reader.readAsDataURL(image)
+								reader.onload = e => {
+									this.fileUplodated = e.target.result
+									//this.image = e.target.result
+									this.updateVentInfo('image')
+									
+								}
+								this.fileValid = true
+								this.saveDisabled = false
+								
+							}
+							else {
+								this.fileValid = false
+								this.saveDisabled = true
+							}
+							
+						}
+					}
+					catch (e) {}
+			},
+				
+			async updateVentInfo(updated) {
+
+    			const name                = this.name
+				const description         = this.meetup_topic
+				const company_name        = this.company_name
+				const company_description = this.company_description
+				const date                = this.date
+				const website             = this.website
+
+				let file = this.log ? '' : 'no_update', 
+					fileName =  '',
+					format =  '',
+					filePreview =  this.bgDeleted ? '' : 'no_update',
+					formatPreview =  '',
+					fileNamePreview = ''
+
+				if ( this.file )
+					if(this.file.name) {
+						file = this.fileUplodated
+						fileName = this.file.name
+						format = fileName.slice(fileName.lastIndexOf('.'), fileName.length)
+					}
+
+				if ( this.previewFile )
+					if(this.previewFile.name) {
+						filePreview = this.previewToup
+						fileNamePreview = this.previewFile.name
+						formatPreview = fileNamePreview.slice(fileNamePreview.lastIndexOf('.'), fileNamePreview.length)
+					}
+
+				const data = {    
+					id: this.id,
+					meetup_name: company_name,
+					description: description,
+					company_name: company_name,
+					company_description: company_description,
+					website: website,
+					date: date,
+					image: file,
+					preview: filePreview,
+					ext: format,                      
+					previewExt: formatPreview,
+					custom_colors: 'no_update',
+					color_schema: 'no_update',
+					meetupRoomOpened: true
+					}
+
+					if (updated === 'image') {
+						data.image = this.fileUplodated
+						await this.setLogo(this.fileUploadated)
+					}
+
+					const res = await MeetupFormRoutes.postUpdate(data)
+					
+				},
+
 		},
 		watch: {
 			ready: function () {
@@ -810,7 +1077,12 @@
 				return this.$store.state.meetupForm.preview
 			},
 			image () {
-				return this.$store.state.meetupForm.logo
+				if (this.fileUplodated) {
+					return this.fileUplodated
+				} else {
+					return this.$store.state.meetupForm.logo
+				}
+				
 			},
 			stuff () {
 				return this.$store.state.meetupForm.stuff
@@ -837,7 +1109,7 @@
 					return 'online-stats--active'
 				else
 					return 'online-stats'
-			},
+			}
 		},
 	}
 </script>

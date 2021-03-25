@@ -202,7 +202,7 @@ import './index.scss'
                     this.$root.profile = res.data.profile[0]
                     this.$root.usertype = res.data.type
 
-                    localStorage.auth = res.headers.authorization
+                    localStorage.setItem("auth", res.headers.authorization)
 
                     this.$router.push(`/`)
                 })

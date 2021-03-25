@@ -102,7 +102,7 @@ export default {
                     if (this.forwardPath.includes('confirm_invitation')) {
                         this.$root.usertype = response.type
                         this.$root.profile = response.profile
-                        localStorage.auth = res.headers.authorization
+                        localStorage.setItem("auth", res.headers.authorization)
                         
                         this.$router.push(this.forwardPath)
                     }
@@ -116,7 +116,7 @@ export default {
                     else {
                         this.$root.usertype = response.type
                         this.$root.profile = response.profile
-                        localStorage.auth = res.headers.authorization
+                        localStorage.setItem("auth", res.headers.authorization)
                         
                         this.$router.push(`/`)
                     }

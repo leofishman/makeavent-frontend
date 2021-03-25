@@ -244,7 +244,7 @@ router.beforeEach((to, from, next) => {
             axios.get(api + `/auth/checkAccess?path=${toUp(to.name)}`, { headers: { authorization: localStorage.auth } })
             .then(res => {
                 if (to.path == '/')
-                    next('demovent')
+                    next('/demovent')
                 //    next('/profile')
 
                 else

@@ -902,7 +902,7 @@
 				return new Promise(async (resolve, reject) => {
 					Axios.get(MEETUP.isParticipant + "?id=" + this.id, {
 						headers: {
-							authorization: localStorage.auth
+							authorization: localStorage.getItem("auth")
 						}
 					})
 					.then(res => {

@@ -124,7 +124,7 @@ export default {
 		logout () {
 			localStorage.setItem("auth", "")
 			this.$root.openGlobalChat = false
-			this.$router.push('/login').catch(e => {})
+			this.$router.go()
 		},
 
 		async toggleOpenMeetupSettings () {

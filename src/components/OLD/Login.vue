@@ -99,7 +99,7 @@ export default {
                 else {
                     this.$root.usertype = data.type
                     this.$root.profile = data.profile
-                    localStorage.auth = res.headers.authorization
+                    localStorage.setItem("auth", res.headers.authorization)
 
                     if (
                         !this.$root.profile.Linkedin &&

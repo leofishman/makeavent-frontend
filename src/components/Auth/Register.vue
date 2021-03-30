@@ -162,13 +162,13 @@ export default {
                 const response = res.data
                 this.$root.usertype = response.type
                 this.$root.profile = response.profile
-                localStorage.auth = res.headers.authorization
+                localStorage.setItem("auth", res.headers.authorization)
 
                 if (this.forwardPath)
                     if (this.forwardPath.includes('confirm_invitation')) {
                         this.$root.usertype = response.type
                         this.$root.profile = response.profile
-                        localStorage.auth = res.headers.authorization
+                        localStorage.setItem("auth", res.headers.authorization)
                         
                         this.$router.push(this.forwardPath)
                     }
@@ -215,7 +215,7 @@ export default {
                     Telegram: this.telegram,
                 }, {
                     headers: {
-                        authorization: localStorage.auth
+                        authorization: localStorage.getItem("auth")
                     }
                 })
             }
@@ -227,7 +227,7 @@ export default {
                 formData.append('userProfilePhoto', this.photo);
 
                 return Axios.post(`${this.api}/login/profilephoto`, formData, {
-                    headers: { authorization: localStorage.auth }
+                    headers: { authorization: localStorage.getItem("auth") }
                 })
             }
             else {

@@ -138,7 +138,7 @@ export default {
                 this.$root.usertype = res.data.type
 
                 window.location.search = ""
-                localStorage.auth = res.headers.authorization
+                localStorage.setItem("auth", res.headers.authorization)
 
                 this.$router.push(`/`)
             })

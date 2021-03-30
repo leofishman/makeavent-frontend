@@ -233,7 +233,7 @@ export default {
                         const data = res.data
                         this.$root.usertype = data.type
                         this.$root.profile = data.profile
-                        localStorage.auth = res.headers.authorization
+                        localStorage.setItem("auth", res.headers.authorization)
     
                         /**
                          * @description #reghall we don't force to provide socials and photo for now

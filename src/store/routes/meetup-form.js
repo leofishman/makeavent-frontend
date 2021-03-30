@@ -1,93 +1,97 @@
 import api from '@/services/api'
 
-const opts = {
-  headers: {
-    Authorization: localStorage.auth
+const opts = () => {
+  const authToken = localStorage.getItem("auth")
+
+  return {
+    headers: {
+      Authorization: authToken
+    }
   }
 }
 
 export default {
   getById (params) {
     return api().get('/meetup/get', {
-      ...opts,
+      ...opts(),
       params
     })
   },
   getMeetupStreamingSources (params) {
     return api().get('/meetup/get-streaming-sources', {
-      ...opts,
+      ...opts(),
       params
     })
   },
   getStreamStats (params) {
     return api().get('/meetup/get-stream-stats', {
-      ...opts,
+      ...opts(),
       params
     })
   },
   postAddMeetup (params) {
     return api().post('/meetup/add-meetup', params, {
-      ...opts     
+      ...opts()
     })
   },
   postUpdate (params) {
     return api().post('/meetup/update-meetup', params, {
-      ...opts     
+      ...opts()     
     })
   },
   postAddStuff (params) {
     return api().post('/meetup/add-stuff', params, {
-      ...opts     
+      ...opts()     
     })
   },
   postAddDemos (params) {
     return api().post('/meetup/add-demos', params, {
-      ...opts     
+      ...opts()     
     })
   },
   postAddSocials (params) {
     return api().post('/meetup/add-socials', params, {
-      ...opts     
+      ...opts()     
     })
   },
   postAddScreensaver (params) {
     return api().post('/meetup/add-screensaver', params, {
-      ...opts     
+      ...opts()     
     })
   },
   postCreateInviteLink(params){
     return api().post('/meetup/create-inv-link', params, {
-      ...opts     
+      ...opts()     
     })    
   },
   toggleNetworkingRoom(params){
     return api().post('/meetup/toggle-networking-room', params, {
-      ...opts     
+      ...opts()     
     })    
   },
   toggleMeetupRoom(params){
     return api().post('/meetup/toggle-webinar-status', params, {
-      ...opts     
+      ...opts()     
     })    
   },
   closeMeetup (params) {
     return api().post('/meetup/set-meetup-finished', params, {
-      ...opts
+      ...opts()
     })
   },
   addStreamingSource(params) {
     return api().post('/meetup/add-streaming-source', params, {
-      ...opts
+      ...opts()
     })
   },
   deleteStreamingSource(params) {
     return api().post('/meetup/delete-streaming-source', params, {
-      ...opts
+      ...opts()
     })
   },
   postInviteByEmail (params) {
     return api().post('/meetup/invite-email', params, {
-      ...opts
+      ...opts()
     })
   }
 }

@@ -23,7 +23,7 @@
 						<aside class="column is-full-mobile is-half-widescreen is-one-third-fullhd">
 							<div class="profile-top">
 								<span 
-									@click.stop="ChangeLogo=true;"
+									@click.stop="ChangeLogoTrue"
 									@mouseover="hover = true"
 									@mouseleave="hover = false; " 
 									class="company-logo-base"
@@ -39,7 +39,7 @@
 										<span  v-if="!ChangeLogo && fileUplodated">											
 											<img :src="fileUplodated">
 										</span>
-										<span v-if="ChangeLogo">
+										<span v-if="ChangeLogo && $root.isUserAdmin">
 											<img :src="`${api}/static/img/trans.png`">
 											<!-- upload section -->
 											<b-field class="company-logo-upload">
@@ -111,7 +111,7 @@
 									<i v-show="hover && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
 								</div>
 								</span>
-								<meetup-room v-if="$root.isUserAdmin" class="admin-bar__switcher" />
+
 								<!-- Company contacts -->
 								<ul class="list-network">
 									<li v-if="website" v-on:click="openAndTrack(website)">
@@ -177,11 +177,15 @@
 									>{{content.viewMaterials}}</b-button>
 								</div> -->
 							</div>
+							<div>
+								<!--meetup-room v-if="$root.isUserAdmin" class="admin-bar__switcher" /-->
+								
+							</div>								
 						</aside>
 
 						<div class="column">
 							<div v-if="$root.isUserAdmin" class="columns">
-								<div class="column">
+								<div class="column" v-if="1 === 2">
 									<div class="columns is-gapless" style="margin-bottom:0px">
 										<div class="column">
 											<h2 class="is-dark-changeable--color">{{content.mainRoom}}</h2>
@@ -197,7 +201,7 @@
 									/>
 								</div>
 								<div v-if="$root.showBackstage" class="column">
-									<h2 class="is-dark-changeable--color">{{content.backstage}}</h2>
+									<h2 v-show="false" class="is-dark-changeable--color">{{content.backstage}}</h2>
 									<JitsiStream
 										v-if="$root.meetup.service == 'jitsi'"
 										:meetup="$root.meetup"
@@ -367,7 +371,8 @@
 					</article>
 				</div>
 				<div v-if="showShareOptions" class="chat-top">
-					<Share />
+					<!--Share /-->
+					<speakers v-if="$root.isUserAdmin" />
 				
 				</div>
 
@@ -473,7 +478,8 @@
 	import tinycolor from 'tinycolor2'
 	import {mapActions} from 'vuex'
 	import MeetupFormRoutes from '@/store/routes/meetup-form'
-	import MeetupRoom from './AdminSidebar/Transmition/MeetupRoom'
+//	import MeetupRoom from './AdminSidebar/Transmition/MeetupRoom'
+	import Speakers from './AdminSidebar/Speakers/'
 	
 	export default {
 		props: {
@@ -494,18 +500,20 @@
 			AdminSidebar,
 //			UploadLogo,
 			Share,
-			MeetupRoom
+//			MeetupRoom,
+			Speakers,
 		},
 		async mounted() {
 			await this.getMeetupById({ id: this.id })
+
+
 			
 			setInterval(async () => {
 				await this.getStreamStats({ id: this.id })
-			}, 5000)
+			}, 5000)		
 		},
 		data () {			
 			/* wait until token and sponsors ready*/
-			value: 10
 			this.$root.check('usertype')
 			.then(this.isMeetupParticipant)
 			.then(this.getMeetup)
@@ -954,6 +962,11 @@
 			endEdit(evt){
 				this.$el.querySelector('#' + evt.path[0].id).blur()
 			},
+			ChangeLogoTrue () {
+				if ( this.$root.isUserAdmin) {
+					this.ChangeLogo = true
+				}
+			},
 			updateLogo(e){
 					try {
 						if ( this.file.size > 1000000 ) {
@@ -1039,7 +1052,7 @@
 
 					const res = await MeetupFormRoutes.postUpdate(data)
 					
-				},
+			},
 
 		},
 		watch: {

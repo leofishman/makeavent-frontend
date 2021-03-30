@@ -103,7 +103,6 @@ export default {
                         this.$root.usertype = response.type
                         this.$root.profile = response.profile
                         localStorage.setItem("auth", res.headers.authorization)
-                        
                         this.$router.push(this.forwardPath)
                     }
                 }

@@ -3,8 +3,8 @@
 		<navbar></navbar>
 
 		<div class="container is-fluid" v-if="ready">
-			
-			<section class="section section-profile">
+			<div>We almost there.....</div>
+			<section class="section section-profile" v-show="1 === 2">
 				<div class="columns is-variable is-8">
 					<div class="column is-one-third profile-main">
 						
@@ -351,7 +351,7 @@
 								previewExt: formatPreview,
 								
 		*/                    }
-							const res = await MeetupFormRoutes.postAddMeetup(vent_data)
+						//	const res = await MeetupFormRoutes.postAddMeetup(vent_data)
 						} 
 							
 					}else {

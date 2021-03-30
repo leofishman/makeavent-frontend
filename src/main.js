@@ -209,7 +209,7 @@ new Vue({
       content: Content[this.selectedLanguage],
 
       openGlobalChat: false,
-      openMeetupSettings: false,
+      openMeetupSettings: true,
       isUserAdmin: false,
 
       modals: [],
@@ -229,7 +229,7 @@ new Vue({
       roomForDragableConference: {},
       activeRooms: [],
 
-      showBackstage: false,
+      showBackstage: true,
       showScreenButtons: true,
 
       backstage: {

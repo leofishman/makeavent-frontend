@@ -330,7 +330,6 @@ export default {
     CompanyStep,
   },
   mounted() {
-    console.log("АЙГИЗ ДАУН");
     this.submit();
     let timer = setInterval(() => {
       if (document.querySelector(".date-placeholder")) {

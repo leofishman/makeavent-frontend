@@ -205,9 +205,7 @@
                                 <img :src="PfileUplodated" alt="">
                             </div>
                         </template>
-                        <template v-else class="attendee-avatar">
-                            <img :src="`${api}/static/img/brand-default.png`">
-                        </template>                             
+                                                    
                     </div>
                 </div>
             </b-step-item>

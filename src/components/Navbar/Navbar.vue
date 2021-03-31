@@ -15,11 +15,13 @@
 						<div v-if="$root.actionsLord.SHOW_MEETUP_SETTINGS_BUTTON()" class="navbar-item settings-button">
 							<div class="buttons">
 								<a @click="toggleOpenMeetupSettings" :class="$root.openMeetupSettings ? 'setting-adminbar is-active' : 'setting-adminbar'">
-									<!--svg width="16" height="25" viewBox="0 0 16 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+									<!--<svg width="16" height="25" viewBox="0 0 16 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M14 2L3 12.5L14 23" stroke="black" stroke-opacity="0.34" stroke-width="3"/>
 									</svg-->
 
-									<img class="settings-ico" src="@/assets/img/Navbar/settings.svg" alt="">
+									<img src="@/assets/img/Navbar/settings.svg" alt="">
+
 									<!-- {{content.settings}}
 									<span class="tag is-info" v-if="$root.pendingCards.length" variant="light">{{$root.pendingCards.length}}</span> -->
 								</a>

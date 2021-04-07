@@ -138,6 +138,18 @@
 		margin-left: 0;
 	}
 
+	.btn-row {
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 30px;
+		&-item {
+			&:first-child {
+				margin-right: 30px;
+			}
+		}
+
+	}
+
 	.chat-company-profile {
 		width: 300px;
 		height: calc(100vh - 80px);

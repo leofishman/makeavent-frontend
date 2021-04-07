@@ -321,10 +321,8 @@
 
 <script>
 import MeetupFormRoutes from "@/store/routes/meetup-form";
-
 import CompanyStep from "./CompanyStep";
 import { mapGetters } from 'vuex'
-
 export default {
   components: {
     CompanyStep,
@@ -363,18 +361,14 @@ export default {
       content: this.$root.content.meetupPopupForm,
       activeStep: 5,
       loading: false,
-
       isAnimated: true,
       isRounded: true,
       isStepsClickable: false,
-
       hasNavigation: false,
       customNavigation: true,
       isProfileSuccess: false,
-
       labelPosition: "bottom",
       mobileMode: "minimalist",
-
       name: "My vent",
       message: "My great vent",
       company_name: this.$root.profile.company,
@@ -392,11 +386,9 @@ export default {
   },
   methods: {
     ...mapGetters(['filterMeetupsOnlyAdminStatus']),
-
     close() {
       window.EventBus.$emit("CreateNewMeetup:close");
     },
-
     updateCompany(obj) {
       this.company_name = obj.company_name;
       this.company_description = obj.company_description;
@@ -410,7 +402,6 @@ export default {
         this.name.length && this.company_description.length
       );
       const validDate = this.date.getTime() !== this.currentDate.getTime();
-
       // if(currentStep === 1 && validCompany) this.nextDisabled = false
       // if(currentStep === 2 && validStep) this.nextDisabled = false
       // if(currentStep === 3 && validDate) this.nextDisabled = false
@@ -422,7 +413,6 @@ export default {
     hideDatePlaceholder() {
       const elInput = document.querySelector(".field.input-date input");
       const elPlaceholder = document.querySelector(".date-placeholder");
-
       elPlaceholder.addEventListener("click", () => {
         elInput.click();
       });
@@ -436,7 +426,6 @@ export default {
     updateLogo(e) {
       try {
         const fileName = this.file.name;
-
         if (this.file.size > 1000000) {
           this.$root.createError(this.$root.content.ErrorMessages[12], "oops");
         } else {
@@ -447,7 +436,6 @@ export default {
             reader.onload = (e) => {
               this.fileUplodated = e.target.result;
             };
-
             this.fileValid = true;
             this.nextDisabled = false;
           } else {
@@ -460,7 +448,6 @@ export default {
     updatePreview(e) {
       try {
         const fileName = this.previewFile.name;
-
         if (this.previewFile.size > 1000000) {
           this.$root.createError(this.$root.content.ErrorMessages[12], "oops");
         } else {
@@ -471,7 +458,6 @@ export default {
             reader.onload = (e) => {
               this.PfileUplodated = e.target.result;
             };
-
             this.previewFileValid = true;
             this.nextDisabled = false;
           } else {
@@ -484,21 +470,16 @@ export default {
     // Submit form
     async submit() {
       this.loading = true;
-
       const name = this.name;
       const description = this.message;
-
       const company_name = this.company_name;
       const company_description = this.company_description;
-
       const date = this.date;
-
       let fileName, format;
       if (this.file.name) {
         fileName = this.file.name;
         format = fileName.slice(fileName.lastIndexOf("."), fileName.length);
       }
-
       let fileNamePreview, formatPreview;
       if (this.previewFile.name) {
         fileNamePreview = this.previewFile.name;
@@ -507,7 +488,6 @@ export default {
           fileNamePreview.length
         );
       }
-
       let PfileUplodated = "";
       if (typeof this.PfileUplodated === "string") {
         PfileUplodated = this.PfileUplodated;
@@ -521,7 +501,6 @@ export default {
           };
         } catch (e) {}
       }
-
       if (this.lastStep) {
         const data = {
           name: name,
@@ -535,7 +514,6 @@ export default {
           previewExt: formatPreview,
           groupName: "test",
         };
-
         const res = await MeetupFormRoutes.postAddMeetup(data);
         this.close();
         
@@ -560,7 +538,6 @@ export default {
     },
     onEdit(evt) {
       var src = evt.target.innerHTML;
-
       switch (evt.srcElement.id) {
         case "name":
           this.name = src;

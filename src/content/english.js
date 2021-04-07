@@ -161,15 +161,15 @@ export default {
         videoConferenceOpened: "Start Video Conference",
         videoConference: "Video Conference",
 
-        backstageSettings: "Manage Speakers",
+        backstageSettings: "Manage Participants",
     },
 
     BackstageControlsModal: {
-        title: "Backstage Controls",
-        speakers: "Speakers",
+        title: "Participants Controls",
+        speakers: "Participants",
         inviteToBackstage: "Send to Backstage",
         sendToMain: "Send to Public Room",
-        searchPlaceholder: "Start typeing speaker name or company to find"
+        searchPlaceholder: "Start typeing participant name or company to find"
     },
     
     Member: {
@@ -673,13 +673,13 @@ export default {
     },
 
     inviteSpeaker: {
-        title: 'Invite Speaker',
+        title: 'Invite Participant',
         labels: {
             invite: 'Invite by link',
             inviteByEmail: 'Invite by email(s)',
             addEmail: 'Add email'
         },
-        hintByLink: "In order to add new speaker just send the link above. Right after that person followed that link and login in his/her Makeavent account, he/she will be confirmed as a speaker",
+        hintByLink: "In order to add new participant just send the link above. Right after that person followed that link and login in his/her Makeavent account, he/she will be confirmed as a participant",
         pressEnter: 'Press "enter" to submit email and add new.',
         successMessage: "Invitation emails been successfully sent."
     },
@@ -740,10 +740,10 @@ export default {
                 }
             },
             speakers: {
-                title: 'Speakers',
+                title: 'Participants',
                 buttons: {
-                    manage: 'Manage Backstage',
-                    add: 'Add Speaker',
+                    manage: 'Manage Participants',
+                    add: 'Invite Participant',
                 }
             },
             streaming: {

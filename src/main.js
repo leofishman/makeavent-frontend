@@ -229,7 +229,7 @@ new Vue({
       roomForDragableConference: {},
       activeRooms: [],
 
-      showBackstage: false,
+      showBackstage: true,
       showScreenButtons: true,
 
       backstage: {

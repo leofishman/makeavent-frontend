@@ -13,9 +13,9 @@ const getDefaultState = () => {
         custom_colors: false,
         color_schema: {
             isLight: true,
-            primary: '#0051d9',
-            dark: '#4b4b4b',
-            light: '#ffffff',
+            primary: '#4fe6db',
+            dark: '#053056',
+            light: '#f4edfbff',
         },
         networkingRoomOpened: false,
         meetupRoomOpened: false,

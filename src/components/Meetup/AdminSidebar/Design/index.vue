@@ -65,10 +65,10 @@ export default {
             isActive: this.$root.meetup.custom_colors,
             isLight: this.$root.meetup.color_schema.isLight,
             defaultValue: {
-              isActive: false,
-              primary: '#4fe6db',
-              dark: '#053056',
-              light: '#f4edfbff',
+                isActive: false,
+                primary: '#4fe6db',
+                dark: '#053056',
+                light: '#f4edfbff',
             },
             isLoading: false
         }
@@ -118,10 +118,10 @@ export default {
         resetToDefault(){
             this.isLight = true
             this.defaultColorShema()
-            let colorShema = {
-              primary: '#4fe6db',
-              dark: '#053056',
-              light: '#f4edfbff',
+            let colorShema = {                
+                primary: '#4fe6db',
+                dark: '#053056',
+                light: '#f4edfbff',
             }
             
             // Primary

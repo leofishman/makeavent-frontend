@@ -156,7 +156,14 @@
 			}
 		},
 		methods: {
-
+      getURL(msg) {
+        let result = msg;
+        var reg = msg.match(/https?:\/\/(?:www\.)?([-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b)*(\/[\/\d\w\.-]*)*(?:[\?])*(.+)*/gi);
+        for (var key in reg){
+          result = result.replace(reg[key],'<span><a href="'+reg[key]+'" target="_blank" style="user-select:text;">'+reg[key]+'</a></span>')
+        }
+        return result;
+      },
 			closeHintWithTimeout () {
 				let self = this
 				setTimeout(() => { self.showHint=false }, 1000)
@@ -196,15 +203,18 @@
 								<div class="quoted-answer">
 									${this.quotedMessage}
 								</div>
-								${this.userTextMessage}
+								${this.getURL(this.userTextMessage)}
 							`,
 							id: id(),
 							message: this.userTextMessage,
-							time: new Date()
+							time: new Date(),
+              link: this.userTextMessage != this.getURL(this.userTextMessage)
 						})
 					}
 					else {
-						this.chat.emit('new_message', { message:this.userTextMessage, id: id(), html:this.userTextMessage })
+            let html = this.getURL(this.userTextMessage);
+            let link = html != this.userTextMessage;
+            this.chat.emit('new_message', { message:this.userTextMessage, id: id(), html:html, link: link })
 					}
 					this.userTextMessage = ""
 					this.showQuote = ''

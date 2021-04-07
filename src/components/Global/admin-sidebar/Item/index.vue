@@ -1,6 +1,6 @@
 <template>
   <div class="admin-sidebar__list-item">
-      <accordion :opened="opened">
+      <accordion :opened="false">
         <accordion-item>            
             <template slot="accordion-trigger">
                 <slot name="header"></slot>

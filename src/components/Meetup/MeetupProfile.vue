@@ -22,7 +22,7 @@
             <button class='button is-primary btn-row-item'
                     @click='setEditMode'
             >Edit info</button>
-            <button class='button is-primary btn-row-item'>Edit design</button>
+            <design class='design__editor'></design>
           </div>
 					<div class="columns is-desktop">
 						<!-- v-if="!$root.openMeetupSettings"  -->
@@ -422,7 +422,7 @@
 			<DemoModal :demos="$root.meetup.demo" :name="$root.meetup.company_name"/>
 		</b-modal>
 
-		<AdminSidebar v-if="$root.isUserAdmin" />
+		<AdminSidebar v-if="$root.isUserAdmin && 1===2" />
 
 		<b-modal
 		:active.sync="isFullScreenStream"
@@ -486,7 +486,8 @@
 	import MeetupFormRoutes from '@/store/routes/meetup-form'
 //	import MeetupRoom from './AdminSidebar/Transmition/MeetupRoom'
 	import Speakers from './AdminSidebar/Speakers/'
-	
+  import Design from './AdminSidebar/Design/.'
+
 	export default {
 		props: {
 			id: {
@@ -508,6 +509,7 @@
 			Share,
 //			MeetupRoom,
 			Speakers,
+      Design,
 		},
 		async mounted() {
 			await this.getMeetupById({ id: this.id })
@@ -1177,5 +1179,10 @@
 			height: 150px;
 		}
 	}
+
+}
+
+.design__editor {
+  min-width: 290px;
 }
 </style>

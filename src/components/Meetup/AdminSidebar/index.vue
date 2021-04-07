@@ -18,7 +18,7 @@
                 <streaming/>
                 <share/-->
                 <information :id="this.$root.meetup._id"/>
-                <design :opened="true" />
+                <design :opened="false" />
                 <recording/>
             </div>
         </div>

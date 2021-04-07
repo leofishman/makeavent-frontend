@@ -18,7 +18,8 @@
                     :id="data.id"
                     class="p-message is-light-changeable--bg distinct-color invert-color"
                     v-on:click="showReplyButton(data.from, index)"
-                    v-html="data.html">
+                    v-html="data.html"
+                    v-bind:class="{ us_sel: this.allowCopy }">
                 </p>
                 <a class="message-time is-dark-changeable--color" v-if="data.time">
                     {{new Date(data.time).getHours()}}:{{new Date(data.time).getMinutes()}}:{{new Date(data.time).getSeconds()}}
@@ -119,9 +120,16 @@
 
             return false;
         }, false);
+    },
+    computed: {
+      allowCopy() {
+        return this.data.link;
+      }
     }
 }
 </script>
 <style lang="scss" scpoed>
-
+  .us_sel {
+    user-select: text;
+  }
 </style>

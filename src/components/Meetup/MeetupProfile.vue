@@ -16,14 +16,20 @@
 			<!-- NOT RELEASED -->
 			<!-- <Storycreate v-if="$root.isAdmin(contacts)"/> -->
 
-			<div class="container container-edit">
+			<div class="container container-edit" v-if="$root.isUserAdmin">
 				<section class="section section-profile-company">
+          <div class="btn-row button-edit-row justify-center">
+            <button class='button is-primary btn-row-item'
+                    @click='setEditMode'
+            >Edit info</button>
+            <button class='button is-primary btn-row-item'>Edit design</button>
+          </div>
 					<div class="columns is-desktop">
 						<!-- v-if="!$root.openMeetupSettings"  -->
 						<aside class="column is-full-mobile is-half-widescreen is-one-third-fullhd">
 							<div class="profile-top">
 								<span 
-									@click.stop="ChangeLogoTrue"
+									@click.stop="ChangeLogo=editMode"
 									@mouseover="hover = true"
 									@mouseleave="hover = false; " 
 									class="company-logo-base"
@@ -39,7 +45,7 @@
 										<span  v-if="!ChangeLogo && fileUplodated">											
 											<img :src="fileUplodated">
 										</span>
-										<span v-if="ChangeLogo && $root.isUserAdmin">
+										<span v-if="ChangeLogo && $root.isUserAdmin && this.editMode">
 											<img :src="`${api}/static/img/trans.png`">
 											<!-- upload section -->
 											<b-field class="company-logo-upload">
@@ -76,7 +82,7 @@
 
 											<!--UploadLogo v-if="ChangeLogo && $root.isUserAdmin" class="company-logo-upload" @click="hover=false"  :value="value" @update="onChildUpdate"/-->
 										</span>
-										<i v-show="hover && $root.isUserAdmin" @click="ChangeLogo = true" class="far fa-edit edit-file-icon"></i>
+										<i v-show="this.editMode && $root.isUserAdmin" @click="ChangeLogo = true" class="far fa-edit edit-file-icon"></i>
 									</figure>
 									
 									
@@ -98,7 +104,7 @@
 									@mouseleave="hover = false"
 									>
 								<div class="company-name-base">
-									<div contenteditable class="company-name is-dark-changeable--color editable editme"
+									<div :contenteditable='this.editMode' class="company-name is-dark-changeable--color editable editme"
 										v-if="$root.isUserAdmin"
 									   id="company_name"
 									   v-html="company_name"
@@ -108,7 +114,7 @@
 										{{company_name}}
 									</div>
 									<div v-else class="company-name is-dark-changeable--color editme">{{company_name}}</div>
-									<i v-show="hover && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
+									<i v-show="this.editMode && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
 								</div>
 								</span>
 
@@ -141,7 +147,7 @@
                     @mouseleave="hover = false"
                 >
 								<div class="company-description-base">
-									<div contenteditable class="company_description is-dark-changeable--color editable editme"
+									<div :contenteditable='this.editMode' class="company_description is-dark-changeable--color editable editme"
                        v-if="$root.isUserAdmin"
                        id="company_description"
                        v-html="company_description"
@@ -151,7 +157,7 @@
 										{{company_description}}
 									</div>
 									<div v-else class="company_description is-dark-changeable--color editme">{{company_description}}</div>
-                  <i v-show="hover && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
+                  <i v-show="this.editMode && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
 								</div>
 								</span>
 
@@ -263,7 +269,7 @@
 								@mouseleave="hover = false"
 							>
 								<div class="meetup-name-base">
-									<div contenteditable class="meetup-title is-dark-changeable--color editable editme"
+									<div :contenteditable='this.editMode'  class="meetup-title is-dark-changeable--color editable editme"
 										v-if="$root.isUserAdmin"
 										id="meetup_name"
 										v-html="meetup_name"
@@ -273,7 +279,7 @@
 										{{meetup_name}}
 									</div>
 									<h1 v-else class="meetup-title is-dark-changeable--color" v-html="meetup_name"></h1>
-									<i v-show="hover && $root.isUserAdmin"   class="far fa-edit edit-icon"></i>
+									<i v-show="this.editMode && $root.isUserAdmin"   class="far fa-edit edit-icon"></i>
 								</div>
 							</span>
 
@@ -331,7 +337,7 @@
                   @mouseleave="hover = false"
               >
 								<div class="meetup-description">
-									<div contenteditable class="meetup-description is-dark-changeable--color editable editme"
+									<div :contenteditable='this.editMode'  class="meetup-description is-dark-changeable--color editable editme"
                        v-if="$root.isUserAdmin"
                        id="meetup_topic"
                        v-html="meetup_topic"
@@ -341,7 +347,7 @@
 										{{meetup_topic}}
 									</div>
                   <h1 v-else class="meetup-title is-dark-changeable--color" v-html="meetup_topic"></h1>
-                  <i v-show="hover && $root.isUserAdmin"   class="far fa-edit edit-icon"></i>
+                  <i v-show="this.editMode && $root.isUserAdmin"   class="far fa-edit edit-icon"></i>
 								</div>
               </span>
 
@@ -585,7 +591,8 @@
 				fileUplodated: false,
 				previewFile: {},  
 				previewUplodated: false,
-				fileValid: true,  				
+				fileValid: true,
+        editMode: false,
 			}
 		},
 		methods: {
@@ -932,32 +939,34 @@
 				this.updateColorPrimary(this.$root.meetup.color_schema.primary)
 			},
 			onEdit(evt) {
-				var src = evt.target.innerHTML
-				switch (evt.srcElement.id) {
-				case 'name':
-					this.name = src
-					break;
-				case 'company_name':
-					this.$store.state.meetupForm.company_name = src;
-				// this.company_name = src
-					break;
-				case 'meetup_name':
-					this.$store.state.meetupForm.name = src;
-					//this.meetup_name = src;
-					//console.log(src);
-					break
-				case 'meetup_topic':
-					this.$store.state.meetupForm.message = src;
-					//this.meetup_name = src;
-					//console.log(867,this.$store.state.meetupForm, src);
-					break
-				case 'company_description':
-					this.$store.state.meetupForm.company_description = src;
-					break;
-				case 'message':
-					this.message = src;
-					}
-				this.updateVentInfo();
+        if (this.editMode) {
+          var src = evt.target.innerHTML
+          switch (evt.srcElement.id) {
+            case 'name':
+              this.name = src
+              break;
+            case 'company_name':
+              this.$store.state.meetupForm.company_name = src;
+              // this.company_name = src
+              break;
+            case 'meetup_name':
+              this.$store.state.meetupForm.name = src;
+              //this.meetup_name = src;
+              //console.log(src);
+              break
+            case 'meetup_topic':
+              this.$store.state.meetupForm.message = src;
+              //this.meetup_name = src;
+              //console.log(867,this.$store.state.meetupForm, src);
+              break
+            case 'company_description':
+              this.$store.state.meetupForm.company_description = src;
+              break;
+            case 'message':
+              this.message = src;
+          }
+          this.updateVentInfo();
+        }
 			},
 			endEdit(evt){
 				this.$el.querySelector('#' + evt.path[0].id).blur()
@@ -1053,7 +1062,13 @@
 					const res = await MeetupFormRoutes.postUpdate(data)
 					
 			},
-
+      setEditMode() {
+        if (this.editMode) {
+          this.editMode = false;
+        } else {
+          this.editMode = true;
+        }
+      },
 		},
 		watch: {
 			ready: function () {

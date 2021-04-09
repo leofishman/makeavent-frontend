@@ -115,6 +115,7 @@
 									</div>
 									<div v-else class="company-name is-dark-changeable--color editme">{{company_name}}</div>
 									<i v-show="this.editMode && $root.isUserAdmin" class="far fa-edit edit-icon"></i>
+									<MaterialsSocials v-if="$root.isUserAdmin && this.editMode" />
 								</div>
 								</span>
 
@@ -424,6 +425,8 @@
 
 		<AdminSidebar v-if="$root.isUserAdmin && 1===2" />
 
+		
+
 		<b-modal
 		:active.sync="isFullScreenStream"
 		has-modal-card
@@ -486,7 +489,8 @@
 	import MeetupFormRoutes from '@/store/routes/meetup-form'
 //	import MeetupRoom from './AdminSidebar/Transmition/MeetupRoom'
 	import Speakers from './AdminSidebar/Speakers/'
-  import Design from './AdminSidebar/Design/.'
+	import Design from './AdminSidebar/Design/.'
+	import MaterialsSocials from './MaterialsSocials'
 
 	export default {
 		props: {
@@ -509,7 +513,8 @@
 			Share,
 //			MeetupRoom,
 			Speakers,
-      Design,
+      		Design,
+			MaterialsSocials,
 		},
 		async mounted() {
 			await this.getMeetupById({ id: this.id })

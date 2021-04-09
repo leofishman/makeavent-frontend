@@ -13,7 +13,7 @@
 				<div id="navbar" class="navbar-menu">
 					<div class="navbar-start">
 						<div v-if="$root.actionsLord.SHOW_MEETUP_SETTINGS_BUTTON()" class="navbar-item settings-button">
-							<div class="buttons">
+							<div class="buttons" v-show="1===2">
 								<a @click="toggleOpenMeetupSettings" :class="$root.openMeetupSettings ? 'setting-adminbar is-active' : 'setting-adminbar'">
 
 									<!--<svg width="16" height="25" viewBox="0 0 16 25" fill="none" xmlns="http://www.w3.org/2000/svg">

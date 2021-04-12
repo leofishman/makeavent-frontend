@@ -1,6 +1,36 @@
 import MeetupController from '../controllers/meetup-form'
 import MeetupRouter from '../routes/meetup-form'
 
+const getDefaultState = () => {
+    return {
+        name: '',
+        message: '',
+        company_name: '',
+        company_description: '',
+        logo: '',
+        date: '',
+        preview: '',
+        custom_colors: false,
+        color_schema: {
+            isLight: true,
+            primary: '#4fe6db',
+            dark: '#053056',
+            light: '#f4edfbff',
+        },
+        networkingRoomOpened: false,
+        meetupRoomOpened: false,
+        status: '',
+        demo: [],
+        stuff: [],
+        socials: [],
+        speakers: [],
+        isDefault: true,
+        streamStats: {},
+    }
+}
+
+const state = getDefaultState()
+
 export default {
     actions: {
         // getMeetupById
@@ -14,7 +44,7 @@ export default {
                 catch (e) { console.log(e) }
             })
         },
-        async getStreamingSources (ctx, meetupIdObj) {
+        async getStreamingSources(ctx, meetupIdObj) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const sources = await MeetupController.getMeetupStreamingSources(meetupIdObj)
@@ -24,27 +54,27 @@ export default {
                 catch (e) { console.log(e) }
             })
         },
-        async toggleMeetupNetworkingRoom(ctx, meetupIdObj){
+        async toggleMeetupNetworkingRoom(ctx, meetupIdObj) {
             return new Promise(async (resolve, reject) => {
                 try {
                     await MeetupRouter.toggleNetworkingRoom(meetupIdObj)
-                    ctx.commit('toggleNetworkingRoom')  
+                    ctx.commit('toggleNetworkingRoom')
                     resolve(true)
                 }
                 catch (e) { console.log(e) }
             })
         },
-        async toggleMeetupRoom(ctx, meetupIdObj){
+        async toggleMeetupRoom(ctx, meetupIdObj) {
             return new Promise(async (resolve, reject) => {
                 try {
                     await MeetupRouter.toggleMeetupRoom(meetupIdObj)
-                    ctx.commit('toggleRoom')  
+                    ctx.commit('toggleRoom')
                     resolve(true)
                 }
                 catch (e) { console.log(e) }
             })
         },
-        async getStreamStats (ctx, meetupIdObj) {
+        async getStreamStats(ctx, meetupIdObj) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const streamStats = await MeetupRouter.getStreamStats(meetupIdObj)
@@ -57,8 +87,8 @@ export default {
     },
     mutations: {
         // update Meetup
-        updateMeetup(state, meetup){            
-            state.name = meetup.meetup_name           
+        updateMeetup(state, meetup) {
+            state.name = meetup.meetup_name
             state.message = meetup.meetup_topic
             state.company_name = meetup.company_name
             state.company_description = meetup.company_description
@@ -79,71 +109,49 @@ export default {
             state.website = meetup.website
             state.status = meetup.status
         },
-        updateMeetupStreamSources (state, streamingSources) {
+        updateMeetupStreamSources(state, streamingSources) {
             state.streamingSources = streamingSources
         },
-        updateStreamStats (state, streamStats) {
+        updateStreamStats(state, streamStats) {
             state.streamStats = streamStats.data
         },
-        updateCustomColor(state, val){
+        updateCustomColor(state, val) {
             state.custom_colors = val
             state.isDefault = false
         },
-        updateColorMode(state, val){
+        updateColorMode(state, val) {
             state.color_schema.isLight = val
             state.isDefault = false
         },
-        updateSchemaColor(state, color){
+        updateSchemaColor(state, color) {
             state.color_schema[color.key] = color.value
             state.isDefault = false
         },
-        updateIsDefault(state){
+        updateIsDefault(state) {
             state.isDefault = true
         },
-        toggleNetworkingRoom(state){
+        toggleNetworkingRoom(state) {
             state.networkingRoomOpened = !state.networkingRoomOpened
         },
-        toggleRoom(state){
+        toggleRoom(state) {
             state.meetupRoomOpened = !state.meetupRoomOpened
         },
     },
-    state: {
-        name: '',
-        message: '',
-        company_name: '',
-        company_description: '',
-        logo: '',
-        date: '',
-        preview: '',
-        custom_colors: false,
-        color_schema: {
-            isLight: true,
-            primary: '#0051d9',
-            dark: '#4b4b4b',
-            light: '#ffffff',
-        },
-        networkingRoomOpened: false,
-        meetupRoomOpened: false,
-        status: '',
-        demo: [],
-        stuff: [],
-        socials: [],
-        speakers: [],
-        isDefault: true,
-        streamStats: {},
-    },
+    state: state,
     getters: {
-        meetupFull(state){
+        meetupFull(state) {
             return state
         },
-        meetupColorSchema(state){
+        meetupColorSchema(state) {
             return state.color_schema
         },
-        meetupSocials(state){
+        meetupSocials(state) {
             return state.socials
         },
-        meetupRoomOpened (state) {
+        meetupRoomOpened(state) {
             return state.status
         },
     }
+
 }
+

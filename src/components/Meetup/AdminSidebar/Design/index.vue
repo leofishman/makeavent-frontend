@@ -5,7 +5,7 @@
             :active.sync="isLoading" 
             :can-cancel="false"
         />
-        <item class="admin-bar__design" :opened="true">
+        <item class="admin-bar__design"  :opened="false">
             <p class="admin-bar__list-item-header" slot="header">{{content.items.design.title}}</p>
             
             <template slot="inner">
@@ -14,7 +14,7 @@
                         @updateMode="updateMode"
                         @updateActive="updateActive" 
                         @resetToDefault="resetToDefault"
-                        :isActive="true"
+                        :isActive="isActive"
                         :isLight="isLight"
                     />
                 </div>
@@ -64,11 +64,11 @@ export default {
             content: this.$root.content.adminSidebar,
             isActive: this.$root.meetup.custom_colors,
             isLight: this.$root.meetup.color_schema.isLight,
-            defaultValue: {   
-                isActive: false,             
-                primary: '#0051d9',
-                dark: '#4b4b4b',
-                light: '#ffffff',
+            defaultValue: {
+                isActive: false,
+                primary: '#4fe6db',
+                dark: '#053056',
+                light: '#f4edfbff',
             },
             isLoading: false
         }
@@ -119,9 +119,9 @@ export default {
             this.isLight = true
             this.defaultColorShema()
             let colorShema = {                
-                primary: '#0051d9',
-                dark: '#4b4b4b',
-                light: '#ffffff',
+                primary: '#4fe6db',
+                dark: '#053056',
+                light: '#f4edfbff',
             }
             
             // Primary
